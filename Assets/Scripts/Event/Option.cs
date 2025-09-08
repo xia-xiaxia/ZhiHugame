@@ -14,4 +14,6 @@ public class Option
     public bool oiftl;           // 是否触发统领QTE
     public bool oifjs;           // 是否触发军事QTE
     public bool oifhm;           // 是否触发后宫QTE
+
+    public string nextEventId;   // 选项对应的下一个事件 ID
 }

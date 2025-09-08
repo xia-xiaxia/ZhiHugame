@@ -41,6 +41,8 @@ public class UIManager : MonoBehaviour
     // 运行时生成的按钮缓存
     private List<GameObject> optionButtons = new List<GameObject>();
 
+    private string nextId;
+
     void Awake() { Instance = this; }
 
     void Start()
@@ -100,8 +102,9 @@ public class UIManager : MonoBehaviour
 
         if (!ifShow)
         {
+            Debug.Log("turns" + turns);
             turns++;
-            if(turns==65 && !allgone)
+            if (turns == 65 && !allgone)
             {
                 gameover.sprite = end3;
                 MusicManager.Instance.PlayBgm(GE, 0.8f);
@@ -119,14 +122,17 @@ public class UIManager : MonoBehaviour
                 string rdm = "" + randomid;
                 ShowEvent(rdm);
             }
-            
+            else if(turns % 4 == 0 && turns<64 && nextId!=null)
+            {
+                ShowEvent(nextId);
+                nextId = null;
+            }
             else
             {
                 int idn = 200 + turns / 4;
                 string id = "" + idn;
                 ShowEvent(id);
             }
-
 
         }
     }
@@ -142,6 +148,11 @@ public class UIManager : MonoBehaviour
 
         // 2. 取事件
         var evt = EventManager.Instance.GetEvent(id);
+        if (evt == null)
+        {
+            Debug.LogError($"无法找到事件ID: {id}，停止显示事件");
+            return;
+        }
         titleText.text = evt.title;
         dialoguePanel.SetBody(evt.body);
 
@@ -155,12 +166,18 @@ public class UIManager : MonoBehaviour
             var capturedOpt = opt;
             btn.GetComponent<Button>().onClick.AddListener(() =>
             {
-                EventManager.Instance.ApplyOption(capturedOpt,turns);
+                EventManager.Instance.ApplyOption(capturedOpt, turns);
                 UpdateStatText();
                 // 如果你想跳到下一事件，把 ShowEvent("xxx") 放这里
+                if (!string.IsNullOrEmpty(capturedOpt.nextEventId))
+                {
+                    nextId = capturedOpt.nextEventId;
+                }
+                
             });
 
             optionButtons.Add(btn);
+            Debug.Log("111" + id);
         }
     }
 

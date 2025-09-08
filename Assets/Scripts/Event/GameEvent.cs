@@ -15,29 +15,32 @@ public class GameEvent
 
     public TType Ttype;
 
+    public int Invterval = 0;
+
     public void SetGEventTypeFromId()
     {
         if (string.IsNullOrEmpty(id))
         {
-            Gtype = GType.Event;
+            Gtype = GType.tempEvent;
             return;
         }
 
-        char firstChar = id[0];
+        char firstChar = id[1];
         switch (firstChar)
         {
             case '0':
-                Gtype = GType.Event;
+                Gtype = GType.tempEvent;
                 break;
             case '1':
-                Gtype = GType.Mask;
+                Gtype = GType.historyEvent;
                 break;
             default:
-                Gtype = GType.Event; // 默认值
+                Gtype = GType.tempEvent; // 默认值
                 break;
         }
     }
-    
+
+
     public void SetTEventTypeFromId()
     {
         if (string.IsNullOrEmpty(id))
@@ -46,7 +49,7 @@ public class GameEvent
             return;
         }
 
-        char firstChar = id[1];
+        char firstChar = id[0];
         switch (firstChar)
         {
             case '0':
@@ -65,13 +68,14 @@ public class GameEvent
                 Ttype = TType.era0; // 默认值
                 break;
         }
+        
     }
 }
 
 public enum GType
 {
-    Event,
-    Mask
+    tempEvent,
+    historyEvent
 
 }
 
