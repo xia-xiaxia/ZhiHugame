@@ -1,18 +1,19 @@
 %YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
+%TAG !u! tag:yousandi.cn,2023:
 --- !u!1 &1527842572345812476
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
+  serializedVersion: 7
   m_Component:
   - component: {fileID: 3046917225831086714}
   - component: {fileID: 6049112491648960389}
   - component: {fileID: 1991094848709742291}
   - component: {fileID: 8529104853876680589}
   m_Layer: 5
+  m_HasEditorInfo: 1
   m_Name: EventsBotton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +38,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 650, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6049112491648960389
 CanvasRenderer:
@@ -127,12 +128,13 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
+  serializedVersion: 7
   m_Component:
   - component: {fileID: 8244552873029240231}
   - component: {fileID: 5426800722166886626}
   - component: {fileID: 4112589038942587849}
   m_Layer: 5
+  m_HasEditorInfo: 1
   m_Name: buttontext
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,7 +150,7 @@ RectTransform:
   m_GameObject: {fileID: 9080585767219585889}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.90573, y: 0.6581518, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3046917225831086714}
