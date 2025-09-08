@@ -1,0 +1,189 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class UIManager : MonoBehaviour
+{
+    public static UIManager Instance;
+
+    // 原来的 4 个引用
+    public StatModel stats;
+    public Image gameover;
+    public Sprite end1;
+    public Sprite end2;
+    public Sprite end3;
+    public Sprite end4;
+    public Sprite end5;
+
+
+
+
+    public Text titleText;
+    public Text bodyText;
+    public DialoguePanel dialoguePanel;
+    public Text statText1;
+    public Text statText2;
+    public Text statText3;
+    public Text statText4;
+    public bool ifShow;
+    public int eventid=100;
+    public int turns = 0;
+    public AudioClip GE;
+    public AudioClip BE;
+
+    // 新增：按钮预制体 & 父容器
+    public GameObject optionButtonPrefab;
+    public Transform optionsParent;   // 随便建一个空物体当父节点，方便排版
+
+    public bool allgone = false;
+
+    // 运行时生成的按钮缓存
+    private List<GameObject> optionButtons = new List<GameObject>();
+
+    void Awake() { Instance = this; }
+
+    void Start()
+    {
+
+        
+    }
+    IEnumerator Fade()
+    {
+        Color c = gameover.color; c.a = 0; gameover.color = c;
+        for (float t = 0; t < 2f; t += Time.deltaTime)
+        {
+            c.a = t / 2f;
+            gameover.color = c;
+            yield return null;
+        }
+        c.a = 1;
+        gameover.color = c;
+    }
+    private void Update()
+    {
+        if (stats.gold <= 0&&!allgone)
+        {
+            gameover.sprite = end5;
+            MusicManager.Instance.PlayBgm(BE, 0.8f);
+            gameover.raycastTarget = true;
+            allgone=true;
+            StartCoroutine(Fade());
+            
+        }
+        
+        if (stats.people <= 0 && !allgone)
+        {
+            gameover.sprite = end2;
+            MusicManager.Instance.PlayBgm(BE, 0.8f);
+            gameover.raycastTarget = true;
+            allgone = true;
+            StartCoroutine(Fade());
+        }
+        if (stats.weiwang <= 0 && !allgone)
+        {
+            gameover.sprite = end4;
+            MusicManager.Instance.PlayBgm(BE, 0.8f);
+            gameover.raycastTarget = true;
+            allgone = true;
+            StartCoroutine(Fade());
+        }
+        if (stats.zhouli <= 0 && !allgone)
+        {
+            gameover.sprite = end1;
+            MusicManager.Instance.PlayBgm(BE, 0.8f);
+            gameover.raycastTarget = true;
+            allgone = true;
+            StartCoroutine(Fade());
+        }
+
+
+        if (!ifShow)
+        {
+            turns++;
+            if(turns==65 && !allgone)
+            {
+                gameover.sprite = end3;
+                MusicManager.Instance.PlayBgm(GE, 0.8f);
+                allgone = true;
+                StartCoroutine(Fade());
+                gameover.raycastTarget = true;
+            }
+            else if (turns == 1)
+            {
+                ShowEvent("301");
+            }
+            else if (turns % 4 != 0)
+            {
+                int randomid = Random.Range(101, 148);
+                string rdm = "" + randomid;
+                ShowEvent(rdm);
+            }
+            
+            else
+            {
+                int idn = 200 + turns / 4;
+                string id = "" + idn;
+                ShowEvent(id);
+            }
+
+
+        }
+    }
+
+
+    // 关键：根据事件选项数量动态生成按钮
+    public void ShowEvent(string id)
+    {
+        ifShow = true;
+        // 1. 清掉上一次生成的按钮
+        foreach (var b in optionButtons) Destroy(b);
+        optionButtons.Clear();
+
+        // 2. 取事件
+        var evt = EventManager.Instance.GetEvent(id);
+        titleText.text = evt.title;
+        dialoguePanel.SetBody(evt.body);
+
+        // 3. 根据选项数量生成按钮
+        foreach (var opt in evt.options)
+        {
+            GameObject btn = Instantiate(optionButtonPrefab, optionsParent);
+            btn.GetComponentInChildren<Text>().text = opt.text;
+
+            // 把点击事件绑进去（注意闭包陷阱，用局部变量）
+            var capturedOpt = opt;
+            btn.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                EventManager.Instance.ApplyOption(capturedOpt,turns);
+                UpdateStatText();
+                // 如果你想跳到下一事件，把 ShowEvent("xxx") 放这里
+            });
+
+            optionButtons.Add(btn);
+        }
+    }
+
+    public void UpdateStatText()
+    {
+        var s = EventManager.Instance.stats;
+        statText1.text = $"{s.gold}";
+        statText2.text = $"{s.people}";
+        statText3.text = $"{s.weiwang}";
+        statText4.text = $"{s.zhouli}";
+
+    }
+
+    public void ClearText()
+    {
+        ifShow=false;
+        // 1. 清空文字
+        titleText.text = string.Empty;
+        dialoguePanel.SetBody(" ");
+
+        // 2. 销毁所有选项按钮
+        foreach (var b in optionButtons)
+            Destroy(b);
+        optionButtons.Clear();
+    }
+}

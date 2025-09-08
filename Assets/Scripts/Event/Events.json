@@ -1,0 +1,1264 @@
+[
+  {
+    "id": "100",
+    "title": "旱灾",
+    "body": "庄稼颗粒无收，百姓饥荒。",
+    "options": [
+      {
+        "text": "开仓放粮",
+        "goldChange": -50,
+        "peopleChange": 10
+      },
+      {
+        "text": "征粮加税",
+        "goldChange": 30,
+        "peopleChange": -20
+      },
+      {
+        "text": "不管不顾",
+        
+        "peopleChange": -30
+      }
+    ]
+  },
+
+
+  {
+    "id": "101",
+    "title": "田猎",
+    "body": "太宰：陛下，按照《周礼》的规定，您应当进行田猎的礼仪，打猎来祈求丰收！",
+    "options": [
+      {
+        "text": "寡人将参与田猎",
+        "oiftl": true
+      }
+    ]
+  },
+
+  {
+    "id": "102",
+    "title": "尝麦",
+    "body": "太宰：陛下，今年的麦子已经收获了，按照《周礼》的规定，您应该先在宗庙向先祖进献当年新麦以示感恩，后亲自品尝新麦完成尝新礼、这样才能保证我大周福祚绵长啊！",
+    "options": [
+      {
+        "text": "寡人将亲自行礼",
+        "oifjs": true
+      },
+      {
+        "text": "你跟我讲周礼我都觉得好笑",
+        "zhouLiChange": -4,
+        "peopleChange": 1,
+        "goldChange": 1
+      }
+    ]
+  },
+
+  {
+    "id": "103",
+    "title": "包茅不入",
+    "body": "司马：陛下，今年楚国没有按时进贡包茅。没有包茅，我们无法过滤御酒，您一定要出兵讨伐楚国啊！",
+    "options": [
+      {
+        "text": "大胆楚国，寡人要削他的爵位！",
+        "weiwangChange": 2,
+        "zhouLiChange": -2
+      },
+      {
+        "text": "大胆楚国，寡人要征讨之！",
+        "oifzz": true
+      },
+      {
+        "text": "不过滤就不能喝酒了吗？",
+        "weiwangChange": -1,
+        "goldChange": -1
+      }
+    ]
+  },
+
+  {
+    "id": "104",
+    "title": "祭鼓裂了",
+    "body": "宗伯：陛下，祖庙的大鼓昨夜自己崩裂，声如裂帛，卜人说不吉。",
+    "options": [
+      {
+        "text": "换个新鼓，继续祭",
+        "oifjs": true
+      },
+      {
+        "text": "先不敲鼓，改奏编钟",
+        "zhouLiChange": -1
+      }
+    ]
+  },
+
+  {
+    "id": "105",
+    "title": "御苑鹿逃",
+    "body": "囿人：陛下，围栏年久失修，昨夜跑了三只白唇鹿。",
+    "options": [
+      {
+        "text": "画影图形，悬赏百钱一只",
+        "goldChange": -2,
+        "weiwangChange": 1
+      },
+      {
+        "text": "跑了就跑了，省得天天喂",
+        "goldChange": 1,
+        "weiwangChange": 1
+      },
+      {
+        "text": "那寡人要去打猎",
+        "oiftl": true
+      }
+    ]
+  },
+
+  {
+    "id": "106",
+    "title": "雨坏灵台",
+    "body": "保章氏：陛下，昨夜暴雨，观天之灵台倾圮三阶，今晨无法测日影。",
+    "options": [
+      {
+        "text": "征发庶民速修",
+        "peopleChange": -2,
+        "zhouLiChange": 1
+      },
+      {
+        "text": "寡人亲登残台以观象",
+        "oifjs": true
+      },
+      {
+        "text": "不修也罢，天意难测",
+        "zhouLiChange": -1,
+        "goldChange": 1
+      }
+    ]
+  },
+
+  {
+    "id": "107",
+    "title": "西戎进犯",
+    "body": "司马：陛下，西戎进犯，需要出兵征讨。",
+    "options": [
+      {
+        "text": "即刻出兵",
+        "oifzz": true
+      },
+      {
+        "text": "交给诸侯去办吧",
+        "goldChange": -2,
+        "weiwangChange": 2
+      }
+    ]
+  },
+
+  {
+    "id": "108",
+    "title": "南蛮来犯",
+    "body": "司马：陛下，南蛮来犯，需要出兵征讨。",
+    "options": [
+      {
+        "text": "即刻出兵",
+        "oifzz": true
+      },
+      {
+        "text": "交给诸侯去办吧",
+        "goldChange": -2,
+        "weiwangChange": 2
+      }
+    ]
+  },
+
+  {
+    "id": "109",
+    "title": "猎物过境",
+    "body": "御士：陛下，我们发现有一群新的猎物经过国土，此乃田猎的好机会",
+    "options": [
+      {
+        "text": "出发吧",
+        "oiftl": true
+      },
+      {
+        "text": "不必在意，寡人有要事在身",
+        "goldChange": 2
+      }
+    ]
+  },
+
+  {
+    "id": "110",
+    "title": "失礼",
+    "body": "保氏：陛下，按照礼制您步行的时候应当“鸣玉以节步”，可今年您上朝的时候步伐混乱，玉佩的声音都乱掉了，这样是很不雅的",
+    "options": [
+      {
+        "text": "寡人将改正之",
+        "weiwangChange": -2,
+        "zhouLiChange": 1
+      },
+      {
+        "text": "别对寡人指指点点的",
+        "zhouLiChange": -1,
+        "weiwangChange": 1
+      }
+    ]
+  },
+
+  {
+    "id": "111",
+    "title": "太子作业",
+    "body": "太傅：陛下，太子最近刻字歪七扭八，相当不用心！",
+    "options": [
+      {
+        "text": "随他去吧",
+        "zhouLiChange": -2
+      },
+      {
+        "text": "望太傅严加管教",
+        "weiwangChange": 1,
+        "zhouLiChange": 2
+      }
+    ]
+  },
+
+  {
+    "id": "112",
+    "title": "不听话的羊",
+    "body": "太傅：陛下，您的祭祀之车撞到了诸侯进贡的活羊，现在羊群挡路，御者不敢驱赶这神圣的祭祀用品，只能原地等，祭祀恐怕要推迟了……",
+    "options": [
+      {
+        "text": "把羊宰了！",
+        "zhouLiChange": -4,
+        "weiwangChange": 2
+      },
+      {
+        "text": "寡人等等便是",
+        "zhouLiChange": 2,
+        "peopleChange": 1,
+        "goldChange": 1
+      }
+    ]
+  },
+
+  {
+    "id": "113",
+    "title": "鼎不够了",
+    "body": "少府：陛下！虢国进贡白玉璧一双，按礼需回赠青铜鼎两件，但我们仓库发现鼎的库存不足了……不过郑公刚刚进贡两件，也许可以转赠？",
+    "options": [
+      {
+        "text": "回赠虢国别的东西吧",
+        "zhouLiChange": 1,
+        "goldChange": -2
+      },
+      {
+        "text": "就按你的意思办",
+        "weiwangChange": -1,
+        "goldChange": 1
+      }
+    ]
+  },
+
+  {
+    "id": "114",
+    "title": "年终总结",
+    "body": "太史：本年记录如下：“三月，王打喷嚏三；五月，王打碎玉璧一双；七月，王遗失冠缨一根；九月，王遗履于庙阶；十月，王与犬戎使者竞歌而破音……”",
+    "options": [
+      {
+        "text": "不要再说寡人的黑历史了！",
+        "weiwangChange": 1,
+        "zhouLiChange": -1
+      },
+      {
+        "text": "（默不作声）",
+        "weiwangChange": -2,
+        "goldChange": 1
+      }
+    ]
+  },
+
+  {
+    "id": "115",
+    "title": "狗吃肉",
+    "body": "膳夫：陛下！祭祀后未撤下的胙肉，被您最爱的田犬“驺吾”叼走一块。这这这可一点都不合乎周礼，不如杀了狗吧！",
+    "options": [
+      {
+        "text": "罚你点钱，下次长长记性",
+        "goldChange": 1,
+        "weiwangChange": 1
+      },
+      {
+        "text": "杀死这只狗！",
+        "zhouLiChange": -1,
+        "weiwangChange": 2
+      }
+    ]
+  },
+
+  {
+    "id": "116",
+    "title": "争枣糕",
+    "body": "寺人：陛下！您前些日子赐枣糕，媵妾甲偷偷把枣多的那块换给自己，被媵妾乙发现，两人为此发生争执，在寝宫外撕头发！",
+    "options": [
+      {
+        "text": "明日改赐梨，省得争",
+        "weiwangChange": 2
+      },
+      {
+        "text": "爱打打吧",
+        "weiwangChange": -1,
+        "goldChange": 1
+      }
+    ]
+  },
+  {
+    "id": "117",
+    "title": "想吃稻子",
+    "body": "司徒：陛下！您前些日子说想吃稻子，可王城附近的田地水量不是很足，除非您让郑国主动多给我们匀一点水，不然恐怕吃不上啊",
+    "options": [
+      {
+        "text": "派人去请求郑公",
+        "goldChange": 3,
+        "weiwangChange": -2
+      },
+      {
+        "text": "那寡人不吃了",
+        "goldChange": 1
+      }
+    ]
+  },
+  {
+    "id": "118",
+    "title": "水渠",
+    "body": "司空：王邑水渠该修一修了，请您批示",
+    "options": [
+      {
+        "text": "没钱",
+        "peopleChange": -2
+      },
+      {
+        "text": "修",
+        "goldChange": -2,
+        "peopleChange": 3
+      }
+    ]
+  },
+  {
+    "id": "119",
+    "title": "九鼎漏水",
+    "body": "太宰：陛下！九鼎忽然渗水，卜人说是“德衰之兆”，得赶紧铸新鼎镇住！",
+    "options": [
+      {
+        "text": "寡人出不起这铜，拿泥巴糊一糊吧",
+        "goldChange": 1,
+        "zhouLiChange": -1
+      },
+      {
+        "text": "那就再铸一次！",
+        "goldChange": -2
+      }
+    ]
+  },
+  {
+    "id": "120",
+    "title": "洛水改道",
+    "body": "司空：陛下！洛水昨夜决堤，把王城东门外的祭坛冲成了“水门汀”，太卜说今年祭天得改在船上……",
+    "options": [
+      {
+        "text": "船就船，寡人顺便钓鱼",
+        "zhouLiChange": -1,
+        "peopleChange": 1
+      },
+      {
+        "text": "速召民夫筑堤，寡人可不想天天坐船上班",
+        "peopleChange": -2,
+        "goldChange": -2,
+        "zhouLiChange": 2
+      }
+    ]
+  },
+  {
+    "id": "121",
+    "title": "王子逃学",
+    "body": "太傅：陛下！太子今儿又翻墙去洛邑酒肆听曲儿了，还把王子的帽子当酒筹抵押……",
+    "options": [
+      {
+        "text": "小孩子嘛，听听曲儿长见识",
+        "weiwangChange": 1
+      },
+      {
+        "text": "把那逆子抓回来，罚抄《周礼》三百遍！",
+        "zhouLiChange": 1
+      }
+    ]
+  },
+  {
+    "id": "122",
+    "title": "诸侯迟到",
+    "body": "大行人：陛下！会盟时辰已过，齐侯、晋侯都说“路上堵车”，实际在城外扎营看热闹……",
+    "options": [
+      {
+        "text": "寡人也睡个回笼觉，看谁熬得过谁",
+        "weiwangChange": -4
+      },
+      {
+        "text": "鸣钟三通，再不开门就永远别进来了",
+        "weiwangChange": 2,
+        "peopleChange": -2
+      }
+    ]
+  },
+  {
+    "id": "123",
+    "title": "天狗吃日",
+    "body": "冯相氏：陛下！天狗把日头啃了一半，百姓敲锣打鼓吓狗，声浪震得王宫瓦片都掉！",
+    "options": [
+      {
+        "text": "传令下去，把锅碗瓢盆全敲烂，吓死它",
+        "goldChange": -1,
+        "peopleChange": 2
+      },
+      {
+        "text": "慌什么，寡人正好趁阴凉睡午觉",
+        "peopleChange": -2
+      }
+    ]
+  },
+  {
+    "id": "124",
+    "title": "王姬比射",
+    "body": "宗伯：陛下！王姬说不想学刺绣，非要和王子们比骑射，还把晋国的质子赢了……晋使吵着要“精神损失”",
+    "options": [
+      {
+        "text": "寡人女儿威武！赏金十镒",
+        "peopleChange": 2
+      },
+      {
+        "text": "赶紧让她闭门思过，学三个月女红",
+        "peopleChange": -1,
+        "zhouLiChange": 1
+      }
+    ]
+  },
+
+  {
+    "id": "125",
+    "title": "竹简掉色",
+    "body": "御史：陛下！今年新写国史用的劣质墨，刚收进库房就掉色，您的丰功伟绩全糊成一团了……",
+    "options": [
+      {
+        "text": "那就重写，顺便把寡人写高点",
+        "weiwangChange": 1
+      },
+      {
+        "text": "天意如此，随它去吧",
+        "weiwangChange": -1
+      }
+    ]
+  },
+  {
+    "id": "126",
+    "title": "天子烤红薯",
+    "body": "膳夫：陛下！您偷偷在祭坛后面烤红薯，把燎祭用的柴堆点着了，现在御史要记“王以社稷为炉”……",
+    "options": [
+      {
+        "text": "红薯挺香，分御史一个封口",
+        "goldChange": -1
+      },
+      {
+        "text": "寡人自首，罚酒三杯",
+        "goldChange": -1
+      }
+    ]
+  },
+  {
+    "id": "127",
+    "title": "雨淹麦场",
+    "body": "司徒：陛下，夏日暴雨，洛水倒灌，把刚收的春麦泡了大半！",
+    "options": [
+      {
+        "text": "召集民夫排水，能救多少是多少",
+        "peopleChange": -1,
+        "goldChange": -1
+      },
+      {
+        "text": "罢了，让膳房改做稻饭",
+        "goldChange": -3
+      }
+    ]
+  },
+  {
+    "id": "128",
+    "title": "王子打鸟",
+    "body": "太傅：太子今日用弹弓打伤守门侍卫的耳朵，说是“练习射艺”。",
+    "options": [
+      {
+        "text": "罚他抄《射义》十遍",
+        "zhouLiChange": 2
+      },
+      {
+        "text": "小孩子手痒，让他去猎场射靶",
+        "zhouLiChange": -2
+      }
+    ]
+  },
+  {
+    "id": "129",
+    "title": "齐使贡品被劫",
+    "body": "齐使：臣自临淄来，路上遇盗，贡品被劫了一半。",
+    "options": [
+      {
+        "text": "人没事就好，贡品折半记账",
+        "weiwangChange": 1,
+        "goldChange": 1
+      },
+      {
+        "text": "寡人派人护送你回国，补齐再送来",
+        "goldChange": 2,
+        "weiwangChange": -1
+      }
+    ]
+  },
+  {
+    "id": "130",
+    "title": "鹿皮税短",
+    "body": "司徒：今年诸侯交来的鹿皮比往年少三成，军衣恐难缝。",
+    "options": [
+      {
+        "text": "改征麻布，也能御寒",
+        "zhouLiChange": -1,
+        "weiwangChange": -1,
+        "goldChange": 2,
+        "peopleChange": 1
+      },
+      {
+        "text": "下诏责问，不交的明年加倍",
+        "zhouLiChange": 1,
+        "weiwangChange": 1,
+        "goldChange": -1,
+        "peopleChange": -1
+      }
+    ]
+  },
+  {
+    "id": "131",
+    "title": "洪水",
+    "body": "大臣：陛下，大河溃坝，多地受灾，急需开仓救助",
+    "options": [
+      {
+        "text": "快去",
+        "goldChange": -4,
+        "zhouLiChange": 3,
+        "weiwangChange": 2
+      },
+      {
+        "text": "地方可以靠自己治理的",
+        "weiwangChange": -3,
+        "peopleChange": -2,
+        "goldChange": 1
+      }
+    ]
+  },
+
+  {
+    "id": "132",
+    "title": "叛乱",
+    "body": "司马：陛下，地方受外蛊惑，爆发叛乱，急需派兵镇压",
+    "options": [
+      {
+        "text": "立刻执行",
+        "peopleChange": -1,
+        "weiwangChange": 2,
+        "zhouLiChange": 1,
+        "ifzz": true
+      },
+      {
+        "text": "罢了，便把那地弃了",
+        "weiwangChange": -2,
+        "goldChange": 3
+      }
+    ]
+  },
+
+  {
+    "id": "133",
+    "title": "流星",
+    "body": "大臣：陛下，皇宫外的天空划过一颗星星，国民传言那是凶兆",
+    "options": [
+      {
+        "text": "经济！傻瓜们",
+        "zhouLiChange": -2,
+        "weiwangChange": -2
+      }
+    ]
+  },
+
+  {
+    "id": "134",
+    "title": "太子病危",
+    "body": "太医：陛下，太子病危，急需医治啊",
+    "options": [
+      {
+        "text": "快去请一位训练有素的医生",
+        "goldChange": -2
+      }
+    ]
+  },
+
+  {
+    "id": "135",
+    "title": "井绳断了",
+    "body": "泽虞：陛下，今日祭河伯的玉璧已系好沉水，可井绳忽断，玉璧坠入深井不见踪影！",
+    "options": [
+      {
+        "text": "改沉青铜礼器代替",
+        "zhouLiChange": -2,
+        "goldChange": 1
+      },
+      {
+        "text": "河伯不饮此水也罢",
+        "weiwangChange": -1,
+        "peopleChange": 1
+      }
+    ]
+  },
+
+  {
+    "id": "136",
+    "title": "诸侯迟宴",
+    "body": "小行人：陛下，鲁公、卫侯同时入京，皆言“途遇暴雨”，御厨备宴已过申时而宾客未至。",
+    "options": [
+      {
+        "text": "撤宴，饿他们一顿",
+        "weiwangChange": 1,
+        "zhouLiChange": -2
+      },
+      {
+        "text": "改行“夕食”并赐醒酒汤",
+        "goldChange": -1,
+        "zhouLiChange": 1
+      }
+    ]
+  },
+
+  {
+    "id": "137",
+    "title": "王后丢簪",
+    "body": "世妇：陛下，王后晨起失其玉簪，遍寻不获；那是大婚时您亲赐的！",
+    "options": [
+      {
+        "text": "封闭宫门，大索三日",
+        "peopleChange": -1,
+        "weiwangChange": 1
+      },
+      {
+        "text": "悬赏十金，不问来路",
+        "goldChange": -2,
+        "peopleChange": 1
+      }
+    ]
+  },
+
+  {
+    "id": "138",
+    "title": "犬戎献白狼",
+    "body": "象胥：陛下，犬戎使者牵白狼一头，云“愿世世为藩”，然狼龇牙咆哮，群臣失色。",
+    "options": [
+      {
+        "text": "命虎贲当场格杀",
+        "weiwangChange": 2,
+        "zhouLiChange": -1
+      },
+      {
+        "text": "赐金遣返，拒收其礼",
+        "weiwangChange": -1,
+        "zhouLiChange": 1
+      }
+    ]
+  },
+
+  {
+    "id": "139",
+    "title": "太子射鹤",
+    "body": "射人：陛下，太子于西池习射，误中丹顶鹤，宫人皆言“不祥”。",
+    "options": [
+      {
+        "text": "罚太子三日不得食肉",
+        "zhouLiChange": 2
+      },
+      {
+        "text": "令太子守灵三日以谢罪",
+        "weiwangChange": 1,
+        "peopleChange": -1
+      },
+      {
+        "text": "鹤本飞来横祸，随它去",
+        "zhouLiChange": -2,
+        "goldChange": 1
+      }
+    ]
+  },
+
+  {
+    "id": "140",
+    "title": "稷神少黍",
+    "body": "甸师：陛下，祭稷神的黍米昨日被仓鼠啃去两斗，恐礼数不足。",
+    "options": [
+      {
+        "text": "夺郑国新贡之黍以补",
+        "weiwangChange": -2,
+        "zhouLiChange": 1
+      },
+      {
+        "text": "以粱代黍，重编祝辞",
+        "zhouLiChange": -1,
+        "peopleChange": 1
+      }
+    ]
+  },
+
+  {
+    "id": "141",
+    "title": "织室火警",
+    "body": "典妇功：陛下，织室午后走水，所幸扑灭及时，然王后新制祭服焦了一角。",
+    "options": [
+      {
+        "text": "命工匠连夜补绣",
+        "goldChange": -2,
+        "zhouLiChange": 1
+      },
+      {
+        "text": "寡人改穿旧服上阵",
+        "weiwangChange": -1,
+        "goldChange": 1
+      }
+    ]
+  },
+
+  {
+    "id": "142",
+    "title": "玉磬自鸣",
+    "body": "典同：陛下，昨夜宗庙玉磬无故自鸣，声若“宫角”，卜人言“国有贤人来”。",
+    "options": [
+      {
+        "text": "寡人斋戒三日以待贤",
+        "zhouLiChange": 1,
+        "peopleChange": -1
+      },
+      {
+        "text": "不过是风吹罢了",
+        "zhouLiChange": -1,
+        "weiwangChange": 1
+      }
+    ]
+  },
+
+  {
+    "id": "143",
+    "title": "大丰收",
+    "body": "司徒：陛下！今年成周外头又是大丰收，要不要减轻赋税让国人们乐呵乐呵？",
+    "options": [
+      {
+        "text": "狠狠地加税！",
+        "goldChange": 4,
+        "zhouLiChange": -2
+      },
+      {
+        "text": "照常收税",
+        "goldChange": 2
+      },
+      {
+        "text": "减税",
+        "goldChange": 1,
+        "zhouLiChange": 2
+      }
+    ]
+  },
+
+  {
+    "id": "144",
+    "title": "旱灾",
+    "body": "司徒：陛下！今年成周旱灾，百姓们收成惨淡啊",
+    "options": [
+      {
+        "text": "照常收税",
+        "goldChange": 2
+      },
+      {
+        "text": "减税",
+        "goldChange": 1,
+        "zhouLiChange": 2
+      }
+    ]
+  },
+
+  {
+    "id": "145",
+    "title": "淮夷诸部",
+    "body": "太师：陛下，淮夷诸部来使已在宫外等候，也许我们可以举办一次会盟",
+    "options": [
+      {
+        "text": "进来吧",
+
+        "oifhm": true
+      },
+      {
+        "text": "赶出去，寡人不待见",
+        
+        
+        "zhouLiChange": -1,
+        "weiwangChange": 2,
+        "oifhm": false
+      }
+    ]
+  },
+  {
+    "id": "146",
+    "title": "犬戎使者",
+    "body": "太师：犬戎使者觐见，为陛下献上了众多宝物，也许我们可以举办一次会盟",
+    "options": [
+      {
+        "text": "献上来",
+        
+        
+        
+        
+        "oifzz": false,
+        "oifhm": true
+      },
+      {
+        "text": "寡人不待见",
+        
+        
+        "zhouLiChange": -1,
+        "weiwangChange": 2
+      }
+    ]
+  },
+  {
+    "id": "147",
+    "title": "泗上诸侯",
+    "body": "太师：陛下，泗上诸侯来使已在宫外等候，也许我们可以举办一次会盟",
+    "options": [
+      {
+        "text": "进来吧",
+        "oifhm": true
+      },
+      {
+        "text": "赶出去，寡人不待见",
+        "zhouLiChange": -1,
+        "weiwangChange": 2
+      }
+    ]
+  },
+
+  {
+    "id": "201",
+    "title": "犬戎追杀1",
+    "body": "司马：陛下！我们东迁之后，宗周之地已经被犬戎尽数占领，我们或许可以发起一次反击，去抢救我们没有来得及带走的一部分财宝",
+    "options": [
+      {
+        "text": "我知道了",
+        
+        
+        
+        
+        
+        
+        "oifjs": false
+      }
+    ]
+  },
+  {
+    "id": "202",
+    "title": "犬戎追杀2",
+    "body": "司马：陛下！秦人作为我们西土的诸侯，如今已经和犬戎打的有来有回，也许我们可以把宗周之地册封给他们，让他们尽心尽力的为我们打击犬戎！",
+    "options": [
+      {
+        "text": "就这么办！",
+        
+        "peopleChange": 1,
+        
+        "weiwangChange": -2,
+        "oifzz": false,
+        
+        "oifjs": false
+      },
+      {
+        "text": "祖宗之地不可封",
+        
+        "peopleChange": -1,
+        
+        "weiwangChange": 3,
+        "oifzz": false,
+        
+        "oifjs": false
+      }
+    ]
+  },
+  {
+    "id": "203",
+    "title": "犬戎追杀3",
+    "body": "司马：陛下！犬戎的分支已经深入王城南部的山中，我们有必要对此加以警戒！",
+    "options": [
+      {
+        "text": "我知道了",
+        
+        
+        
+        
+        "oifzz": false,
+        
+        "oifjs": false
+      }
+    ]
+  },
+  {
+    "id": "204",
+    "title": "（结算）犬戎追杀4",
+    "body": "司马：陛下！犬戎似乎集结了他们所能集结的所有力量，我们不得不迎击了！",
+    "options": [
+      {
+        "text": "寡人亲自对抗",
+        
+        "peopleChange": -10,
+        
+        
+        "oifzz": true,
+        
+        "oifjs": false
+      },
+      {
+        "text": "散财破灾",
+        "goldChange": -10,
+        
+        
+        
+        "oifzz": false,
+        
+        "oifjs": false
+      }
+    ]
+  },
+  {
+    "id": "205",
+    "title": "郑公小霸1",
+    "body": "虢公：陛下！郑公的权力疑似有点太大了，这样下去一切的功劳都被他独占了，您的威风就被破坏了啊，建议您提拔其他人，来分化他的权力",
+    "options": [
+      {
+        "text": "你说得对",
+        
+        
+        
+        "weiwangChange": 2,
+        "oifzz": false,
+        
+        "oifjs": false
+      },
+      {
+        "text": "没这个必要",
+        "goldChange": 2,
+        
+        
+        "weiwangChange": -2,
+        "oifzz": false,
+        
+        "oifjs": false
+      }
+    ]
+  },
+  {
+    "id": "206",
+    "title": "郑公小霸2",
+    "body": "虢公：陛下！郑公派兵抢收周王室温地的麦子，又收割成周的稻谷，等于公开抢劫天子粮仓，是可忍孰不可忍！",
+    "options": [
+      {
+        "text": "剥夺他的官职！",
+        
+        
+        
+        "weiwangChange": 2,
+        "oifzz": false,
+        
+        "oifjs": false
+      },
+      {
+        "text": "忍一时风平浪静",
+        "goldChange": 2,
+        
+        
+        "weiwangChange": -2,
+        "oifzz": false,
+        
+        "oifjs": false
+      }
+    ]
+  },
+  {
+    "id": "207",
+    "title": "郑公小霸3",
+    "body": "虢公：陛下！郑国私下和鲁国交换“许田”——这是周天子祭泰山的专用地，等于动了天子的祭天产业，是可忍孰不可忍！",
+    "options": [
+      {
+        "text": "剥夺他的俸禄！",
+        
+        
+        
+        "weiwangChange": 2,
+        "oifzz": false,
+        
+        "oifjs": false
+      },
+      {
+        "text": "忍一时风平浪静",
+        "goldChange": 2,
+        
+        
+        "weiwangChange": -2,
+        "oifzz": false,
+        
+        "oifjs": false
+      }
+    ]
+  },
+  {
+    "id": "208",
+    "title": "（结算）郑公小霸4",
+    "body": "虢公：郑公近来越发嚣张了，我们有必要联合陈国、蔡国、卫国，组成联军讨伐郑国！",
+    "options": [
+      {
+        "text": "就这么办，寡人要御驾亲征！",
+        
+        "peopleChange": -10,
+        
+        
+        "oifzz": true,
+        
+        "oifjs": false
+      },
+      {
+        "text": "使众诸侯伐之",
+        
+        
+        
+        "weiwangChange": -10,
+        "oifzz": false,
+        
+        "oifjs": false
+      }
+    ]
+  },
+  {
+    "id": "209",
+    "title": "干涉诸侯1",
+    "body": "卫公子：陛下，卫国的君位被我的弟弟篡夺了，您一定要帮我主持公道啊！",
+    "options": [
+      {
+        "text": "我知道了",
+        
+        
+        
+        
+        "oifzz": false,
+        
+        "oifjs": false
+      }
+    ]
+  },
+  {
+    "id": "210",
+    "title": "干涉诸侯2",
+    "body": "齐公：陛下，我愿意尊王攘夷，打起您的旗帜，讨伐戎狄！",
+    "options": [
+      {
+        "text": "寡人会自己办的",
+        
+        
+        
+        
+        "oifzz": false,
+        
+        "oifjs": false
+      }
+    ]
+  },
+  {
+    "id": "211",
+    "title": "干涉诸侯3",
+    "body": "楚王：敢问天子的九鼎有多重啊？",
+    "options": [
+      {
+        "text": "这不是你该问的！",
+        
+        
+        
+        "weiwangChange": 2,
+        "oifzz": false,
+        
+        "oifjs": false
+      },
+      {
+        "text": "如实供述",
+        
+        
+        
+        
+        "oifzz": false,
+        
+        "oifjs": false
+      }
+    ]
+  },
+  {
+    "id": "212",
+    "title": "（结算）干涉诸侯4",
+    "body": "太宰：陛下，今年的典礼，按周礼所有诸侯都应该到场，请您出席",
+    "options": [
+      {
+        "text": "看看这些诸侯是否还遵守周礼，忠于寡人",
+        
+        
+        "zhouLiChange": -10,
+        
+        "oifzz": false,
+        
+        "oifjs": false
+      },
+      {
+        "text": "看看寡人是否还武德充沛，使诸侯忠于寡人",
+        
+        
+        
+        "weiwangChange": -10,
+        "oifzz": false,
+        
+        "oifjs": false
+      }
+    ]
+  },
+  {
+    "id": "213",
+    "title": "王弟逼宫1",
+    "body": "王弟：陛下，今年的典礼筹备的相当混乱，我愿意为您分忧",
+    "options": [
+      {
+        "text": "你说得对",
+        
+        
+        
+        "weiwangChange": 2,
+        "oifzz": false,
+        
+        "oifjs": false
+      },
+      {
+        "text": "没这个必要",
+        "goldChange": 2,
+        
+        
+        "weiwangChange": -1,
+        "oifzz": false,
+        
+        "oifjs": false
+      }
+    ]
+  },
+  {
+    "id": "214",
+    "title": "王弟逼宫2",
+    "body": "王弟：陛下，您身体辛苦，今年的尝麦礼我替您来执行吧！",
+    "options": [
+      {
+        "text": "你说得对",
+        
+        
+        
+        "weiwangChange": 2,
+        "oifzz": false,
+        
+        "oifjs": false
+      },
+      {
+        "text": "没这个必要",
+        "goldChange": 2,
+        
+        
+        "weiwangChange": -1,
+        "oifzz": false,
+        
+        "oifjs": false
+      }
+    ]
+  },
+  {
+    "id": "215",
+    "title": "王弟逼宫3",
+    "body": "王弟：陛下，如今朝中缺乏人才，我看军权可以交给我来管了",
+    "options": [
+      {
+        "text": "你说得对",
+        
+        
+        
+        "weiwangChange": 2,
+        
+        
+        "oifjs": false
+      },
+      {
+        "text": "没这个必要",
+        "goldChange": 2,
+        
+        
+        "weiwangChange": -1,
+        
+        
+        "oifjs": false
+      }
+    ]
+  },
+  {
+    "id": "216",
+    "title": "（结算）王弟逼宫4",
+    "body": "王弟：陛下，您缺乏威信，国人也不支持您，不如主动退位，我替您执掌朝野！",
+    "options": [
+      {
+        "text": "那你尽管来吧",
+        
+        
+        "zhouLiChange": -10,
+        
+        "oifzz": false,
+        
+        "oifjs": false
+      },
+      {
+        "text": "买通官臣",
+        "goldChange": -10,
+        
+        
+        
+        "oifzz": false,
+        
+        "oifjs": false
+      }
+    ]
+  },
+
+  {
+    "id": "301",
+    "title": "教程",
+    "body": "王弟：陛下，现如今我们周王庭刚刚东迁，落在成周，您一定要励精图治，主动祭祀、田猎、征战、会盟来让大周复兴啊！",
+    "options": [
+      {
+        "text": "寡人知道了",
+        
+        
+        
+        
+        "oifzz": false,
+        
+        "oifjs": false
+      }
+
+    ]
+  }
+]

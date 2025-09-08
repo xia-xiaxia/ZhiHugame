@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 1d459f4a64752fe4b965a99452647262
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - titleText: {fileID: 8263172481037931499, guid: ea866701e0dc3234ca82455fcfc65fc2, type: 3}
+  - bodyText: {fileID: 4494163181614128093, guid: c6fbb192caa260741937f9432f2fd42e, type: 3}
+  - optionButton: {fileID: 6382525608316073228, guid: 92433798c0f59e642850516dc800552e, type: 3}
+  - optionText: {fileID: 530241620068220936, guid: bf9371475279a1849a7d2725f760e7ba, type: 3}
+  - statText: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
