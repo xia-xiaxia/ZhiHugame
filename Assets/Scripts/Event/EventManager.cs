@@ -38,6 +38,9 @@ public class EventManager : MonoBehaviour
     // public DaChenMove dc3;
     public int dcb=1;
 
+    // 事件ID生成相关
+    private string nextEventId = "100"; // 下一个要显示的事件ID
+
     private void Start()
     {
         UIManager.Instance.UpdateStatText();
@@ -203,6 +206,85 @@ public class EventManager : MonoBehaviour
     //     UIManager.Instance.UpdateStatText();
 
     // }
+
+
+    // ===== 事件ID生成逻辑 =====
+    
+    /// <summary>
+    /// 获取下一个事件ID
+    /// </summary>
+    public string GetNextEventId()
+    {
+        return nextEventId;
+    }
+    
+    /// <summary>
+    /// 设置下一个事件ID
+    /// </summary>
+    public void SetNextEventId(string eventId)
+    {
+        nextEventId = eventId;
+        Debug.Log($"[EventManager] SetNextEventId: {eventId}");
+    }
+    
+    /// <summary>
+    /// 根据游戏状态决定下一个事件ID
+    /// </summary>
+    public string DetermineNextEventId()
+    {
+        int currentTurn = GameControl.Instance.turns;
+        
+        // 如果已经有预设的下一个事件ID，优先使用
+        if (!string.IsNullOrEmpty(nextEventId) && nextEventId != "100")
+        {
+            string result = nextEventId;
+            nextEventId = "100"; // 重置
+            Debug.Log($"[EventManager] DetermineNextEventId: 使用预设事件ID {result}");
+            return result;
+        }
+        
+        // 检查是否有任务完成事件
+        if (GameControl.Instance.IsCompleteTask)
+        {
+            GameControl.Instance.IsCompleteTask = false; // 重置任务状态
+            Debug.Log($"[EventManager] DetermineNextEventId: 任务完成事件 200");
+            return "200"; // 任务完成事件
+        }
+        
+        // 第一回合显示开场事件
+        if (currentTurn == 1)
+        {
+            Debug.Log($"[EventManager] DetermineNextEventId: 开场事件 301");
+            return "301";
+        }
+        
+        // 4的倍数回合显示主线事件
+        if (currentTurn % 4 == 0 && currentTurn < 64 && currentTurn != 0)
+        {
+            int idn = 200 + currentTurn / 4;
+            string calculatedId = idn.ToString();
+            
+            // 检查计算出的事件ID是否存在
+            var testEvent = GetEvent(calculatedId);
+            if (testEvent != null)
+            {
+                Debug.Log($"[EventManager] DetermineNextEventId: 主线事件 {calculatedId}");
+                return calculatedId;
+            }
+            else
+            {
+                Debug.LogWarning($"计算的事件ID '{calculatedId}' 不存在，使用随机事件");
+                // 继续到随机事件逻辑
+            }
+        }
+        
+        // 其他情况显示随机事件
+        int randomId = Random.Range(101, 148);
+        string eventId = randomId.ToString();
+        
+        Debug.Log($"[EventManager] DetermineNextEventId: 随机事件 {eventId}");
+        return eventId;
+    }
 
 
 }

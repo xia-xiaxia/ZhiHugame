@@ -30,7 +30,6 @@ public class UIManager : MonoBehaviour
     // public Text statText4;
     public bool ifShow;
     public int eventid = 100;
-    public int turns = 0;
     public AudioClip GE;
     public AudioClip BE;
 
@@ -43,10 +42,6 @@ public class UIManager : MonoBehaviour
     // 运行时生成的按钮缓存
     private List<GameObject> optionButtons = new List<GameObject>();
 
-    private string nextId;
-    private bool waitingForNextTurn = false; // 是否正在等待下一回合
-    private Coroutine currentWaitCoroutine = null; // 当前运行的等待协程
-
     void Awake() { Instance = this; }
 
     void Start()
@@ -56,6 +51,9 @@ public class UIManager : MonoBehaviour
         {
             daDian.SetActive(false);
         }
+        
+        // 开始游戏
+        GameControl.Instance.StartGame();
     }
     IEnumerator Fade()
     {
@@ -107,64 +105,14 @@ public class UIManager : MonoBehaviour
         }
 
 
-        if (!ifShow && !waitingForNextTurn)
+        // 检查回合数达到65时的游戏胜利条件
+        if (GameControl.Instance != null && GameControl.Instance.turns >= 65 && !allgone) 
         {
-            Debug.Log("Update检测到可以开始新回合，当前turns: " + turns);
-            turns++;
-            Debug.Log("turns递增后: " + turns);
-            
-            // 设置等待状态，防止重复执行
-            waitingForNextTurn = true;
-            if (turns == 65 && !allgone)
-            {
-                gameover.sprite = end3;
-                MusicManager.Instance.PlayBgm(GE, 0.8f);
-                allgone = true;
-                StartCoroutine(Fade());
-                gameover.raycastTarget = true;
-            }
-            else if (turns == 1)
-            {
-                ShowEvent("301");
-                Debug.Log("显示事件301");
-            }
-            else if (turns % 4 != 0)
-            {
-                int randomid = Random.Range(101, 148);
-                string rdm = "" + randomid;
-                ShowEvent(rdm);
-                Debug.Log("显示随机事件: " + rdm);
-            }
-            else if (turns % 4 == 0 && turns < 64 && nextId != null && turns != 0)
-            {
-                ShowEvent(nextId);
-                nextId = null;
-                Debug.Log("显示指定事件: " + nextId);
-            }
-            else if (turns % 4 == 0 && turns < 64 && turns != 0)
-            {
-                // 当 turns 是4的倍数但 nextId 为空时的处理
-                int idn = 200 + turns / 4;
-                string calculatedId = "" + idn;
-                Debug.Log("尝试显示计算事件: " + calculatedId);    
-                
-                // 检查计算出的事件ID是否存在
-                var testEvent = EventManager.Instance.GetEvent(calculatedId);
-                if (testEvent != null)
-                {
-                    ShowEvent(calculatedId);
-                    Debug.Log("显示计算事件: " + calculatedId);
-                }
-                else
-                {
-                    Debug.LogWarning($"计算的事件ID '{calculatedId}' 不存在，使用随机事件");
-                    int randomid = Random.Range(101, 148);
-                    string rdm = "" + randomid;
-                    ShowEvent(rdm);
-                    Debug.Log("显示备用随机事件: " + rdm);
-                }
-            }
-
+            gameover.sprite = end3;
+            MusicManager.Instance.PlayBgm(GE, 0.8f);
+            allgone = true;
+            StartCoroutine(Fade());
+            gameover.raycastTarget = true;
         }
     }
 
@@ -173,20 +121,6 @@ public class UIManager : MonoBehaviour
     public void ShowEvent(string id)
     {
         Debug.Log("ShowEvent被调用，事件ID: " + id);
-        
-        // 停止当前运行的协程（如果有的话）
-        if (currentWaitCoroutine != null)
-        {
-            StopCoroutine(currentWaitCoroutine);
-            currentWaitCoroutine = null;
-            Debug.Log("ShowEvent中停止了之前的协程");
-            
-            // 由于停止了协程，需要手动执行协程本来要做的清理工作
-            HideDaDian();
-            Debug.Log("手动隐藏dadian，因为协程被停止了");
-        }
-        
-        // 不在这里设置ifShow，等按钮生成后再设置
         
         // 1. 清掉上一次生成的按钮
         foreach (var b in optionButtons) Destroy(b);
@@ -214,35 +148,27 @@ public class UIManager : MonoBehaviour
             var capturedOpt = opt;
             btn.GetComponent<Button>().onClick.AddListener(() =>
             {
-                Debug.Log($"按钮被点击，当前turns: {turns}，点击时间: {Time.time}");
-                
-                // 停止之前的协程（如果存在）
-                if (currentWaitCoroutine != null)
-                {
-                    StopCoroutine(currentWaitCoroutine);
-                    Debug.Log("停止之前的协程");
-                }
+                Debug.Log($"按钮被点击: {capturedOpt.text}，点击时间: {Time.time}");
                 
                 // 立即设置为正在显示状态，避免Update中重复触发
                 ifShow = true;
-                waitingForNextTurn = false; // 重置等待状态
-                Debug.Log("设置ifShow=true, waitingForNextTurn=false");
+                Debug.Log("设置ifShow=true");
                 
-                // 玩家做出选择后，立即显示 dadian
-                ShowDaDian();
-                
-                EventManager.Instance.ApplyOption(capturedOpt, turns);
+                // 应用选项效果
+                EventManager.Instance.ApplyOption(capturedOpt, GameControl.Instance.turns);
                 UpdateStatText();
                 
-                // 设置下一个事件ID（可选，如果选项指定了的话）
+                // 设置下一个事件ID（如果选项指定了的话）
                 if (!string.IsNullOrEmpty(capturedOpt.nextEventId))
                 {
-                    nextId = capturedOpt.nextEventId;
+                    EventManager.Instance.SetNextEventId(capturedOpt.nextEventId);
                 }
-                // 不再在这里预计算其他事件ID，让Update方法统一处理
                 
-                // 等待一小会儿后抽取下一个任务
-                currentWaitCoroutine = StartCoroutine(WaitAndShowNextEvent());
+                // 清理当前UI状态
+                ClearText();
+                
+                // 让 GameControl 处理下一回合
+                GameControl.Instance.ProcessNextTurn();
             });
 
             optionButtons.Add(btn);
@@ -299,28 +225,5 @@ public class UIManager : MonoBehaviour
         {
             dialoguePanel.OnDadianHidden();
         }
-    }
-    
-    // 等待一小段时间后显示下一个事件的协程
-    private IEnumerator WaitAndShowNextEvent()
-    {
-        float startTime = Time.time;
-        Debug.Log($"开始等待协程，开始时间: {startTime}");
-        
-        // 等待1.5秒（可以根据需要调整时间）
-        yield return new WaitForSeconds(1.5f);
-        
-        float endTime = Time.time;
-        Debug.Log($"协程等待结束，结束时间: {endTime}，等待了: {endTime - startTime}秒");
-        Debug.Log("隐藏dadian");
-        
-        // 隐藏 dadian
-        HideDaDian();
-        
-        Debug.Log("协程结束，准备下一回合");
-        // 重置状态，允许下一回合开始
-        ifShow = false;
-        waitingForNextTurn = false;
-        currentWaitCoroutine = null; // 清空协程引用
     }
 }
