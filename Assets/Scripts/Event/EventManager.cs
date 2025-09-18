@@ -123,9 +123,13 @@ public class EventManager : MonoBehaviour
         // }
 
         stats.gold += opt.goldChange;
+        Debug.Log("goldchange");
         stats.people += opt.peopleChange;
+        Debug.Log("peoplechange");
         stats.zhouli += opt.zhouLiChange;
+        Debug.Log("zhoulichange");
         stats.weiwang += opt.weiwangChange;
+        Debug.Log("weiwangchange");
         
         // 只有当nextEventId不为"0"时才设置，为"0"时保持默认值，让系统选择随机事件
         if (opt.nextEventId != "0")
