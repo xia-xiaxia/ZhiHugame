@@ -1,36 +1,39 @@
 [
   {
-    "id": "100",
+    "id": "1200101",
     "title": "旱灾",
     "body": "庄稼颗粒无收，百姓饥荒。",
     "options": [
       {
         "text": "开仓放粮",
-        "goldChange": -50,
-        "peopleChange": 10
+        "goldChange": -5,
+        "peopleChange": 1,
+        "nextEventId": "1200102"
       },
       {
         "text": "征粮加税",
-        "goldChange": 30,
-        "peopleChange": -20
+        "goldChange": 3,
+        "peopleChange": -2,
+        "nextEventId": "1200102"
       },
       {
         "text": "不管不顾",
-        
-        "peopleChange": -30
+        "peopleChange": -3,
+        "nextEventId": "1200102"
       }
     ]
   },
 
 
   {
-    "id": "101",
+    "id": "1200102",
     "title": "田猎",
     "body": "太宰：陛下，按照《周礼》的规定，您应当进行田猎的礼仪，打猎来祈求丰收！",
     "options": [
       {
         "text": "寡人将参与田猎",
-        "oiftl": true
+        "oiftl": true,
+        "nextEventId": "0"
       }
     ]
   },
@@ -878,8 +881,8 @@
         
         "weiwangChange": -2,
         "oifzz": false,
-        
-        "oifjs": false
+        "oifjs": false,
+        "nextEventId": "203"
       },
       {
         "text": "祖宗之地不可封",
@@ -889,7 +892,8 @@
         "weiwangChange": 3,
         "oifzz": false,
         
-        "oifjs": false
+        "oifjs": false,
+        "nextEventId": "204"
       }
     ]
   },

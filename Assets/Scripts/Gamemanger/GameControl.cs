@@ -2,19 +2,23 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class GameControl : MonoBehaviour
 {
     public static GameControl Instance;
     public StatModel stats;  // 统计数据
+    
     public bool GameOver = false;
-
     public bool IsCompleteTask = false;
 
     // 回合管理相关
     public int turns = 0; // 当前回合数
     private bool waitingForNextTurn = false; // 是否正在等待下一回合
     private Coroutine currentWaitCoroutine = null; // 当前运行的等待协程
+
+    private List<string> lastEvents = new List<string> { " ", " ", " " }; // 记录最后的事件ID
+
     void Awake()
     {
         Instance = this;
@@ -22,7 +26,14 @@ public class GameControl : MonoBehaviour
 
     public void CompleteTask()
     {
-        IsCompleteTask = true;
+        if(EventManager.Instance != null)
+        {
+            foreach(var eventId in lastEvents)
+            {
+                if (EventManager.Instance.DetermineNextEventId() == "")
+                    IsCompleteTask = true;
+            }
+        }
         Debug.Log("任务完成！");
         stats.year += 1;
         if (stats.year > 3)

@@ -17,6 +17,8 @@ public class GameEvent
 
     public int Invterval = 0;
 
+    public int nextEventId = -1; // 用于线性事件的下一个事件ID
+
     public void SetGEventTypeFromId()
     {
         if (string.IsNullOrEmpty(id))
@@ -28,10 +30,10 @@ public class GameEvent
         char firstChar = id[1];
         switch (firstChar)
         {
-            case '0':
+            case '1':
                 Gtype = GType.tempEvent;
                 break;
-            case '1':
+            case '2':
                 Gtype = GType.historyEvent;
                 break;
             default:
@@ -52,16 +54,16 @@ public class GameEvent
         char firstChar = id[0];
         switch (firstChar)
         {
-            case '0':
+            case '1':
                 Ttype = TType.era0;
                 break;
-            case '1':
+            case '2':
                 Ttype = TType.era1;
                 break;
-            case '2':
+            case '3':
                 Ttype = TType.era2;
                 break;
-            case '3':
+            case '4':
                 Ttype = TType.era3;
                 break;
             default:

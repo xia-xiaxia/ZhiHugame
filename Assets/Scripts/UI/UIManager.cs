@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,18 +17,16 @@ public class UIManager : MonoBehaviour
     public Sprite end4;
     public Sprite end5;
 
-
     public GameObject daDian;
-
     public GameObject jinYan;
 
     public Text titleText;
     public Text bodyText;
     public DialoguePanel dialoguePanel;
-    // public Text statText1;
-    // public Text statText2;
-    // public Text statText3;
-    // public Text statText4;
+    public TextMeshProUGUI statText1;
+    public TextMeshProUGUI statText2;
+    public TextMeshProUGUI statText3;
+    public TextMeshProUGUI statText4;
     public bool ifShow;
     public int eventid = 100;
     public AudioClip GE;
@@ -55,6 +54,7 @@ public class UIManager : MonoBehaviour
         // 开始游戏
         GameControl.Instance.StartGame();
     }
+
     IEnumerator Fade()
     {
         Color c = gameover.color; c.a = 0; gameover.color = c;
@@ -67,8 +67,10 @@ public class UIManager : MonoBehaviour
         c.a = 1;
         gameover.color = c;
     }
+
     private void Update()
     {
+        // 只检查游戏结束条件，不管理回合
         if (stats.gold <= 0 && !allgone)
         {
             gameover.sprite = end5;
@@ -76,7 +78,6 @@ public class UIManager : MonoBehaviour
             gameover.raycastTarget = true;
             allgone = true;
             StartCoroutine(Fade());
-
         }
 
         if (stats.people <= 0 && !allgone)
@@ -87,6 +88,7 @@ public class UIManager : MonoBehaviour
             allgone = true;
             StartCoroutine(Fade());
         }
+        
         if (stats.weiwang <= 0 && !allgone)
         {
             gameover.sprite = end4;
@@ -95,6 +97,7 @@ public class UIManager : MonoBehaviour
             allgone = true;
             StartCoroutine(Fade());
         }
+        
         if (stats.zhouli <= 0 && !allgone)
         {
             gameover.sprite = end1;
@@ -104,9 +107,8 @@ public class UIManager : MonoBehaviour
             StartCoroutine(Fade());
         }
 
-
         // 检查回合数达到65时的游戏胜利条件
-        if (GameControl.Instance != null && GameControl.Instance.turns >= 65 && !allgone) 
+        if (GameControl.Instance.turns >= 65 && !allgone)
         {
             gameover.sprite = end3;
             MusicManager.Instance.PlayBgm(GE, 0.8f);
@@ -115,13 +117,11 @@ public class UIManager : MonoBehaviour
             gameover.raycastTarget = true;
         }
     }
-
-
-    // 关键：根据事件选项数量动态生成按钮
+        // 关键：根据事件选项数量动态生成按钮
     public void ShowEvent(string id)
     {
         Debug.Log("ShowEvent被调用，事件ID: " + id);
-        
+
         // 1. 清掉上一次生成的按钮
         foreach (var b in optionButtons) Destroy(b);
         optionButtons.Clear();
@@ -138,7 +138,7 @@ public class UIManager : MonoBehaviour
 
         // 3. 根据选项数量生成按钮
         Debug.Log($"事件 {id} 有 {evt.options.Count} 个选项");
-        
+
         foreach (var opt in evt.options)
         {
             GameObject btn = Instantiate(optionButtonPrefab, optionsParent);
@@ -149,45 +149,42 @@ public class UIManager : MonoBehaviour
             btn.GetComponent<Button>().onClick.AddListener(() =>
             {
                 Debug.Log($"按钮被点击: {capturedOpt.text}，点击时间: {Time.time}");
-                
+
                 // 立即设置为正在显示状态，避免Update中重复触发
                 ifShow = true;
                 Debug.Log("设置ifShow=true");
-                
+
                 // 应用选项效果
                 EventManager.Instance.ApplyOption(capturedOpt, GameControl.Instance.turns);
                 UpdateStatText();
-                
+
                 // 设置下一个事件ID（如果选项指定了的话）
                 if (!string.IsNullOrEmpty(capturedOpt.nextEventId))
                 {
                     EventManager.Instance.SetNextEventId(capturedOpt.nextEventId);
                 }
-                
+
                 // 清理当前UI状态
                 ClearText();
-                
+
                 // 让 GameControl 处理下一回合
                 GameControl.Instance.ProcessNextTurn();
             });
-
             optionButtons.Add(btn);
             Debug.Log("生成按钮: " + opt.text);
         }
-        
+
         // 所有按钮生成完毕后，设置ifShow = true
         ifShow = true;
         Debug.Log("事件显示完成，设置ifShow=true");
     }
-
     public void UpdateStatText()
     {
-        // var s = EventManager.Instance.stats;
-        // statText1.text = $"{s.gold}";
-        // statText2.text = $"{s.people}";
-        // statText3.text = $"{s.weiwang}";
-        // statText4.text = $"{s.zhouli}";
-
+        StatModel s = stats;
+        statText1.text = $"{s.gold}";
+        statText2.text = $"{s.people}";
+        statText3.text = $"{s.weiwang}";
+        statText4.text = $"{s.zhouli}";
     }
 
     public void ClearText()
@@ -211,7 +208,7 @@ public class UIManager : MonoBehaviour
             daDian.SetActive(true);
         }
     }
-    
+
     public void HideDaDian()
     {
         // 隐藏 dadian

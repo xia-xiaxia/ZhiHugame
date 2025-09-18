@@ -61,13 +61,17 @@ public class EventManager : MonoBehaviour
             e.SetGEventTypeFromId();
             e.SetTEventTypeFromId();
             events[e.id] = e;
-            if(e.Gtype==GType.tempEvent)
+            if (e.Gtype == GType.tempEvent)
             {
                 tempEvents.Add(e);
             }
             else
             {
                 historyEvents.Add(e);
+                if (e.nextEventId != -1)
+                {
+                    Debug.Log($"事件 {e.id} 有后续事件 {e.nextEventId}");
+                }
             }
         }
         }
@@ -122,6 +126,18 @@ public class EventManager : MonoBehaviour
         stats.people += opt.peopleChange;
         stats.zhouli += opt.zhouLiChange;
         stats.weiwang += opt.weiwangChange;
+        
+        // 只有当nextEventId不为"0"时才设置，为"0"时保持默认值，让系统选择随机事件
+        if (opt.nextEventId != "0")
+        {
+            nextEventId = opt.nextEventId;
+            Debug.Log($"[EventManager] ApplyOption: 设置下一个事件ID为 {opt.nextEventId}");
+        }
+        else
+        {
+            Debug.Log($"[EventManager] ApplyOption: 选项nextEventId为0，将选择随机事件");
+        }
+        
         UIManager.Instance.UpdateStatText();
         // if (opt.oifzz || opt.oifjs || opt.oiftl||opt.oifhm)
         // {
@@ -223,6 +239,7 @@ public class EventManager : MonoBehaviour
     /// </summary>
     public void SetNextEventId(string eventId)
     {
+        if(eventId == "0") return;
         nextEventId = eventId;
         Debug.Log($"[EventManager] SetNextEventId: {eventId}");
     }
@@ -234,15 +251,6 @@ public class EventManager : MonoBehaviour
     {
         int currentTurn = GameControl.Instance.turns;
         
-        // 如果已经有预设的下一个事件ID，优先使用
-        if (!string.IsNullOrEmpty(nextEventId) && nextEventId != "100")
-        {
-            string result = nextEventId;
-            nextEventId = "100"; // 重置
-            Debug.Log($"[EventManager] DetermineNextEventId: 使用预设事件ID {result}");
-            return result;
-        }
-        
         // 检查是否有任务完成事件
         if (GameControl.Instance.IsCompleteTask)
         {
@@ -251,36 +259,69 @@ public class EventManager : MonoBehaviour
             return "200"; // 任务完成事件
         }
         
-        // 第一回合显示开场事件
+        // 第一回合显示开场事件（每个时代的既定事件）
         if (currentTurn == 1)
         {
-            Debug.Log($"[EventManager] DetermineNextEventId: 开场事件 301");
-            return "301";
+            Debug.Log($"[EventManager] DetermineNextEventId: 开场事件 1200101");
+            return "1200101";
+        }
+
+        // 检查是否有预设的下一个事件ID（非主线回合且非"0"）
+        if (!string.IsNullOrEmpty(GetNextEventId()) && GetNextEventId() != "0" && GetNextEventId() != "100")
+        {
+            string result = GetNextEventId();
+            SetNextEventId("100"); // 重置
+            Debug.Log($"[EventManager] DetermineNextEventId: 使用预设事件ID {result}");
+            return result;
         }
         
         // 4的倍数回合显示主线事件
-        if (currentTurn % 4 == 0 && currentTurn < 64 && currentTurn != 0)
+        if (currentTurn % 4 == 0 && currentTurn > 0)
         {
-            int idn = 200 + currentTurn / 4;
-            string calculatedId = idn.ToString();
-            
-            // 检查计算出的事件ID是否存在
-            var testEvent = GetEvent(calculatedId);
-            if (testEvent != null)
+            string mainEventId = "";
+
+            if (currentTurn == 4)
             {
-                Debug.Log($"[EventManager] DetermineNextEventId: 主线事件 {calculatedId}");
-                return calculatedId;
+                // 第一个主线事件ID固定
+                mainEventId = GameControl.Instance.stats.year + "1" + "001" + "01";
+                Debug.Log($"[EventManager] DetermineNextEventId: 第一个主线事件 {mainEventId}");
             }
             else
             {
-                Debug.LogWarning($"计算的事件ID '{calculatedId}' 不存在，使用随机事件");
+                // 后续主线事件：如果有预设的下一个事件ID，使用它
+                if (!string.IsNullOrEmpty(GetNextEventId()) && GetNextEventId() != "0" && GetNextEventId() != "100")
+                {
+                    mainEventId = GetNextEventId();
+                    SetNextEventId("100"); // 重置
+                    Debug.Log($"[EventManager] DetermineNextEventId: 后续主线事件 {mainEventId}");
+                }
+                else
+                {
+                    // 如果没有预设事件ID，说明主线任务链断了，继续随机事件
+                    Debug.LogWarning($"[EventManager] 回合 {currentTurn} 应该是主线事件，但没有预设的事件ID，使用随机事件");
+                    int fallbackRandomId = Random.Range(1, 100);
+                    string fallbackEventId = GameControl.Instance.stats.year + "2" + fallbackRandomId.ToString("000") + "01";
+                    Debug.Log($"[EventManager] DetermineNextEventId: 随机事件（主线缺失替代） {fallbackEventId}");
+                    return fallbackEventId;
+                }
+            }
+
+            // 检查主线事件ID是否存在
+            var testEvent = GetEvent(mainEventId);
+            if (testEvent != null)
+            {
+                return mainEventId;
+            }
+            else
+            {
+                Debug.LogWarning($"计算的主线事件ID '{mainEventId}' 不存在，使用随机事件");
                 // 继续到随机事件逻辑
             }
         }
         
         // 其他情况显示随机事件
-        int randomId = Random.Range(101, 148);
-        string eventId = randomId.ToString();
+        int randomId = Random.Range(1, 100);
+        string eventId = GameControl.Instance.stats.year + "2" + randomId.ToString("000") + "01";
         
         Debug.Log($"[EventManager] DetermineNextEventId: 随机事件 {eventId}");
         return eventId;
