@@ -1,47 +1,28 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using UnityEngine;
 
 [System.Serializable]
-public class GameEvent
+public class RandomEvent
 {
     public string id;            // 事件唯一标识
-    public string title;
-    public string body;
+    public string title;         // 事件标题
+    public string body;          // 事件内容
+    public string person;        // 事件发言人
     public List<Option> options; // 选项列表
 
-    public GType Gtype;
-
+    public int Interval = 0;     // 随机事件决策的间隔随机事件数
     public TType Ttype;
+    public bool isDustActive = false;    // 事件是否激活
+    public int isAffctEvents = 0;     // 影响采用的随机事件集（发言人可能四了）
 
-    public int Invterval = 0;
-
-    public int nextEventId = -1; // 用于线性事件的下一个事件ID
-
-    public void SetGEventTypeFromId()
+    public enum TType
     {
-        if (string.IsNullOrEmpty(id))
-        {
-            Gtype = GType.tempEvent;
-            return;
-        }
-
-        char firstChar = id[1];
-        switch (firstChar)
-        {
-            case '1':
-                Gtype = GType.tempEvent;
-                break;
-            case '2':
-                Gtype = GType.historyEvent;
-                break;
-            default:
-                Gtype = GType.tempEvent; // 默认值
-                break;
-        }
+        era0,
+        era1,
+        era2,
+        era3
     }
-
 
     public void SetTEventTypeFromId()
     {
@@ -70,21 +51,6 @@ public class GameEvent
                 Ttype = TType.era0; // 默认值
                 break;
         }
-        
+
     }
-}
-
-public enum GType
-{
-    tempEvent,
-    historyEvent
-
-}
-
-public enum TType
-{
-    era0,
-    era1,
-    era2,
-    era3
 }

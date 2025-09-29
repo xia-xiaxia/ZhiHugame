@@ -118,28 +118,53 @@ public class UIManager : MonoBehaviour
         }
     }
         // 关键：根据事件选项数量动态生成按钮
-    public void ShowEvent(string id)
+    public void ShowEvent(string id, int randomId)
     {
         Debug.Log("ShowEvent被调用，事件ID: " + id);
 
         // 1. 清掉上一次生成的按钮
         foreach (var b in optionButtons) Destroy(b);
         optionButtons.Clear();
-
+        HistoryEvent hevt = null;
+        RandomEvent revt = null;
         // 2. 取事件
-        var evt = EventManager.Instance.GetEvent(id);
-        if (evt == null)
+        if (randomId == -1) {
+            if (EventManager.Instance.isHistoryEvent)
+            {
+                hevt = EventManager.Instance.GetHistoryEvent(id);
+                if (hevt == null)
+                {
+                    Debug.LogError($"无法找到历史事件ID: {id}，停止显示事件");
+                    return;
+                }
+                titleText.text = hevt.title;
+                dialoguePanel.SetBody(hevt.body);
+            }
+        }
+        else
+        {
+            revt = EventManager.Instance.GetRandomEvent(id, randomId);
+            if (revt == null)
+            {
+                Debug.LogError($"无法找到随机事件ID: {id}，停止显示事件");
+                return;
+            }
+            titleText.text = revt.title;
+            dialoguePanel.SetBody(revt.body);
+        }
+
+        if (hevt == null && revt == null)
         {
             Debug.LogError($"无法找到事件ID: {id}，停止显示事件");
             return;
         }
-        titleText.text = evt.title;
-        dialoguePanel.SetBody(evt.body);
+        titleText.text = hevt?.title ?? revt?.title;
+        dialoguePanel.SetBody(hevt?.body ?? revt?.body);
 
         // 3. 根据选项数量生成按钮
-        Debug.Log($"事件 {id} 有 {evt.options.Count} 个选项");
+        Debug.Log($"事件 {id} 有 {hevt?.options.Count ?? 0} 个选项");
 
-        foreach (var opt in evt.options)
+        foreach (var opt in hevt?.options ?? revt?.options)
         {
             GameObject btn = Instantiate(optionButtonPrefab, optionsParent);
             btn.GetComponentInChildren<Text>().text = opt.text;

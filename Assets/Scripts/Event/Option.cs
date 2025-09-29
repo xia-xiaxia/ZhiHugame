@@ -19,5 +19,5 @@ public class Option
 
     public bool isNextEra = false; // 是否是跳转到下一时代
 
-    
+    public int Intervals = 0; // 历史事件决策的间隔随机事件数
 }

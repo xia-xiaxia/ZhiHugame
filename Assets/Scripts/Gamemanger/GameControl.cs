@@ -114,7 +114,7 @@ public class GameControl : MonoBehaviour
         }
 
         // 显示事件
-        UIManager.Instance.ShowEvent(eventId);
+        UIManager.Instance.ShowEvent(eventId, EventManager.Instance.randomID);
 
         waitingForNextTurn = false;
         currentWaitCoroutine = null;
