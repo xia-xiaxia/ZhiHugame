@@ -8,7 +8,7 @@ public class GameControl : MonoBehaviour
 {
     public static GameControl Instance;
     public StatModel stats;  // 统计数据
-    
+
     public bool GameOver = false;
     public bool IsCompleteTask = false;
 
@@ -26,9 +26,9 @@ public class GameControl : MonoBehaviour
 
     public void CompleteTask()
     {
-        if(EventManager.Instance != null)
+        if (EventManager.Instance != null)
         {
-            foreach(var eventId in lastEvents)
+            foreach (var eventId in lastEvents)
             {
                 if (EventManager.Instance.DetermineNextEventId() == "")
                     IsCompleteTask = true;
@@ -125,5 +125,15 @@ public class GameControl : MonoBehaviour
     private IEnumerator wait()
     {
         yield return new WaitForSeconds(2f);
+    }
+    
+    public void RecordEvent(string eventId)
+    {
+        
+        lastEvents.Add(eventId);
+        if (lastEvents.Count > 3)
+        {
+            lastEvents.RemoveAt(0); // 保持列表长度为3
+        }
     }
 }

@@ -13,8 +13,7 @@ public class GameEvent
 
     public int Invterval = 0;
 
-    public int nextEventId = -1; // 用于线性事件的下一个事件ID
-
+    public string speaker;
 
 }
 

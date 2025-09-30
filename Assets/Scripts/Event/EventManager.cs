@@ -37,6 +37,8 @@ public class EventManager : MonoBehaviour
     public int currentRandomEventSet = 0;
     public int[] unUsedlistIndex = new int[5] {-1,-1,-1,-1,-1};
 
+    public bool ishistoryEvent = false;
+
     // public DaChenMove dc1;
     // public DaChenMove dc2;
     // public DaChenMove dc3;
@@ -78,6 +80,19 @@ public class EventManager : MonoBehaviour
     // 供 UI 调用：返回某个事件
     public GameEvent GetEvent(string id, int randomEventSet = -1)
     {
+        if (ishistoryEvent)
+        {
+            if (historyEvents.ContainsKey(id))
+            {
+                Debug.Log($"[EventManager] 获取历史事件ID: {id}");
+                return historyEvents[id];
+            }
+            else
+            {
+                Debug.LogError($"历史事件ID '{id}' 不存在于历史事件字典中!");
+                return null;
+            }
+        }
         if (randomEventSet == -1)
             randomEventSet = currentRandomEventSet;
         if (randomEventSet < 0 || randomEventSet >= randomEventList.Count)
@@ -95,6 +110,8 @@ public class EventManager : MonoBehaviour
             Debug.LogError($"事件ID '{id}' 不存在于事件字典中!");
             return null;
         }
+
+
     }
 
     // 玩家点了某个选项后调用
@@ -149,6 +166,12 @@ public class EventManager : MonoBehaviour
         else
         {
             Debug.Log($"[EventManager] ApplyOption: 选项nextEventId为0，将选择随机事件");
+            // 如果选项没有指定下一个事件ID，说明历史事件链结束，重置历史事件标志
+            if (ishistoryEvent)
+            {
+                ishistoryEvent = false;
+                Debug.Log($"[EventManager] ApplyOption: 历史事件链结束，重置历史事件标志");
+            }
         }
         
         UIManager.Instance.UpdateStatText();
@@ -295,9 +318,9 @@ public class EventManager : MonoBehaviour
 
             if (currentTurn == 4)
             {
-                int id1 = Random.Range(1, 4); // 1到3
+                ishistoryEvent = true;
                 // 第一个主线事件ID固定
-                mainEventId =  id1.ToString("000") + "01";
+                mainEventId =  "00501";
                 Debug.Log($"[EventManager] DetermineNextEventId: 第一个主线事件 {mainEventId}");
             }
             else
@@ -305,16 +328,18 @@ public class EventManager : MonoBehaviour
                 // 后续主线事件：如果有预设的下一个事件ID，使用它
                 if (!string.IsNullOrEmpty(GetNextEventId()) && GetNextEventId() != "0" && GetNextEventId() != "100")
                 {
+                    ishistoryEvent = true;
                     mainEventId = GetNextEventId();
-                    SetNextEventId("126"); // 重置
+                    SetNextEventId("00501"); // 重置
                     Debug.Log($"[EventManager] DetermineNextEventId: 后续主线事件 {mainEventId}");
                 }
                 else
                 {
                     // 如果没有预设事件ID，说明主线任务链断了，继续随机事件
+                    ishistoryEvent = false;
                     Debug.LogWarning($"[EventManager] 回合 {currentTurn} 应该是主线事件，但没有预设的事件ID，使用随机事件");
-                    int fallbackRandomId = Random.Range(1, 100);
-                    string fallbackEventId = GameControl.Instance.stats.year + "2" + fallbackRandomId.ToString("000") + "01";
+                    int fallbackRandomId = Random.Range(1, 5);
+                    string fallbackEventId = fallbackRandomId.ToString("000") + "01";
                     Debug.Log($"[EventManager] DetermineNextEventId: 随机事件（主线缺失替代） {fallbackEventId}");
                     return fallbackEventId;
                 }
