@@ -17,7 +17,9 @@ public class Option
     public bool oifhm;           // 是否触发后宫QTE
     public string nextEventId = "0";   // 选项对应的下一个决策 ID
 
-    public bool isNextEra = false; // 是否是跳转到下一时代
+    public int interval;             // 决策间隔
+    public string activateTask;      // 激活任务
+    public int randomEventSet;    // 影响采用的随机事件集
+}
 
     
-}

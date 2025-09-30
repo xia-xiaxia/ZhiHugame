@@ -1747,7 +1747,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 2829b78a15585bb499d85f3bb724a519, type: 2}
-  eventJson: {fileID: 4900000, guid: 913500d406199bd4ebb38db68a77635f, type: 3}
+  eventJsons:
+  - {fileID: 4900000, guid: 913500d406199bd4ebb38db68a77635f, type: 3}
+  - {fileID: 4900000, guid: 9eca03dabd7c5154596615b3a2829e90, type: 3}
+  historyEventJson: {fileID: 4900000, guid: b1d4fe6b601c212489658e7b406a9f64, type: 3}
   palace: {fileID: 291984971}
   qte: {fileID: 0}
   qteimage: {fileID: 0}
@@ -1767,6 +1770,8 @@ MonoBehaviour:
   Bgm: {fileID: 8300000, guid: f89e39b64d01a904c94f4ba98bb443a2, type: 3}
   audioSrc: {fileID: 584881424}
   zhong: {fileID: 8300000, guid: c564fa16efe201a4c84b984e79dcdb06, type: 3}
+  currentRandomEventSet: 0
+  unUsedlistIndex: ffffffffffffffffffffffffffffffffffffffff
   dcb: 1
 --- !u!4 &853081177
 Transform:

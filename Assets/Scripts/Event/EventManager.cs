@@ -2,12 +2,14 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System.IO;
+using System.Threading.Tasks;
 
 public class EventManager : MonoBehaviour
 {
     public static EventManager Instance;
     public StatModel stats;      // 拖到 Inspector
-    public TextAsset eventJson;  // 把 JSON 文件拖到这里
+    public List<TextAsset> eventJsons;  // 把 JSON 文件拖到这里
+    public TextAsset historyEventJson;  // 把 JSON 文件拖到这里
     public GameObject palace;
     public GameObject qte;
     public Image qteimage;
@@ -28,15 +30,17 @@ public class EventManager : MonoBehaviour
     public AudioSource audioSrc;
     public AudioClip zhong;
     // public FadePulseOnce target;
-    private Dictionary<string, GameEvent> events = new Dictionary<string, GameEvent>();
+    private Dictionary<string, GameEvent> randomEvents = new Dictionary<string, GameEvent>();
+    private Dictionary<string, GameEvent> historyEvents = new Dictionary<string, GameEvent>();
 
-    private List<GameEvent> tempEvents = new List<GameEvent>();
+    private List<Dictionary<string,GameEvent>> randomEventList = new List<Dictionary<string,GameEvent>>();
+    public int currentRandomEventSet = 0;
+    public int[] unUsedlistIndex = new int[5] {-1,-1,-1,-1,-1};
 
-    private List<GameEvent> historyEvents = new List<GameEvent>();
     // public DaChenMove dc1;
     // public DaChenMove dc2;
     // public DaChenMove dc3;
-    public int dcb=1;
+    public int dcb = 1;
 
     // 事件ID生成相关
     private string nextEventId = "100"; // 下一个要显示的事件ID
@@ -54,34 +58,37 @@ public class EventManager : MonoBehaviour
     void LoadEvents()
     {
         // 直接从 JSON 文件中加载事件
-        GameEvent[] all = JsonHelper.FromJson<GameEvent>(eventJson.text);
-
-        foreach (var e in all)
+        foreach (var eventJson in eventJsons)
         {
-            e.SetGEventTypeFromId();
-            e.SetTEventTypeFromId();
-            events[e.id] = e;
-            if (e.Gtype == GType.tempEvent)
+            GameEvent[] all = JsonHelper.FromJson<GameEvent>(eventJson.text);
+
+            foreach (var e in all)
             {
-                tempEvents.Add(e);
+                randomEvents[e.id]=e;
             }
-            else
-            {
-                historyEvents.Add(e);
-                if (e.nextEventId != -1)
-                {
-                    Debug.Log($"事件 {e.id} 有后续事件 {e.nextEventId}");
-                }
-            }
+            randomEventList.Add(randomEvents);
         }
+        GameEvent[] hisEvts = JsonHelper.FromJson<GameEvent>(historyEventJson.text);
+        foreach (var e in hisEvts)
+        {
+            historyEvents[e.id] = e;
         }
+    }
 
     // 供 UI 调用：返回某个事件
-    public GameEvent GetEvent(string id)
+    public GameEvent GetEvent(string id, int randomEventSet = -1)
     {
-        if (events.ContainsKey(id))
+        if (randomEventSet == -1)
+            randomEventSet = currentRandomEventSet;
+        if (randomEventSet < 0 || randomEventSet >= randomEventList.Count)
         {
-            return events[id];
+            Debug.LogError($"随机事件集索引 {randomEventSet} 超出范围，使用默认事件集 0");
+            randomEventSet = 0;
+        }
+        var eventDict = randomEventList[randomEventSet];
+        if (eventDict.ContainsKey(id))
+        {
+            return eventDict[id];
         }
         else
         {
@@ -130,6 +137,8 @@ public class EventManager : MonoBehaviour
         Debug.Log("zhoulichange");
         stats.weiwang += opt.weiwangChange;
         Debug.Log("weiwangchange");
+
+        currentRandomEventSet = opt.randomEventSet;
         
         // 只有当nextEventId不为"0"时才设置，为"0"时保持默认值，让系统选择随机事件
         if (opt.nextEventId != "0")
@@ -266,15 +275,15 @@ public class EventManager : MonoBehaviour
         // 第一回合显示开场事件（每个时代的既定事件）
         if (currentTurn == 1)
         {
-            Debug.Log($"[EventManager] DetermineNextEventId: 开场事件 1200101");
-            return "1200101";
+            Debug.Log($"[EventManager] DetermineNextEventId: 开场事件 00101");
+            return "00101";
         }
 
         // 检查是否有预设的下一个事件ID（非主线回合且非"0"）
         if (!string.IsNullOrEmpty(GetNextEventId()) && GetNextEventId() != "0" && GetNextEventId() != "100")
         {
             string result = GetNextEventId();
-            SetNextEventId("100"); // 重置
+            SetNextEventId("126"); // 重置
             Debug.Log($"[EventManager] DetermineNextEventId: 使用预设事件ID {result}");
             return result;
         }
@@ -286,8 +295,9 @@ public class EventManager : MonoBehaviour
 
             if (currentTurn == 4)
             {
+                int id1 = Random.Range(1, 4); // 1到3
                 // 第一个主线事件ID固定
-                mainEventId = GameControl.Instance.stats.year + "1" + "001" + "01";
+                mainEventId =  id1.ToString("000") + "01";
                 Debug.Log($"[EventManager] DetermineNextEventId: 第一个主线事件 {mainEventId}");
             }
             else
@@ -296,7 +306,7 @@ public class EventManager : MonoBehaviour
                 if (!string.IsNullOrEmpty(GetNextEventId()) && GetNextEventId() != "0" && GetNextEventId() != "100")
                 {
                     mainEventId = GetNextEventId();
-                    SetNextEventId("100"); // 重置
+                    SetNextEventId("126"); // 重置
                     Debug.Log($"[EventManager] DetermineNextEventId: 后续主线事件 {mainEventId}");
                 }
                 else
@@ -324,8 +334,8 @@ public class EventManager : MonoBehaviour
         }
         
         // 其他情况显示随机事件
-        int randomId = Random.Range(1, 100);
-        string eventId = GameControl.Instance.stats.year + "2" + randomId.ToString("000") + "01";
+        int randomId = Random.Range(1, 4);
+        string eventId = randomId.ToString("000") + "01";
         
         Debug.Log($"[EventManager] DetermineNextEventId: 随机事件 {eventId}");
         return eventId;

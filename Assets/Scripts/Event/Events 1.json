@@ -8,21 +8,18 @@
         "text": "开仓放粮",
         "goldChange": -5,
         "peopleChange": 1,
-        "nextEventId": "00102",
-        "randomEventSetId": "1"
+        "nextEventId": "00102"
       },
       {
         "text": "征粮加税",
         "goldChange": 3,
         "peopleChange": -2,
-        "nextEventId": "00102",
-        "randomEventSetId": 0
+        "nextEventId": "00102"
       },
       {
         "text": "不管不顾",
         "peopleChange": -3,
-        "nextEventId": "00102",
-        "randomEventSetId": 0
+        "nextEventId": "00102"
       }
     ]
   },
@@ -227,6 +224,7 @@
       }
     ]
   },
+
 
   {
     "id": "112",
