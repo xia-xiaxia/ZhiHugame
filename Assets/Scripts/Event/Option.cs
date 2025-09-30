@@ -22,4 +22,9 @@ public class Option
     public int randomEventSet;    // 影响采用的随机事件集
 }
 
+<<<<<<< HEAD
     
+=======
+    public int Intervals = 0; // 历史事件决策的间隔随机事件数
+}
+>>>>>>> 7cf8af2542cd309f4def5973e6b761bc57f4e617

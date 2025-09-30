@@ -1,0 +1,248 @@
+[
+  {
+    "id": "00101",
+    "speaker": "农夫",
+    "title": "丰收献礼",
+    "body": "陛下，今年风调雨顺，小民获得大丰收，特来进献新谷，感谢陛下的恩德。",
+    "eventSet": "prosperity",
+    "options": [
+      {
+        "text": "接受献礼，赏赐农夫",
+        "goldChange": -5,
+        "peopleChange": 10,
+        "zhouLiChange": 5,
+        "weiwangChange": 8,
+        "oifzz": false,
+        "oiftl": false,
+        "oifjs": false,
+        "oifhm": false,
+        "nextEventId": "0",
+        "isNextEra": false,
+        "Intervals": 0,
+        "activateTask": "0",
+        "affectRandomEventSet": "default"
+      },
+      {
+        "text": "婉拒献礼，体恤民情",
+        "goldChange": 0,
+        "peopleChange": 15,
+        "zhouLiChange": 10,
+        "weiwangChange": 12,
+        "oifzz": false,
+        "oiftl": false,
+        "oifjs": false,
+        "oifhm": false,
+        "nextEventId": "0",
+        "isNextEra": false,
+        "Intervals": 0,
+        "activateTask": "0",
+        "affectRandomEventSet": "default"
+      }
+    ]
+  },
+  {
+    "id": "00201",
+    "speaker": "商人",
+    "title": "商队求助",
+    "body": "陛下，草民的商队在边境遭遇山贼袭击，货物被抢，恳请陛下派兵剿匪，还商路平安。",
+    "eventSet": "default",
+    "options": [
+      {
+        "text": "立即派兵剿匪",
+        "goldChange": -15,
+        "peopleChange": 8,
+        "zhouLiChange": 0,
+        "weiwangChange": 15,
+        "oifzz": false,
+        "oiftl": false,
+        "oifjs": true,
+        "oifhm": false,
+        "nextEventId": "0",
+        "isNextEra": false,
+        "Intervals": 0,
+        "activateTask": "0",
+        "affectRandomEventSet": "military_active"
+      },
+      {
+        "text": "让商人自行组织护卫",
+        "goldChange": 5,
+        "peopleChange": -5,
+        "zhouLiChange": -5,
+        "weiwangChange": -8,
+        "oifzz": false,
+        "oiftl": false,
+        "oifjs": false,
+        "oifhm": false,
+        "nextEventId": "0",
+        "isNextEra": false,
+        "Intervals": 0,
+        "activateTask": "0",
+        "affectRandomEventSet": "laissez_faire"
+      }
+    ]
+  },
+  {
+    "id": "00301",
+    "speaker": "节俭派大臣",
+    "title": "节约开支建议",
+    "body": "陛下，国库开支颇大，臣建议削减某些不必要的支出，以备不时之需。",
+    "eventSet": "frugal",
+    "options": [
+      {
+        "text": "采纳建议，削减开支",
+        "goldChange": 20,
+        "peopleChange": -5,
+        "zhouLiChange": 0,
+        "weiwangChange": -3,
+        "oifzz": false,
+        "oiftl": false,
+        "oifjs": false,
+        "oifhm": false,
+        "nextEventId": "0",
+        "isNextEra": false,
+        "Intervals": 0,
+        "activateTask": "0",
+        "affectRandomEventSet": "frugal"
+      },
+      {
+        "text": "维持现状，保障各项开支",
+        "goldChange": -10,
+        "peopleChange": 5,
+        "zhouLiChange": 5,
+        "weiwangChange": 8,
+        "oifzz": false,
+        "oiftl": false,
+        "oifjs": false,
+        "oifhm": false,
+        "nextEventId": "0",
+        "isNextEra": false,
+        "Intervals": 0,
+        "activateTask": "0",
+        "affectRandomEventSet": "default"
+      }
+    ]
+  },
+  {
+    "id": "00401",
+    "speaker": "宗族长老",
+    "title": "宗族聚会",
+    "body": "陛下，宗族长老们希望定期举办宗族聚会，以加强血缘纽带和宗族团结。",
+    "eventSet": "noble_clan",
+    "options": [
+      {
+        "text": "支持定期举办宗族聚会",
+        "goldChange": -8,
+        "peopleChange": 0,
+        "zhouLiChange": 15,
+        "weiwangChange": 12,
+        "oifzz": false,
+        "oiftl": false,
+        "oifjs": false,
+        "oifhm": false,
+        "nextEventId": "0",
+        "isNextEra": false,
+        "Intervals": 0,
+        "activateTask": "0",
+        "affectRandomEventSet": "noble_clan"
+      },
+      {
+        "text": "建议适度举办，避免过度消耗",
+        "goldChange": -3,
+        "peopleChange": 0,
+        "zhouLiChange": 8,
+        "weiwangChange": 5,
+        "oifzz": false,
+        "oiftl": false,
+        "oifjs": false,
+        "oifhm": false,
+        "nextEventId": "0",
+        "isNextEra": false,
+        "Intervals": 0,
+        "activateTask": "0",
+        "affectRandomEventSet": "default"
+      }
+    ]
+  },
+  {
+    "id": "00501",
+    "speaker": "功臣后代",
+    "title": "功臣请赏",
+    "body": "陛下，先父曾为开国立下汗马功劳，如今家道中落，恳请陛下念及旧情，给予赏赐。",
+    "eventSet": "meritorious",
+    "options": [
+      {
+        "text": "厚赏功臣后代",
+        "goldChange": -15,
+        "peopleChange": 8,
+        "zhouLiChange": 0,
+        "weiwangChange": 18,
+        "oifzz": false,
+        "oiftl": false,
+        "oifjs": false,
+        "oifhm": false,
+        "nextEventId": "0",
+        "isNextEra": false,
+        "Intervals": 0,
+        "activateTask": "0",
+        "affectRandomEventSet": "meritorious"
+      },
+      {
+        "text": "适度赏赐，勉励自立",
+        "goldChange": -5,
+        "peopleChange": 3,
+        "zhouLiChange": 5,
+        "weiwangChange": 8,
+        "oifzz": false,
+        "oiftl": false,
+        "oifjs": false,
+        "oifhm": false,
+        "nextEventId": "0",
+        "isNextEra": false,
+        "Intervals": 0,
+        "activateTask": "0",
+        "affectRandomEventSet": "default"
+      }
+    ]
+  },
+  {
+    "id": "00601",
+    "speaker": "礼制监督官",
+    "title": "礼制执行检查",
+    "body": "陛下，臣奉命检查各地礼制执行情况，发现部分地区执行不够严格，请陛下指示。",
+    "eventSet": "strict_ritual",
+    "options": [
+      {
+        "text": "严厉处罚违礼者",
+        "goldChange": 0,
+        "peopleChange": -8,
+        "zhouLiChange": 25,
+        "weiwangChange": 10,
+        "oifzz": true,
+        "oiftl": false,
+        "oifjs": false,
+        "oifhm": false,
+        "nextEventId": "0",
+        "isNextEra": false,
+        "Intervals": 0,
+        "activateTask": "0",
+        "affectRandomEventSet": "strict_ritual"
+      },
+      {
+        "text": "加强教化，循序渐进",
+        "goldChange": -5,
+        "peopleChange": 5,
+        "zhouLiChange": 15,
+        "weiwangChange": 8,
+        "oifzz": false,
+        "oiftl": false,
+        "oifjs": false,
+        "oifhm": false,
+        "nextEventId": "0",
+        "isNextEra": false,
+        "Intervals": 0,
+        "activateTask": "0",
+        "affectRandomEventSet": "default"
+      }
+    ]
+  }
+]

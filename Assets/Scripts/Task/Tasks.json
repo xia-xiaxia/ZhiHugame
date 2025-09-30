@@ -1,0 +1,217 @@
+{
+  "items": [
+    {
+      "id": "001001",
+      "serial": "001",
+      "description": "盛大开国典礼的后续发展",
+      "requirements": [
+        {
+          "timeLimit": 8,
+          "taskElements": [
+            {
+              "statType": "weiwang",
+              "operator": ">=",
+              "value": 150,
+              "description": "威望大于等于150"
+            },
+            {
+              "statType": "zhouli",
+              "operator": ">=", 
+              "value": 100,
+              "description": "周礼大于等于100"
+            }
+          ],
+          "taskLimitations": [
+            {
+              "statType": "gold",
+              "operator": "<",
+              "value": 0,
+              "description": "国库不能为负"
+            }
+          ],
+          "successEventId": "1300101",
+          "failureEventId": "1300201"
+        }
+      ]
+    },
+    {
+      "id": "001002",
+      "serial": "001",
+      "description": "节俭开国的长远影响",
+      "requirements": [
+        {
+          "timeLimit": 10,
+          "taskElements": [
+            {
+              "statType": "gold",
+              "operator": ">=",
+              "value": 200,
+              "description": "国库大于等于200"
+            },
+            {
+              "statType": "people",
+              "operator": ">=",
+              "value": 120,
+              "description": "民心大于等于120"
+            }
+          ],
+          "taskLimitations": [
+            {
+              "statType": "weiwang",
+              "operator": "<",
+              "value": 50,
+              "description": "威望不能低于50"
+            }
+          ],
+          "successEventId": "1300102",
+          "failureEventId": "1300202"
+        }
+      ]
+    },
+    {
+      "id": "002001",
+      "serial": "002",
+      "description": "同姓诸侯的政治稳定",
+      "requirements": [
+        {
+          "timeLimit": 6,
+          "taskElements": [
+            {
+              "statType": "zhouli",
+              "operator": ">=",
+              "value": 180,
+              "description": "周礼大于等于180"
+            }
+          ],
+          "taskLimitations": [
+            {
+              "statType": "people",
+              "operator": "<",
+              "value": 80,
+              "description": "民心不能低于80"
+            }
+          ],
+          "successEventId": "1400101",
+          "failureEventId": "1400201"
+        }
+      ]
+    },
+    {
+      "id": "002002",
+      "serial": "002", 
+      "description": "异姓功臣的忠诚考验",
+      "requirements": [
+        {
+          "timeLimit": 8,
+          "taskElements": [
+            {
+              "statType": "weiwang",
+              "operator": ">=",
+              "value": 160,
+              "description": "威望大于等于160"
+            },
+            {
+              "statType": "people",
+              "operator": ">=",
+              "value": 140,
+              "description": "民心大于等于140"
+            }
+          ],
+          "taskLimitations": [
+            {
+              "statType": "zhouli",
+              "operator": "<",
+              "value": 50,
+              "description": "周礼不能低于50"
+            }
+          ],
+          "successEventId": "1400102",
+          "failureEventId": "1400202"
+        }
+      ]
+    },
+    {
+      "id": "002003",
+      "serial": "002",
+      "description": "观望政策的时机把握",
+      "requirements": [
+        {
+          "timeLimit": 12,
+          "taskElements": [
+            {
+              "statType": "gold",
+              "operator": ">=",
+              "value": 250,
+              "description": "国库大于等于250"
+            }
+          ],
+          "taskLimitations": [
+            {
+              "statType": "weiwang",
+              "operator": "<",
+              "value": 60,
+              "description": "威望不能低于60"
+            }
+          ],
+          "successEventId": "1400103",
+          "failureEventId": "1400203"
+        }
+      ]
+    },
+    {
+      "id": "003001",
+      "serial": "003",
+      "description": "严格礼制的社会秩序",
+      "requirements": [
+        {
+          "timeLimit": -1,
+          "taskElements": [
+            {
+              "statType": "zhouli",
+              "operator": ">=",
+              "value": 200,
+              "description": "周礼大于等于200"
+            }
+          ],
+          "taskLimitations": [
+            {
+              "statType": "people",
+              "operator": "<",
+              "value": 70,
+              "description": "民心不能低于70"
+            }
+          ],
+          "successEventId": "1500101",
+          "failureEventId": "1500201"
+        }
+      ]
+    },
+    {
+      "id": "003002",
+      "serial": "003",
+      "description": "宽松礼制的社会和谐",
+      "requirements": [
+        {
+          "timeLimit": 0,
+          "taskElements": [
+            {
+              "statType": "people",
+              "operator": ">=",
+              "value": 150,
+              "description": "民心大于等于150"
+            },
+            {
+              "statType": "zhouli",
+              "operator": ">=",
+              "value": 120,
+              "description": "周礼大于等于120"
+            }
+          ],
+          "taskLimitations": [],
+          "successEventId": "1500102",
+          "failureEventId": "1500202"
+        }
+      ]
+    }
+  ]
+}
