@@ -7,27 +7,29 @@
     "options": [
       {
         "text": "把羊宰了！",
-        "goldChange": 0,
         "peopleChange": 0,
-        "zhouLiChange": -4,
-        "weiwangChange": 2,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": 0,
+        "foreignChange": -4,
+        "scholarChange": 2
       },
       {
         "text": "寡人等等便是",
-        "goldChange": 1,
         "peopleChange": 1,
-        "zhouLiChange": 2,
-        "weiwangChange": 0,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": 1,
+        "foreignChange": 2,
+        "scholarChange": 0
       }
     ]
   },
@@ -39,27 +41,29 @@
     "options": [
       {
         "text": "回赠虢国别的东西吧",
-        "goldChange": -2,
         "peopleChange": 0,
-        "zhouLiChange": 1,
-        "weiwangChange": 0,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": -2,
+        "foreignChange": 1,
+        "scholarChange": 0
       },
       {
         "text": "就按你的意思办",
-        "goldChange": 1,
         "peopleChange": 0,
-        "zhouLiChange": 0,
-        "weiwangChange": -1,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": 1,
+        "foreignChange": 0,
+        "scholarChange": -1
       }
     ]
   },
@@ -71,27 +75,29 @@
     "options": [
       {
         "text": "不要再说寡人的黑历史了！",
-        "goldChange": 0,
         "peopleChange": 0,
-        "zhouLiChange": -1,
-        "weiwangChange": 1,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": 0,
+        "foreignChange": -1,
+        "scholarChange": 1
       },
       {
         "text": "（默不作声）",
-        "goldChange": 1,
         "peopleChange": 0,
-        "zhouLiChange": 0,
-        "weiwangChange": -2,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": 1,
+        "foreignChange": 0,
+        "scholarChange": -2
       }
     ]
   },
@@ -103,27 +109,29 @@
     "options": [
       {
         "text": "罚你点钱，下次长长记性",
-        "goldChange": 1,
         "peopleChange": 0,
-        "zhouLiChange": 0,
-        "weiwangChange": 1,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": 1,
+        "foreignChange": 0,
+        "scholarChange": 1
       },
       {
         "text": "杀死这只狗！",
-        "goldChange": 0,
         "peopleChange": 0,
-        "zhouLiChange": -1,
-        "weiwangChange": 2,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": 0,
+        "foreignChange": -1,
+        "scholarChange": 2
       }
     ]
   },
@@ -135,27 +143,29 @@
     "options": [
       {
         "text": "明日改赐梨，省得争",
-        "goldChange": 0,
         "peopleChange": 0,
-        "zhouLiChange": 0,
-        "weiwangChange": 2,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": 0,
+        "foreignChange": 0,
+        "scholarChange": 2
       },
       {
         "text": "爱打打吧",
-        "goldChange": 1,
         "peopleChange": 0,
-        "zhouLiChange": 0,
-        "weiwangChange": -1,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": 1,
+        "foreignChange": 0,
+        "scholarChange": -1
       }
     ]
   },
@@ -167,27 +177,29 @@
     "options": [
       {
         "text": "派人去请求郑公",
-        "goldChange": 3,
         "peopleChange": 0,
-        "zhouLiChange": 0,
-        "weiwangChange": -2,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": 3,
+        "foreignChange": 0,
+        "scholarChange": -2
       },
       {
         "text": "那寡人不吃了",
-        "goldChange": 1,
         "peopleChange": 0,
-        "zhouLiChange": 0,
-        "weiwangChange": 0,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": 1,
+        "foreignChange": 0,
+        "scholarChange": 0
       }
     ]
   },
@@ -199,27 +211,29 @@
     "options": [
       {
         "text": "没钱",
-        "goldChange": 0,
         "peopleChange": -2,
-        "zhouLiChange": 0,
-        "weiwangChange": 0,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": 0,
+        "foreignChange": 0,
+        "scholarChange": 0
       },
       {
         "text": "修",
-        "goldChange": -2,
         "peopleChange": 3,
-        "zhouLiChange": 0,
-        "weiwangChange": 0,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": -2,
+        "foreignChange": 0,
+        "scholarChange": 0
       }
     ]
   },
@@ -231,27 +245,29 @@
     "options": [
       {
         "text": "寡人出不起这铜，拿泥巴糊一糊吧",
-        "goldChange": 1,
         "peopleChange": 0,
-        "zhouLiChange": -1,
-        "weiwangChange": 0,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": 1,
+        "foreignChange": -1,
+        "scholarChange": 0
       },
       {
         "text": "那就再铸一次！",
-        "goldChange": -2,
         "peopleChange": 0,
-        "zhouLiChange": 0,
-        "weiwangChange": 0,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": -2,
+        "foreignChange": 0,
+        "scholarChange": 0
       }
     ]
   },
@@ -263,27 +279,29 @@
     "options": [
       {
         "text": "船就船，寡人顺便钓鱼",
-        "goldChange": 0,
         "peopleChange": 1,
-        "zhouLiChange": -1,
-        "weiwangChange": 0,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": 0,
+        "foreignChange": -1,
+        "scholarChange": 0
       },
       {
         "text": "速召民夫筑堤，寡人可不想天天坐船上班",
-        "goldChange": -2,
         "peopleChange": -2,
-        "zhouLiChange": 2,
-        "weiwangChange": 0,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": -2,
+        "foreignChange": 2,
+        "scholarChange": 0
       }
     ]
   },
@@ -295,27 +313,29 @@
     "options": [
       {
         "text": "小孩子嘛，听听曲儿长见识",
-        "goldChange": 0,
         "peopleChange": 0,
-        "zhouLiChange": 0,
-        "weiwangChange": 1,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": 0,
+        "foreignChange": 0,
+        "scholarChange": 1
       },
       {
         "text": "把那逆子抓回来，罚抄《周礼》三百遍！",
-        "goldChange": 0,
         "peopleChange": 0,
-        "zhouLiChange": 1,
-        "weiwangChange": 0,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": 0,
+        "foreignChange": 1,
+        "scholarChange": 0
       }
     ]
   },
@@ -327,27 +347,29 @@
     "options": [
       {
         "text": "寡人也睡个回笼觉，看谁熬得过谁",
-        "goldChange": 0,
         "peopleChange": 0,
-        "zhouLiChange": 0,
-        "weiwangChange": -4,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": 0,
+        "foreignChange": 0,
+        "scholarChange": -4
       },
       {
         "text": "鸣钟三通，再不开门就永远别进来了",
-        "goldChange": 0,
         "peopleChange": -2,
-        "zhouLiChange": 0,
-        "weiwangChange": 2,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": 0,
+        "foreignChange": 0,
+        "scholarChange": 2
       }
     ]
   },
@@ -359,27 +381,29 @@
     "options": [
       {
         "text": "传令下去，把锅碗瓢盆全敲烂，吓死它",
-        "goldChange": -1,
         "peopleChange": 2,
-        "zhouLiChange": 0,
-        "weiwangChange": 0,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": -1,
+        "foreignChange": 0,
+        "scholarChange": 0
       },
       {
         "text": "慌什么，寡人正好趁阴凉睡午觉",
-        "goldChange": 0,
         "peopleChange": -2,
-        "zhouLiChange": 0,
-        "weiwangChange": 0,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": 0,
+        "foreignChange": 0,
+        "scholarChange": 0
       }
     ]
   },
@@ -391,27 +415,29 @@
     "options": [
       {
         "text": "寡人女儿威武！赏金十镒",
-        "goldChange": 0,
         "peopleChange": 2,
-        "zhouLiChange": 0,
-        "weiwangChange": 0,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": 0,
+        "foreignChange": 0,
+        "scholarChange": 0
       },
       {
         "text": "赶紧让她闭门思过，学三个月女红",
-        "goldChange": 0,
         "peopleChange": -1,
-        "zhouLiChange": 1,
-        "weiwangChange": 0,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": 0,
+        "foreignChange": 1,
+        "scholarChange": 0
       }
     ]
   },
@@ -423,27 +449,29 @@
     "options": [
       {
         "text": "那就重写，顺便把寡人写高点",
-        "goldChange": 0,
         "peopleChange": 0,
-        "zhouLiChange": 0,
-        "weiwangChange": 1,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": 0,
+        "foreignChange": 0,
+        "scholarChange": 1
       },
       {
         "text": "天意如此，随它去吧",
-        "goldChange": 0,
         "peopleChange": 0,
-        "zhouLiChange": 0,
-        "weiwangChange": -1,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": 0,
+        "foreignChange": 0,
+        "scholarChange": -1
       }
     ]
   },
@@ -455,27 +483,29 @@
     "options": [
       {
         "text": "红薯挺香，分御史一个封口",
-        "goldChange": -1,
         "peopleChange": 0,
-        "zhouLiChange": 0,
-        "weiwangChange": 0,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": -1,
+        "foreignChange": 0,
+        "scholarChange": 0
       },
       {
         "text": "寡人自首，罚酒三杯",
-        "goldChange": -1,
         "peopleChange": 0,
-        "zhouLiChange": 0,
-        "weiwangChange": 0,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
-        "randomEventSet": 0
+        "randomEventSet": 0,
+        "kingChange": 0,
+        "nobleChange": -1,
+        "foreignChange": 0,
+        "scholarChange": 0
       }
     ]
   }

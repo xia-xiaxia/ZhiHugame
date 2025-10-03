@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 public class EventManager : MonoBehaviour
 {
     public static EventManager Instance;
-    public StatModel stats;      // 拖到 Inspector
+    public StatModel1 stats;      // 拖到 Inspector
     public List<TextAsset> eventJsons;  // 把 JSON 文件拖到这里
     public TextAsset historyEventJson;  // 把 JSON 文件拖到这里
     public GameObject palace;
@@ -34,8 +34,7 @@ public class EventManager : MonoBehaviour
     private Dictionary<string, GameEvent> historyEvents = new Dictionary<string, GameEvent>();
 
     private List<Dictionary<string,GameEvent>> randomEventList = new List<Dictionary<string,GameEvent>>();
-    public int currentRandomEventSet = 0;
-    public int[] unUsedlistIndex = new int[5] {-1,-1,-1,-1,-1};
+    private List<int> activeRandomEventSetIndices = new List<int>();
 
     public bool ishistoryEvent = false;
 
@@ -60,20 +59,33 @@ public class EventManager : MonoBehaviour
     void LoadEvents()
     {
         // 直接从 JSON 文件中加载事件
-        foreach (var eventJson in eventJsons)
+        randomEventList.Clear();
+        activeRandomEventSetIndices.Clear();
+
+        for (int i = 0; i < eventJsons.Count; i++)
         {
+            var eventJson = eventJsons[i];
+            var currentEventDict = new Dictionary<string, GameEvent>();
             GameEvent[] all = JsonHelper.FromJson<GameEvent>(eventJson.text);
 
             foreach (var e in all)
             {
-                randomEvents[e.id]=e;
+                if (!string.IsNullOrEmpty(e?.id))
+                    currentEventDict[e.id] = e;
             }
-            randomEventList.Add(randomEvents);
+            randomEventList.Add(currentEventDict);
+            // 默认激活全部事件集
+            activeRandomEventSetIndices.Add(i);
+            Debug.Log($"[EventManager] LoadEvents: 加载事件集 {i} (count={currentEventDict.Count})");
         }
-        GameEvent[] hisEvts = JsonHelper.FromJson<GameEvent>(historyEventJson.text);
-        foreach (var e in hisEvts)
+
+        // 历史事件加载（如果有）保持原样
+        if (historyEventJson != null)
         {
-            historyEvents[e.id] = e;
+            historyEvents.Clear();
+            var his = JsonHelper.FromJson<GameEvent>(historyEventJson.text);
+            foreach (var e in his) if (!string.IsNullOrEmpty(e?.id)) historyEvents[e.id] = e;
+            Debug.Log($"[EventManager] LoadEvents: 加载历史事件 count={historyEvents.Count}");
         }
     }
 
@@ -93,71 +105,78 @@ public class EventManager : MonoBehaviour
                 return null;
             }
         }
-        if (randomEventSet == -1)
-            randomEventSet = currentRandomEventSet;
-        if (randomEventSet < 0 || randomEventSet >= randomEventList.Count)
+        
+        // 尝试从所有激活的随机事件集中查找
+        foreach (int index in activeRandomEventSetIndices)
         {
-            Debug.LogError($"随机事件集索引 {randomEventSet} 超出范围，使用默认事件集 0");
-            randomEventSet = 0;
-        }
-        var eventDict = randomEventList[randomEventSet];
-        if (eventDict.ContainsKey(id))
-        {
-            return eventDict[id];
-        }
-        else
-        {
-            Debug.LogError($"事件ID '{id}' 不存在于事件字典中!");
-            return null;
+            if (index < randomEventList.Count && randomEventList[index].ContainsKey(id))
+            {
+                return randomEventList[index][id];
+            }
         }
 
+        // 如果找不到，作为后备方案，尝试从所有随机事件集中查找
+        foreach (var eventDict in randomEventList)
+        {
+            if (eventDict.ContainsKey(id))
+            {
+                Debug.LogWarning($"事件ID '{id}' 在非激活的事件集中找到。");
+                return eventDict[id];
+            }
+        }
 
+        Debug.LogError($"事件ID '{id}' 在任何事件字典中都不存在!");
+        return null;
     }
 
     // 玩家点了某个选项后调用
     public void ApplyOption(Option opt,int turns)
     {
-        //audioSrc?.PlayOneShot(zhong,1.5f);
-        
-        // if(turns==1||turns%4==0)        target.Play();
+        // 安全检查
+        if (opt == null)
+        {
+            Debug.LogError("[EventManager] ApplyOption: 参数 opt 为 null，操作中止");
+            return;
+        }
+        if (stats == null)
+        {
+            Debug.LogError("[EventManager] ApplyOption: stats 未绑定（请在 Inspector 中把 StatModel1 拖入 EventManager.stats）");
+            return;
+        }
 
-        // if (dcb == 1)
-        // {
-        //     dc1.FlipX();
-        //     dc1.MoveRight();
-        //     dc2.FlipX();
-        //     dc2.MoveLeft();
-        //     dcb++;
-        // }
-        // else if (dcb == 2)
-        // {
-        //     dc2.FlipX();
-        //     dc2.MoveRight();
-        //     dc3.FlipX();
-        //     dc3.MoveLeft();
-        //     dcb++;
-        // }
-        // else
-        // {
-        //     dc3.FlipX();
-        //     dc3.MoveRight();
-        //     dc1.FlipX();
-        //     dc1.MoveLeft();
-        //     dcb = 1;
-        // }
-
-        stats.gold += opt.goldChange;
-        Debug.Log("goldchange");
+        // 应用数值变化
+        stats.king += opt.kingChange;
+        stats.noble += opt.nobleChange;
+        stats.scholar += opt.scholarChange;
+        stats.foreign += opt.foreignChange;
         stats.people += opt.peopleChange;
-        Debug.Log("peoplechange");
-        stats.zhouli += opt.zhouLiChange;
-        Debug.Log("zhoulichange");
-        stats.weiwang += opt.weiwangChange;
-        Debug.Log("weiwangchange");
 
-        currentRandomEventSet = opt.randomEventSet;
-        
-        // 只有当nextEventId不为"0"时才设置，为"0"时保持默认值，让系统选择随机事件
+        // --- 处理 randomEventSet 逻辑 ---
+        if (opt.randomEventSet > 0)
+        {
+            int activateIndex = opt.randomEventSet - 1;
+            if (activateIndex >= 0 && activateIndex < randomEventList.Count)
+            {
+                if (!activeRandomEventSetIndices.Contains(activateIndex))
+                {
+                    activeRandomEventSetIndices.Add(activateIndex);
+                    Debug.Log($"[EventManager] 激活了第 {opt.randomEventSet} 个随机事件集。");
+                }
+            }
+            else Debug.LogWarning($"[EventManager] ApplyOption: 无效的激活索引 {opt.randomEventSet}");
+        }
+        else if (opt.randomEventSet < 0)
+        {
+            int hideIndex = -opt.randomEventSet - 1;
+            if (hideIndex >= 0 && hideIndex < randomEventList.Count && activeRandomEventSetIndices.Contains(hideIndex))
+            {
+                activeRandomEventSetIndices.Remove(hideIndex);
+                Debug.Log($"[EventManager] 隐藏了第 {-opt.randomEventSet} 个随机事件集。");
+            }
+            else Debug.LogWarning($"[EventManager] ApplyOption: 无效的隐藏索引 {-opt.randomEventSet}");
+        }
+
+        // 处理 nextEventId
         if (opt.nextEventId != "0")
         {
             nextEventId = opt.nextEventId;
@@ -166,75 +185,23 @@ public class EventManager : MonoBehaviour
         else
         {
             Debug.Log($"[EventManager] ApplyOption: 选项nextEventId为0，将选择随机事件");
-            // 如果选项没有指定下一个事件ID，说明历史事件链结束，重置历史事件标志
             if (ishistoryEvent)
             {
                 ishistoryEvent = false;
                 Debug.Log($"[EventManager] ApplyOption: 历史事件链结束，重置历史事件标志");
             }
         }
-        
-        UIManager.Instance.UpdateStatText();
-        // if (opt.oifzz || opt.oifjs || opt.oiftl||opt.oifhm)
-        // {
-        //     palace.SetActive(false);
-        //     qte.SetActive(true);
-        //     if (opt.oifjs)
-        //     {
-        //         qteimage.sprite = jsimage;
-        //         QTEController qtec = qte.GetComponent<QTEController>();
-        //         qtec.enabled = true;
-        //         qtec.successCount = 0;
-        //         qtec.failCount = 0;
-        //         opt.oifjs = false;
-        //         stats.ifjs = true;
-        //         jsjy.SetActive(true);
-        //         pandingwenben.localPosition = new Vector3(-260,-265, 0);
-        //         MusicManager.Instance.PlayBgm(jsBgm);
-        //     }
-        //     else if (opt.oiftl)
-        //     {
-        //         qteimage.sprite = tlimage;
-        //         QTE2 qtec = qte.GetComponent<QTE2>();
-        //         qtec.successCount = 0;
-        //         qtec.failCount = 0;
-        //         qtec.enabled = true;
-        //         opt.oiftl = false;
-        //         stats.iftl = true;
-        //         tljy.SetActive(true);
-        //         pandingwenben.localPosition = new Vector3(769, -247, 0);
-        //         MusicManager.Instance.PlayBgm(tlBgm);
-        //     }
-        //     else if(opt.oifzz) 
-        //     { 
-        //         qteimage.sprite = zzimage; 
-        //         QTE3 qtec= qte.GetComponent<QTE3>();
-        //         qtec.successCount = 0;
-        //         qtec.enabled = true;
-        //         opt.oifzz = false;
-        //         stats.ifzz = true;
-        //         zzjy.SetActive(true);
-        //         pandingwenben.localPosition = new Vector3(-355, -265, 0);
-        //         MusicManager.Instance.PlayBgm(zzBgm);
-        //     }
-        //     else
-        //     {
-        //         qteimage.sprite = hmimage;
-        //         QTE4 qtec = qte.GetComponent<QTE4>();
-        //         qtec.holdTime = 0;
-        //         qtec.enabled = true;
-        //         opt.oifhm = false;
-        //         stats.ifhm = true;
-        //         hmjy.SetActive(true);
-        //         pandingwenben.localPosition = new Vector3(890, -260, 0);
-        //         MusicManager.Instance.PlayBgm(hmBgm);
-        //     }
 
-        // }
+        // 更新 UI （安全判断）
+        if (UIManager.Instance != null)
+        {
             UIManager.Instance.UpdateStatText();
             UIManager.Instance.ClearText();
-
-
+        }
+        else
+        {
+            Debug.LogWarning("[EventManager] ApplyOption: UIManager.Instance 为 null，跳过 UI 更新");
+        }
     }
     // public void OverQTE()
     // {
@@ -359,11 +326,108 @@ public class EventManager : MonoBehaviour
         }
         
         // 其他情况显示随机事件
-        int randomId = Random.Range(1, 4);
-        string eventId = randomId.ToString("000") + "01";
+        if (activeRandomEventSetIndices.Count == 0)
+        {
+            Debug.LogError("[EventManager] 没有可用的随机事件集！请检查逻辑。");
+            return "00101"; // 返回一个默认的后备事件
+        }
+
+        // 从激活的事件集列表中随机选一个
+        int randomSetIndex = activeRandomEventSetIndices[Random.Range(0, activeRandomEventSetIndices.Count)];
+        var targetEventDict = randomEventList[randomSetIndex];
+
+        if (targetEventDict.Count == 0)
+        {
+            Debug.LogError($"[EventManager] 选中的事件集 {randomSetIndex} 为空！");
+            return "00101"; // 返回一个默认的后备事件
+        }
+
+        // 从选中的事件集中随机选一个事件
+        List<string> eventIds = new List<string>(targetEventDict.Keys);
+        string eventId = eventIds[Random.Range(0, eventIds.Count)];
         
-        Debug.Log($"[EventManager] DetermineNextEventId: 随机事件 {eventId}");
+        Debug.Log($"[EventManager] DetermineNextEventId: 从事件集 {randomSetIndex} 中抽取随机事件 {eventId}");
         return eventId;
+    }
+
+    // 游戏失败处理：重置随机事件集、保存剧情进度、重置数值
+    public void HandleGameOver(string reason)
+    {
+        Debug.LogWarning($"[EventManager] 游戏失败触发: {reason}");
+
+        // 保存剧情推进（即使事件重置，整体进度推进）
+        int progress = PlayerPrefs.GetInt("StoryProgress", 0) + 1;
+        PlayerPrefs.SetInt("StoryProgress", progress);
+        PlayerPrefs.Save();
+        Debug.Log($"[EventManager] StoryProgress 增加到 {progress}");
+
+        // 重载事件（将所有事件集恢复为默认激活状态）
+        LoadEvents();
+
+        // 重置 nextEventId / 标志
+        nextEventId = "100";
+        ishistoryEvent = false;
+
+        // 重置玩家数值（若需要由 GameControl 统一控制也可调用）
+        if (stats != null)
+        {
+            //stats.ResetToDefault();
+            Debug.Log("[EventManager] Player stats 已重置为默认值 (50)");
+        }
+
+        // 更新 UI 显示
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.UpdateStatText();
+            Debug.Log("[EventManager] 通知 UI 更新数值显示");
+        }
+
+        // 如需其它重置行为（例如回到主菜单、播放破局动画等），在这里扩展
+    }
+
+    // 在抽取随机事件处，请使用 activeRandomEventSetIndices 列表决定抽取范围
+    private string PickRandomEventFromActiveSets()
+    {
+        if (randomEventList == null || randomEventList.Count == 0)
+        {
+            Debug.LogError("[EventManager] 无随机事件可用！");
+            return "0";
+        }
+
+        if (activeRandomEventSetIndices == null || activeRandomEventSetIndices.Count == 0)
+        {
+            // 恢复默认激活全部，避免没有可抽取集
+            activeRandomEventSetIndices = new List<int>();
+            for (int i = 0; i < randomEventList.Count; i++) activeRandomEventSetIndices.Add(i);
+            Debug.LogWarning("[EventManager] activeRandomEventSetIndices 为空，已恢复全部激活");
+        }
+
+        int setIndex = activeRandomEventSetIndices[Random.Range(0, activeRandomEventSetIndices.Count)];
+        var dict = randomEventList[setIndex];
+        if (dict == null || dict.Count == 0)
+        {
+            // 找到任意非空集作为后备
+            for (int i = 0; i < randomEventList.Count; i++)
+            {
+                if (randomEventList[i] != null && randomEventList[i].Count > 0)
+                {
+                    dict = randomEventList[i];
+                    setIndex = i;
+                    break;
+                }
+            }
+        }
+
+        if (dict == null || dict.Count == 0)
+        {
+            Debug.LogError("[EventManager] 所有事件集均为空");
+            return "0";
+        }
+
+        var keys = new List<string>(dict.Keys);
+        string id = keys[Random.Range(0, keys.Count)];
+        Debug.Log($"[EventManager] PickRandomEventFromActiveSets: 从事件集 {setIndex} 抽到 {id}");
+        return id;
     }
 
 
