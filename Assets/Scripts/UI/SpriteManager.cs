@@ -24,10 +24,11 @@ public class SpriteManager : MonoBehaviour
     void Start()
     {
         qunchen2.SetActive(false);
-        stats.zhouli = 10;
-        stats.people = 10;
-        stats.gold = 10;
-        stats.weiwang = 10;
+        stats.king = 50;
+        stats.people = 50;
+        stats.foreign = 50;
+        stats.scholar = 50;
+        stats.noble = 50;
         stats.iftl=false;
         stats.ifjs = false;
         stats.ifzz = false;
@@ -37,15 +38,15 @@ public class SpriteManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (stats.gold > 20)
+        if (stats.foreign > 80)
             tianzi.sprite = tz2;
-        else if(stats.gold >25)
+        else if(stats.noble >80)
             tianzi.sprite= tz3;
 
-        if (stats.gold > 15)
+        if (stats.people > 80)
             background.sprite = bg2;
 
-        if (stats.people > 15)
+        if (stats.king> 80)
             qunchen2.SetActive(true);
     }
 }

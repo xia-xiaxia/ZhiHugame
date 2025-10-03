@@ -9,7 +9,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
 
     // 原来的 4 个引用
-    public StatModel stats;
+    public StatModel1 stats;
     public Image gameover;
     public Sprite end1;
     public Sprite end2;
@@ -27,6 +27,8 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI statText2;
     public TextMeshProUGUI statText3;
     public TextMeshProUGUI statText4;
+    public TextMeshProUGUI statText5;
+
     public bool ifShow;
     public int eventid = 100;
     public AudioClip GE;
@@ -40,6 +42,8 @@ public class UIManager : MonoBehaviour
 
     // 运行时生成的按钮缓存
     private List<GameObject> optionButtons = new List<GameObject>();
+
+    private bool gameOverTriggered = false;
 
     void Awake() { Instance = this; }
 
@@ -71,7 +75,7 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         // 只检查游戏结束条件，不管理回合
-        if (stats.gold <= 0 && !allgone)
+        if (stats.noble <= 0 && !allgone)
         {
             gameover.sprite = end5;
             MusicManager.Instance.PlayBgm(BE, 0.8f);
@@ -89,7 +93,7 @@ public class UIManager : MonoBehaviour
             StartCoroutine(Fade());
         }
         
-        if (stats.weiwang <= 0 && !allgone)
+        if (stats.king <= 0 && !allgone)
         {
             gameover.sprite = end4;
             MusicManager.Instance.PlayBgm(BE, 0.8f);
@@ -98,7 +102,7 @@ public class UIManager : MonoBehaviour
             StartCoroutine(Fade());
         }
         
-        if (stats.zhouli <= 0 && !allgone)
+        if (stats.scholar <= 0 && !allgone)
         {
             gameover.sprite = end1;
             MusicManager.Instance.PlayBgm(BE, 0.8f);
@@ -180,11 +184,34 @@ public class UIManager : MonoBehaviour
     }
     public void UpdateStatText()
     {
-        StatModel s = stats;
-        statText1.text = $"{s.gold}";
-        statText2.text = $"{s.people}";
-        statText3.text = $"{s.weiwang}";
-        statText4.text = $"{s.zhouli}";
+        if (stats == null)
+        {
+            Debug.LogError("[UIManager] stats 为 null，无法更新数值显示");
+            return;
+        }
+
+        statText1.text = $"{stats.king}";
+        statText2.text = $"{stats.noble}";
+        statText3.text = $"{stats.scholar}";
+        statText4.text = $"{stats.foreign}";
+        statText5.text = $"{stats.people}";
+
+        // 检查是否触发失败（只触发一次）
+        if (!gameOverTriggered && stats.IsOutOfBounds())
+        {
+            gameOverTriggered = true;
+            Debug.LogWarning("[UIManager] 检测到统计数值越界，触发游戏失败");
+            if (EventManager.Instance != null)
+            {
+                EventManager.Instance.HandleGameOver("统计数值越界");
+            }
+        }
+    }
+
+    // 在需要时复位 gameOverTriggered（例如 Start 新游戏或重置界面时）
+    public void ResetGameOverFlag()
+    {
+        gameOverTriggered = false;
     }
 
     public void ClearText()

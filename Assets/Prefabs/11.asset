@@ -9,14 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 403197802efa15a44aa578d7e7acc49a, type: 3}
-  m_Name: 111
+  m_Script: {fileID: 11500000, guid: 162da53cb023ce34bbddf3e852d3731d, type: 3}
+  m_Name: 11
   m_EditorClassIdentifier: 
-  gold: 10
-  people: 10
-  weiwang: 10
-  zhouli: 10
-  ifjs: 0
-  ifzz: 0
-  iftl: 0
-  ifhm: 0
+  king: 50
+  noble: 50
+  scholar: 50
+  foreign: 50
+  people: 50
