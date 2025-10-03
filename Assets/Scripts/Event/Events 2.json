@@ -7,7 +7,7 @@
     "options": [
       {
         "text": "把羊宰了！",
-        "kingChange": 0,
+        "kingChange": 10,
         "nobleChange": 0,
         "scholarChange": 0,
         "foreignChange": 0,

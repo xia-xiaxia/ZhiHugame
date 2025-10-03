@@ -7,14 +7,14 @@
     "options": [
       {
         "text": "把羊宰了！",
-        "peopleChange": 0,
+        "peopleChange": 10,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
         "activateTask": "",
         "randomEventSet": 0,
         "kingChange": 0,
-        "nobleChange": 0,
+        "nobleChange": 100,
         "foreignChange": -4,
         "scholarChange": 2
       },
