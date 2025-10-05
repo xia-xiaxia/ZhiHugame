@@ -120,14 +120,20 @@ public class GameControl : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
     }
-    
+
     public void RecordEvent(string eventId)
     {
-        
+
         lastEvents.Add(eventId);
         if (lastEvents.Count > 3)
         {
             lastEvents.RemoveAt(0); // 保持列表长度为3
         }
+    }
+    
+    public void TriggerEnding(string endingId, string endingDescription)
+    {
+        GameOver = true;
+        //UIManager.Instance.ShowEnding(endingId, endingDescription);
     }
 }

@@ -1,0 +1,17 @@
+[
+  {
+    "id": "001",
+    "description": "国君权力过盛，天下动荡，王朝覆灭。",
+    "trigger": { "stat": "king", "type": "max", "value": 80 }
+  },
+  {
+    "id": "002",
+    "description": "贵族权力过盛，王权旁落，国君被废。",
+    "trigger": { "stat": "noble", "type": "max", "value": 80 }
+  },
+  {
+    "id": "003",
+    "description": "任务“统一天下”完成，王朝进入盛世。",
+    "trigger": { "taskId": "unify", "type": "success" }
+  }
+]
