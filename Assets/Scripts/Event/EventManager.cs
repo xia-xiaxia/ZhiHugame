@@ -44,7 +44,7 @@ public class EventManager : MonoBehaviour
     public int dcb = 1;
 
     // 事件ID生成相关
-    private string nextEventId = "100"; // 下一个要显示的事件ID
+    private string nextEventId = "000"; // 下一个要显示的事件ID
 
     private void Start()
     {
