@@ -315,7 +315,7 @@ MonoBehaviour:
   qunchen: {fileID: 0}
   qunchen2: {fileID: 0}
   background: {fileID: 2025459876}
-  stats: {fileID: 11400000, guid: 2829b78a15585bb499d85f3bb724a519, type: 2}
+  stats: {fileID: 11400000, guid: 88af981aebd9a164c873c7866cec4707, type: 2}
   tz1: {fileID: 21300000, guid: 5fd3d28ddef4f85499b000cb4b26dc6e, type: 3}
   tz2: {fileID: 21300000, guid: fac14af68c045d64992e0a1bbcbfeddd, type: 3}
   tz3: {fileID: 21300000, guid: 56db40ac725c9b145b6a3a48e0b94d91, type: 3}
@@ -3120,7 +3120,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 580, y: 800, z: -448}
+  m_LocalPosition: {x: 620, y: 800, z: -448}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3139,7 +3139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startButton: {fileID: 1045128265}
-  targetPosition: {x: 580, y: 270, z: -448}
+  targetPosition: {x: 620, y: 270, z: -448}
   moveSpeed: 100
   moveCurve:
     serializedVersion: 2
@@ -5556,10 +5556,10 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 1300
-  m_PreferredHeight: 500
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: 1
+  m_FlexibleHeight: 1
   m_LayoutPriority: 1
 --- !u!114 &1790506068
 MonoBehaviour:

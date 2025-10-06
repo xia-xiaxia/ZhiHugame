@@ -19,7 +19,7 @@ public class CameraMove : MonoBehaviour
     public Button startButton;
     
     [Header("移动设置")]
-    public Vector3 targetPosition = new Vector3(580, 270, -448); // 目标位置
+    public Vector3 targetPosition = new Vector3(620, 270, -448); // 目标位置
     public float moveSpeed = 2f; // 移动速度
     public AnimationCurve moveCurve = AnimationCurve.EaseInOut(0, 0, 1, 1); // 移动曲线
     

@@ -151,6 +151,8 @@ public class EventManager : MonoBehaviour
         stats.foreign += opt.foreignChange;
         stats.people += opt.peopleChange;
 
+        Debug.Log("[EventManager] ApplyOption: " +
+            $"K:{opt.kingChange} N:{opt.nobleChange} S:{opt.scholarChange} F:{opt.foreignChange} P:{opt.peopleChange}");
         if (opt.randomEventSet > 0)
         {
             int act = opt.randomEventSet - 1;
