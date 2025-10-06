@@ -29,10 +29,7 @@ public class SpriteManager : MonoBehaviour
         stats.foreign = 50;
         stats.scholar = 50;
         stats.noble = 50;
-        stats.iftl=false;
-        stats.ifjs = false;
-        stats.ifzz = false;
-        stats.ifhm = false;
+
         MusicManager.Instance.PlayBgm(Bgm,0.8f);
     }
     // Update is called once per frame

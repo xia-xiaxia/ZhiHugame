@@ -1,13 +1,32 @@
+using TMPro.SpriteAssetUtilities;
 using UnityEngine;
 
-public static class JsonHelper
+namespace JsonB
 {
-    [System.Serializable]
-    private class Wrapper<T> { public T[] Items; }
-
-    public static T[] FromJson<T>(string raw)
+    public static class JsonHelper
     {
-        string fix = "{\"Items\":" + raw + "}";
-        return JsonUtility.FromJson<Wrapper<T>>(fix).Items;
+        [System.Serializable]
+        private class Wrapper<T> { public T[] Items; }
+
+        public static T[] FromJson<T>(string raw)
+        {
+            string fix = "{\"Items\":" + raw + "}";
+            return JsonUtility.FromJson<Wrapper<T>>(fix).Items;
+        }
+    }
+}
+
+namespace JsonA
+{
+    public static class JsonHelper
+    {
+        [System.Serializable]
+        private class Wrapper<T> { public T[] Items; }
+
+        public static T[] FromJson<T>(string raw)
+        {
+            string fix = "{\"Items\":" + raw + "}";
+            return JsonUtility.FromJson<Wrapper<T>>(fix).Items;
+        }
     }
 }
