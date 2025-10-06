@@ -19,6 +19,7 @@ public class GameControl : MonoBehaviour
 
     private List<string> lastEvents = new List<string> { " ", " ", " " };
 
+    public GameObject man;
     // ====== 新增：结局与阈值相关 ======
     public int turnLimit = 60;          // 回合上限（Inspector 可调）
     private bool endingTriggered = false;
@@ -102,15 +103,25 @@ public class GameControl : MonoBehaviour
 
         // 显示大殿
         if (UIManager.Instance != null && UIManager.Instance.daDian != null)
+        {
             UIManager.Instance.daDian.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
+            if (man != null)
+            {
+                man.SetActive(true);
+            }
+        }
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         if (UIManager.Instance != null && UIManager.Instance.daDian != null)
+        {
             UIManager.Instance.daDian.SetActive(false);
+            man.SetActive(false);
+        }
 
         if (!GameOver && UIManager.Instance != null)
-            UIManager.Instance.ShowEvent(eventId);
+                UIManager.Instance.ShowEvent(eventId);
 
         waitingForNextTurn = false;
         currentWaitCoroutine = null;
