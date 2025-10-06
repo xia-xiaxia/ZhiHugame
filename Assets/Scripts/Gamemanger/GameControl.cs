@@ -48,11 +48,38 @@ public class GameControl : MonoBehaviour
     // ===== 开始游戏 =====
     public void StartGame()
     {
+        // 检查相机是否准备好
+        if (CameraMove.Instance != null && !CameraMove.Instance.isReady)
+        {
+            Debug.Log("[GameControl] 等待相机移动完成...");
+            StartCoroutine(WaitForCameraReady());
+            return;
+        }
+
         turns = 0;
         GameOver = false;
         endingTriggered = false;
         waitingForNextTurn = false;
+        //UIManager.Instance.daDian.SetActive(true);
         Debug.Log("[GameControl] 游戏开始");
+        StartCoroutine(wait());
+        ProcessNextTurn();
+    }
+
+    // 等待相机准备完成的协程
+    private IEnumerator WaitForCameraReady()
+    {
+        while (CameraMove.Instance != null && !CameraMove.Instance.isReady)
+        {
+            yield return null; // 等待一帧
+        }
+        
+        // 相机准备好后开始游戏
+        Debug.Log("[GameControl] 相机准备完成，开始游戏");
+        turns = 0;
+        GameOver = false;
+        endingTriggered = false;
+        waitingForNextTurn = false;
         StartCoroutine(wait());
         ProcessNextTurn();
     }

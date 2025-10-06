@@ -7,7 +7,7 @@
     "options": [
       {
         "text": "把羊宰了！",
-        "peopleChange": 10,
+        "peopleChange": 100,
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,

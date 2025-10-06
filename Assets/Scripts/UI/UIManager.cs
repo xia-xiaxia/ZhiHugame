@@ -49,7 +49,7 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        if (daDian != null) daDian.SetActive(false);
+        if (daDian != null) daDian.SetActive(true);
         if (endingPanel != null) endingPanel.SetActive(false);
         // 启动游戏（确保 GameControl 已在场景中）
         if (GameControl.Instance != null)
