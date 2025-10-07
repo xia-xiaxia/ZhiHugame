@@ -64,7 +64,7 @@ public class UIManager : MonoBehaviour
         Debug.Log("ShowEvent被调用，事件ID: " + id);
 
         // 清理旧按钮
-        foreach (var b in optionButtons) 
+        foreach (var b in optionButtons)
             if (b != null) Destroy(b);
         optionButtons.Clear();
 
@@ -80,40 +80,29 @@ public class UIManager : MonoBehaviour
 
         Debug.Log($"事件 {id} 有 {evt.options.Count} 个选项");
 
-        // 修复：正确捕获循环变量并确保UI顺序
-        for (int i = 0; i < evt.options.Count; i++)
-        {
-            var opt = evt.options[i];
-            Debug.Log($"创建UI按钮 {i} (从上到下第{i+1}个): {opt.text}, 数值变化: K{opt.kingChange} N{opt.nobleChange} S{opt.scholarChange} F{opt.foreignChange} P{opt.peopleChange}");
-            
+        foreach (var opt in evt.options){
             GameObject btn = Instantiate(optionButtonPrefab, optionsParent);
-            
-            // 强制设置按钮在UI中的顺序
-            btn.transform.SetSiblingIndex(i);
-            
-            btn.GetComponentInChildren<Text>().text = $"{i+1}. {opt.text}";
-            
-            // 关键修复：创建局部副本并添加索引调试
-            var capturedOpt = opt;
-            var optionIndex = i; // 捕获索引用于调试
-            
+            btn.GetComponentInChildren<Text>().text = opt.text;
+
+            var capturedOpt = opt; 
             btn.GetComponent<Button>().onClick.AddListener(() =>
             {
-                Debug.Log($"点击了UI第 {optionIndex+1} 个按钮 (数组索引{optionIndex}): {capturedOpt.text}");
-                Debug.Log($"应用数值变化: K{capturedOpt.kingChange} N{capturedOpt.nobleChange} S{capturedOpt.scholarChange} F{capturedOpt.foreignChange} P{capturedOpt.peopleChange}");
-                
+                Debug.Log($"按钮被点击: {capturedOpt.text}，点击时间: {Time.time} ");
+
                 ifShow = true;
+
                 EventManager.Instance.ApplyOption(capturedOpt, GameControl.Instance.turns);
                 UpdateStatText();
 
                 if (!string.IsNullOrEmpty(capturedOpt.nextEventId))
-                    EventManager.Instance.SetNextEventId(capturedOpt.nextEventId, 0);
-
+                {
+                    EventManager.Instance.SetNextEventId(capturedOpt.nextEventId);
+                }
                 ClearText();
                 GameControl.Instance.ProcessNextTurn();
             });
-            
             optionButtons.Add(btn);
+            Debug.Log("生成按钮："  + opt.text);
         }
 
         ifShow = true;

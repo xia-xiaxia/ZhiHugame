@@ -77,10 +77,11 @@ public class DialoguePanel : MonoBehaviour
     private IEnumerator TypeRoutine()
     {
         bodyText.text = "";
-        int len = currentFullText.Length;
+        int len = currentFullText != null ? currentFullText.Length : 0;
         for (int i = 0; i <= len; i++)
         {
-            bodyText.text = currentFullText.Substring(0, i);
+            int safeLen = Mathf.Clamp(i, 0, len);
+            bodyText.text = currentFullText.Substring(0, safeLen);
             yield return new WaitForSeconds(typeInterval);
         }
         typeRoutine = null;
