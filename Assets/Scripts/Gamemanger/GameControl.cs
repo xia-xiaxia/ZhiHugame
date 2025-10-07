@@ -73,7 +73,7 @@ public class GameControl : MonoBehaviour
         {
             yield return null; // 等待一帧
         }
-        
+
         // 相机准备好后开始游戏
         Debug.Log("[GameControl] 相机准备完成，开始游戏");
         turns = 0;
@@ -148,7 +148,7 @@ public class GameControl : MonoBehaviour
         }
 
         if (!GameOver && UIManager.Instance != null)
-                UIManager.Instance.ShowEvent(eventId);
+            UIManager.Instance.ShowEvent(eventId);
 
         waitingForNextTurn = false;
         currentWaitCoroutine = null;
@@ -250,5 +250,12 @@ public class GameControl : MonoBehaviour
 
         Debug.Log("[GameControl] 重开完成");
         ProcessNextTurn();
+    }
+    
+    // ===== 退出游戏 =====
+    public void QuitGame()
+    {
+        Debug.Log("退出游戏");
+        Application.Quit();
     }
 }
