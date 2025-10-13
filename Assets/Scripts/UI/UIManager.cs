@@ -18,9 +18,11 @@ public class UIManager : MonoBehaviour
 
     public GameObject daDian;
     public GameObject jinYan;
+    public GameObject renwu;
 
     public Text titleText;
     public Text bodyText;
+    public Text tasktext;
     public DialoguePanel dialoguePanel;
     public TextMeshProUGUI statText1;
     public TextMeshProUGUI statText2;

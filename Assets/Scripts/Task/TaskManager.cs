@@ -12,7 +12,6 @@ public class TaskManager : MonoBehaviour
 
     // 将 JSON 作为 TextAsset 拖入 Inspector（推荐）
     public TextAsset taskJsonAsset;
-    public string taskJsonFileName = "Tasks.json"; // 仅作回退用（可选）
 
     public List<TaskDefinition> tasks = new List<TaskDefinition>();
 
@@ -46,18 +45,6 @@ public class TaskManager : MonoBehaviour
         {
             json = taskJsonAsset.text;
             Debug.Log("[TaskManager] 从 Inspector TextAsset 加载任务 JSON");
-        }
-        else
-        {
-            // 回退到磁盘路径（仅在编辑器下或特殊需求时使用）
-            string path = Path.Combine(Application.dataPath, "Scripts/Task", taskJsonFileName);
-            if (!File.Exists(path))
-            {
-                Debug.LogError($"[TaskManager] 未找到任务 JSON 文件: {path}，且未在 Inspector 指定 TextAsset");
-                return;
-            }
-            json = File.ReadAllText(path);
-            Debug.Log("[TaskManager] 从磁盘路径加载任务 JSON: " + path);
         }
 
         tasks = JsonHelper.FromJson<TaskDefinition>(json);

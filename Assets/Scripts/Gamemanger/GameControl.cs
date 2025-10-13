@@ -20,15 +20,19 @@ public class GameControl : MonoBehaviour
     private List<string> lastEvents = new List<string> { " ", " ", " " };
 
     public GameObject man;
+    public GameObject objectsAboutEvent;
     // ====== 新增：结局与阈值相关 ======
-    public int turnLimit = 60;          // 回合上限（Inspector 可调）
+    public int turnLimit = 80;          // 回合上限（Inspector 可调）
     private bool endingTriggered = false;
     // 是否使用 StatModel 内的动态阈值（否则使用固定值）
     public bool useDynamicThreshold = true;
 
+
     void Awake()
     {
         Instance = this;
+        if(objectsAboutEvent != null)
+            objectsAboutEvent.SetActive(false);
     }
 
     // ===== 任务完成示例（保持原逻辑）=====
@@ -49,18 +53,18 @@ public class GameControl : MonoBehaviour
     public void StartGame()
     {
         // 检查相机是否准备好
-        if (CameraMove.Instance != null && !CameraMove.Instance.isReady)
+        if (CanvasMove.Instance != null && !CanvasMove.Instance.isReady)
         {
             Debug.Log("[GameControl] 等待相机移动完成...");
             StartCoroutine(WaitForCameraReady());
             return;
         }
-
         turns = 0;
         GameOver = false;
         endingTriggered = false;
         waitingForNextTurn = false;
-        //UIManager.Instance.daDian.SetActive(true);
+        UIManager.Instance.daDian.SetActive(true);
+        
         Debug.Log("[GameControl] 游戏开始");
         StartCoroutine(wait());
         ProcessNextTurn();
@@ -69,13 +73,13 @@ public class GameControl : MonoBehaviour
     // 等待相机准备完成的协程
     private IEnumerator WaitForCameraReady()
     {
-        while (CameraMove.Instance != null && !CameraMove.Instance.isReady)
+        while (CanvasMove.Instance != null && !CanvasMove.Instance.isReady)
         {
             yield return null; // 等待一帧
         }
 
         // 相机准备好后开始游戏
-        Debug.Log("[GameControl] 相机准备完成，开始游戏");
+        Debug.Log("[GameControl]画面准备完成，开始游戏");
         turns = 0;
         GameOver = false;
         endingTriggered = false;
@@ -131,12 +135,15 @@ public class GameControl : MonoBehaviour
         // 显示大殿
         if (UIManager.Instance != null && UIManager.Instance.daDian != null)
         {
+            if (objectsAboutEvent != null)
+                objectsAboutEvent.SetActive(false);
             UIManager.Instance.daDian.SetActive(true);
             yield return new WaitForSeconds(0.5f);
             if (man != null)
             {
                 man.SetActive(true);
             }
+
         }
 
         yield return new WaitForSeconds(1f);
@@ -148,8 +155,11 @@ public class GameControl : MonoBehaviour
         }
 
         if (!GameOver && UIManager.Instance != null)
+        {
+            if (objectsAboutEvent != null)
+                objectsAboutEvent.SetActive(true);
             UIManager.Instance.ShowEvent(eventId);
-
+        }
         waitingForNextTurn = false;
         currentWaitCoroutine = null;
     }
@@ -251,11 +261,19 @@ public class GameControl : MonoBehaviour
         Debug.Log("[GameControl] 重开完成");
         ProcessNextTurn();
     }
-    
+
     // ===== 退出游戏 =====
     public void QuitGame()
     {
         Debug.Log("退出游戏");
         Application.Quit();
     }
+
+    // ===== 任务系统 =====
+    public void StartTask(string idCsv)
+    {
+        TaskManager.Instance?.StartTask(idCsv);
+        
+    }
+
 }
