@@ -11,7 +11,7 @@
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
-        "activateTask": "",
+        "activateTask": "001",
         "randomEventSet": 0,
         "kingChange": 0,
         "nobleChange": 10,
@@ -47,7 +47,7 @@
         "interval": 0,
         "activateTask": "",
         "randomEventSet": 0,
-        "kingChange": 0,
+        "kingChange": 10,
         "nobleChange": -2,
         "foreignChange": 1,
         "scholarChange": 0

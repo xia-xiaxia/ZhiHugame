@@ -11,6 +11,7 @@ public class GameControl : MonoBehaviour
 
     public bool GameOver = false;
     public bool IsCompleteTask = false;
+    public string CompleteTaskEventId = "000";
 
     // 回合管理
     public int turns = 0;
@@ -19,8 +20,12 @@ public class GameControl : MonoBehaviour
 
     private List<string> lastEvents = new List<string> { " ", " ", " " };
 
+    // UI 相关
     public GameObject man;
     public GameObject objectsAboutEvent;
+    public GameObject taskAbout;
+
+
     // ====== 新增：结局与阈值相关 ======
     public int turnLimit = 80;          // 回合上限（Inspector 可调）
     private bool endingTriggered = false;
@@ -31,23 +36,13 @@ public class GameControl : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        if(objectsAboutEvent != null)
+        if (objectsAboutEvent != null)
             objectsAboutEvent.SetActive(false);
+        if (taskAbout != null)
+            taskAbout.SetActive(false);
     }
 
-    // ===== 任务完成示例（保持原逻辑）=====
-    public void CompleteTask()
-    {
-        if (EventManager.Instance != null)
-        {
-            foreach (var eventId in lastEvents)
-            {
-                if (EventManager.Instance.DetermineNextEventId() == "")
-                    IsCompleteTask = true;
-            }
-        }
-        Debug.Log("任务完成！");
-    }
+    
 
     // ===== 开始游戏 =====
     public void StartGame()
@@ -273,7 +268,20 @@ public class GameControl : MonoBehaviour
     public void StartTask(string idCsv)
     {
         TaskManager.Instance?.StartTask(idCsv);
-        
+
     }
 
+    // ===== 任务完成示例=====
+    public void CompleteTask(string nextEventId = "000")
+    {
+        IsCompleteTask = true;
+        CompleteTaskEventId = nextEventId;
+        Debug.Log("任务完成！");
+    }
+
+    public void switchTaskPanel()
+    {
+        if (taskAbout != null)
+            taskAbout.SetActive(!taskAbout.activeSelf);
+    }
 }

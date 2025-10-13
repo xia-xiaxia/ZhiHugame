@@ -182,6 +182,12 @@ public class EventManager : MonoBehaviour
             ishistoryEvent = false;
         }
 
+        if(opt.activateTask != null && GameControl.Instance != null)
+        {
+            GameControl.Instance.StartTask(opt.activateTask);
+            Debug.Log("[EventManager] 任务已激活");
+        }
+
         UIManager.Instance?.UpdateStatText();
         UIManager.Instance?.ClearText();
         GameControl.Instance?.OnStatsChanged();
@@ -204,8 +210,11 @@ public class EventManager : MonoBehaviour
 
         if (GameControl.Instance.IsCompleteTask)
         {
+            ishistoryEvent = false;
             GameControl.Instance.IsCompleteTask = false;
-            return "200";
+            string completeId = GameControl.Instance.CompleteTaskEventId;
+            GameControl.Instance.CompleteTaskEventId = "000";
+            return completeId;
         }
 
         if (currentTurn == 1)
@@ -355,4 +364,5 @@ public class EventManager : MonoBehaviour
     }
 
     public void OnRestartCleanup() { }
+
 }
