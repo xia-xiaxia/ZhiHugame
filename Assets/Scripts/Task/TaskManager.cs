@@ -28,6 +28,9 @@ public class TaskManager : MonoBehaviour
         public TaskDefinition def;
         public int startTurn;
         public bool finished;
+        // 新增：UI 与过期标记
+        public GameObject uiItem;
+        public bool expiredUnfinished;
     }
 
     private List<TaskInstance> running = new List<TaskInstance>();
@@ -37,6 +40,8 @@ public class TaskManager : MonoBehaviour
     public int maxConcurrentTasks = 100;
     public bool preventDuplicate = true;
     public int unlimitedTaskSafetyLimit = 200; // 超过该回合数仍未手动结束则强制判定失败
+    [Header("过期UI保留回合数")]
+    public int expiredKeepTurns = 3;
 
     void Awake()
     {
@@ -108,6 +113,8 @@ public class TaskManager : MonoBehaviour
         currentTask.GetComponentInChildren<Text>().text = def.description;
         Button taskButton = currentTask.GetComponentInChildren<Button>();
         taskButton.onClick.AddListener(() => { ShowTaskDescription(def); }); // 点击查看详细显示
+        // 记录UI对象
+        inst.uiItem = currentTask;
 
         Debug.Log($"[TaskManager] 任务 {def.id} 开始 (timeLimit={def.timeLimit})");
 
@@ -156,7 +163,12 @@ public class TaskManager : MonoBehaviour
             yield return null;
 
         if (!inst.finished)
+        {
+            // 到时限但未完成：标记未完成，并在若干回合后移除UI
+            MarkExpiredAndScheduleRemoval(inst, expiredKeepTurns);
+            // 仍按现有逻辑做结算（通常走失败分支）
             EvaluateAndFinish(inst);
+        }
     }
 
     public void EvaluateAndFinishById(string id)
@@ -197,6 +209,13 @@ public class TaskManager : MonoBehaviour
         running.Remove(inst);
         // 任务真正结束后，释放占位，允许再次启动
         activeTaskIds.Remove(inst.def.id);
+
+        // 若不是“过期保留”的情况，立即移除UI；过期的UI由协程延时销毁
+        if (!inst.expiredUnfinished && inst.uiItem != null)
+        {
+            Destroy(inst.uiItem);
+        }
+        inst.uiItem = null;
     }
 
     private int GetStatValue(string stat)
@@ -258,6 +277,12 @@ public class TaskManager : MonoBehaviour
         StopAllCoroutines();
         running.Clear();
         activeTaskIds.Clear();
+        // 清空面板上遗留的UI项
+        if (taskPanel != null)
+        {
+            for (int i = taskPanel.transform.childCount - 1; i >= 0; i--)
+                Destroy(taskPanel.transform.GetChild(i).gameObject);
+        }
     }
 
     public void ShowTaskDescription(TaskDefinition def)
@@ -267,6 +292,33 @@ public class TaskManager : MonoBehaviour
             taskDescriptionText.text = def.description + "\n" + "时限：" + def.timeLimit + " 回合";
             taskDescription.SetActive(!taskDescription.activeSelf);
         }
+    }
+
+    // 标记过期并安排延迟回合移除
+    private void MarkExpiredAndScheduleRemoval(TaskInstance inst, int delayTurns)
+    {
+        if (inst == null) return;
+        inst.expiredUnfinished = true;
+        if (inst.uiItem != null)
+        {
+            // 文案标记 + 置灰 + 禁用交互
+            var text = inst.uiItem.GetComponentInChildren<Text>();
+            if (text != null) text.text = $"{inst.def.description}（未完成）";
+            var btn = inst.uiItem.GetComponentInChildren<Button>();
+            if (btn != null) btn.interactable = false;
+            var img = inst.uiItem.GetComponentInChildren<Image>();
+            if (img != null) img.color = new Color(img.color.r, img.color.g, img.color.b, 0.6f);
+        }
+        StartCoroutine(RemoveTaskUIAfterTurns(inst.uiItem, delayTurns));
+    }
+
+    private IEnumerator RemoveTaskUIAfterTurns(GameObject uiItem, int afterTurns)
+    {
+        if (uiItem == null) yield break;
+        int startTurn = GetCurrentTurn();
+        while (GameControl.Instance != null && GetCurrentTurn() - startTurn < afterTurns)
+            yield return null;
+        if (uiItem != null) Destroy(uiItem);
     }
 }
 
