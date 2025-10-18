@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System.IO;
-using System.Threading.Tasks;
 using JsonA;
 
 public class EventManager : MonoBehaviour
@@ -10,39 +9,21 @@ public class EventManager : MonoBehaviour
     public static EventManager Instance;
     public StatModel stats;
     public List<TextAsset> eventJsons;
-    public TextAsset historyEventJson;
     public GameObject palace;
-    public GameObject qte;
-    public Image qteimage;
-    public Sprite tlimage;
-    public Sprite zzimage;
-    public Sprite jsimage;
-    public Sprite hmimage;
-    public GameObject tljy;
-    public GameObject hmjy;
-    public GameObject zzjy;
-    public GameObject jsjy;
-    public Transform pandingwenben;
-    public AudioClip tlBgm;
-    public AudioClip jsBgm;
-    public AudioClip hmBgm;
-    public AudioClip zzBgm;
+    
     public AudioClip Bgm;
     public AudioSource audioSrc;
-    public AudioClip zhong;
-
-    private Dictionary<string, GameEvent> randomEvents = new Dictionary<string, GameEvent>();
-    private Dictionary<string, GameEvent> historyEvents = new Dictionary<string, GameEvent>();
 
     private List<Dictionary<string, GameEvent>> randomEventList = new List<Dictionary<string, GameEvent>>();
     private List<int> activeRandomEventSetIndices = new List<int>();
 
-    public bool ishistoryEvent = false;
     public int fileIndex = 0;
-    public int dcb = 1;
 
     // 下一个事件（仅选项强制指定时生效）
     private string nextEventId = "0";
+
+    // 延时事件队列：每项 (触发年份, 事件ID)
+    private List<(int triggerYear, string eventId)> delayedEvents = new List<(int, string)>();
 
     private void Start()
     {
@@ -60,7 +41,6 @@ public class EventManager : MonoBehaviour
     {
         randomEventList.Clear();
         activeRandomEventSetIndices.Clear();
-        historyEvents.Clear();
 
         for (int i = 0; i < eventJsons.Count; i++)
         {
@@ -72,7 +52,7 @@ public class EventManager : MonoBehaviour
             }
 
             var currentEventDict = new Dictionary<string, GameEvent>();
-            List<GameEvent> all = JsonHelper.FromJson<GameEvent>(eventJson.text);
+            GameEvent[] all = JsonHelper.FromJson<GameEvent>(eventJson.text);
             foreach (var e in all)
             {
                 if (!string.IsNullOrEmpty(e?.id))
@@ -82,33 +62,10 @@ public class EventManager : MonoBehaviour
             activeRandomEventSetIndices.Add(i);
             Debug.Log($"[EventManager] LoadEvents 随机事件集 {i} 加载 {currentEventDict.Count} 条");
         }
-
-        if (historyEventJson != null)
-        {
-            List<GameEvent> his = JsonHelper.FromJson<GameEvent>(historyEventJson.text);
-            foreach (var e in his)
-            {
-                if (!string.IsNullOrEmpty(e?.id))
-                    historyEvents[e.id] = e;
-            }
-            Debug.Log($"[EventManager] LoadEvents 历史事件加载 {historyEvents.Count} 条");
-        }
-        else
-        {
-            Debug.LogWarning("[EventManager] 未提供历史事件 JSON");
-        }
     }
 
     public GameEvent GetEvent(string id, int randomEventSet = -1)
     {
-        if (ishistoryEvent)
-        {
-            if (historyEvents.TryGetValue(id, out var his))
-                return his;
-            Debug.LogError($"[EventManager] 历史事件 {id} 不存在");
-            return null;
-        }
-
         foreach (int idx in activeRandomEventSetIndices)
         {
             if (idx >= 0 && idx < randomEventList.Count &&
@@ -132,7 +89,7 @@ public class EventManager : MonoBehaviour
         return null;
     }
 
-    public void ApplyOption(Option opt, int turns)
+    public void ApplyOption(Option opt, int year)
     {
         if (opt == null)
         {
@@ -172,21 +129,21 @@ public class EventManager : MonoBehaviour
             }
         }
 
-        if (opt.nextEventId != "0")
+        if (!string.IsNullOrEmpty(opt.nextEventId) && opt.nextEventId != "0")
         {
-            nextEventId = opt.nextEventId;
-            Debug.Log($"[EventManager] 设定后继事件 {nextEventId}");
-        }
-        else if (ishistoryEvent)
-        {
-            ishistoryEvent = false;
+            if (opt.interval > 0)
+            {
+                int triggerYear = GameControl.Instance.year + opt.interval;
+                delayedEvents.Add((triggerYear, opt.nextEventId));
+                Debug.Log($"[EventManager] 延时插入事件 {opt.nextEventId}，将在第 {triggerYear} 年触发");
+            }
+            else
+            {
+                nextEventId = opt.nextEventId;
+                Debug.Log($"[EventManager] 设定后继事件 {nextEventId}");
+            }
         }
 
-        if(opt.activateTask != null && GameControl.Instance != null)
-        {
-            GameControl.Instance.StartTask(opt.activateTask);
-            Debug.Log("[EventManager] 任务已激活");
-        }
 
         UIManager.Instance?.UpdateStatText();
         UIManager.Instance?.ClearText();
@@ -206,56 +163,83 @@ public class EventManager : MonoBehaviour
     // 核心决定逻辑
     public string DetermineNextEventId()
     {
-        int currentTurn = GameControl.Instance.turns;
+        int currentYear = GameControl.Instance.year;
 
-        if (GameControl.Instance.IsCompleteTask)
+        // 优先处理延时事件队列
+        for (int i = 0; i < delayedEvents.Count; i++)
         {
-            ishistoryEvent = false;
-            GameControl.Instance.IsCompleteTask = false;
-            string completeId = GameControl.Instance.CompleteTaskEventId;
-            GameControl.Instance.CompleteTaskEventId = "000";
-            return completeId;
-        }
-
-        if (currentTurn == 1)
-        {
-            ishistoryEvent = false;
-            return "00101";
+            var (triggerYear, eventId) = delayedEvents[i];
+            if (triggerYear <= currentYear)
+            {
+                delayedEvents.RemoveAt(i);
+                Debug.Log($"[EventManager] 触发延时事件 {eventId} 于第 {currentYear} 年");
+                return eventId;
+            }
         }
 
         // 强制后继（一次性）
-        if (!string.IsNullOrEmpty(nextEventId) &&
-            nextEventId != "0" &&
-            nextEventId != "00101" &&
-            nextEventId != "00501")
+        if (!string.IsNullOrEmpty(nextEventId) && nextEventId != "0")
         {
             string forced = nextEventId;
             nextEventId = "0";
-            ishistoryEvent = false;
             return forced;
         }
 
-        // 每4回合尝试主线
-        if (currentTurn % 4 == 0 && currentTurn > 0)
+        // 没有后继决策：随机抽一个 00x 的事件，并跳到第一个决策 00x01
+        return PickRandom01PatternEvent();
+    }
+    // 只挑选以 01 结尾的事件（00x01）
+    private string PickRandom01PatternEvent()
+    {
+        List<string> candidates = new List<string>();
+
+        // 优先在激活事件集中挑选
+        foreach (int idx in activeRandomEventSetIndices)
         {
-            string mainEventId = (currentTurn == 4) ? "00501" : "00501"; // 可扩展后续主线
-            ishistoryEvent = true;
-
-            var he = GetEvent(mainEventId);
-            if (he != null)
-                return mainEventId;
-
-            // 主线缺失 → 使用 ???01 模式随机
-            Debug.LogWarning($"[EventManager] 主线事件 {mainEventId} 缺失，使用 ???01 模式随机");
-            ishistoryEvent = false;
-            return PickRandom01PatternEvent();
+            if (idx < 0 || idx >= randomEventList.Count) continue;
+            var dict = randomEventList[idx];
+            if (dict == null) continue;
+            foreach (var id in dict.Keys)
+            {
+                if (id.EndsWith("01"))
+                {
+                    // 可选：避免非首回合再次进入开场事件
+                    if (GameControl.Instance != null && GameControl.Instance.year > 1 && id == "00101")
+                        continue;
+                    candidates.Add(id);
+                }
+            }
         }
 
-        // 普通随机
-        ishistoryEvent = false;
-        return PickRandomEventFromActiveSets();
-    }
+        // 如果激活集中没有，则在全部事件中找
+        if (candidates.Count == 0)
+        {
+            foreach (var dict in randomEventList)
+            {
+                if (dict == null) continue;
+                foreach (var id in dict.Keys)
+                {
+                    if (id.EndsWith("01"))
+                    {
+                        if (GameControl.Instance != null && GameControl.Instance.year > 1 && id == "00101")
+                            continue;
+                        candidates.Add(id);
+                    }
+                }
+            }
+        }
 
+        if (candidates.Count == 0)
+        {
+            // 兜底：没有任何 01 事件时，退回到通用随机
+            Debug.LogWarning("[EventManager] 未找到任何以 01 结尾的事件，回退到通用随机");
+            return PickRandomEventFromActiveSets();
+        }
+
+        string pick = candidates[Random.Range(0, candidates.Count)];
+        Debug.Log($"[EventManager] PickRandom01PatternEvent -> {pick}");
+        return pick;
+    }
     // 从激活集中随机
     private string PickRandomEventFromActiveSets()
     {
@@ -299,56 +283,13 @@ public class EventManager : MonoBehaviour
         return id;
     }
 
-    // 只挑选以 01 结尾的事件（???01）
-    private string PickRandom01PatternEvent()
-    {
-        List<string> candidates = new List<string>();
-
-        foreach (int idx in activeRandomEventSetIndices)
-        {
-            if (idx < 0 || idx >= randomEventList.Count) continue;
-            var dict = randomEventList[idx];
-            if (dict == null) continue;
-            foreach (var id in dict.Keys)
-            {
-                if (id.EndsWith("01"))
-                {
-                    if (GameControl.Instance != null && GameControl.Instance.turns > 1 && id == "00101")
-                        continue;
-                    candidates.Add(id);
-                }
-            }
-        }
-
-        if (candidates.Count == 0)
-        {
-            foreach (var dict in randomEventList)
-            {
-                if (dict == null) continue;
-                foreach (var id in dict.Keys)
-                    if (id.EndsWith("01")) candidates.Add(id);
-            }
-        }
-
-        if (candidates.Count == 0)
-        {
-            int rnd = Random.Range(1, 10);
-            string manual = rnd.ToString("000") + "01";
-            Debug.LogWarning($"[EventManager] 无 01 结尾事件，构造兜底 {manual}");
-            return manual;
-        }
-
-        string pick = candidates[Random.Range(0, candidates.Count)];
-        Debug.Log($"[EventManager] PickRandom01PatternEvent -> {pick}");
-        return pick;
-    }
+    
 
     public void HandleGameOver(string reason)
     {
         Debug.LogWarning($"[EventManager] 游戏失败: {reason}");
         LoadEvents();
         nextEventId = "0";
-        ishistoryEvent = false;
 
         if (stats != null)
             Debug.Log("[EventManager] 可在此重置数值（目前未重置）");
@@ -359,7 +300,6 @@ public class EventManager : MonoBehaviour
     public void ReloadAllEventsForRestart()
     {
         nextEventId = "0";
-        ishistoryEvent = false;
         LoadEvents();
     }
 

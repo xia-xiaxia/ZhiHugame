@@ -9,20 +9,12 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
 
     public StatModel stats;
-    public Image gameover;
-    public Sprite end1;
-    public Sprite end2;
-    public Sprite end3;
-    public Sprite end4;
-    public Sprite end5;
-
+    
     public GameObject daDian;
     public GameObject jinYan;
-    public GameObject renwu;
 
     public Text titleText;
     public Text bodyText;
-    public Text tasktext;
     public DialoguePanel dialoguePanel;
     public TextMeshProUGUI statText1;
     public TextMeshProUGUI statText2;
@@ -30,15 +22,12 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI statText4;
     public TextMeshProUGUI statText5;
 
-    public bool ifShow;
+    public bool isShow;
     public int eventid = 100;
-    public AudioClip GE;
-    public AudioClip BE;
 
     public GameObject optionButtonPrefab;
     public Transform optionsParent;
 
-    public bool allgone = false;
     private List<GameObject> optionButtons = new List<GameObject>();
     //private bool gameOverTriggered = false;
 
@@ -46,6 +35,12 @@ public class UIManager : MonoBehaviour
     public GameObject endingPanel;
     public Text endingText;
     public Button restartButton;
+
+    // ===== 新增：免死道具确认弹窗 =====
+    public GameObject deathImmunityPanel;
+    public Text deathImmunityText;
+    public Button useDeathImmunityButton;
+    public Button declineDeathImmunityButton;
 
     void Awake() { Instance = this; }
 
@@ -91,9 +86,12 @@ public class UIManager : MonoBehaviour
             {
                 Debug.Log($"按钮被点击: {capturedOpt.text}，点击时间: {Time.time} ");
 
-                ifShow = true;
+                isShow = true;
 
-                EventManager.Instance.ApplyOption(capturedOpt, GameControl.Instance.turns);
+                // 在应用选项前保存数值快照（用于免死道具恢复）
+                GameControl.Instance.SaveStatsSnapshot();
+
+                EventManager.Instance.ApplyOption(capturedOpt, GameControl.Instance.year);
                 UpdateStatText();
 
                 if (!string.IsNullOrEmpty(capturedOpt.nextEventId))
@@ -107,7 +105,7 @@ public class UIManager : MonoBehaviour
             Debug.Log("生成按钮："  + opt.text);
         }
 
-        ifShow = true;
+        isShow = true;
     }
 
     public void UpdateStatText()
@@ -124,10 +122,9 @@ public class UIManager : MonoBehaviour
     }
 
 
-
     public void ClearText()
     {
-        ifShow = false;
+        isShow = false;
         if (titleText) titleText.text = string.Empty;
         if (dialoguePanel) dialoguePanel.SetBody(" ");
         foreach (var b in optionButtons) Destroy(b);
@@ -175,5 +172,53 @@ public class UIManager : MonoBehaviour
     {
         if (daDian != null) daDian.SetActive(false);
         if (dialoguePanel != null) dialoguePanel.OnDadianHidden();
+    }
+
+    // ===== 免死道具确认弹窗 =====
+    public void ShowDeathImmunityPrompt(PolicyItem item, int deathType)
+    {
+        if (deathImmunityPanel != null) deathImmunityPanel.SetActive(true);
+        
+        // 构建提示文本
+        string deathTypeName = GetDeathTypeName(deathType);
+        string promptText = $"检测到致命危机：{deathTypeName}\n\n是否使用国策：{item.name}？\n{item.desc}\n剩余使用次数：{(item.usageCount == -1 ? "无限" : item.usageCount.ToString())}";
+        
+        if (deathImmunityText != null) deathImmunityText.text = promptText;
+
+        // 绑定按钮
+        if (useDeathImmunityButton != null)
+        {
+            useDeathImmunityButton.onClick.RemoveAllListeners();
+            useDeathImmunityButton.onClick.AddListener(() =>
+            {
+                deathImmunityPanel.SetActive(false);
+                GameControl.Instance.OnDeathImmunityUse();
+            });
+        }
+
+        if (declineDeathImmunityButton != null)
+        {
+            declineDeathImmunityButton.onClick.RemoveAllListeners();
+            declineDeathImmunityButton.onClick.AddListener(() =>
+            {
+                deathImmunityPanel.SetActive(false);
+                GameControl.Instance.OnDeathImmunityDecline();
+            });
+        }
+    }
+
+    // 获取死亡类型名称
+    private string GetDeathTypeName(int deathType)
+    {
+        switch (deathType)
+        {
+            case 1: return "国君势力失衡";
+            case 2: return "士族势力失衡";
+            case 3: return "贵族势力失衡";
+            case 4: return "外臣势力失衡";
+            case 5: return "庶人势力失衡";
+            case 6: return "事件强制死亡";
+            default: return "未知危机";
+        }
     }
 }

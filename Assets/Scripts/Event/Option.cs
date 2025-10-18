@@ -15,7 +15,6 @@ public class Option
     public string specialChange;
     public string nextEventId;
     public int interval;
-    public string activateTask;
     public int randomEventSet;
 }
 

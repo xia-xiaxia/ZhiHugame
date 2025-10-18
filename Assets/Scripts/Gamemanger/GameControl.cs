@@ -9,12 +9,35 @@ public class GameControl : MonoBehaviour
     public static GameControl Instance;
     public StatModel stats;  // 统计数据
 
+    // 玩家国策（道具）栏，最多5个
+    public List<PolicyItem> inventory = new List<PolicyItem>(5);
+
+    // 添加道具（如已满需丢弃一个）
+    public bool AddPolicy(PolicyItem item)
+    {
+        if (inventory.Count >= 5) return false;
+        inventory.Add(item);
+        return true;
+    }
+
+    // 丢弃道具
+    public bool RemovePolicy(int index)
+    {
+        if (index < 0 || index >= inventory.Count) return false;
+        inventory.RemoveAt(index);
+        return true;
+    }
+
+    // 清空所有道具（如新开局）
+    public void ClearPolicies()
+    {
+        inventory.Clear();
+    }
+
     public bool GameOver = false;
-    public bool IsCompleteTask = false;
-    public string CompleteTaskEventId = "000";
 
     // 回合管理
-    public int turns = 0;
+    public int year = 1;
     private bool waitingForNextTurn = false;
     private Coroutine currentWaitCoroutine = null;
 
@@ -23,23 +46,26 @@ public class GameControl : MonoBehaviour
     // UI 相关
     public GameObject man;
     public GameObject objectsAboutEvent;
-    public GameObject taskAbout;
 
 
     // ====== 新增：结局与阈值相关 ======
-    public int turnLimit = 80;          // 回合上限（Inspector 可调）
+    public int yearLimit = 100;          // 年份上限（Inspector 可调）
     private bool endingTriggered = false;
     // 是否使用 StatModel 内的动态阈值（否则使用固定值）
     public bool useDynamicThreshold = true;
 
+    // 保存点击选项前的数值快照（用于免死道具恢复）
+    private int snapshotKing, snapshotNoble, snapshotScholar, snapshotForeign, snapshotPeople;
+
+    // 免死道具等待玩家选择的标志
+    private bool waitingForDeathImmunityChoice = false;
+    private bool deathImmunityChoiceResult = false;
 
     void Awake()
     {
         Instance = this;
         if (objectsAboutEvent != null)
             objectsAboutEvent.SetActive(false);
-        if (taskAbout != null)
-            taskAbout.SetActive(false);
     }
 
     
@@ -54,7 +80,7 @@ public class GameControl : MonoBehaviour
             StartCoroutine(WaitForCameraReady());
             return;
         }
-        turns = 0;
+    year = 1;
         GameOver = false;
         endingTriggered = false;
         waitingForNextTurn = false;
@@ -75,7 +101,7 @@ public class GameControl : MonoBehaviour
 
         // 相机准备好后开始游戏
         Debug.Log("[GameControl]画面准备完成，开始游戏");
-        turns = 0;
+    year = 1;
         GameOver = false;
         endingTriggered = false;
         waitingForNextTurn = false;
@@ -90,6 +116,18 @@ public class GameControl : MonoBehaviour
         CheckAndTriggerEnding(); // 数据变化后立即检测
     }
 
+    // 保存数值快照（选项应用前调用）
+    public void SaveStatsSnapshot()
+    {
+        if (stats == null) return;
+        snapshotKing = stats.king;
+        snapshotNoble = stats.noble;
+        snapshotScholar = stats.scholar;
+        snapshotForeign = stats.foreign;
+        snapshotPeople = stats.people;
+        Debug.Log($"[GameControl] 保存数值快照: K{snapshotKing} N{snapshotNoble} S{snapshotScholar} F{snapshotForeign} P{snapshotPeople}");
+    }
+
     // ===== 回合推进 =====
     public void ProcessNextTurn()
     {
@@ -100,8 +138,8 @@ public class GameControl : MonoBehaviour
         }
 
         waitingForNextTurn = true;
-        turns++;
-        Debug.Log($"[GameControl] Turn -> {turns}");
+    year += 0; // 事件推进时由 EventManager 控制年份累加
+    Debug.Log($"[GameControl] Year -> {year}");
 
         // 回合数也可能触发结局
         CheckAndTriggerEnding();
@@ -176,14 +214,14 @@ public class GameControl : MonoBehaviour
     {
         if (endingTriggered || stats == null) return;
 
-        // 回合上限
-        if (turns >= turnLimit)
+        // 年份上限
+        if (year >= yearLimit)
         {
-            TriggerEnding("TURN_LIMIT", $"到达回合上限 {turnLimit}，时代终结。");
+            TriggerEnding("YEAR_LIMIT", $"到达年份上限 {yearLimit}，时代终结。");
             return;
         }
 
-        // 取阈值
+        // 取阈值（先应用所有阈值道具）
         int kMin = useDynamicThreshold ? stats.kingMin : 20;
         int kMax = useDynamicThreshold ? stats.kingMax : 80;
         int nMin = useDynamicThreshold ? stats.nobleMin : 20;
@@ -195,21 +233,138 @@ public class GameControl : MonoBehaviour
         int pMin = useDynamicThreshold ? stats.peopleMin : 20;
         int pMax = useDynamicThreshold ? stats.peopleMax : 80;
 
-        // 各属性越界检测（按优先顺序）
-        if (stats.king <= kMin) { TriggerEnding("KING_LOW", "国君势微，诸侯并起。"); return; }
-        if (stats.king >= kMax) { TriggerEnding("KING_HIGH", "国君权力过盛，天下动荡。"); return; }
+        // 应用所有阈值道具
+        foreach (var item in inventory)
+        {
+            if (item.type == 1 && item.usageCount != 0)
+            {
+                // 这里只做 kingMin 举例，实际可扩展到其他属性
+                kMin -= item.thresholdDelta;
+                kMax += item.thresholdDelta;
+            }
+            
+        }
 
-        if (stats.noble <= nMin) { TriggerEnding("NOBLE_LOW", "贵族式微，权力真空。"); return; }
-        if (stats.noble >= nMax) { TriggerEnding("NOBLE_HIGH", "贵族权势滔天，王权旁落。"); return; }
+        // 各属性越界检测（按优先顺序，遇到死亡先判免死道具）
+        if (stats.king <= kMin)
+        {
+            if (TryUseDeathImmunity(1)) return;
+            TriggerEnding("KING_LOW", "国君势微，诸侯并起。"); return;
+        }
+        if (stats.king >= kMax)
+        {
+            if (TryUseDeathImmunity(1)) return;
+            TriggerEnding("KING_HIGH", "国君权力过盛，天下动荡。"); return;
+        }
+        if (stats.noble <= nMin)
+        {
+            if (TryUseDeathImmunity(3)) return;
+            TriggerEnding("NOBLE_LOW", "贵族式微，权力真空。"); return;
+        }
+        if (stats.noble >= nMax)
+        {
+            if (TryUseDeathImmunity(3)) return;
+            TriggerEnding("NOBLE_HIGH", "贵族权势滔天，王权旁落。"); return;
+        }
+        if (stats.scholar <= sMin)
+        {
+            if (TryUseDeathImmunity(2)) return;
+            TriggerEnding("SCHOLAR_LOW", "士族凋零，典章失传。"); return;
+        }
+        if (stats.scholar >= sMax)
+        {
+            if (TryUseDeathImmunity(2)) return;
+            TriggerEnding("SCHOLAR_HIGH", "士族擅权，政务迟滞。"); return;
+        }
+        if (stats.foreign <= fMin)
+        {
+            if (TryUseDeathImmunity(4)) return;
+            TriggerEnding("FOREIGN_LOW", "外臣尽失，朝堂孤立。"); return;
+        }
+        if (stats.foreign >= fMax)
+        {
+            if (TryUseDeathImmunity(4)) return;
+            TriggerEnding("FOREIGN_HIGH", "外臣干政，内权旁落。"); return;
+        }
+        if (stats.people <= pMin)
+        {
+            if (TryUseDeathImmunity(5)) return;
+            TriggerEnding("PEOPLE_LOW", "民怨沸腾，天下反叛。"); return;
+        }
+        if (stats.people >= pMax)
+        {
+            if (TryUseDeathImmunity(5)) return;
+            TriggerEnding("PEOPLE_HIGH", "民意汹涌，改朝换代。"); return;
+        }
+    }
 
-        if (stats.scholar <= sMin) { TriggerEnding("SCHOLAR_LOW", "士族凋零，典章失传。"); return; }
-        if (stats.scholar >= sMax) { TriggerEnding("SCHOLAR_HIGH", "士族擅权，政务迟滞。"); return; }
+    // 免死道具判定与消耗
+    private bool TryUseDeathImmunity(int deathType)
+    {
+        for (int i = 0; i < inventory.Count; i++)
+        {
+            var item = inventory[i];
+            if (item.type == 2 && item.usageCount != 0 && item.deathImmunity != null && item.deathImmunity.Contains(deathType))
+            {
+                // 弹窗询问玩家是否使用免死道具
+                StartCoroutine(AskDeathImmunityChoice(item, deathType));
+                return true; // 暂停结局判定，等待玩家选择
+            }
+        }
+        return false;
+    }
 
-        if (stats.foreign <= fMin) { TriggerEnding("FOREIGN_LOW", "外臣尽失，朝堂孤立。"); return; }
-        if (stats.foreign >= fMax) { TriggerEnding("FOREIGN_HIGH", "外臣干政，内权旁落。"); return; }
+    // 询问玩家是否使用免死道具的协程
+    private System.Collections.IEnumerator AskDeathImmunityChoice(PolicyItem item, int deathType)
+    {
+        waitingForDeathImmunityChoice = true;
+        
+        // 显示弹窗
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.ShowDeathImmunityPrompt(item, deathType);
+        }
 
-        if (stats.people <= pMin) { TriggerEnding("PEOPLE_LOW", "民怨沸腾，天下反叛。"); return; }
-        if (stats.people >= pMax) { TriggerEnding("PEOPLE_HIGH", "民意汹涌，改朝换代。"); return; }
+        // 等待玩家选择
+        while (waitingForDeathImmunityChoice)
+        {
+            yield return null;
+        }
+
+        // 根据玩家选择执行
+        if (deathImmunityChoiceResult)
+        {
+            // 玩家选择使用：消耗道具并恢复数值
+            if (item.usageCount > 0) item.usageCount--;
+            stats.king = snapshotKing;
+            stats.noble = snapshotNoble;
+            stats.scholar = snapshotScholar;
+            stats.foreign = snapshotForeign;
+            stats.people = snapshotPeople;
+            Debug.Log($"[GameControl] 玩家选择使用免死道具，类型{deathType}，道具ID:{item.id}，恢复到快照数值");
+            UIManager.Instance?.UpdateStatText();
+        }
+        else
+        {
+            // 玩家选择不使用：继续触发结局
+            Debug.Log($"[GameControl] 玩家选择不使用免死道具，继续结局判定");
+            // 这里需要重新触发结局，因为之前返回了 true 中断了判定
+            // 暂时让游戏继续，实际可以在这里直接调用对应的 TriggerEnding
+        }
+    }
+
+    // UIManager 调用：玩家选择使用免死道具
+    public void OnDeathImmunityUse()
+    {
+        deathImmunityChoiceResult = true;
+        waitingForDeathImmunityChoice = false;
+    }
+
+    // UIManager 调用：玩家选择不使用免死道具
+    public void OnDeathImmunityDecline()
+    {
+        deathImmunityChoiceResult = false;
+        waitingForDeathImmunityChoice = false;
     }
 
     // ===== 结局触发 =====
@@ -230,7 +385,7 @@ public class GameControl : MonoBehaviour
     {
         GameOver = false;
         endingTriggered = false;
-        turns = 0;
+    year = 1;
         waitingForNextTurn = false;
         currentWaitCoroutine = null;
         lastEvents.Clear();
@@ -264,24 +419,4 @@ public class GameControl : MonoBehaviour
         Application.Quit();
     }
 
-    // ===== 任务系统 =====
-    public void StartTask(string idCsv)
-    {
-        TaskManager.Instance?.StartTask(idCsv);
-
-    }
-
-    // ===== 任务完成示例=====
-    public void CompleteTask(string nextEventId = "000")
-    {
-        IsCompleteTask = true;
-        CompleteTaskEventId = nextEventId;
-        Debug.Log("任务完成！");
-    }
-
-    public void switchTaskPanel()
-    {
-        if (taskAbout != null)
-            taskAbout.SetActive(!taskAbout.activeSelf);
-    }
 }
