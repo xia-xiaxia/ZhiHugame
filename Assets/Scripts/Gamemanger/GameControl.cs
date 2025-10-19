@@ -375,14 +375,22 @@ public class GameControl : MonoBehaviour
         GameOver = true;
         Debug.Log($"[GameControl] 结局触发: {endingId} - {endingDescription}");
 
+        // 游戏结束时，先生成新一轮商店道具
+        if (PolicyManager.Instance != null)
+            PolicyManager.Instance.GenerateShopItems(5);
+
         // 展示结局UI（需要 UIManager 实现 ShowEndingPanel）
         if (UIManager.Instance != null)
             UIManager.Instance.ShowEndingPanel(endingDescription);
     }
 
-    // ===== 重开 =====
+    // ===== 重开游戏 =====
     public void RestartGame()
     {
+        // 重开时也生成新一轮商店道具
+        if (PolicyManager.Instance != null)
+            PolicyManager.Instance.GenerateShopItems(5);
+
         GameOver = false;
         endingTriggered = false;
     year = 1;
@@ -419,4 +427,17 @@ public class GameControl : MonoBehaviour
         Application.Quit();
     }
 
+    // 获取玩家货币（活了多少年）
+    public int GetCurrency()
+    {
+        return year;
+    }
+
+    // 扣除货币（购买道具时）
+    public void SpendCurrency(int amount)
+    {
+        year -= amount;
+        if (year < 0) year = 0;
+        Debug.Log($"[GameControl] 花费 {amount} 年，剩余 {year} 年");
+    }
 }

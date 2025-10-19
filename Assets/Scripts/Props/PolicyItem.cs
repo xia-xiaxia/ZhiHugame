@@ -11,4 +11,5 @@ public class PolicyItem
     public int usageCount; // 可用次数（-1无限，0销毁）
     public string name; // 名称
     public string desc; // 说明
+
 }
