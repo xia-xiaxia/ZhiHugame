@@ -19,14 +19,23 @@ public class CanvasMove : MonoBehaviour
 
     void Start()
     {
-        if (transform.position != startPanel.position)
-            startPanel.position = transform.position;
+        if (startPanel != null)
+        {
+            Debug.Log("初始化位置");
+            if (transform.position != startPanel.position)
+                startPanel.position = transform.position;
+        }
         isReady = false;
     }
-    
+
     public void StartGame()
     {
         StartCoroutine(MoveUP());
+    }
+    
+    public void BackToStart()
+    {
+        StartCoroutine(MoveDown());
     }
 
     IEnumerator MoveUP()
@@ -45,6 +54,24 @@ public class CanvasMove : MonoBehaviour
         startPanel.position = startEndPos;
         startPanel.gameObject.SetActive(false);
         isReady = true;
+    }
+
+    IEnumerator MoveDown()
+    {
+        startPanel.gameObject.SetActive(true);
+        Vector3 startBeginPos = startPanel.position;
+        Vector3 startEndPos = startPanel.position - (new Vector3(0, 1800, 0));
+
+        float timer = 0;
+        while (timer < moveDuration)
+        {
+            timer += Time.deltaTime;
+            float t = timer / moveDuration;
+            startPanel.position = Vector3.Lerp(startBeginPos, startEndPos, t);
+            yield return null;
+        }
+        startPanel.position = startEndPos;
+        isReady = false;
     }
     
 

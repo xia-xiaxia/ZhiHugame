@@ -205,7 +205,11 @@ public class UIManager : MonoBehaviour
     {
         isShow = false;
         if (titleText) titleText.text = string.Empty;
-        if (dialoguePanel) dialoguePanel.SetBody(" ");
+        // 只有在 dialoguePanel 激活时才调用 SetBody，避免协程启动失败
+        if (dialoguePanel && dialoguePanel.gameObject.activeInHierarchy)
+        {
+            dialoguePanel.SetBody(" ");
+        }
         // 隐藏所有选项按钮
         foreach (var btn in optionButtons)
         {
@@ -531,7 +535,7 @@ public class UIManager : MonoBehaviour
         if (currencyText != null && GameControl.Instance != null)
         {
             int currency = GameControl.Instance.GetCurrency();
-            currencyText.text = $"可用年数：{currency}";
+            currencyText.text = $"金币：{currency}";
         }
     }
 

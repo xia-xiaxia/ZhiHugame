@@ -80,7 +80,7 @@ public class GameControl : MonoBehaviour
             StartCoroutine(WaitForCameraReady());
             return;
         }
-    year = 1;
+        year = 1;
         GameOver = false;
         endingTriggered = false;
         waitingForNextTurn = false;
@@ -136,6 +136,10 @@ public class GameControl : MonoBehaviour
             Debug.Log($"[GameControl] ProcessNextTurn blocked - GameOver: {GameOver}, waiting: {waitingForNextTurn}");
             return;
         }
+        if(UIManager.Instance != null)
+            if(UIManager.Instance.jinYan != null)
+                if(!UIManager.Instance.jinYan.activeSelf)
+                    UIManager.Instance.jinYan.SetActive(true);
 
         waitingForNextTurn = true;
     year += 0; // 事件推进时由 EventManager 控制年份累加
@@ -393,7 +397,7 @@ public class GameControl : MonoBehaviour
 
         GameOver = false;
         endingTriggered = false;
-    year = 1;
+        year = 1;
         waitingForNextTurn = false;
         currentWaitCoroutine = null;
         lastEvents.Clear();
@@ -408,6 +412,8 @@ public class GameControl : MonoBehaviour
         {
             UIManager.Instance.HideEndingPanel();
             UIManager.Instance.UpdateStatText();
+            UIManager.Instance.daDian.SetActive(true);
+            UIManager.Instance.jinYan.SetActive(false);
         }
 
         if (EventManager.Instance != null)
@@ -416,8 +422,21 @@ public class GameControl : MonoBehaviour
             EventManager.Instance.OnRestartCleanup();
         }
 
-        Debug.Log("[GameControl] 重开完成");
-        ProcessNextTurn();
+        BackToStartMenu();
+
+        Debug.Log("[GameControl] 重开完成，等待玩家点击开始游戏");
+        // 移除自动 ProcessNextTurn()，等待玩家手动点击开始游戏按钮
+    }
+
+    public void BackToStartMenu()
+    {
+        
+        if( CanvasMove.Instance != null)
+        {
+            CanvasMove.Instance.BackToStart();
+            
+        }
+        Debug.Log("[GameControl] 返回主菜单完成");
     }
 
     // ===== 退出游戏 =====

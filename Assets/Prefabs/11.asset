@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: 11
   m_EditorClassIdentifier: 
   king: 50
-  noble: 50
-  scholar: 50
-  foreign: 50
-  people: 50
+  noble: 61
+  scholar: 49
+  foreign: 51
+  people: 49
   kingMin: 20
   kingMax: 80
   nobleMin: 20
