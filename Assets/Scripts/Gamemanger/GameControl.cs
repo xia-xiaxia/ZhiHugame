@@ -10,21 +10,21 @@ public class GameControl : MonoBehaviour
     public StatModel stats;  // 统计数据
 
     // 玩家国策（道具）栏，最多5个
-    public List<PolicyItem> inventory = new List<PolicyItem>(5);
+    public Dictionary<string, PolicyItem> inventory = new Dictionary<string, PolicyItem>(5);
 
     // 添加道具（如已满需丢弃一个）
     public bool AddPolicy(PolicyItem item)
     {
         if (inventory.Count >= 5) return false;
-        inventory.Add(item);
+        inventory.Add(item.id, item);
         return true;
     }
 
     // 丢弃道具
-    public bool RemovePolicy(int index)
+    public bool RemovePolicy(string id)
     {
-        if (index < 0 || index >= inventory.Count) return false;
-        inventory.RemoveAt(index);
+        if (!inventory.ContainsKey(id)) return false;
+        inventory.Remove(id);
         return true;
     }
 
@@ -238,7 +238,7 @@ public class GameControl : MonoBehaviour
         int pMax = useDynamicThreshold ? stats.peopleMax : 80;
 
         // 应用所有阈值道具
-        foreach (var item in inventory)
+        foreach (var item in inventory.Values)
         {
             if (item.type == 1 && item.usageCount != 0)
             {
@@ -305,9 +305,8 @@ public class GameControl : MonoBehaviour
     // 免死道具判定与消耗
     private bool TryUseDeathImmunity(int deathType)
     {
-        for (int i = 0; i < inventory.Count; i++)
+        foreach (var item in inventory.Values)
         {
-            var item = inventory[i];
             if (item.type == 2 && item.usageCount != 0 && item.deathImmunity != null && item.deathImmunity.Contains(deathType))
             {
                 // 弹窗询问玩家是否使用免死道具

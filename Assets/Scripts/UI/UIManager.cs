@@ -27,7 +27,7 @@ public class UIManager : MonoBehaviour
 
     public Button[] optionButtons = new Button[4]; // 在Inspector拖入4个选项按钮
 
-    // ===== 新增：结局面板（由 GameControl 统一触发）=====
+    // ===== 新增：结局面板（由 Game Control 统一触发）=====
     public GameObject endingPanel;
     public Text endingText;
     public Button restartButton;
@@ -75,6 +75,9 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log("ShowEvent被调用，事件ID: " + id);
         currentEventId = id; // 记录当前事件id
+        // 标记该事件为已使用，防止本局重复出现
+        if (EventManager.Instance != null)
+            EventManager.Instance.MarkEventUsed(id);
         var evt = EventManager.Instance.GetEvent(id);
         if (evt == null)
         {
@@ -337,10 +340,11 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        for (int i = 0; i < GameControl.Instance.inventory.Count; i++)
+        int idx = 0;
+        // 修复：inventory 为按字符串键索引的集合，改用 Values 遍历，避免整数下标访问
+        foreach (var item in GameControl.Instance.inventory.Values)
         {
-            var item = GameControl.Instance.inventory[i];
-            int index = i; // 捕获索引
+            int index = idx++; // 捕获显示顺序索引
 
             GameObject btn = Instantiate(policyItemButtonPrefab, policyItemsParent);
             
@@ -357,7 +361,8 @@ public class UIManager : MonoBehaviour
             Button button = btn.GetComponent<Button>();
             if (button != null)
             {
-                button.onClick.AddListener(() => OnPolicyItemClicked(item, index));
+                var capturedItem = item;
+                button.onClick.AddListener(() => OnPolicyItemClicked(capturedItem, index));
                 
                 // 根据道具类型决定是否可点击
                 // 免死道具(2)和阈值道具(1)不可主动使用
@@ -561,8 +566,8 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        // 检查是否已拥有相同ID的道具
-        bool alreadyOwned = GameControl.Instance.inventory.Exists(item => item.id == policy.id);
+        // 检查是否已拥有相同ID的道具（按ID为键）
+        bool alreadyOwned = GameControl.Instance.inventory.ContainsKey(policy.id);
         if (alreadyOwned)
         {
             Debug.Log($"[UIManager] 已拥有道具：{policy.name}");
@@ -576,7 +581,7 @@ public class UIManager : MonoBehaviour
         PolicyItem newItem = PolicyManager.Instance.GetPolicy(policy.id);
         if (newItem != null)
         {
-            GameControl.Instance.inventory.Add(newItem);
+            GameControl.Instance.inventory.Add(newItem.id, newItem);
             Debug.Log($"[UIManager] 购买成功：{policy.name}，花费 {price} 年");
             // 更新货币显示
             UpdateCurrencyDisplay();
