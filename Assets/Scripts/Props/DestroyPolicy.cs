@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class DestroyPolicy : MonoBehaviour
 {
-    private GameObject gt;
-    private PolicyItem policyItem;
+    // 公共字段，由外部设置（例如在UIManager创建按钮时）
+    [HideInInspector]
+    public PolicyItem policyItem;
+
     void Start()
     {
-        gt = this.gameObject;
-        policyItem = gt.GetComponent<PolicyItem>();
+        // 如果 policyItem 未设置，输出警告
+        if (policyItem == null)
+        {
+            Debug.LogWarning("DestroyPolicy: policyItem 未设置！");
+        }
     }
 
     void Update()
@@ -19,7 +24,10 @@ public class DestroyPolicy : MonoBehaviour
     
     public void destroyThis()
     {
+        if (policyItem != null)
+        {
+            GameControl.Instance.RemovePolicy(policyItem.id);
+        }
         Destroy(gameObject);
-        GameControl.Instance.RemovePolicy(policyItem.id);
     }
 }

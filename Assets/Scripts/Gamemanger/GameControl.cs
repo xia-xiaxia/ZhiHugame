@@ -35,6 +35,7 @@ public class GameControl : MonoBehaviour
     }
 
     public bool GameOver = false;
+    public bool GamePaused = false; // 游戏是否暂停（退出到主菜单）
 
     // 回合管理
     public int year = 1;
@@ -42,6 +43,10 @@ public class GameControl : MonoBehaviour
     private Coroutine currentWaitCoroutine = null;
 
     private List<string> lastEvents = new List<string> { " ", " ", " " };
+
+    // 暂停时的事件快照
+    private string pausedEventId = null; // 暂停时正在播放的事件ID
+    private int pausedSentenceIndex = 0; // 暂停时的句子索引
 
     // UI 相关
     public GameObject man;
@@ -73,6 +78,33 @@ public class GameControl : MonoBehaviour
     // ===== 开始游戏 =====
     public void StartGame()
     {
+        // 如果是从暂停恢复，重新播放暂停时的事件
+        if (GamePaused)
+        {
+            Debug.Log("[GameControl] 从暂停恢复游戏");
+            GamePaused = false;
+            
+            if (CanvasMove.Instance != null)
+                CanvasMove.Instance.StartGame(); // 切换到游戏场景
+            
+            // 恢复暂停时的事件
+            if (!string.IsNullOrEmpty(pausedEventId))
+            {
+                Debug.Log($"[GameControl] 恢复暂停时的事件: {pausedEventId}, 句子索引: {pausedSentenceIndex}");
+                if (UIManager.Instance != null)
+                {
+                    // 重新播放事件（从头开始）
+                    UIManager.Instance.ShowEvent(pausedEventId);
+                    // 如果需要恢复到具体句子，可以调用 UIManager 的恢复方法
+                    // UIManager.Instance.RestoreEventState(pausedEventId, pausedSentenceIndex);
+                }
+                // 清除快照
+                pausedEventId = null;
+                pausedSentenceIndex = 0;
+            }
+            return;
+        }
+
         // 检查相机是否准备好
         if (CanvasMove.Instance != null && !CanvasMove.Instance.isReady)
         {
@@ -142,8 +174,7 @@ public class GameControl : MonoBehaviour
                     UIManager.Instance.jinYan.SetActive(true);
 
         waitingForNextTurn = true;
-    year += 0; // 事件推进时由 EventManager 控制年份累加
-    Debug.Log($"[GameControl] Year -> {year}");
+        Debug.Log($"[GameControl] Year -> {year}");
 
         // 回合数也可能触发结局
         CheckAndTriggerEnding();
@@ -240,64 +271,88 @@ public class GameControl : MonoBehaviour
         // 应用所有阈值道具
         foreach (var item in inventory.Values)
         {
-            if (item.type == 1 && item.usageCount != 0)
+            if (item.type == 1 && item.whichChange == "king")
             {
-                // 这里只做 kingMin 举例，实际可扩展到其他属性
-                kMin -= item.thresholdDelta;
-                kMax += item.thresholdDelta;
+                kMin += item.thresholdDeltadown;
+                kMax += item.thresholdDeltaup;
             }
-            
+            if (item.type == 1 && item.whichChange == "noble")
+            {
+                nMin += item.thresholdDeltadown;
+                nMax += item.thresholdDeltaup;
+            }
+            if (item.type == 1 && item.whichChange == "scholar")
+            {
+                sMin += item.thresholdDeltadown;
+                sMax += item.thresholdDeltaup;
+            }
+            if (item.type == 1 && item.whichChange == "foreign")
+            {
+                fMin += item.thresholdDeltadown;
+                fMax += item.thresholdDeltaup;
+            }
+            if (item.type == 1 && item.whichChange == "people")
+            {
+                pMin += item.thresholdDeltadown;
+                pMax += item.thresholdDeltaup;
+            }
+            else
+            {
+                Debug.LogWarning($"[GameControl] 道具 {item.id} 的 whichChange 字段无效或未设置，无法应用阈值变化");
+                continue;
+            }
+
         }
 
         // 各属性越界检测（按优先顺序，遇到死亡先判免死道具）
         if (stats.king <= kMin)
         {
-            if (TryUseDeathImmunity(1)) return;
+            if (TryUseDeathImmunity(-1)) return; // -1 表示国君下限
             TriggerEnding("KING_LOW", "国君势微，诸侯并起。"); return;
         }
         if (stats.king >= kMax)
         {
-            if (TryUseDeathImmunity(1)) return;
+            if (TryUseDeathImmunity(1)) return; // 1 表示国君上限
             TriggerEnding("KING_HIGH", "国君权力过盛，天下动荡。"); return;
         }
         if (stats.noble <= nMin)
         {
-            if (TryUseDeathImmunity(3)) return;
+            if (TryUseDeathImmunity(-3)) return; // -3 表示贵族下限
             TriggerEnding("NOBLE_LOW", "贵族式微，权力真空。"); return;
         }
         if (stats.noble >= nMax)
         {
-            if (TryUseDeathImmunity(3)) return;
+            if (TryUseDeathImmunity(3)) return; // 3 表示贵族上限
             TriggerEnding("NOBLE_HIGH", "贵族权势滔天，王权旁落。"); return;
         }
         if (stats.scholar <= sMin)
         {
-            if (TryUseDeathImmunity(2)) return;
+            if (TryUseDeathImmunity(-2)) return; // -2 表示卿士下限
             TriggerEnding("SCHOLAR_LOW", "士族凋零，典章失传。"); return;
         }
         if (stats.scholar >= sMax)
         {
-            if (TryUseDeathImmunity(2)) return;
+            if (TryUseDeathImmunity(2)) return; // 2 表示卿士上限
             TriggerEnding("SCHOLAR_HIGH", "士族擅权，政务迟滞。"); return;
         }
         if (stats.foreign <= fMin)
         {
-            if (TryUseDeathImmunity(4)) return;
+            if (TryUseDeathImmunity(-4)) return; // -4 表示外臣下限
             TriggerEnding("FOREIGN_LOW", "外臣尽失，朝堂孤立。"); return;
         }
         if (stats.foreign >= fMax)
         {
-            if (TryUseDeathImmunity(4)) return;
+            if (TryUseDeathImmunity(4)) return; // 4 表示外臣上限
             TriggerEnding("FOREIGN_HIGH", "外臣干政，内权旁落。"); return;
         }
         if (stats.people <= pMin)
         {
-            if (TryUseDeathImmunity(5)) return;
+            if (TryUseDeathImmunity(-5)) return; // -5 表示庶人下限
             TriggerEnding("PEOPLE_LOW", "民怨沸腾，天下反叛。"); return;
         }
         if (stats.people >= pMax)
         {
-            if (TryUseDeathImmunity(5)) return;
+            if (TryUseDeathImmunity(5)) return; // 5 表示庶人上限
             TriggerEnding("PEOPLE_HIGH", "民意汹涌，改朝换代。"); return;
         }
     }
@@ -339,13 +394,26 @@ public class GameControl : MonoBehaviour
         {
             // 玩家选择使用：消耗道具并恢复数值
             if (item.usageCount > 0) item.usageCount--;
+            if (item.usageCount == 0)
+            {
+                // 次数用尽，从背包移除
+                RemovePolicy(item.id);
+            }
+            
             stats.king = snapshotKing;
             stats.noble = snapshotNoble;
             stats.scholar = snapshotScholar;
             stats.foreign = snapshotForeign;
             stats.people = snapshotPeople;
+            
             Debug.Log($"[GameControl] 玩家选择使用免死道具，类型{deathType}，道具ID:{item.id}，恢复到快照数值");
             UIManager.Instance?.UpdateStatText();
+            
+            // 显示免死道具生效文案
+            if (!string.IsNullOrEmpty(item.deathdec) && UIManager.Instance != null)
+            {
+                UIManager.Instance.ShowDeathImmunityMessage(item.deathdec);
+            }
         }
         else
         {
@@ -396,6 +464,7 @@ public class GameControl : MonoBehaviour
 
         GameOver = false;
         endingTriggered = false;
+        GamePaused = false; // 清除暂停状态
         year = 1;
         waitingForNextTurn = false;
         currentWaitCoroutine = null;
@@ -403,6 +472,10 @@ public class GameControl : MonoBehaviour
         lastEvents.Add(" ");
         lastEvents.Add(" ");
         lastEvents.Add(" ");
+
+        // 清除暂停快照
+        pausedEventId = null;
+        pausedSentenceIndex = 0;
 
         if (stats != null)
             stats.ResetToDefault();
@@ -436,6 +509,36 @@ public class GameControl : MonoBehaviour
             
         }
         Debug.Log("[GameControl] 返回主菜单完成");
+    }
+
+    // ===== 暂停游戏并返回主菜单（不重置进度）=====
+    public void PauseAndBackToMenu()
+    {
+        GamePaused = true;
+        
+        // 保存当前事件状态（快照）
+        if (UIManager.Instance != null)
+        {
+            pausedEventId = UIManager.Instance.GetCurrentEventId();
+            pausedSentenceIndex = UIManager.Instance.GetCurrentSentenceIndex();
+            Debug.Log($"[GameControl] 游戏暂停，保存事件快照: {pausedEventId}, 句子索引: {pausedSentenceIndex}");
+            
+            // 隐藏游戏UI
+            UIManager.Instance.HideEventOptions();
+            UIManager.Instance.ClearText();
+            if (UIManager.Instance.jinYan != null)
+                UIManager.Instance.jinYan.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("[GameControl] 游戏暂停，返回主菜单");
+        }
+        
+        // 返回主菜单
+        if (CanvasMove.Instance != null)
+        {
+            CanvasMove.Instance.BackToStart();
+        }
     }
 
     // ===== 退出游戏 =====

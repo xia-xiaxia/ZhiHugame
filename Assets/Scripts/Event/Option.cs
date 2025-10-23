@@ -16,6 +16,7 @@ public class Option
     public string nextEventId;
     public int interval;
     public int randomEventSet;
+    public string activateBUFF; // 激活BUFF
 }
 
 

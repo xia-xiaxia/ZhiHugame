@@ -66,14 +66,18 @@ public class PolicyManager : MonoBehaviour
             type = original.type,
             name = original.name,
             desc = original.desc,
-            thresholdDelta = original.thresholdDelta,
+            result = original.result,
+            whichChange = original.whichChange,
+            thresholdDeltaup = original.thresholdDeltaup,
+            thresholdDeltadown = original.thresholdDeltadown,
             deathImmunity = original.deathImmunity != null ? new List<int>(original.deathImmunity) : new List<int>(),
             kingChange = original.kingChange,
             nobleChange = original.nobleChange,
             scholarChange = original.scholarChange,
             foreignChange = original.foreignChange,
             peopleChange = original.peopleChange,
-            usageCount = original.usageCount
+            usageCount = original.usageCount,
+            deathdec = original.deathdec
         };
     }
 

@@ -17,6 +17,10 @@ public class EventManager : MonoBehaviour
     private List<Dictionary<string, GameEvent>> randomEventList = new List<Dictionary<string, GameEvent>>();
     private List<int> activeRandomEventSetIndices = new List<int>();
 
+    // 专用：BUFF（时局）触发事件的独立数据源
+    public TextAsset buffEventJson; // 指向一个仅存放BUFF触发事件的JSON
+    private Dictionary<string, GameEvent> buffEvents = new Dictionary<string, GameEvent>();
+
     public int fileIndex = 0;
 
     // 下一个事件（仅选项强制指定时生效）
@@ -50,6 +54,7 @@ public class EventManager : MonoBehaviour
         usedEventIds.Clear();
         availableAllBySet.Clear();
         available01BySet.Clear();
+        buffEvents.Clear();
 
         for (int i = 0; i < eventJsons.Count; i++)
         {
@@ -81,6 +86,7 @@ public class EventManager : MonoBehaviour
             availableAllBySet[i] = allSet;
             available01BySet[i] = only01;
         }
+
     }
 
     public GameEvent GetEvent(string id, int randomEventSet = -1)
@@ -159,6 +165,7 @@ public class EventManager : MonoBehaviour
 
     public void ApplyOption(Option opt, int year)
     {
+
         if (opt == null)
         {
             Debug.LogError("[EventManager] ApplyOption: opt 为 null");
@@ -212,7 +219,20 @@ public class EventManager : MonoBehaviour
                 Debug.Log($"[EventManager] 隐藏事件集 {-opt.randomEventSet}");
             }
         }
-
+        // 处理激活BUFF
+        if (!string.IsNullOrEmpty(opt.activateBUFF))
+        {
+            BuffDefinition buff = BuffManager.Instance.AddBuffById(opt.activateBUFF);
+            if (buff != null)
+            {
+                Debug.Log($"[EventManager] 激活BUFF: {buff.name}");
+            }
+            else
+            {
+                Debug.LogWarning($"[EventManager] 未找到要激活的BUFF: {opt.activateBUFF}");
+            }
+        }
+        // 处理后继事件
         if (!string.IsNullOrEmpty(opt.nextEventId) && opt.nextEventId != "0")
         {
             if (opt.interval > 0)
@@ -242,6 +262,32 @@ public class EventManager : MonoBehaviour
         nextEventId = eventId;
         if (file != 0) fileIndex = file;
         Debug.Log($"[EventManager] SetNextEventId -> {eventId}");
+    }
+
+    // 使指定事件可被抽取：写入白名单（必要时初始化集合）
+    public bool MakeEventAvailable(int setIndex, string id)
+    {
+        if (string.IsNullOrEmpty(id)) return false;
+        if (setIndex < 0 || setIndex >= randomEventList.Count) return false;
+        var dict = randomEventList[setIndex];
+        if (dict == null || !dict.ContainsKey(id)) return false;
+
+        if (!availableAllBySet.TryGetValue(setIndex, out var allSet) || allSet == null)
+        {
+            allSet = new HashSet<string>();
+            availableAllBySet[setIndex] = allSet;
+        }
+        allSet.Add(id);
+
+        if (!available01BySet.TryGetValue(setIndex, out var only01) || only01 == null)
+        {
+            only01 = new HashSet<string>();
+            available01BySet[setIndex] = only01;
+        }
+        if (id.EndsWith("01"))
+            only01.Add(id);
+
+        return true;
     }
 
     // 核心决定逻辑
@@ -274,7 +320,8 @@ public class EventManager : MonoBehaviour
         {
             string forced = nextEventId;
             nextEventId = "0";
-            if (IsAvailable(forced))
+            // 若在普通白名单可抽取，或为 BUFF 专用事件（允许绕过白名单）
+            if (IsAvailable(forced) || (buffEvents != null && buffEvents.ContainsKey(forced)))
                 return forced;
             Debug.Log($"[EventManager] 跳过不可抽取的强制后继事件 {forced}");
         }

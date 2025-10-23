@@ -84,6 +84,7 @@ public class DialoguePanel : MonoBehaviour
             bodyText.text = currentFullText.Substring(0, safeLen);
             yield return new WaitForSeconds(typeInterval);
         }
+        yield return new WaitForSeconds(0.1f);
         typeRoutine = null;
     }
     

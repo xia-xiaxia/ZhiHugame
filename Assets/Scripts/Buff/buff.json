@@ -1,24 +1,21 @@
 [
   {
     "id": "001",
-    "description": "王者加冕，国君属性上限+10，且每事件国君+2",
+    "description": "王者加冕",
+    "result": "每年国君+2",
     "duration": 5,
-    "thresholdChanges": [
-      { "stat": "king", "minDelta": 0, "maxDelta": 10 }
-    ],
-    "longTermEffects": [
-      { "stat": "king", "delta": 2 }
-    ]
+    "kingChange": 2,
+    "nobleChange": 0,
+    "scholarChange": 0,
+    "foreignChange": 0,
+    "peopleChange": 0
   },
   {
     "id": "002",
-    "description": "贵族动乱，贵族属性下限-10，每事件贵族-1",
-    "duration": 3,
-    "thresholdChanges": [
-      { "stat": "noble", "minDelta": -10, "maxDelta": 0 }
-    ],
-    "longTermEffects": [
-      { "stat": "noble", "delta": -1 }
-    ]
+    "description": "贵族动乱",
+    "result": "每年贵族-3",
+    "duration": 1,
+    "nobleChange": -1
+
   }
 ]

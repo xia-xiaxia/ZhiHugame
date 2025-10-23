@@ -437,6 +437,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48149763cbea5464bb06eefe85c0fb6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  policyItem:
+    id: 
+    type: 0
+    name: 
+    desc: 
+    result: 
+    whichChange: 
+    thresholdDeltaup: 0
+    thresholdDeltadown: 0
+    deathImmunity: 
+    kingChange: 0
+    nobleChange: 0
+    scholarChange: 0
+    foreignChange: 0
+    peopleChange: 0
+    usageCount: 0
+    cost: 0
+    deathdec: 
 --- !u!1 &3510773479285452007
 GameObject:
   m_ObjectHideFlags: 0
@@ -799,12 +817,12 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 32
+    m_FontSize: 40
     m_FontStyle: 1
-    m_BestFit: 1
-    m_MinSize: 3
+    m_BestFit: 0
+    m_MinSize: 0
     m_MaxSize: 80
-    m_Alignment: 4
+    m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0

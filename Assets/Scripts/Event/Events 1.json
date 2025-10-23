@@ -13,11 +13,11 @@
         "foreignChange": 0,
         "peopleChange": 0,
         "specialItemChange": "",
+        "yearDelta": 1,
         "nextEventId": "0",
         "interval": 0,
-        "activateTask": "",
-        "randomEventSet": -1,
-        "yearDelta": 1
+        "activateBUFF": "",
+        "randomEventSet": -1
       },
       {
         "text": "寡人等等便是",
@@ -29,8 +29,9 @@
         "specialItemChange": "",
         "nextEventId": "0",
         "interval": 0,
-        "activateTask": "",
-        "randomEventSet": -2
+        "activateBUFF": "",
+        "randomEventSet": -2,
+        "yearDelta":1
       }
     ]
   },

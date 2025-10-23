@@ -7,6 +7,7 @@ using UnityEngine;
 public class StatModel : ScriptableObject
 {
     // 初始值均为 50
+    public int year = 0;      // 当前年份
     public int king = 50;     // 国君
     public int noble = 50;    // 贵族
     public int scholar = 50;  // 士族
@@ -38,6 +39,7 @@ public class StatModel : ScriptableObject
     // 可调用的重置方法（重开时恢复初始值）
     public void ResetToDefault()
     {
+        year = 0;
         king = noble = scholar = foreign = people = 50;
         kingMin = 20; kingMax = 80;
         nobleMin = 20; nobleMax = 80;

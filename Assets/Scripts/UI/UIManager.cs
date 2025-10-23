@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,6 +25,8 @@ public class UIManager : MonoBehaviour
 
     public bool isShow;
     public int eventid = 100;
+    private int currentYear;
+    public Text currentYearText;
 
     public Button[] optionButtons = new Button[4]; // 在Inspector拖入4个选项按钮
 
@@ -36,7 +39,13 @@ public class UIManager : MonoBehaviour
     public GameObject deathImmunityPanel;
     public Text deathImmunityText;
     public Button useDeathImmunityButton;
+
     public Button declineDeathImmunityButton;
+
+    // ===== 新增：免死道具生效文案显示面板 =====
+    public GameObject deathImmunityMessagePanel;
+    public Text deathImmunityMessageText;
+    public Button deathImmunityMessageConfirmButton;
 
     // ===== 新增：道具菜单弹窗（显示所有道具）=====
     public GameObject policyMenuPanel;
@@ -52,6 +61,28 @@ public class UIManager : MonoBehaviour
     public Button closeShopButton; // 关闭商店继续结局流程
     private List<GameObject> shopItemButtons = new List<GameObject>();
 
+    // ===== 新增：商店页面的背包显示区域 =====
+    public Transform shopInventoryParent; // 商店中的背包区域容器
+    public GameObject shopInventoryItemPrefab; // 背包道具按钮预制体
+    public Text shopInventoryCountText; // 显示背包数量 (例如: "3/5")
+    private List<GameObject> shopInventoryButtons = new List<GameObject>();
+
+    // ===== 新增：时局（BUFF）列表面板 =====
+    public GameObject buffPanel;
+    public Transform buffItemsParent;
+    public GameObject buffItemButtonPrefab;
+    public Text buffDetailText;
+    public Button buffCloseButton;
+    private readonly List<GameObject> buffItemButtons = new List<GameObject>();
+    private string selectedBuffId = null;
+
+    // ===== 新增：全局道具提示框（用于鼠标悬停显示，需在场景中设置）=====
+    public GameObject policyTooltipPanel;
+    public Text policyTooltipText;
+
+    // ===== 新增：游戏内退出按钮 =====
+    public Button exitToMenuButton; // 游戏中退出到主菜单按钮
+
     private List<string> currentEventSentences = new List<string>();
     private int currentSentenceIndex = 0;
     private bool waitingForSentence = false;
@@ -63,9 +94,28 @@ public class UIManager : MonoBehaviour
     {
         if (daDian != null) daDian.SetActive(true);
         if (endingPanel != null) endingPanel.SetActive(false);
+    
+        
+        // 绑定游戏内退出按钮
+        if (exitToMenuButton != null)
+        {
+            exitToMenuButton.onClick.RemoveAllListeners();
+            exitToMenuButton.onClick.AddListener(OnExitToMenuClicked);
+        }
+
         // 启动游戏（确保 GameControl 已在场景中）
         if (GameControl.Instance != null)
             GameControl.Instance.StartGame();
+            
+    }
+
+    // 游戏内退出到主菜单
+    private void OnExitToMenuClicked()
+    {
+        if (GameControl.Instance != null)
+        {
+            GameControl.Instance.PauseAndBackToMenu();
+        }
     }
 
 
@@ -128,11 +178,18 @@ public class UIManager : MonoBehaviour
                     isShow = true;
                     GameControl.Instance.SaveStatsSnapshot();
                     EventManager.Instance.ApplyOption(opt, GameControl.Instance.year);
-                    UpdateStatText();
+                    // 优先考虑玩家选择设置的后继事件
                     if (!string.IsNullOrEmpty(opt.nextEventId))
                     {
                         EventManager.Instance.SetNextEventId(opt.nextEventId);
                     }
+                    // 每个事件串结束后，应用"时局(BUFF)"的长期影响与时限扣减
+                    // 注释掉不存在的方法调用
+                    // if (BuffManager.Instance != null)
+                    //     BuffManager.Instance.OnEventChainEnd();
+                    // 更新UI并再次做死亡/结局判定
+                    UpdateStatText();
+                    GameControl.Instance?.OnStatsChanged();
                     ClearText();
                     GameControl.Instance.ProcessNextTurn();
                 });
@@ -140,6 +197,17 @@ public class UIManager : MonoBehaviour
             else
             {
                 optionButtons[i].gameObject.SetActive(false);
+            }
+        }
+        // 修复：使用 yearDelta 而不是 yearChange
+        GameControl.Instance.year += evt.yearDelta;
+        if(evt.yearDelta != 0)
+        {
+            for(int i = 0; i < evt.yearDelta; i++)
+            {
+                // 注释掉不存在的方法
+                // GameControl.Instance.CheckAndTriggerYearEnding();
+                BuffManager.Instance?.OnYearEnd();
             }
         }
     }
@@ -200,7 +268,6 @@ public class UIManager : MonoBehaviour
         if (statText4 != null) statText4.text = stats.foreign.ToString();
         if (statText5 != null) statText5.text = stats.people.ToString();
 
-        // 原先这里的越界 -> GameOver 判定已移交 GameControl
     }
 
 
@@ -222,6 +289,52 @@ public class UIManager : MonoBehaviour
                 btn.onClick.RemoveAllListeners();
                 btn.GetComponentInChildren<Text>().text = "";
             }
+        }
+    }
+
+    // ===== 获取当前事件状态（用于暂停保存）=====
+    public string GetCurrentEventId()
+    {
+        return currentEventId;
+    }
+
+    public int GetCurrentSentenceIndex()
+    {
+        return currentSentenceIndex;
+    }
+
+    // ===== 恢复事件状态（用于暂停恢复）=====
+    public void RestoreEventState(string eventId, int sentenceIndex)
+    {
+        currentEventId = eventId;
+        currentSentenceIndex = sentenceIndex;
+        
+        // 重新加载事件
+        GameEvent evt = EventManager.Instance.GetEvent(eventId);
+        if (evt == null)
+        {
+            Debug.LogWarning($"[UIManager] 无法恢复事件 {eventId}");
+            return;
+        }
+        
+        // 重新设置句子列表
+        currentEventSentences.Clear();
+        currentEventSentences.Add(evt.title);
+        if (!string.IsNullOrEmpty(evt.body))
+        {
+            string[] sentences = evt.body.Split('\n');
+            currentEventSentences.AddRange(sentences);
+        }
+        
+        // 从指定句子开始显示
+        if (sentenceIndex >= currentEventSentences.Count)
+        {
+            // 如果索引超出，直接显示选项
+            ShowEventOptions(eventId);
+        }
+        else
+        {
+            ShowCurrentSentence();
         }
     }
 
@@ -313,13 +426,45 @@ public class UIManager : MonoBehaviour
     {
         switch (deathType)
         {
-            case 1: return "国君势力失衡";
-            case 2: return "士族势力失衡";
-            case 3: return "贵族势力失衡";
-            case 4: return "外臣势力失衡";
-            case 5: return "庶人势力失衡";
+            case 1: return "国君上限危机";
+            case -1: return "国君下限危机";
+            case 2: return "卿士上限危机";
+            case -2: return "卿士下限危机";
+            case 3: return "贵族上限危机";
+            case -3: return "贵族下限危机";
+            case 4: return "外臣上限危机";
+            case -4: return "外臣下限危机";
+            case 5: return "庶人上限危机";
+            case -5: return "庶人下限危机";
             case 6: return "事件强制死亡";
             default: return "未知危机";
+        }
+    }
+
+    // ===== 显示免死道具生效文案 =====
+    public void ShowDeathImmunityMessage(string message)
+    {
+        if (deathImmunityMessagePanel != null)
+        {
+            deathImmunityMessagePanel.SetActive(true);
+        }
+
+        if (deathImmunityMessageText != null)
+        {
+            deathImmunityMessageText.text = message;
+        }
+
+        // 绑定确认按钮
+        if (deathImmunityMessageConfirmButton != null)
+        {
+            deathImmunityMessageConfirmButton.onClick.RemoveAllListeners();
+            deathImmunityMessageConfirmButton.onClick.AddListener(() =>
+            {
+                if (deathImmunityMessagePanel != null)
+                {
+                    deathImmunityMessagePanel.SetActive(false);
+                }
+            });
         }
     }
 
@@ -347,6 +492,21 @@ public class UIManager : MonoBehaviour
             int index = idx++; // 捕获显示顺序索引
 
             GameObject btn = Instantiate(policyItemButtonPrefab, policyItemsParent);
+            
+            // 设置 DestroyPolicy 组件的 policyItem 字段
+            DestroyPolicy destroyPolicy = btn.GetComponent<DestroyPolicy>();
+            if (destroyPolicy != null)
+            {
+                destroyPolicy.policyItem = item;
+            }
+            
+            // ===== 重要：设置 PolicyInShopTrigger 的道具数据 =====
+            PolicyInShopTrigger trigger = btn.GetComponent<PolicyInShopTrigger>();
+            if (trigger != null)
+            {
+                trigger.SetPolicyItem(item);
+                Debug.Log($"[UIManager] 为背包道具按钮设置数据: {item.name}");
+            }
             
             // 设置道具信息显示
             Text btnText = btn.GetComponentInChildren<Text>();
@@ -474,7 +634,10 @@ public class UIManager : MonoBehaviour
         // 更新可用货币显示
         UpdateCurrencyDisplay();
 
-        // 清理旧按钮
+        // 刷新商店页面的背包显示
+        RefreshShopInventoryDisplay();
+
+        // 清理旧商店道具按钮
         foreach (var btn in shopItemButtons)
             if (btn != null) Destroy(btn);
         shopItemButtons.Clear();
@@ -490,20 +653,24 @@ public class UIManager : MonoBehaviour
         foreach (var policy in shopItems)
         {
             GameObject btn = Instantiate(shopItemButtonPrefab, shopItemsParent);
-            // 自动归零本地缩放和位置，适配布局组件
-            var rect = btn.GetComponent<RectTransform>();
-            if (rect != null)
+            
+            // ===== 设置 PolicyInShopTrigger 的道具数据 =====
+            PolicyInShopTrigger trigger = btn.GetComponent<PolicyInShopTrigger>();
+            if (trigger != null)
             {
-                rect.localScale = Vector3.one;
-                rect.anchoredPosition3D = Vector3.zero;
-                rect.offsetMin = new Vector2(rect.offsetMin.x, rect.offsetMin.y);
-                rect.offsetMax = new Vector2(rect.offsetMax.x, rect.offsetMax.y);
+                trigger.SetPolicyItem(policy);
+                Debug.Log($"[UIManager] 为商店道具按钮设置数据: {policy.name}");
             }
+            else
+            {
+                Debug.LogWarning($"[UIManager] 商店道具按钮缺少 PolicyInShopTrigger 组件");
+            }
+            
             // 设置道具信息显示
             Text btnText = btn.GetComponentInChildren<Text>();
             if (btnText != null)
             {
-                btnText.text = policy.name;
+                btnText.text = policy.name+policy.desc;
             }
             // 绑定购买按钮
             Button button = btn.GetComponent<Button>();
@@ -534,13 +701,220 @@ public class UIManager : MonoBehaviour
         if (policyShopPanel != null) policyShopPanel.SetActive(false);
     }
 
+    // ===== 刷新商店页面的背包显示 =====
+    private void RefreshShopInventoryDisplay()
+    {
+        // 清理旧的背包按钮
+        foreach (var btn in shopInventoryButtons)
+            if (btn != null) Destroy(btn);
+        shopInventoryButtons.Clear();
+
+        if (GameControl.Instance == null || GameControl.Instance.inventory == null)
+        {
+            if (shopInventoryCountText != null)
+                shopInventoryCountText.text = "0/5";
+            return;
+        }
+
+        var inventory = GameControl.Instance.inventory;
+        int count = inventory.Count;
+
+        // 更新背包数量显示
+        if (shopInventoryCountText != null)
+        {
+            shopInventoryCountText.text = $"{count}/5";
+        }
+
+        // 显示每个背包道具
+        foreach (var item in inventory.Values)
+        {
+            if (shopInventoryParent == null || shopInventoryItemPrefab == null) break;
+
+            GameObject btn = Instantiate(shopInventoryItemPrefab, shopInventoryParent);
+
+            // 设置 PolicyInShopTrigger 的道具数据（用于鼠标悬停显示详情）
+            PolicyInShopTrigger trigger = btn.GetComponent<PolicyInShopTrigger>();
+            if (trigger != null)
+            {
+                trigger.SetPolicyItem(item);
+            }
+
+            // 设置道具显示（简化版，只显示名称或图标）
+            Text btnText = btn.GetComponentInChildren<Text>();
+            if (btnText != null)
+            {
+                btnText.text = item.name;
+            }
+
+            // 绑定点击事件：确认是否丢弃
+            Button button = btn.GetComponent<Button>();
+            if (button != null)
+            {
+                var capturedItem = item;
+                button.onClick.AddListener(() => OnShopInventoryItemClicked(capturedItem));
+            }
+
+            shopInventoryButtons.Add(btn);
+        }
+    }
+
+    // 商店页面背包道具点击事件：询问是否丢弃
+    private void OnShopInventoryItemClicked(PolicyItem item)
+    {
+        if (item == null || GameControl.Instance == null) return;
+
+        // TODO: 这里可以添加确认弹窗UI
+        // 目前使用Debug.Log模拟确认，实际应该弹出确认对话框
+        Debug.Log($"[UIManager] 点击背包道具: {item.name}，是否丢弃？");
+        
+        // 简化处理：直接丢弃（您可以根据需要添加确认弹窗）
+        // 例如：ShowConfirmDialog("确定要丢弃道具吗？", () => { 丢弃逻辑 });
+        
+        bool confirmed = true; // 临时自动确认
+        
+        if (confirmed)
+        {
+            Debug.Log($"[UIManager] 确认丢弃道具: {item.name}");
+            GameControl.Instance.RemovePolicy(item.id);
+            
+            // 刷新背包显示
+            RefreshShopInventoryDisplay();
+        }
+    }
+
+    // ===== 时局（BUFF）列表 UI =====
+    public void ShowBuffPanel()
+    {
+        if (buffPanel != null) buffPanel.SetActive(true);
+        RefreshBuffListUI();
+
+        // 绑定关闭按钮
+        if (buffCloseButton != null)
+        {
+            buffCloseButton.onClick.RemoveAllListeners();
+            buffCloseButton.onClick.AddListener(() => HideBuffPanel());
+        }
+
+        // 不再绑定丢弃按钮
+    }
+
+    public void HideBuffPanel()
+    {
+        if (buffPanel != null) buffPanel.SetActive(false);
+        selectedBuffId = null;
+        if (buffDetailText != null) buffDetailText.text = "";
+    }
+
+    private void RefreshBuffListUI()
+    {
+        // 清空旧的按钮
+        foreach (var go in buffItemButtons)
+            if (go != null) Destroy(go);
+        buffItemButtons.Clear();
+
+        if (BuffManager.Instance == null || BuffManager.Instance.GetActiveBuffs() == null)
+        {
+            if (buffDetailText != null) buffDetailText.text = "暂无时局";
+            return;
+        }
+
+        int idx = 0;
+        foreach (var buff in BuffManager.Instance.GetActiveBuffs())
+        {
+            var btnGo = Instantiate(buffItemButtonPrefab, buffItemsParent);
+            var rect = btnGo.GetComponent<RectTransform>();
+            if (rect != null)
+            {
+                rect.localScale = Vector3.one;
+                rect.anchoredPosition3D = Vector3.zero;
+            }
+
+            // 按钮文字：显示名称 + 剩余时限
+            var txt = btnGo.GetComponentInChildren<Text>();
+            if (txt != null)
+            {
+                string dur = buff.duration < 0 ? "∞" : buff.duration.ToString();
+                txt.text = $"{buff.name ?? buff.id}  (时限:{dur})";
+            }
+
+            var button = btnGo.GetComponent<Button>();
+            if (button != null)
+            {
+                var captured = buff; // 捕获
+                button.onClick.AddListener(() => OnBuffItemClicked(captured));
+            }
+
+            buffItemButtons.Add(btnGo);
+            idx++;
+        }
+
+        // 默认选中第一个，显示详情
+        if (BuffManager.Instance.GetActiveBuffs().Count > 0)
+        {
+            OnBuffItemClicked(BuffManager.Instance.GetActiveBuffs()[0]);
+        }
+        else
+        {
+            selectedBuffId = null;
+            if (buffDetailText != null) buffDetailText.text = "暂无时局";
+        }
+    }
+
+    private void OnBuffItemClicked(BuffDefinition buff)
+    {
+        if (buff == null) return;
+        selectedBuffId = buff.id;
+
+        if (buffDetailText != null)
+        {
+            // 组装详细描述
+            string dur = buff.duration < 0 ? "∞" : buff.duration.ToString();
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            sb.AppendLine($"名称：{(buff.name ?? buff.id)}");
+            sb.AppendLine($"时限：{dur}");
+            if (!string.IsNullOrEmpty(buff.description))
+                sb.AppendLine($"描述：{buff.description}");
+
+            // 显示数值变化
+            bool hasChanges = false;
+            if (buff.kingChange != 0)
+            {
+                if (!hasChanges) { sb.AppendLine("每年数值变化："); hasChanges = true; }
+                sb.AppendLine($" - 国君: {(buff.kingChange >= 0 ? "+" : "")}{buff.kingChange}");
+            }
+            if (buff.nobleChange != 0)
+            {
+                if (!hasChanges) { sb.AppendLine("每年数值变化："); hasChanges = true; }
+                sb.AppendLine($" - 贵族: {(buff.nobleChange >= 0 ? "+" : "")}{buff.nobleChange}");
+            }
+            if (buff.scholarChange != 0)
+            {
+                if (!hasChanges) { sb.AppendLine("每年数值变化："); hasChanges = true; }
+                sb.AppendLine($" - 士族: {(buff.scholarChange >= 0 ? "+" : "")}{buff.scholarChange}");
+            }
+            if (buff.foreignChange != 0)
+            {
+                if (!hasChanges) { sb.AppendLine("每年数值变化："); hasChanges = true; }
+                sb.AppendLine($" - 外臣: {(buff.foreignChange >= 0 ? "+" : "")}{buff.foreignChange}");
+            }
+            if (buff.peopleChange != 0)
+            {
+                if (!hasChanges) { sb.AppendLine("每年数值变化："); hasChanges = true; }
+                sb.AppendLine($" - 国人: {(buff.peopleChange >= 0 ? "+" : "")}{buff.peopleChange}");
+            }
+
+            buffDetailText.text = sb.ToString();
+        }
+    }
+
+
     // 更新货币显示
     private void UpdateCurrencyDisplay()
     {
         if (currencyText != null && GameControl.Instance != null)
         {
             int currency = GameControl.Instance.GetCurrency();
-            currencyText.text = $"金币：{currency}";
+            currencyText.text = $"货币：{currency}";
         }
     }
 
@@ -583,8 +957,12 @@ public class UIManager : MonoBehaviour
         {
             GameControl.Instance.inventory.Add(newItem.id, newItem);
             Debug.Log($"[UIManager] 购买成功：{policy.name}，花费 {price} 年");
+            
             // 更新货币显示
             UpdateCurrencyDisplay();
+            
+            // 刷新商店页面的背包显示
+            RefreshShopInventoryDisplay();
         }
     }
 
