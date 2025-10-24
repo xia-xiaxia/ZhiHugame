@@ -1,0 +1,209 @@
+[
+  {
+    "id": "00101",
+    "title": "工程建设00101",
+    "speaker": "白产",
+    "body": "君上，都邑水渠年久失修\n该拨款修修了",
+    "options": [
+      {
+        "text": "寡人亲自监工修缮",
+        "kingChange": 10
+      },
+      {
+        "text": "那有劳你了",
+        "scholarChange": 10
+      }
+    ],
+    "yearDelta": 1
+  },
+  {
+    "id": "00201",
+    "title": "工程建设00201",
+    "speaker": "白产",
+    "body": "君上，都城南桥被洪流斜冲，石栏错位\n今早百姓挑菜过河，有童子差点落水\n该修桥了",
+    "options": [
+      {
+        "text": "封桥，抓紧维修",
+        "peopleChange": 5
+      },
+      {
+        "text": "等桥塌了再议",
+        "kingChange": -10,
+        "peopleChange": -10
+      }
+    ],
+    "yearDelta": 1
+  },
+  {
+    "id": "00301",
+    "title": "工程建设00301",
+    "speaker": "白产",
+    "body": "君上，连日暴雨，河水漫堤，南郭已成泽国\n百姓纷纷爬上屋脊——是先护堤，还是先救人？",
+    "options": [
+      {
+        "text": "护堤，人自己会游",
+        "kingChange": 5,
+        "peopleChange": -15
+      },
+      {
+        "text": "救人，堤塌了再筑",
+        "peopleChange": 15
+      },
+      {
+        "text": "我心里装的是九州万方，这点小事别找我",
+        "kingChange": -20,
+        "peopleChange": -10
+      }
+    ],
+    "yearDelta": 1
+  },
+  {
+    "id": "00401",
+    "title": "工程建设00401",
+    "speaker": "白产",
+    "body": "君上，国家监狱墙脚年久失修\n昨夜下雨，积水泡塌了墙角\n囚徒跑了三人，得抓回来不？",
+    "options": [
+      {
+        "text": "墙都修不好，还关什么人？散了罢",
+        "peopleChange": 5,
+        "kingChange": -15
+      },
+      {
+        "text": "派人去追，追不到你就来受罚",
+        "scholarChange": -5,
+        "kingChange": 5
+      }
+    ],
+    "yearDelta": 1
+  },
+  {
+    "id": "00501",
+    "title": "工程建设00501",
+    "speaker": "白产",
+    "body": "君上，国都城墙东南角有些许裂隙\n我考察二三，觉得需要维修\n与其小修，臣觉得不如干脆大修\n请您批准臣征发国人数十",
+    "options": [
+      {
+        "text": "准了，一劳永逸",
+        "peopleChange": -5
+      },
+      {
+        "text": "你自己修便是了，没必要如此动众",
+        "scholarChange": -10
+      }
+    ],
+    "yearDelta": 1
+  },
+  {
+    "id": "00601",
+    "title": "工程建设00601",
+    "speaker": "白产",
+    "body": "君上，朝堂东南角有些老化\n有垮塌的风险\n如果想要修缮，需要合适的木料\n我国一时是找不出来，得去外国采买\n是拜托外臣去他们母国采买\n还是找卿士代表我国去采买呢？",
+    "options": [
+      {
+        "text": "让外臣去他们母国要个好价钱",
+        "foreignChange": 10,
+        "kingChange": -5
+      },
+      {
+        "text": "让卿士去精打细算找好材料",
+        "scholarChange": 10
+      },
+      {
+        "text": "让我国庶人再好好找找，怎么可能一点没有",
+        "peopleChange": -10,
+        "kingChange": -10
+      }
+    ],
+    "yearDelta": 1
+  },
+  {
+    "id": "00701",
+    "title": "工程建设00701",
+    "speaker": "白产",
+    "body": "君上，我们从东山取来一些石料\n这部分石料品质上乘，可用于建造\n现如今，南泽的水坝需要维修\n朝堂维修也需要这部分石料\n一些贵族也希望用这些石料修缮府邸\n怎么办呢？",
+    "options": [
+      {
+        "text": "先用于水坝维修",
+        "peopleChange": 10
+      },
+      {
+        "text": "先用于朝堂修缮",
+        "scholarChange": 10,
+        "foreignChange": 10
+      },
+      {
+        "text": "先供给寡人和贵族生活",
+        "nobleChange": 15,
+        "kingChange": 15
+      }
+    ],
+    "yearDelta": 1
+  },
+  {
+    "id": "00801",
+    "title": "工程建设00801",
+    "speaker": "白产",
+    "body": "君上，贵族们想要修筑一座高台\n仿照楚国章华台的形制\n规模浩大，雕琢仔细\n不过听起来就耗费颇丰啊\n而且肯定会动员大量庶人服徭役",
+    "options": [
+      {
+        "text": "这简直是胡闹，不准建",
+        "peopleChange": 10,
+        "nobleChange": -10
+      },
+      {
+        "text": "降低形制，建座小台便是了",
+        "nobleChange": 5,
+        "peopleChange": -15
+      }
+    ],
+    "yearDelta": 1
+  },
+  {
+    "id": "00901",
+    "title": "工程建设00901",
+    "speaker": "白产",
+    "body": "君上，外臣们想要修筑一座学宫\n以供列国学子来这里交流辩论\n只是学宫之人，耗费颇丰\n您觉得？",
+    "options": [
+      {
+        "text": "本国卿士还没用上呢，他们急什么",
+        "scholarChange": 10,
+        "foreignChange": -15
+      },
+      {
+        "text": "我们可离不开外臣的辅佐",
+        "foreignChange": 10,
+        "kingChange": -5
+      }
+    ],
+    "yearDelta": 1
+  },
+  {
+    "id": "01001",
+    "title": "工程建设01001",
+    "speaker": "白产",
+    "body": "君上，庶人们希望在城南新建一批水利设施\n水利可增加田产，庶人的日子也好过些\n只是国库空虚，钱不太够",
+    "options": [
+      {
+        "text": "让贵族出钱，给他们修",
+        "nobleChange": -15,
+        "peopleChange": 10
+      },
+      {
+        "text": "让卿士捐钱，给他们修",
+        "scholarChange": -15,
+        "peopleChange": 10
+      },
+      {
+        "text": "狠狠宰境内外商一笔，给他们修",
+        "foreignChange": -15,
+        "peopleChange": 10
+      },
+      {
+        "text": "没钱，不修",
+        "kingChange": -25,
+        "peopleChange": -5
+      }
+    ],
+    "yearDelta": 1
+  }
+]

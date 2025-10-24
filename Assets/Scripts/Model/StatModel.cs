@@ -8,6 +8,7 @@ public class StatModel : ScriptableObject
 {
     // 初始值均为 50
     public int year = 0;      // 当前年份
+    public int currency = 0;  // 当前资金
     public int king = 50;     // 国君
     public int noble = 50;    // 贵族
     public int scholar = 50;  // 士族

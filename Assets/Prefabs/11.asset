@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 11
   m_EditorClassIdentifier: 
   year: 0
-  king: 105
+  king: 50
   noble: 50
   scholar: 50
   foreign: 50

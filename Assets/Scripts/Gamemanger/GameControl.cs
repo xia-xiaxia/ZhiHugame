@@ -8,6 +8,7 @@ public class GameControl : MonoBehaviour
 {
     public static GameControl Instance;
     public StatModel stats;  // 统计数据
+    public int currency;  // 当前资金
 
     // 玩家国策（道具）栏，最多5个
     public Dictionary<string, PolicyItem> inventory = new Dictionary<string, PolicyItem>(5);
@@ -175,6 +176,9 @@ public class GameControl : MonoBehaviour
 
         waitingForNextTurn = true;
         Debug.Log($"[GameControl] Year -> {year}");
+        stats.year = year;
+        UIManager.Instance.currentYearText.text = "第" + year.ToString() + "年";
+        UIManager.Instance.currentYearTextinDadian.text = "第" + year.ToString() + "年";
 
         // 回合数也可能触发结局
         CheckAndTriggerEnding();

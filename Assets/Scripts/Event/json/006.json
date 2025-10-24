@@ -1,0 +1,115 @@
+[
+  {
+    "id": "00101",
+    "title": "巫蛊之术00101",
+    "speaker": "南生",
+    "body": "君上，一月无雨，土裂如龟\n这是不利于农业的\n臣恰巧懂一点巫蛊之术\n我们可以烧死一对童男童女\n这样一来，天上自会下雨\n君上舍得用谁家的?",
+    "options": [
+      {
+        "text": "你家的",
+        "yearDelta": 1
+      },
+      {
+        "text": "什么乱七八糟的，不干",
+        "nextEventId": "00102",
+        "interval": 0,
+        "yearDelta": 1
+      },
+      {
+        "text": "从国人家里抓",
+        "nextEventId": "00103",
+        "interval": 0,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00102",
+    "title": "巫蛊之术00102",
+    "speaker": "南生",
+    "body": "额，微臣膝下无子，恐难从命",
+    "options": [
+      {
+        "text": "那你还不滚蛋",
+        "peopleChange": 5,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00103",
+    "title": "巫蛊之术00103",
+    "speaker": "白产",
+    "body": "君上怎可信如此荒谬失当之言？万万不可如此",
+    "options": [
+      {
+        "text": "好吧",
+        "peopleChange": -20,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00201",
+    "title": "巫蛊之术00201",
+    "speaker": "南生",
+    "body": "君上，臣有一巫蛊法术\n以此法，可将您的病痛转移给他人\n只要取街上一庶人的头发一束，便可实行\n此法隐秘无比，不会被任何人察觉\n不知道您愿不愿意一试呢？",
+    "options": [
+      {
+        "text": "我可不干",
+        "kingChange": 5,
+        "peopleChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "那你试一试吧",
+        "nextEventId": "00202",
+        "interval": 0,
+        "peopleChange": -20,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00202",
+    "title": "巫蛊之术00202",
+    "speaker": "南生",
+    "body": "呜呼，君上怎可如此\n如此不在乎庶人之性命，以庶人为刍草\n不过臣还是会为君上做此法",
+    "options": [
+      {
+        "text": "这时候你装什么爱民？",
+        "peopleChange": -10,
+        "yearDelta": 0
+      },
+      {
+        "text": "那我不干了",
+        "peopleChange": 5,
+        "kingChange": -15,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00301",
+    "title": "巫蛊之术00301",
+    "speaker": "南生",
+    "body": "君上，臣听闻君夫人前些日子受惊，噩梦缠绕\n臣不只会观星象，还会“祝由术”\n只要画符噀水，缚草为形，咒而埋之\n可把疾病转移给土木，永无后患",
+    "options": [
+      {
+        "text": "可行，但不要惊动太多人",
+        "nobleChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "寡人夫人又不是纸糊的，少来这套",
+        "scholarChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "顺手把寡人的落枕也祝了吧",
+        "nobleChange": 10,
+        "yearDelta": 1
+      }
+    ]
+  }
+]

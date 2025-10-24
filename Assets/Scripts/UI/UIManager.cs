@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
 
     public Text titleText;
     public Text bodyText;
+    public Text speakerName;
     public DialoguePanel dialoguePanel;
     public TextMeshProUGUI statText1;
     public TextMeshProUGUI statText2;
@@ -25,8 +26,8 @@ public class UIManager : MonoBehaviour
 
     public bool isShow;
     public int eventid = 100;
-    private int currentYear;
     public Text currentYearText;
+    public Text currentYearTextinDadian;
 
     public Button[] optionButtons = new Button[4]; // 在Inspector拖入4个选项按钮
 
@@ -135,6 +136,7 @@ public class UIManager : MonoBehaviour
             return;
         }
         titleText.text = evt.title;
+        speakerName.text = evt.speaker;
         // 按句分割正文（可按'\n'或其它分隔符）
         currentEventSentences = new List<string>(evt.body.Split('\n'));
         currentSentenceIndex = 0;

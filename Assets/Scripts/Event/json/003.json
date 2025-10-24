@@ -1,0 +1,515 @@
+[
+  {
+    "id": "00101",
+    "title": "后厨百味00101",
+    "speaker": "谷雨",
+    "body": "君上，您看这个烤芋怎么样……\n（谷雨递给你一块色香味俱全的烤芋）\n很好吃对吧\n您不好奇这芋怎么来的吗\n这是我刚才在祭坛后烤的\n芋很好吃对吧，但是有一点小意外\n火星一步消息燎了几垛祭柴\n我只好说这是给您烤的\n所以太史要记“君以社稷为炉”……",
+    "options": [
+      {
+        "text": "挺香，分他一个封口",
+        "peopleChange": 5,
+        "kingChange": -5,
+        "nextEventId": "00102",
+        "interval": 0,
+        "yearDelta": 1
+      },
+      {
+        "text": "寡人只能认了，烤芋拿来",
+        "peopleChange": 5,
+        "kingChange": -10,
+        "yearDelta": 1
+      },
+      {
+        "text": "烤芋归我，过错归你",
+        "peopleChange": -10,
+        "kingChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00102",
+    "title": "后厨百味00102",
+    "speaker": "共伯",
+    "body": "史家秉笔直书，一字不改",
+    "options": [
+      {
+        "text": "好吧",
+        "kingChange": -15,
+        "yearDelta": 0
+      },
+      {
+        "text": "叉出去",
+        "kingChange": 5,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00201",
+    "title": "后厨百味00201",
+    "speaker": "谷雨",
+    "body": "君上，牧人养的猪下崽了\n我的意思是，我们有了一头乳猪\n再说的直白一些，有一道名菜叫做“烤乳猪”\n不过我并没有蛊惑您违反周礼的意思\n当然我也知道周礼明确规定乳猪属于“八珍”\n只有周天子可以食用\n您如果真的吃了，那就是极度的僭越\n不过话又说回来，这个烤乳猪着实让人垂涎啊\n我们只要不让别人知道就好了",
+    "options": [
+      {
+        "text": "寡人偷偷吃就好啦",
+        "peopleChange": 10,
+        "kingChange": -5,
+        "yearDelta": 1
+      },
+      {
+        "text": "寡人偏要明目张胆的吃",
+        "peopleChange": 10,
+        "kingChange": 10,
+        "nobleChange": -10,
+        "yearDelta": 1
+      },
+      {
+        "text": "那寡人不吃便是了",
+        "kingChange": -5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00301",
+    "title": "后厨百味00301",
+    "speaker": "谷雨",
+    "body": "君上，祭后胙肉被您心爱的猎犬叼走一块\n这是不合周礼的\n不如把它杀了吃肉吧？",
+    "options": [
+      {
+        "text": "明明是你看管不力，罚钱，下次长长记性",
+        "peopleChange": -15,
+        "kingChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "那就处死这只狗吧，礼法更重要",
+        "nobleChange": 10,
+        "kingChange": -5,
+        "yearDelta": 1
+      },
+      {
+        "text": "你还想吃寡人的爱犬？叉出去！",
+        "peopleChange": -10,
+        "kingChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00401",
+    "title": "后厨百味00401",
+    "speaker": "谷雨",
+    "body": "君上，我发现今年的肥羊品质极高\n虽然按照礼法您应该分一些给其他大臣\n不过您会不会想多吃一点呢",
+    "options": [
+      {
+        "text": "快给寡人开小灶！",
+        "kingChange": 10,
+        "scholarChange": -5,
+        "nobleChange": -5,
+        "foreignChange": -5,
+        "yearDelta": 1
+      },
+      {
+        "text": "严格按照礼法，大家分食",
+        "kingChange": 5,
+        "foreignChange": 5,
+        "nobleChange": 5,
+        "scholarChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00501",
+    "title": "后厨百味00501",
+    "speaker": "谷雨",
+    "body": "君上，今日小灶菜单本有烧鸡\n但那个国相太抠门了，不给我批钱买鸡\n我只好换成城外猎户打的苍鹭，肉柴味腥\n我看这玩意是没法吃，您怎么看？",
+    "options": [
+      {
+        "text": "这点钱还用省？让他批钱",
+        "scholarChange": -5,
+        "peopleChange": 5,
+        "kingChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "鹭汤留着，寡人正想尝尝野味",
+        "kingChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00601",
+    "title": "后厨百味00601",
+    "speaker": "谷雨",
+    "body": "君上，您不介意昆虫料理吧？\n周礼记载天子会吃“蚳醢”\n采取精品蚂蚁卵发酵制成，黑亮如黍，微酸可口\n简直是酱料之极品\n我也试着做了一些，味真足！\n您要不要尝尝？",
+    "options": [
+      {
+        "text": "有点意思，来点试试",
+        "peopleChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "蚂蚁也能当酱？叉出去！",
+        "peopleChange": -10,
+        "yearDelta": 1
+      },
+      {
+        "text": "那卖给宋国人吧",
+        "peopleChange": 5,
+        "foreignChange": -5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00701",
+    "title": "后厨百味00701",
+    "speaker": "谷雨",
+    "body": "君上，您还记得庙庖那只老鼋吗？\n那是养来祭河神的，已经有七年了\n前两天我发现它背甲裂口，怕是熬不到下次秋祭了\n不如先宰了熬汤如何？",
+    "options": [
+      {
+        "text": "神没口福，寡人代享",
+        "nobleChange": -15,
+        "kingChange": 15,
+        "yearDelta": 1
+      },
+      {
+        "text": "养伤，继续供，裂甲也算天意啊",
+        "nobleChange": 15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00801",
+    "title": "后厨百味00801",
+    "speaker": "谷雨",
+    "body": "君上，宫中养的那只“鸣鹿”发情了\n它昼夜哀嚎，声如哭丧\n宫人夜不能寐，不堪其扰\n也许我们可以放掉它，或者阉掉它\n再或者宰了烤肉？",
+    "options": [
+      {
+        "text": "放，让它去宋国哭，寡人耳根清净",
+        "foreignChange": -10,
+        "peopleChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "阉，哭完这回，下回就没得哭",
+        "peopleChange": 10,
+        "nobleChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "吃肉，正好开开荤",
+        "peopleChange": 10,
+        "kingChange": 10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00901",
+    "title": "后厨百味00901",
+    "speaker": "谷雨",
+    "body": "君上，这是我独家秘制“梅子酱”\n臣取万颗青梅捣汁，和饴熬成\n色赤如枣，可蘸胙肉、解腥腻\n佐肉吃更美味哦",
+    "options": [
+      {
+        "text": "好吃，重赏渔夫",
+        "peopleChange": 20,
+        "yearDelta": 1
+      },
+      {
+        "text": "藏好这个菜单，只有寡人能吃",
+        "peopleChange": 5,
+        "kingChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "如此好物，当赏给勋贵百官",
+        "nobleChange": 5,
+        "scholarChange": 5,
+        "foreignChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01001",
+    "title": "后厨百味01001",
+    "speaker": "谷雨",
+    "body": "君上，今秋的菰米到了\n只是品质堪忧、粒短味腥\n我掺两把栗粉，蒸成“菰栗饭”，才能勉强入口\n不过祭礼那边得用纯菰，不能杂",
+    "options": [
+      {
+        "text": "祭天用纯，寡人吃杂，天远，寡人近",
+        "nobleChange": -5,
+        "kingChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "你另蒸一升纯的，按礼仪办事",
+        "nobleChange": 10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01101",
+    "title": "后厨百味01101",
+    "speaker": "谷雨",
+    "body": "君上，您有没有发现今天的稻饭不太一样\n香甜可口，甚至隐隐有一股竹子香气对吧\n而且冥冥之中似有书卷墨香对吧\n没错！柴火当时烧完了，火又不能断\n于是我顺手拿了太史半卷竹简\n他急眼了，现在要我赔",
+    "options": [
+      {
+        "text": "你拆的你自己赔，给他抄书",
+        "peopleChange": -10,
+        "scholarChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "寡人去跟太史赔不是",
+        "peopleChange": 10,
+        "kingChange": -10,
+        "scholarChange": -15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01201",
+    "title": "后厨百味01201",
+    "speaker": "谷雨",
+    "body": "君上，您那猎犬叼走了刚煮好的雁腿\n我追了三圈，实在撵不上\n等到它吐出来，骨头都嚼完了\n按礼，雁是宾席之馔，不能缺",
+    "options": [
+      {
+        "text": "今晚扣它一顿，让它闻香挨饿",
+        "peopleChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "为什么你没看好锅，该罚",
+        "peopleChange": -15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01301",
+    "title": "后厨百味01301",
+    "speaker": "谷雨",
+    "body": "君上，东圃的韭菜窜的相当快\n按礼，春韭是“庶人菜”\n您贵为国君，不该和庶人抢这个吃\n可若半夜偷烤，撒点盐，谁晓得？",
+    "options": [
+      {
+        "text": "半夜点火，寡人做贼也无妨",
+        "peopleChange": -5,
+        "kingChange": 10,
+        "nextEventId": "01002",
+        "interval": 0,
+        "yearDelta": 1
+      },
+      {
+        "text": "寡人不吃",
+        "peopleChange": 10,
+        "kingChange": 10,
+        "nextEventId": "01002",
+        "interval": 0,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01002",
+    "title": "后厨百味01002",
+    "speaker": "白产",
+    "body": "君上，您不该吃这个\n庶人生活已经很贫苦\n春韭是他们为数不多的加餐\n您吃这个，会被当做与民争利",
+    "options": [
+      {
+        "text": "那寡人不吃便是",
+        "peopleChange": 10,
+        "yearDelta": 0
+      },
+      {
+        "text": "寡人偏要光明正大的吃",
+        "kingChange": 10,
+        "peopleChange": -5,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "01401",
+    "title": "后厨百味01401",
+    "speaker": "谷雨",
+    "body": "君上，去年预制的咸鱼实在是太咸了\n我都心疼盐……\n我看您就别吃了，干脆赏赐给群臣",
+    "options": [
+      {
+        "text": "赏给功勋卓著的贵族",
+        "nobleChange": -5,
+        "yearDelta": 1
+      },
+      {
+        "text": "赏给劳累的卿士们",
+        "scholarChange": -5,
+        "yearDelta": 1
+      },
+      {
+        "text": "寡人自己吃",
+        "kingChange": -5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01501",
+    "title": "后厨百味01501",
+    "speaker": "谷雨",
+    "body": "君上，今天新打上的鲂鱼，鳞色若银，可惜太小\n我正发愁，渔夫提了一个菜谱\n剔骨取肉，剁成茸，加蛋清打万下\n挤成鱼丸，滚冷水定形，再配笋片清汤\n一碗鱼糜丸，入口弹牙，后味有竹气\n甚是美味啊！",
+    "options": [
+      {
+        "text": "好吃，重赏渔夫",
+        "peopleChange": 20,
+        "yearDelta": 1
+      },
+      {
+        "text": "藏好这个菜单，只有寡人能吃",
+        "peopleChange": 5,
+        "kingChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "如此好物，当赏给勋贵百官",
+        "nobleChange": 5,
+        "scholarChange": 5,
+        "foreignChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01601",
+    "title": "后厨百味01601",
+    "speaker": "谷雨",
+    "body": "君上，春末枇杷黄，我剥皮去核，加蜜小火熬\n熬到肉化汁稠，封罐，得枇杷膏\n吃时拿茶匙挖，一勺能含半日\n此物实属稀罕，您怎么安排？",
+    "options": [
+      {
+        "text": "把方法传授给庶人，让他们也尝鲜",
+        "peopleChange": 15,
+        "yearDelta": 1
+      },
+      {
+        "text": "寡人吃吃吃吃吃吃",
+        "kingChange": 10,
+        "peopleChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01701",
+    "title": "后厨百味01701",
+    "speaker": "谷雨",
+    "body": "君上，今早摘到新鲜紫苋\n我稍加烹饪，颇有一番风味\n入口软，嚼有菜汁\n君夫人怕菜汁染唇，有碍观瞻，不肯下箸\n怎么劝？",
+    "options": [
+      {
+        "text": "紫为国色，染唇正好",
+        "nobleChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "那我自己吃，豪赤！",
+        "kingChange": 10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01801",
+    "title": "后厨百味01801",
+    "speaker": "谷雨",
+    "body": "君上，楚使贡来小螯虾，壳青肉紧\n我取酒糟腌渍半日，再上锅蒸，糟香透壳\n剥壳蘸清酱，鲜甜可人\n只不过，剥壳并不是容易事\n满手虾脑，未免失礼\n马上到贵族宴会了，上不上这个菜？",
+    "options": [
+      {
+        "text": "先厨房剥好再上桌，保全面子",
+        "peopleChange": -10,
+        "nobleChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "让贵族自己剥，看热闹",
+        "nobleChange": -15,
+        "yearDelta": 1
+      },
+      {
+        "text": "不吃了，磨成粉当肥料",
+        "peopleChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01901",
+    "title": "后厨百味01901",
+    "speaker": "谷雨",
+    "body": "君上，贾人从西南带来一些食材\n他称当地人多采食这种植物的嫩芽煮食\n虽然味苦，但是清新解腻\n我使炭火小壶，煮沸食之，叶子苦涩，难以入口\n但这汤味清而微涩，很有风味",
+    "options": [
+      {
+        "text": "有意思，拿来试试",
+        "peopleChange": 5,
+        "kingChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "当成俸禄的一部分发给群臣",
+        "scholarChange": 5,
+        "foreignChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "作为礼品发给群臣尝鲜",
+        "scholarChange": 15,
+        "foreignChange": 15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "02001",
+    "title": "后厨百味02001",
+    "speaker": "谷雨",
+    "body": "君上，臣听说南方人喜食“舒凫”\n也就是鸭子\n但我国养鸭甚少\n我想鸭子是很不错的家禽\n还可以做烤鸭\n为什么不试试大规模养殖呢",
+    "options": [
+      {
+        "text": "寡人不爱吃那玩意",
+        "peopleChange": -5,
+        "yearDelta": 1
+      },
+      {
+        "text": "寡人会考虑的",
+        "peopleChange": 10,
+        "nextEventId": "02002",
+        "interval": 0,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "02002",
+    "title": "后厨百味02002",
+    "speaker": "白产",
+    "body": "君上，我们可以在泗水边上蓄水筑一座小城\n然后在城内养鸭子\n这样既能获得大量的鸭子，又有军事效益，一举两得！",
+    "options": [
+      {
+        "text": "这是个好主意，就这么办",
+        "peopleChange": 10,
+        "scholarChange": 5,
+        "yearDelta": 0
+      },
+      {
+        "text": "买两只鸭子得了，用不着这么兴师动众",
+        "peopleChange": 5,
+        "yearDelta": 0
+      }
+    ]
+  }
+]

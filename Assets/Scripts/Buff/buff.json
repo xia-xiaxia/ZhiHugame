@@ -1,21 +1,54 @@
 [
   {
     "id": "001",
-    "description": "王者加冕",
-    "result": "每年国君+2",
+    "name": "初税亩",
+    "description": "我们执行了田制改革，以田亩税代替井田制",
+    "result": "国君势力持续小幅上升，持续一段时间",
     "duration": 5,
-    "kingChange": 2,
-    "nobleChange": 0,
-    "scholarChange": 0,
-    "foreignChange": 0,
-    "peopleChange": 0
+    "kingChange": 5
   },
   {
     "id": "002",
-    "description": "贵族动乱",
-    "result": "每年贵族-3",
-    "duration": 1,
-    "nobleChange": -1
-
+    "name": "铸刑书",
+    "description": "我们把口头约法改革为成文法，判罚更加公正",
+    "result": "贵族势力持续小幅下降，国君势力持续小幅上升，持续一段时间",
+    "duration": 5,
+    "kingChange": 5,
+    "nobleChange": -5
+  },
+  {
+    "id": "003",
+    "name": "采邑改革",
+    "description": "我们把贵族的世袭采邑逐步削减，收归中央",
+    "result": "贵族势力持续中幅下降，国君势力持续小幅上升，持续一段时间",
+    "duration": 3,
+    "kingChange": 5,
+    "nobleChange": -10
+  },
+  {
+    "id": "004",
+    "name": "三世收爵",
+    "description": "贵族三代无功，官职和待遇一并撤销",
+    "result": "贵族势力持续小幅下降",
+    "duration": -1,
+    "nobleChange": -3
+  },
+  {
+    "id": "005",
+    "name": "考律",
+    "description": "庶人、卿士、外臣可参加考律，以考试授官",
+    "result": "庶人、卿士、外臣势力持续小幅上升",
+    "duration": -1,
+    "scholarChange": 2,
+    "foreignChange": 2,
+    "peopleChange": 2
+  },
+  {
+    "id": "006",
+    "name": "垦荒令",
+    "description": "我们鼓励庶人开垦荒地，增加田亩",
+    "result": "庶人势力持续小幅上升，持续一段时间",
+    "duration": 5,
+    "peopleChange": 5
   }
 ]

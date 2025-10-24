@@ -66,7 +66,19 @@ public class EventManager : MonoBehaviour
             }
 
             var currentEventDict = new Dictionary<string, GameEvent>();
-            GameEvent[] all = JsonHelper.FromJson<GameEvent>(eventJson.text);
+            GameEvent[] all = new GameEvent[0];
+            try
+            {
+                all = JsonHelper.FromJson<GameEvent>(eventJson.text);
+            }
+            catch (System.Exception ex)
+            {
+                string snippet = "";
+                try { var t = eventJson.text ?? ""; snippet = t.Length > 200 ? t.Substring(0, 200) + "..." : t; } catch { snippet = "<unable to read text>"; }
+                Debug.LogError($"[EventManager] 解析事件 JSON 失败: {eventJson.name} 异常: {ex.Message}\n片段: {snippet}");
+                // 跳过当前文件，继续尝试其他文件
+                continue;
+            }
             foreach (var e in all)
             {
                 if (!string.IsNullOrEmpty(e?.id))

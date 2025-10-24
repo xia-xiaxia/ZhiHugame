@@ -1,0 +1,479 @@
+[
+  {
+    "id": "00101",
+    "title": "学者之言00101",
+    "speaker": "敬开",
+    "body": "君上，孔夫子曾说“举直错诸枉，则民服；举枉错诸直，则民不服”\n这意味着选举人才应当唯才是举，否则人民不信服\n您怎么看？",
+    "options": [
+      {
+        "text": "贵族们血统纯正，德才兼备，堪当大任",
+        "nobleChange": 15,
+        "yearDelta": 1
+      },
+      {
+        "text": "卿士们广有才学，可以为国所用",
+        "scholarChange": 15,
+        "yearDelta": 1
+      },
+      {
+        "text": "外臣们怀才不遇，应当认真对待",
+        "foreignChange": 15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00201",
+    "title": "学者之言00201",
+    "speaker": "敬开",
+    "body": "君上，孔夫子曾说“节用而爱人，使民以时”\n这意味着君主应当统治者应节俭爱民而非横征暴敛\n这是有道理的\n所以我们今年不妨不收税了吧？",
+    "options": [
+      {
+        "text": "你说的有道理，但只能减税",
+        "peopleChange": 10,
+        "foreignChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "那就免税一年",
+        "peopleChange": 20,
+        "foreignChange": 10,
+        "nextEventId": "00202",
+        "interval": 0,
+        "yearDelta": 1
+      },
+      {
+        "text": "简直胡闹，节俭和不征税又不是一回事",
+        "peopleChange": -5,
+        "foreignChange": -5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00202",
+    "title": "学者之言00202",
+    "speaker": "白产",
+    "body": "君上，如果今年不征税，我们将发不起官员的禄米\n届时无论是贵族、士族还是外臣，都会不满\n请您收回成命",
+    "options": [
+      {
+        "text": "不发就不发，受着",
+        "peopleChange": 20,
+        "nobleChange": -15,
+        "foreignChange": -15,
+        "scholarChange": -15,
+        "yearDelta": 0
+      },
+      {
+        "text": "你说的有道理，那不这么办了",
+        "peopleChange": -30,
+        "kingChange": -20,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00301",
+    "title": "学者之言00301",
+    "speaker": "敬开",
+    "body": "君上，孔子曾说“为政以德，譬如北辰，居其所而众星共之”\n臣以为您需要为此自省",
+    "options": [
+      {
+        "text": "你说得对，我要注意德行",
+        "kingChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "你说得对，群臣要注意德行",
+        "scholarChange": 5,
+        "foreignChange": 5,
+        "nobleChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00401",
+    "title": "学者之言00401",
+    "speaker": "敬开",
+    "body": "君上，孔子曾说：上好礼，则民莫敢不敬\n上好义，则民莫敢不服\n上好信，则民莫敢不用情\n您应当注意礼义信啊",
+    "options": [
+      {
+        "text": "你说得对，我谨遵孔夫子教诲",
+        "foreignChange": 10,
+        "kingChange": -15,
+        "yearDelta": 1
+      },
+      {
+        "text": "那我可要拿法家学说和你争辩一下了",
+        "kingChange": 15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00501",
+    "title": "学者之言00501",
+    "speaker": "敬开",
+    "body": "君上，孔子曾在山中见到一老妇\n她哭泣不止，孔子问她缘故\n她说她的公公、丈夫、儿子均葬身虎口\n孔子问她为什么不回城里生活\n老妇说待在山中便没有苛政了\n孔子于是说“苛政猛于虎”\n您也要避免这种情况啊",
+    "options": [
+      {
+        "text": "说的好，我知道了",
+        "kingChange": -10,
+        "foreignChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "也许这苛政是采邑的贵族干的呢",
+        "kingChange": 5,
+        "peopleChange": -10,
+        "nobleChange": -15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00601",
+    "title": "学者之言00601",
+    "speaker": "敬开",
+    "body": "君上，邹国的孟轲有一番言论\n民为贵，社稷次之，君为轻\n我认为颇有一番深意啊\n您怎么看？",
+    "options": [
+      {
+        "text": "民有什么好贵的？",
+        "peopleChange": -10,
+        "foreignChange": -10,
+        "yearDelta": 1
+      },
+      {
+        "text": "庶人确实是国家的根基啊",
+        "peopleChange": 15,
+        "foreignChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00701",
+    "title": "学者之言00701",
+    "speaker": "敬开",
+    "body": "君上，邹国的孟轲有一番言论\n谨庠序之教，申之以孝悌之义\n这意味着我们需要展开对庶人的教育啊\n但这需要大量的外臣学者来我国授业\n您愿意为他们提供俸禄和支持吗？",
+    "options": [
+      {
+        "text": "准了，让庶人更加明白事理啊",
+        "peopleChange": 10,
+        "foreignChange": 15,
+        "yearDelta": 1
+      },
+      {
+        "text": "不准，庶人哪需要懂这么多",
+        "foreignChange": -10,
+        "peopleChange": -5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00801",
+    "title": "学者之言00801",
+    "speaker": "敬开",
+    "body": "君上，邹国的孟轲有一番言论\n君之视臣如土芥，则臣视君如寇雠\n这意味着如果您不重视臣子，那么臣子也会不重视您\n您一定要认识到臣子的重要性啊",
+    "options": [
+      {
+        "text": "寡人知道了，臣子是寡人的臂膀啊",
+        "scholarChange": 15,
+        "foreignChange": 15,
+        "nobleChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "敢犯上的臣子已经不是一般的臣子了，必须出重拳",
+        "scholarChange": -15,
+        "foreignChange": -15,
+        "nobleChange": -5,
+        "kingChange": 15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00901",
+    "title": "学者之言00901",
+    "speaker": "敬开",
+    "body": "君上，邹国的孟轲有一番言论\n数罟不入洿池，鱼鳖不可胜食也\n斧斤以时入山林，材木不可胜用也\n我们应该合理的开发自然资源",
+    "options": [
+      {
+        "text": "寡人应该约束贵族的奢靡浪费",
+        "nobleChange": -10,
+        "yearDelta": 1
+      },
+      {
+        "text": "寡人应该约束庶人的乱砍滥伐",
+        "peopleChange": -10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01001",
+    "title": "学者之言01001",
+    "speaker": "敬开",
+    "body": "君上，邹国的孟轲有一番言论\n民之为道也，有恒产者有恒心，无恒产者无恒心\n苟无恒心，放辟邪侈，无不为已\n这意味着要让庶人获得充足的财富\n如此一来他们就可以安分守己，不生事端",
+    "options": [
+      {
+        "text": "有道理，降税几分",
+        "peopleChange": 15,
+        "yearDelta": 1
+      },
+      {
+        "text": "他们有财富了也只会浪费掉",
+        "peopleChange": -10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01101",
+    "title": "学者之言01101",
+    "speaker": "敬开",
+    "body": "君上，宋国的墨翟有一番言论\n官无常贵，而民无终贱；有能则举之，无能则下之\n也就是说，要依照个人能力用人\n无能的贵族应该被贬斥\n有才的庶人应该被提拔\n您怎么看？",
+    "options": [
+      {
+        "text": "有道理，招揽一些庶人，打压几个贵族",
+        "nobleChange": -15,
+        "peopleChange": 15,
+        "yearDelta": 1
+      },
+      {
+        "text": "胡闹，庶人有才就不会是庶人了",
+        "peopleChange": -5,
+        "nobleChange": 10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01201",
+    "title": "学者之言01201",
+    "speaker": "敬开",
+    "body": "君上，宋国的墨翟有一番言论\n圣人为政，去其无用之费，足以倍之\n也就是说，身为君主，应该节俭开支\n省下来的开支可以有利于庶人",
+    "options": [
+      {
+        "text": "有道理，寡人将节俭支出",
+        "kingChange": -15,
+        "peopleChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "接着奏乐，接着舞",
+        "kingChange": 15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01301",
+    "title": "学者之言01301",
+    "speaker": "敬开",
+    "body": "君上，宋国的墨翟有一番言论\n虽在农与工肆之人，有能则举之\n高予之爵，重予之禄，任之以事，断予之令\n也就是说，对于有能力的庶人\n虽然出身寒微，也应当重用",
+    "options": [
+      {
+        "text": "有道理，寡人将任用出色的庶人",
+        "peopleChange": 15,
+        "scholarChange": -10,
+        "yearDelta": 1
+      },
+      {
+        "text": "卿士不比他们有才能？",
+        "scholarChange": 15,
+        "peopleChange": -10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01401",
+    "title": "学者之言01401",
+    "speaker": "敬开",
+    "body": "君上，魏国的李悝有一番言论\n夺淫民之禄，以来四方之士\n也就是说，剥夺一些旧贵族的利益\n将之用来招揽四方的外臣能人",
+    "options": [
+      {
+        "text": "这简直是胡闹",
+        "nobleChange": 20,
+        "yearDelta": 1
+      },
+      {
+        "text": "确实是有道理的啊",
+        "nobleChange": -25,
+        "foreignChange": 20,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01501",
+    "title": "学者之言01501",
+    "speaker": "敬开",
+    "body": "君上，魏国的李悝有一番言论\n食有劳而禄有功，使有能而赏必行\n也就是说，对于有能有功的卿士\n应该合理的进行奖赏",
+    "options": [
+      {
+        "text": "这是很中肯的",
+        "scholarChange": 15,
+        "yearDelta": 1
+      },
+      {
+        "text": "有那钱不如让寡人享乐",
+        "scholarChange": -15,
+        "kingChange": -25,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01601",
+    "title": "学者之言01601",
+    "speaker": "敬开",
+    "body": "君上，齐国的管仲曾有一番言论\n圣王之身能立德，然后能立政\n身能立政，然后能立法\n身能立法，然后能使民\n也就是说，君主应当注重自我修养\n这样才能治理好国家",
+    "options": [
+      {
+        "text": "寡人将修养自己的品德",
+        "kingChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "如果寡人也有管仲那样的臣子就好了",
+        "kingChange": -20,
+        "scholarChange": 15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01701",
+    "title": "学者之言01701",
+    "speaker": "敬开",
+    "body": "君上，齐国的管仲曾有一番言论\n令重于宝，社稷先于亲戚\n法重于民，威权贵于爵禄\n也就是说，即便是贵族，也不能徇私枉法\n如此一来，人民才会信服君主",
+    "options": [
+      {
+        "text": "寡人将把贵族一视同仁",
+        "kingChange": -5,
+        "nobleChange": -20,
+        "peopleChange": 15,
+        "yearDelta": 1
+      },
+      {
+        "text": "那可不是徇私枉法，那叫人情世故",
+        "nobleChange": 25,
+        "peopleChange": -25,
+        "kingChange": -10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01801",
+    "title": "学者之言01801",
+    "speaker": "敬开",
+    "body": "君上，齐国的管仲曾有一番言论\n凡治国之道，必先富民\n民富则易治也，民贫则难治也\n也就是说，君主治国应当让人民富足\n如此一来人民才会易于治理",
+    "options": [
+      {
+        "text": "很有道理，寡人将善待人民",
+        "peopleChange": 10,
+        "kingChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "有管仲那样的出色臣子，人民便会富足",
+        "scholarChange": 15,
+        "peopleChange": 5,
+        "kingChange": -20,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01901",
+    "title": "学者之言01901",
+    "speaker": "敬开",
+    "body": "君上，齐国的管仲曾有一番言论\n闻贤而不举，殆\n闻善而不索，殆\n见能而不使，殆\n这意味着，君主应当唯才是举\n要提拔各路杰出之人，不问出处",
+    "options": [
+      {
+        "text": "外臣之中能人甚多啊",
+        "foreignChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "贵族子弟也不乏贤人",
+        "nobleChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "卿士之中一定有管仲之才",
+        "scholarChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "庶人之中也会有可用之人啊",
+        "peopleChange": 10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "02001",
+    "title": "学者之言02001",
+    "speaker": "敬开",
+    "body": "君上，齐国的晏婴曾有一番言论\n婴闻古之贤君，饱而知人之饥\n温而知人之寒，逸而知人之劳。今君不知也\n意思是劝谏齐景公要体恤民情\n不能高高在上啊",
+    "options": [
+      {
+        "text": "庶人的日子果然难过啊",
+        "peopleChange": 15,
+        "kingChange": -10,
+        "yearDelta": 1
+      },
+      {
+        "text": "君主应当多听臣子劝谏啊",
+        "scholarChange": 10,
+        "kingChange": -5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "02101",
+    "title": "学者之言02101",
+    "speaker": "敬开",
+    "body": "君上，齐国的晏婴曾有一番言论\n繁登降之礼，趋详之节，累世不能殚其学\n当年不能究其礼，非所以先细民也\n意思是劝谏齐景公不能任用孔子这样的儒者\n他们强调繁文缛节，不利于国家\n而应该务实治国",
+    "options": [
+      {
+        "text": "外臣都是帮摇唇鼓舌的水货",
+        "foreignChange": -20,
+        "yearDelta": 1
+      },
+      {
+        "text": "孔子这样的大儒还是很有益于国家的",
+        "foreignChange": 10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "02201",
+    "title": "学者之言02201",
+    "speaker": "敬开",
+    "body": "君上，齐国的尹文曾有一番言论\n不累于俗，不饰于物，不苛于人，不忮于众\n愿天下之安宁以活民命，人我之养毕足而止\n也就是说希望所有人都甘于清贫\n不要被世间万物拖累",
+    "options": [
+      {
+        "text": "没见他不吃不喝",
+        "foreignChange": -10,
+        "kingChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "也有道理，还得节俭些",
+        "kingChange": -20,
+        "foreignChange": 10,
+        "yearDelta": 1
+      }
+    ]
+  }
+]
