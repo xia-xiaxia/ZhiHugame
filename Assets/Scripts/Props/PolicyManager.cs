@@ -66,6 +66,7 @@ public class PolicyManager : MonoBehaviour
             type = original.type,
             name = original.name,
             desc = original.desc,
+            cost = original.cost,
             result = original.result,
             whichChange = original.whichChange,
             thresholdDeltaup = original.thresholdDeltaup,

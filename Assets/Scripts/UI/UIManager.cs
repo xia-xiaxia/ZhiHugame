@@ -11,7 +11,6 @@ public class UIManager : MonoBehaviour
 
     public StatModel stats;
     
-    public GameObject daDian;
     public GameObject jinYan;
 
     public Text titleText;
@@ -27,9 +26,10 @@ public class UIManager : MonoBehaviour
     public bool isShow;
     public int eventid = 100;
     public Text currentYearText;
-    public Text currentYearTextinDadian;
 
     public Button[] optionButtons = new Button[4]; // 在Inspector拖入4个选项按钮
+    public Button nextSentenceButton; // “下一句”按钮
+    public Button autoPlayButton; // “自动播放”按钮
 
     // ===== 新增：结局面板（由 Game Control 统一触发）=====
     public GameObject endingPanel;
@@ -88,15 +88,20 @@ public class UIManager : MonoBehaviour
     private int currentSentenceIndex = 0;
     private bool waitingForSentence = false;
     private string currentEventId = "";
+    private Coroutine autoNextCoroutine = null; // 自动下一句的协程句柄
+    private bool autoPlayEnabled = false; // 是否开启自动播放
 
-    void Awake() { Instance = this; }
+    void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
-        if (daDian != null) daDian.SetActive(true);
+        // 只启用 jinYan（事件显示面板）
+        if (jinYan != null) jinYan.SetActive(true);
         if (endingPanel != null) endingPanel.SetActive(false);
-    
-        
+
         // 绑定游戏内退出按钮
         if (exitToMenuButton != null)
         {
@@ -104,10 +109,33 @@ public class UIManager : MonoBehaviour
             exitToMenuButton.onClick.AddListener(OnExitToMenuClicked);
         }
 
-        // 启动游戏（确保 GameControl 已在场景中）
+        // 注意：不要在这里自动启动游戏，应该由用户点击开始按钮触发
+        // 游戏启动流程：用户点击按钮 → OnStartGameButtonClicked() → CanvasMove.StartGame() → 淡入淡出 → StartGame()
+
+        // 绑定“下一句”按钮
+        if (nextSentenceButton != null)
+        {
+            nextSentenceButton.onClick.RemoveAllListeners();
+            nextSentenceButton.onClick.AddListener(OnNextSentenceClicked);
+        }
+
+        // 绑定“自动播放”按钮
+        if (autoPlayButton != null)
+        {
+            autoPlayButton.onClick.RemoveAllListeners();
+            autoPlayButton.onClick.AddListener(OnAutoPlayClicked);
+            UpdateAutoPlayButtonLabel();
+        }
+
+    }
+
+    // 暂停游戏
+    public void OnPauseGameClicked()
+    {
         if (GameControl.Instance != null)
-            GameControl.Instance.StartGame();
-            
+        {
+            GameControl.Instance.PauseGameForMenu();
+        }
     }
 
     // 游戏内退出到主菜单
@@ -115,7 +143,7 @@ public class UIManager : MonoBehaviour
     {
         if (GameControl.Instance != null)
         {
-            GameControl.Instance.PauseAndBackToMenu();
+            GameControl.Instance.ExitToMainMenuFromPause();
         }
     }
 
@@ -129,21 +157,36 @@ public class UIManager : MonoBehaviour
         // 标记该事件为已使用，防止本局重复出现
         if (EventManager.Instance != null)
             EventManager.Instance.MarkEventUsed(id);
+
+        if (EventManager.Instance == null)
+        {
+            Debug.LogError("[UIManager] EventManager.Instance 为 null，无法显示事件");
+            return;
+        }
+
         var evt = EventManager.Instance.GetEvent(id);
         if (evt == null)
         {
             Debug.LogError($"无法找到事件ID: {id}");
             return;
         }
-        titleText.text = evt.title;
-        speakerName.text = evt.speaker;
+        if(evt.speaker != null && evt.speaker!="旁白")
+        {
+            CharacterManager.Instance.ShowCharacter(evt.speaker);
+        }
+        if (titleText != null) titleText.text = evt.title ?? string.Empty; else Debug.LogWarning("[UIManager] titleText 未绑定");
+        if (speakerName != null) speakerName.text = evt.speaker ?? string.Empty; else Debug.LogWarning("[UIManager] speakerName 未绑定");
         // 按句分割正文（可按'\n'或其它分隔符）
-        currentEventSentences = new List<string>(evt.body.Split('\n'));
+        string body = evt.body ?? string.Empty;
+        currentEventSentences = new List<string>(body.Split('\n'));
         currentSentenceIndex = 0;
         if (currentEventSentences.Count <= 1)
         {
             // 只有一句，正文显示后延迟显示选项
-            dialoguePanel.SetBody(evt.body);
+            if (dialoguePanel != null)
+                dialoguePanel.SetBody(body);
+            else
+                Debug.LogWarning("[UIManager] dialoguePanel 未绑定，无法播放逐字效果");
             waitingForSentence = true;
             StartCoroutine(ShowOptionsAfterDelay(0.8f)); // 0.8秒后显示选项
         }
@@ -223,17 +266,23 @@ public class UIManager : MonoBehaviour
         }
         if (currentSentenceIndex < currentEventSentences.Count)
         {
-            dialoguePanel.SetBody(currentEventSentences[currentSentenceIndex]);
+            if (dialoguePanel != null)
+                dialoguePanel.SetBody(currentEventSentences[currentSentenceIndex]);
             // 自动延迟显示下一句
             currentSentenceIndex++;
             if (currentSentenceIndex < currentEventSentences.Count)
             {
                 // 这里可用协程实现自动延迟（如1秒），也可直接递归调用（立即显示）
-                StartCoroutine(AutoShowNextSentence(1.0f)); // 1秒后自动显示下一句
+                if (autoNextCoroutine != null) { StopCoroutine(autoNextCoroutine); autoNextCoroutine = null; }
+                if (autoPlayEnabled)
+                {
+                    autoNextCoroutine = StartCoroutine(AutoShowNextSentence(1.0f)); // 仅在自动播放时自动下一句
+                }
             }
             else
             {
                 // 全部显示完毕，显示选项
+                if (autoNextCoroutine != null) { StopCoroutine(autoNextCoroutine); autoNextCoroutine = null; }
                 StartCoroutine(ShowOptionsAfterDelay(1.0f));
             }
         }
@@ -241,7 +290,12 @@ public class UIManager : MonoBehaviour
 
     private System.Collections.IEnumerator AutoShowNextSentence(float delay)
     {
+        // 若中途关闭了自动播放则直接退出
+        if (!autoPlayEnabled)
+            yield break;
         yield return new WaitForSeconds(delay);
+        if (!autoPlayEnabled)
+            yield break;
         ShowCurrentSentence();
     }
 
@@ -252,12 +306,70 @@ public class UIManager : MonoBehaviour
         waitingForSentence = false;
     }
 
-    // 新增：外部调用，显示下一句
-    public void ShowNextSentence()
+    // “下一句”按钮点击：优先打断打字，其次前进到下一句
+    private void OnNextSentenceClicked()
     {
         if (!waitingForSentence) return;
-        currentSentenceIndex++;
+        
+        // 若仍在打字中，先强制完成当前句子
+        if (dialoguePanel != null && dialoguePanel.IsTyping)
+        {
+            dialoguePanel.ForceCompleteTyping();
+            return;
+        }
+
+        // 打断自动下一句的协程
+        if (autoNextCoroutine != null)
+        {
+            StopCoroutine(autoNextCoroutine);
+            autoNextCoroutine = null;
+        }
+        // 直接显示当前索引对应的句子（ShowCurrentSentence 内部会自增索引）
         ShowCurrentSentence();
+    }
+
+    // 兼容老接口：外部调用显示下一句
+    public void ShowNextSentence()
+    {
+        OnNextSentenceClicked();
+    }
+
+    // 自动播放按钮点击
+    private void OnAutoPlayClicked()
+    {
+        autoPlayEnabled = !autoPlayEnabled;
+        UpdateAutoPlayButtonLabel();
+
+        if (!autoPlayEnabled)
+        {
+            // 关闭自动播放时，停止任何自动推进
+            if (autoNextCoroutine != null)
+            {
+                StopCoroutine(autoNextCoroutine);
+                autoNextCoroutine = null;
+            }
+        }
+        else
+        {
+            // 开启自动播放：如果当前在句子流程中且不在打字中，并且还有剩余句子，则安排自动下一句
+            if (waitingForSentence && dialoguePanel != null && !dialoguePanel.IsTyping && currentSentenceIndex < currentEventSentences.Count)
+            {
+                if (autoNextCoroutine != null)
+                {
+                    StopCoroutine(autoNextCoroutine);
+                    autoNextCoroutine = null;
+                }
+                autoNextCoroutine = StartCoroutine(AutoShowNextSentence(0.5f));
+            }
+        }
+    }
+
+    private void UpdateAutoPlayButtonLabel()
+    {
+        if (autoPlayButton == null) return;
+        var txt = autoPlayButton.GetComponentInChildren<Text>();
+        if (txt != null)
+            txt.text = autoPlayEnabled ? "自动播放：开" : "自动播放：关";
     }
 
     public void UpdateStatText()
@@ -379,16 +491,6 @@ public class UIManager : MonoBehaviour
         if (endingPanel != null) endingPanel.SetActive(false);
     }
 
-    public void ShowDaDian()
-    {
-        if (daDian != null) daDian.SetActive(true);
-    }
-
-    public void HideDaDian()
-    {
-        if (daDian != null) daDian.SetActive(false);
-        if (dialoguePanel != null) dialoguePanel.OnDadianHidden();
-    }
 
     // ===== 免死道具确认弹窗 =====
     public void ShowDeathImmunityPrompt(PolicyItem item, int deathType)
@@ -481,15 +583,14 @@ public class UIManager : MonoBehaviour
         policyItemButtons.Clear();
 
         // 显示所有道具
-        if (GameControl.Instance == null || GameControl.Instance.inventory == null)
+        if (GameControl.Instance == null || GameControl.Instance.stats == null || GameControl.Instance.stats.policyBag == null)
         {
             Debug.LogWarning("[UIManager] 无法获取道具列表");
             return;
         }
 
         int idx = 0;
-        // 修复：inventory 为按字符串键索引的集合，改用 Values 遍历，避免整数下标访问
-        foreach (var item in GameControl.Instance.inventory.Values)
+        foreach (var item in GameControl.Instance.stats.policyBag)
         {
             int index = idx++; // 捕获显示顺序索引
 
@@ -668,18 +769,12 @@ public class UIManager : MonoBehaviour
                 Debug.LogWarning($"[UIManager] 商店道具按钮缺少 PolicyInShopTrigger 组件");
             }
             
-            // 设置道具信息显示
-            Text btnText = btn.GetComponentInChildren<Text>();
-            if (btnText != null)
-            {
-                btnText.text = policy.name+policy.desc;
-            }
-            // 绑定购买按钮
+            // PolicyInShopTrigger 会自己处理 UI 显示，这里只需绑定点击事件
+            // 绑定购买按钮 - 点击后显示购买确认面板
             Button button = btn.GetComponent<Button>();
-            if (button != null)
+            if (button != null && trigger != null)
             {
-                var capturedPolicy = policy;
-                button.onClick.AddListener(() => OnShopItemClicked(capturedPolicy));
+                button.onClick.AddListener(() => trigger.ShowPurchaseConfirm());
             }
             shopItemButtons.Add(btn);
         }
@@ -704,22 +799,22 @@ public class UIManager : MonoBehaviour
     }
 
     // ===== 刷新商店页面的背包显示 =====
-    private void RefreshShopInventoryDisplay()
+    public void RefreshShopInventoryDisplay()
     {
         // 清理旧的背包按钮
         foreach (var btn in shopInventoryButtons)
             if (btn != null) Destroy(btn);
         shopInventoryButtons.Clear();
 
-        if (GameControl.Instance == null || GameControl.Instance.inventory == null)
+        if (GameControl.Instance == null || GameControl.Instance.stats == null || GameControl.Instance.stats.policyBag == null)
         {
             if (shopInventoryCountText != null)
                 shopInventoryCountText.text = "0/5";
             return;
         }
 
-        var inventory = GameControl.Instance.inventory;
-        int count = inventory.Count;
+        var policyBag = GameControl.Instance.stats.policyBag;
+        int count = policyBag.Count;
 
         // 更新背包数量显示
         if (shopInventoryCountText != null)
@@ -727,62 +822,79 @@ public class UIManager : MonoBehaviour
             shopInventoryCountText.text = $"{count}/5";
         }
 
-        // 显示每个背包道具
-        foreach (var item in inventory.Values)
+        // 显示5个槽位（已占用的显示道具，空槽显示空框或占位符）
+        List<PolicyItem> itemList = new List<PolicyItem>(policyBag);
+        
+        for (int i = 0; i < 5; i++)
         {
             if (shopInventoryParent == null || shopInventoryItemPrefab == null) break;
 
             GameObject btn = Instantiate(shopInventoryItemPrefab, shopInventoryParent);
-
-            // 设置 PolicyInShopTrigger 的道具数据（用于鼠标悬停显示详情）
-            PolicyInShopTrigger trigger = btn.GetComponent<PolicyInShopTrigger>();
-            if (trigger != null)
+            
+            if (i < itemList.Count)
             {
-                trigger.SetPolicyItem(item);
+                // 已占用的槽位：显示道具
+                PolicyItem item = itemList[i];
+                
+                // 设置 PolicyInInventoryTrigger 的道具数据
+                PolicyInInventoryTrigger trigger = btn.GetComponent<PolicyInInventoryTrigger>();
+                if (trigger != null)
+                {
+                    trigger.enabled = true; // 确保组件启用
+                    trigger.SetPolicyItem(item);
+                }
+                else
+                {
+                    Debug.LogWarning("[UIManager] shopInventoryItemPrefab 缺少 PolicyInInventoryTrigger 组件");
+                }
+
+                // 设置道具显示
+                Text btnText = btn.GetComponentInChildren<Text>();
+                if (btnText != null)
+                {
+                    btnText.text = item.name;
+                }
+
+                // 绑定点击事件：显示丢弃确认面板
+                Button button = btn.GetComponent<Button>();
+                if (button != null)
+                {
+                    button.interactable = true; // 确保按钮可点击
+                    if (trigger != null)
+                    {
+                        button.onClick.AddListener(() => trigger.ShowDiscardConfirm());
+                    }
+                }
             }
-
-            // 设置道具显示（简化版，只显示名称或图标）
-            Text btnText = btn.GetComponentInChildren<Text>();
-            if (btnText != null)
+            else
             {
-                btnText.text = item.name;
-            }
+                // 空槽位：显示占位符
+                Text btnText = btn.GetComponentInChildren<Text>();
+                if (btnText != null)
+                {
+                    btnText.text = "空";
+                    btnText.color = new Color(0.5f, 0.5f, 0.5f, 0.5f); // 灰色半透明
+                }
 
-            // 绑定点击事件：确认是否丢弃
-            Button button = btn.GetComponent<Button>();
-            if (button != null)
-            {
-                var capturedItem = item;
-                button.onClick.AddListener(() => OnShopInventoryItemClicked(capturedItem));
+                // 禁用按钮
+                Button button = btn.GetComponent<Button>();
+                if (button != null)
+                {
+                    button.interactable = false;
+                }
+                
+                // 禁用触发器组件
+                PolicyInInventoryTrigger trigger = btn.GetComponent<PolicyInInventoryTrigger>();
+                if (trigger != null)
+                {
+                    trigger.enabled = false;
+                }
             }
 
             shopInventoryButtons.Add(btn);
         }
     }
 
-    // 商店页面背包道具点击事件：询问是否丢弃
-    private void OnShopInventoryItemClicked(PolicyItem item)
-    {
-        if (item == null || GameControl.Instance == null) return;
-
-        // TODO: 这里可以添加确认弹窗UI
-        // 目前使用Debug.Log模拟确认，实际应该弹出确认对话框
-        Debug.Log($"[UIManager] 点击背包道具: {item.name}，是否丢弃？");
-        
-        // 简化处理：直接丢弃（您可以根据需要添加确认弹窗）
-        // 例如：ShowConfirmDialog("确定要丢弃道具吗？", () => { 丢弃逻辑 });
-        
-        bool confirmed = true; // 临时自动确认
-        
-        if (confirmed)
-        {
-            Debug.Log($"[UIManager] 确认丢弃道具: {item.name}");
-            GameControl.Instance.RemovePolicy(item.id);
-            
-            // 刷新背包显示
-            RefreshShopInventoryDisplay();
-        }
-    }
 
     // ===== 时局（BUFF）列表 UI =====
     public void ShowBuffPanel()
@@ -911,7 +1023,7 @@ public class UIManager : MonoBehaviour
 
 
     // 更新货币显示
-    private void UpdateCurrencyDisplay()
+    public void UpdateCurrencyDisplay()
     {
         if (currencyText != null && GameControl.Instance != null)
         {
@@ -920,64 +1032,133 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    // 商店道具点击（购买）
+    // ===== 已废弃：以下购买相关方法不再使用，现由 PolicyInShopTrigger 管理 =====
+    /*
+    // 商店道具点击（显示购买确认面板）
     private void OnShopItemClicked(PolicyItem policy)
     {
-        if (GameControl.Instance == null) return;
+        if (GameControl.Instance == null || policy == null) return;
 
-        int price = GetPolicyPrice(policy);
+        // 从 PolicyInShopTrigger 获取实际价格
+        PolicyInShopTrigger trigger = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject?.GetComponent<PolicyInShopTrigger>();
+        int price = (trigger != null && trigger.policyValue > 0) ? trigger.policyValue : GetPolicyPrice(policy);
+        
+        // 保存待购买信息
+        pendingPurchaseItem = policy;
+        pendingPurchasePrice = price;
+        pendingPurchaseButton = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+
+        // 显示购买确认面板
+        ShowShopPurchaseConfirmPanel(policy, price);
+    }
+
+    // 显示商店购买确认面板
+    private void ShowShopPurchaseConfirmPanel(PolicyItem policy, int price)
+    {
+        if (shopPurchaseConfirmPanel == null)
+        {
+            Debug.LogWarning("[UIManager] shopPurchaseConfirmPanel 未设置");
+            return;
+        }
+
         int currency = GameControl.Instance.GetCurrency();
+        
+        // 构建提示文本
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        sb.AppendLine($"<b>{policy.name}</b>");
+        sb.AppendLine($"<color=#FFD700>━━━━━━━━━━</color>");
+        sb.AppendLine($"<color=#FFD700>价格：{price} 年</color>");
+        sb.AppendLine($"<color=#87CEEB>当前货币：{currency} 年</color>");
+        sb.AppendLine($"<color=#FFD700>━━━━━━━━━━</color>");
+        
+        if (!string.IsNullOrEmpty(policy.desc))
+        {
+            sb.AppendLine($"\n{policy.desc}");
+        }
 
-        // 检查货币是否足够
+        // 检查是否可购买
+        bool canPurchase = true;
         if (currency < price)
         {
-            Debug.Log($"[UIManager] 货币不足，需要 {price} 年，当前只有 {currency} 年");
-            return;
+            sb.AppendLine($"\n<color=#FF6B6B>货币不足！</color>");
+            canPurchase = false;
         }
-
-        // 检查背包是否已满
-        if (GameControl.Instance.inventory.Count >= 5)
+        if (GameControl.Instance.stats.policyBag.Count >= 5)
         {
-            Debug.Log("[UIManager] 背包已满（最多5件道具）");
-            return;
+            sb.AppendLine($"\n<color=#FF6B6B>背包已满（最多5件）！</color>");
+            canPurchase = false;
         }
-
-        // 检查是否已拥有相同ID的道具（按ID为键）
-        bool alreadyOwned = GameControl.Instance.inventory.ContainsKey(policy.id);
-        if (alreadyOwned)
+        if (GameControl.Instance.GetPolicy(policy.id) != null)
         {
-            Debug.Log($"[UIManager] 已拥有道具：{policy.name}");
+            sb.AppendLine($"\n<color=#FF6B6B>已拥有此道具！</color>");
+            canPurchase = false;
+        }
+
+        if (shopPurchaseInfoText != null)
+        {
+            shopPurchaseInfoText.text = sb.ToString();
+        }
+
+        // 根据是否可购买设置按钮状态
+        if (shopPurchaseConfirmButton != null)
+        {
+            shopPurchaseConfirmButton.interactable = canPurchase;
+        }
+
+        shopPurchaseConfirmPanel.SetActive(true);
+        Debug.Log($"[UIManager] 显示购买确认面板: {policy.name}, 价格: {price}");
+    }
+
+    // 确认购买
+    private void OnShopPurchaseConfirm()
+    {
+        if (pendingPurchaseItem == null || GameControl.Instance == null)
+        {
+            Debug.LogWarning("[UIManager] pendingPurchaseItem 或 GameControl 为空");
+            OnShopPurchaseCancel();
             return;
         }
 
-        // 扣除货币（这里需要GameControl提供扣除方法）
-        GameControl.Instance.SpendCurrency(price);
+        // 扣除货币
+        GameControl.Instance.SpendCurrency(pendingPurchasePrice);
 
         // 添加道具到背包（从 PolicyManager 获取副本）
-        PolicyItem newItem = PolicyManager.Instance.GetPolicy(policy.id);
+        PolicyItem newItem = PolicyManager.Instance.GetPolicy(pendingPurchaseItem.id);
         if (newItem != null)
         {
-            GameControl.Instance.inventory.Add(newItem.id, newItem);
-            Debug.Log($"[UIManager] 购买成功：{policy.name}，花费 {price} 年");
-            
-            // 更新货币显示
-            UpdateCurrencyDisplay();
-            
-            // 刷新商店页面的背包显示
-            RefreshShopInventoryDisplay();
+            GameControl.Instance.AddPolicy(newItem);
+            Debug.Log($"[UIManager] 购买成功：{pendingPurchaseItem.name}，花费 {pendingPurchasePrice} 年");
         }
+
+        // 从商店列表中移除该道具按钮
+        if (pendingPurchaseButton != null)
+        {
+            shopItemButtons.Remove(pendingPurchaseButton);
+            Destroy(pendingPurchaseButton);
+            Debug.Log($"[UIManager] 从商店移除道具按钮: {pendingPurchaseItem.name}");
+        }
+
+        // 更新货币显示
+        UpdateCurrencyDisplay();
+        
+        // 刷新商店页面的背包显示
+        RefreshShopInventoryDisplay();
+
+        // 关闭确认面板
+        OnShopPurchaseCancel();
     }
 
-    // 计算道具价格（可自定义规则）
-    private int GetPolicyPrice(PolicyItem policy)
+    // 取消购买
+    private void OnShopPurchaseCancel()
     {
-        switch (policy.type)
+        if (shopPurchaseConfirmPanel != null)
         {
-            case 1: return 30; // 阈值道具
-            case 2: return 50; // 免死道具
-            case 3: return 20; // 跳过道具
-            case 4: return 40; // 调控道具
-            default: return 10;
+            shopPurchaseConfirmPanel.SetActive(false);
         }
+        pendingPurchaseItem = null;
+        pendingPurchaseButton = null;
+        pendingPurchasePrice = 0;
     }
+    */
+
 }

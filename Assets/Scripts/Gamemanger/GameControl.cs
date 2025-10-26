@@ -2,37 +2,54 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 
 public class GameControl : MonoBehaviour
 {
     public static GameControl Instance;
     public StatModel stats;  // 统计数据
-    public int currency;  // 当前资金
-
-    // 玩家国策（道具）栏，最多5个
-    public Dictionary<string, PolicyItem> inventory = new Dictionary<string, PolicyItem>(5);
+    // 注意：currency 现在从 stats.currency 读取，不再使用独立字段
 
     // 添加道具（如已满需丢弃一个）
     public bool AddPolicy(PolicyItem item)
     {
-        if (inventory.Count >= 5) return false;
-        inventory.Add(item.id, item);
+        if (stats == null || stats.policyBag == null) return false;
+        if (stats.policyBag.Count >= 5) return false;
+        
+        // 检查是否已存在
+        if (stats.policyBag.Any(p => p.id == item.id)) return false;
+        
+        stats.policyBag.Add(item);
         return true;
     }
 
     // 丢弃道具
     public bool RemovePolicy(string id)
     {
-        if (!inventory.ContainsKey(id)) return false;
-        inventory.Remove(id);
+        if (stats == null || stats.policyBag == null) return false;
+        
+        PolicyItem item = stats.policyBag.FirstOrDefault(p => p.id == id);
+        if (item == null) return false;
+        
+        stats.policyBag.Remove(item);
         return true;
     }
 
     // 清空所有道具（如新开局）
     public void ClearPolicies()
     {
-        inventory.Clear();
+        if (stats != null && stats.policyBag != null)
+        {
+            stats.policyBag.Clear();
+        }
+    }
+    
+    // 获取道具（通过ID）
+    public PolicyItem GetPolicy(string id)
+    {
+        if (stats == null || stats.policyBag == null) return null;
+        return stats.policyBag.FirstOrDefault(p => p.id == id);
     }
 
     public bool GameOver = false;
@@ -42,6 +59,9 @@ public class GameControl : MonoBehaviour
     public int year = 1;
     private bool waitingForNextTurn = false;
     private Coroutine currentWaitCoroutine = null;
+    
+    // 防止 StartGame 重复调用
+    private bool isGameStarting = false;
 
     private List<string> lastEvents = new List<string> { " ", " ", " " };
 
@@ -50,7 +70,6 @@ public class GameControl : MonoBehaviour
     private int pausedSentenceIndex = 0; // 暂停时的句子索引
 
     // UI 相关
-    public GameObject man;
     public GameObject objectsAboutEvent;
 
 
@@ -66,6 +85,7 @@ public class GameControl : MonoBehaviour
     // 免死道具等待玩家选择的标志
     private bool waitingForDeathImmunityChoice = false;
     private bool deathImmunityChoiceResult = false;
+    public List<PolicyItem> policyBag = new List<PolicyItem>();
 
     void Awake()
     {
@@ -74,72 +94,155 @@ public class GameControl : MonoBehaviour
             objectsAboutEvent.SetActive(false);
     }
 
-    
-
-    // ===== 开始游戏 =====
-    public void StartGame()
+    // ===== 开始游戏按钮调用（初始化并触发淡入淡出）=====
+    public void OnStartGameButtonClicked()
     {
-        // 如果是从暂停恢复，重新播放暂停时的事件
+        Debug.Log("[GameControl] 开始游戏按钮被点击");
+        
+        // 重置游戏启动标志
+        isGameStarting = false;
+        
+        // 如果是从暂停状态恢复
         if (GamePaused)
         {
-            Debug.Log("[GameControl] 从暂停恢复游戏");
+            Debug.Log("[GameControl] 从暂停状态恢复游戏");
             GamePaused = false;
+            GameOver = false;
             
+            // 切换场景（会触发淡入淡出）
             if (CanvasMove.Instance != null)
-                CanvasMove.Instance.StartGame(); // 切换到游戏场景
-            
-            // 恢复暂停时的事件
-            if (!string.IsNullOrEmpty(pausedEventId))
             {
-                Debug.Log($"[GameControl] 恢复暂停时的事件: {pausedEventId}, 句子索引: {pausedSentenceIndex}");
-                if (UIManager.Instance != null)
-                {
-                    // 重新播放事件（从头开始）
-                    UIManager.Instance.ShowEvent(pausedEventId);
-                    // 如果需要恢复到具体句子，可以调用 UIManager 的恢复方法
-                    // UIManager.Instance.RestoreEventState(pausedEventId, pausedSentenceIndex);
-                }
-                // 清除快照
-                pausedEventId = null;
-                pausedSentenceIndex = 0;
+                CanvasMove.Instance.StartGame();
             }
+            
             return;
         }
-
-        // 检查相机是否准备好
-        if (CanvasMove.Instance != null && !CanvasMove.Instance.isReady)
-        {
-            Debug.Log("[GameControl] 等待相机移动完成...");
-            StartCoroutine(WaitForCameraReady());
-            return;
-        }
-        year = 1;
-        GameOver = false;
-        endingTriggered = false;
-        waitingForNextTurn = false;
-        UIManager.Instance.daDian.SetActive(true);
         
-        Debug.Log("[GameControl] 游戏开始");
-        StartCoroutine(wait());
-        ProcessNextTurn();
+        // 新游戏初始化
+        Debug.Log("[GameControl] 初始化新游戏数据");
+        GameOver = false;
+        GamePaused = false;
+        year = 1;
+        
+        // 重置数值（但不重置 currency，让它累计）
+        stats.king = 50;
+        stats.noble = 50;
+        stats.scholar = 50;
+        stats.foreign = 50;
+        stats.people = 50;
+        stats.year = 1;
+        // stats.currency 保持不变，累计上一局的
+        
+        // policyBag 已经在 stats 中，无需赋值
+        // 清空背包
+        ClearPolicies();
+        
+        // 清除暂停快照
+        pausedEventId = null;
+        pausedSentenceIndex = 0;
+
+        if (objectsAboutEvent != null)
+            objectsAboutEvent.SetActive(false);
+        
+        // 触发场景切换淡入淡出（CanvasMove 会在合适时机调用 StartGame）
+        if (CanvasMove.Instance != null)
+        {
+            CanvasMove.Instance.StartGame();
+        }
     }
 
-    // 等待相机准备完成的协程
-    private IEnumerator WaitForCameraReady()
+    // ===== 由 CanvasMove 在淡入到阈值时调用（开始游戏逻辑）=====
+    public void StartGame()
     {
-        while (CanvasMove.Instance != null && !CanvasMove.Instance.isReady)
+        // 防止重复调用
+        if (isGameStarting)
         {
-            yield return null; // 等待一帧
+            Debug.Log("[GameControl] StartGame 已在执行中，忽略重复调用");
+            return;
         }
+        
+        isGameStarting = true;
+        Debug.Log("[GameControl] 开始游戏（由CanvasMove调用）");
+        
+        // 确保 objectsAboutEvent 初始隐藏，等待事件显示协程控制
+        if (objectsAboutEvent != null)
+        {
+            objectsAboutEvent.SetActive(false);
+        }
+        
+        // 如果是从暂停恢复
+        if (!string.IsNullOrEmpty(pausedEventId))
+        {
+            Debug.Log($"[GameControl] 恢复暂停的事件: {pausedEventId}, 句子索引: {pausedSentenceIndex}");
+            
+            // 显示游戏 UI 面板（但不显示 objectsAboutEvent）
+            if (UIManager.Instance != null && UIManager.Instance.jinYan != null)
+            {
+                UIManager.Instance.jinYan.SetActive(true);
+            }
+            
+            // 延迟显示事件内容，让淡入动画完成（等待淡入从0.8到1.0 + 额外缓冲）
+            StartCoroutine(DelayedRestoreEvent(pausedEventId, pausedSentenceIndex));
+            
+            // 清除暂停快照
+            pausedEventId = null;
+            pausedSentenceIndex = 0;
+            
+            return;
+        }
+        
+        // 新游戏：显示第一个事件
+        Debug.Log("[GameControl] 新游戏，显示第一个事件");
+        
+        // 显示游戏 UI 面板
+        if (UIManager.Instance != null && UIManager.Instance.jinYan != null)
+        {
+            UIManager.Instance.jinYan.SetActive(true);
+        }
+        
+        // 更新 UI
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.UpdateStatText();
+            UIManager.Instance.UpdateCurrencyDisplay();
+        }
+        
+        // 延迟显示第一个事件，等待淡入动画完全完成
+        StartCoroutine(DelayedProcessFirstTurn());
+    }
 
-        // 相机准备好后开始游戏
-        Debug.Log("[GameControl]画面准备完成，开始游戏");
-    year = 1;
-        GameOver = false;
-        endingTriggered = false;
-        waitingForNextTurn = false;
-        StartCoroutine(wait());
+    // 延迟处理第一回合（等待淡入动画完成）
+    private IEnumerator DelayedProcessFirstTurn()
+    {
+        // 等待淡入动画完全完成（从0.8到1.0大约需要0.2秒，再加0.3秒缓冲）
+        yield return new WaitForSeconds(0.5f);
+        
+        Debug.Log("[GameControl] 淡入动画完成，开始显示第一个事件");
         ProcessNextTurn();
+        
+        // 重置标志，允许下次调用
+        isGameStarting = false;
+    }
+
+    // 延迟恢复暂停的事件（等待淡入动画完成）
+    private IEnumerator DelayedRestoreEvent(string eventId, int sentenceIndex)
+    {
+        // 等待淡入动画完全完成
+        yield return new WaitForSeconds(0.5f);
+        
+        Debug.Log("[GameControl] 淡入动画完成，恢复暂停的事件");
+        
+        // 显示事件面板
+        if (objectsAboutEvent != null)
+        {
+            objectsAboutEvent.SetActive(true);
+        }
+        
+        // 恢复事件状态
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.RestoreEventState(eventId, sentenceIndex);
+        }
     }
 
     // ===== 外部在数值变化后调用（例如在 EventManager.ApplyOption 里调用 GameControl.Instance.OnStatsChanged();）=====
@@ -178,7 +281,6 @@ public class GameControl : MonoBehaviour
         Debug.Log($"[GameControl] Year -> {year}");
         stats.year = year;
         UIManager.Instance.currentYearText.text = "第" + year.ToString() + "年";
-        UIManager.Instance.currentYearTextinDadian.text = "第" + year.ToString() + "年";
 
         // 回合数也可能触发结局
         CheckAndTriggerEnding();
@@ -204,32 +306,20 @@ public class GameControl : MonoBehaviour
             yield break;
         }
 
-        // 显示大殿
-        if (UIManager.Instance != null && UIManager.Instance.daDian != null)
-        {
-            if (objectsAboutEvent != null)
-                objectsAboutEvent.SetActive(false);
-            UIManager.Instance.daDian.SetActive(true);
-            yield return new WaitForSeconds(0.5f);
-            if (man != null)
-            {
-                man.SetActive(true);
-            }
+        // 使用 jinYan 作为主事件面板，不再在此隐藏它，避免误关。
+        if (objectsAboutEvent != null)
+            objectsAboutEvent.SetActive(false);
 
-        }
-
-        yield return new WaitForSeconds(1f);
-
-        if (UIManager.Instance != null && UIManager.Instance.daDian != null)
-        {
-            UIManager.Instance.daDian.SetActive(false);
-            man.SetActive(false);
-        }
+        // 保留一个轻微延时以避免突兀切换（可按需调整/删除）
+        yield return new WaitForSeconds(0.5f);
 
         if (!GameOver && UIManager.Instance != null)
         {
             if (objectsAboutEvent != null)
                 objectsAboutEvent.SetActive(true);
+            // 确保 jinYan 已开启
+            if (UIManager.Instance.jinYan != null && !UIManager.Instance.jinYan.activeSelf)
+                UIManager.Instance.jinYan.SetActive(true);
             UIManager.Instance.ShowEvent(eventId);
         }
         waitingForNextTurn = false;
@@ -273,39 +363,36 @@ public class GameControl : MonoBehaviour
         int pMax = useDynamicThreshold ? stats.peopleMax : 80;
 
         // 应用所有阈值道具
-        foreach (var item in inventory.Values)
+        if (stats.policyBag != null)
         {
-            if (item.type == 1 && item.whichChange == "king")
+            foreach (var item in stats.policyBag)
             {
-                kMin += item.thresholdDeltadown;
-                kMax += item.thresholdDeltaup;
+                if (item.type == 1 && item.whichChange == "king")
+                {
+                    kMin += item.thresholdDeltadown;
+                    kMax += item.thresholdDeltaup;
+                }
+                if (item.type == 1 && item.whichChange == "noble")
+                {
+                    nMin += item.thresholdDeltadown;
+                    nMax += item.thresholdDeltaup;
+                }
+                if (item.type == 1 && item.whichChange == "scholar")
+                {
+                    sMin += item.thresholdDeltadown;
+                    sMax += item.thresholdDeltaup;
+                }
+                if (item.type == 1 && item.whichChange == "foreign")
+                {
+                    fMin += item.thresholdDeltadown;
+                    fMax += item.thresholdDeltaup;
+                }
+                if (item.type == 1 && item.whichChange == "people")
+                {
+                    pMin += item.thresholdDeltadown;
+                    pMax += item.thresholdDeltaup;
+                }
             }
-            if (item.type == 1 && item.whichChange == "noble")
-            {
-                nMin += item.thresholdDeltadown;
-                nMax += item.thresholdDeltaup;
-            }
-            if (item.type == 1 && item.whichChange == "scholar")
-            {
-                sMin += item.thresholdDeltadown;
-                sMax += item.thresholdDeltaup;
-            }
-            if (item.type == 1 && item.whichChange == "foreign")
-            {
-                fMin += item.thresholdDeltadown;
-                fMax += item.thresholdDeltaup;
-            }
-            if (item.type == 1 && item.whichChange == "people")
-            {
-                pMin += item.thresholdDeltadown;
-                pMax += item.thresholdDeltaup;
-            }
-            else
-            {
-                Debug.LogWarning($"[GameControl] 道具 {item.id} 的 whichChange 字段无效或未设置，无法应用阈值变化");
-                continue;
-            }
-
         }
 
         // 各属性越界检测（按优先顺序，遇到死亡先判免死道具）
@@ -364,13 +451,16 @@ public class GameControl : MonoBehaviour
     // 免死道具判定与消耗
     private bool TryUseDeathImmunity(int deathType)
     {
-        foreach (var item in inventory.Values)
+        if (stats.policyBag != null)
         {
-            if (item.type == 2 && item.usageCount != 0 && item.deathImmunity != null && item.deathImmunity.Contains(deathType))
+            foreach (var item in stats.policyBag)
             {
-                // 弹窗询问玩家是否使用免死道具
-                StartCoroutine(AskDeathImmunityChoice(item, deathType));
-                return true; // 暂停结局判定，等待玩家选择
+                if (item.type == 2 && item.usageCount != 0 && item.deathImmunity != null && item.deathImmunity.Contains(deathType))
+                {
+                    // 弹窗询问玩家是否使用免死道具
+                    StartCoroutine(AskDeathImmunityChoice(item, deathType));
+                    return true; // 暂停结局判定，等待玩家选择
+                }
             }
         }
         return false;
@@ -450,6 +540,10 @@ public class GameControl : MonoBehaviour
         GameOver = true;
         Debug.Log($"[GameControl] 结局触发: {endingId} - {endingDescription}");
 
+        // 游戏结束时，将当前年数加到累计货币中
+        stats.currency += year;
+        Debug.Log($"[GameControl] 本局存活 {year} 年，累计货币: {stats.currency}");
+
         // 游戏结束时，先生成新一轮商店道具
         if (PolicyManager.Instance != null)
             PolicyManager.Instance.GenerateShopItems(5);
@@ -472,6 +566,7 @@ public class GameControl : MonoBehaviour
         year = 1;
         waitingForNextTurn = false;
         currentWaitCoroutine = null;
+        isGameStarting = false; // 重置游戏启动标志
         lastEvents.Clear();
         lastEvents.Add(" ");
         lastEvents.Add(" ");
@@ -488,8 +583,9 @@ public class GameControl : MonoBehaviour
         {
             UIManager.Instance.HideEndingPanel();
             UIManager.Instance.UpdateStatText();
-            UIManager.Instance.daDian.SetActive(true);
-            UIManager.Instance.jinYan.SetActive(false);
+            // 重开时显示 jinYan
+            if (UIManager.Instance.jinYan != null)
+                UIManager.Instance.jinYan.SetActive(true);
         }
 
         if (EventManager.Instance != null)
@@ -503,46 +599,75 @@ public class GameControl : MonoBehaviour
         Debug.Log("[GameControl] 重开完成，等待玩家点击开始游戏");
         // 移除自动 ProcessNextTurn()，等待玩家手动点击开始游戏按钮
     }
+    
+    public void continueGame()
+    {
+        if(GamePaused)
+        {
+            Debug.Log("[GameControl] continueGame - 调用 OnStartGameButtonClicked 恢复游戏");
+            OnStartGameButtonClicked();
+            return;
+        }
+    }
 
     public void BackToStartMenu()
     {
+        // 重置游戏启动标志
+        isGameStarting = false;
         
-        if( CanvasMove.Instance != null)
+        if (CanvasMove.Instance != null)
         {
             CanvasMove.Instance.BackToStart();
-            
         }
         Debug.Log("[GameControl] 返回主菜单完成");
     }
 
     // ===== 暂停游戏并返回主菜单（不重置进度）=====
-    public void PauseAndBackToMenu()
+
+    // 点击菜单按钮 -> 只暂停游戏并保存快照（不返回主菜单）
+    public void PauseGameForMenu()
     {
         GamePaused = true;
-        
+
         // 保存当前事件状态（快照）
         if (UIManager.Instance != null)
         {
+            if (objectsAboutEvent != null)
+                objectsAboutEvent.SetActive(false);
+
             pausedEventId = UIManager.Instance.GetCurrentEventId();
             pausedSentenceIndex = UIManager.Instance.GetCurrentSentenceIndex();
             Debug.Log($"[GameControl] 游戏暂停，保存事件快照: {pausedEventId}, 句子索引: {pausedSentenceIndex}");
-            
-            // 隐藏游戏UI
-            UIManager.Instance.HideEventOptions();
-            UIManager.Instance.ClearText();
-            if (UIManager.Instance.jinYan != null)
-                UIManager.Instance.jinYan.SetActive(false);
-        }
+
+            // 停止当前等待显示事件的协程（但不 StopAllCoroutines，避免意外停止其他协程）
+            if (currentWaitCoroutine != null)
+            {
+                StopCoroutine(currentWaitCoroutine);
+                currentWaitCoroutine = null;
+            }
+            waitingForNextTurn = false;
+
+         }
         else
         {
-            Debug.Log("[GameControl] 游戏暂停，返回主菜单");
+            Debug.Log("[GameControl] 游戏暂停（UI 管理器不可用）");
         }
-        
-        // 返回主菜单
+
+        // 此函数不切换到主菜单，仅保持暂停状态，等待玩家在菜单中选择退出或继续
+    }
+
+    // 菜单中点击退出 -> 真正返回主菜单（保留 paused 快照以便可能恢复）
+    public void ExitToMainMenuFromPause()
+    {
+        // 保证处于暂停状态
+        GamePaused = true;
+
         if (CanvasMove.Instance != null)
         {
             CanvasMove.Instance.BackToStart();
         }
+
+        Debug.Log("[GameControl] 从暂停状态返回主菜单完成");
     }
 
     // ===== 退出游戏 =====
@@ -552,17 +677,24 @@ public class GameControl : MonoBehaviour
         Application.Quit();
     }
 
-    // 获取玩家货币（活了多少年）
+    // 获取玩家货币（累计的总货币）
     public int GetCurrency()
     {
-        return year;
+        return stats != null ? stats.currency : 0;
     }
 
     // 扣除货币（购买道具时）
     public void SpendCurrency(int amount)
     {
-        year -= amount;
-        if (year < 0) year = 0;
-        Debug.Log($"[GameControl] 花费 {amount} 年，剩余 {year} 年");
+        if (stats == null) return;
+        stats.currency -= amount;
+        if (stats.currency < 0) stats.currency = 0;
+        Debug.Log($"[GameControl] 花费 {amount} 货币，剩余 {stats.currency} 货币");
+        
+        // 更新UI显示
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.UpdateCurrencyDisplay();
+        }
     }
 }

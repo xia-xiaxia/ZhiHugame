@@ -1,65 +1,73 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class PolicyInInventoryTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("物品信息")]
     public PolicyItem policyItem;
-    public int policyValue;
 
     [Header("提示面板设置")]
     public GameObject tooltipPanel;
     public Text tooltipText;
     public Vector2 tooltipOffset = new Vector2(10, -10);
 
-    [Header("购买确认面板设置")]
-    public GameObject purchaseConfirmParent;
-    public Button purchaseConfirmButton;
-    public Button purchaseCancelButton;
+    [Header("丢弃确认面板设置")]
+    public GameObject discardConfirmParent;
+    public Button discardConfirmButton;
+    public Button discardCancelButton;
+    public Text discardInfoText;
 
     private Canvas canvas;
     private bool useGlobalTooltip = false;
 
     void Start()
     {
-        if (policyItem != null && policyValue == 0 && policyItem.cost > 0)
-        {
-            float multiple = Random.Range(0.8f, 1.2f);
-            policyValue = Mathf.FloorToInt(policyItem.cost * multiple);
-        }
-        
         canvas = GetComponentInParent<Canvas>();
         
+        InitializeTooltip();
+
+        if (discardConfirmParent != null)
+        {
+            discardConfirmParent.SetActive(false);
+            
+            if (discardConfirmButton != null)
+            {
+                discardConfirmButton.onClick.RemoveAllListeners();
+                discardConfirmButton.onClick.AddListener(OnDiscardConfirm);
+            }
+            
+            if (discardCancelButton != null)
+            {
+                discardCancelButton.onClick.RemoveAllListeners();
+                discardCancelButton.onClick.AddListener(OnDiscardCancel);
+            }
+        }
+    }
+
+    private void InitializeTooltip()
+    {
         if (tooltipPanel == null && UIManager.Instance != null)
         {
             tooltipPanel = UIManager.Instance.policyTooltipPanel;
             tooltipText = UIManager.Instance.policyTooltipText;
             useGlobalTooltip = true;
+            
+            if (tooltipPanel != null)
+            {
+                Debug.Log($"[PolicyInInventoryTrigger] 成功从 UIManager 获取全局 tooltip");
+            }
+            else
+            {
+                Debug.LogWarning($"[PolicyInInventoryTrigger] UIManager.policyTooltipPanel 为空，请在 Inspector 中为 UIManager 赋值");
+            }
         }
         
         if (tooltipPanel != null)
         {
             tooltipPanel.SetActive(false);
-        }
-
-        if (purchaseConfirmParent != null)
-        {
-            purchaseConfirmParent.SetActive(false);
-            
-            if (purchaseConfirmButton != null)
-            {
-                purchaseConfirmButton.onClick.RemoveAllListeners();
-                purchaseConfirmButton.onClick.AddListener(OnPurchaseConfirm);
-            }
-            
-            if (purchaseCancelButton != null)
-            {
-                purchaseCancelButton.onClick.RemoveAllListeners();
-                purchaseCancelButton.onClick.AddListener(OnPurchaseCancel);
-            }
         }
     }
 
@@ -91,6 +99,12 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
 
     private void ShowTooltip()
     {
+        // 如果还没初始化，尝试重新初始化
+        if (tooltipPanel == null)
+        {
+            InitializeTooltip();
+        }
+        
         if (tooltipPanel == null || policyItem == null) return;
 
         string tooltipContent = BuildTooltipText();
@@ -149,16 +163,6 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
         string typeText = GetPolicyTypeName(policyItem.type);
         sb.AppendLine($"<color=#87CEEB>类型：</color>{typeText}");
         
-        if (policyItem.cost > 0)
-        {
-            if (policyValue == 0)
-            {
-                float multiple = Random.Range(0.8f, 1.2f);
-                policyValue = Mathf.FloorToInt(policyItem.cost * multiple);
-            }
-            sb.AppendLine($"<color=#FFD700>价格：</color>{policyValue} 年");
-        }
-        
         string usageText = policyItem.usageCount == -1 ? "无限" : policyItem.usageCount.ToString();
         sb.AppendLine($"<color=#90EE90>次数：</color>{usageText}");
         
@@ -210,6 +214,8 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
                 break;
         }
         
+        sb.AppendLine($"\n<color=#FFA500>点击可丢弃此道具</color>");
+        
         return sb.ToString();
     }
 
@@ -260,13 +266,6 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
     public void SetPolicyItem(PolicyItem item)
     {
         policyItem = item;
-        
-        if (policyItem != null && policyItem.cost > 0)
-        {
-            float multiple = Random.Range(0.8f, 1.2f);
-            policyValue = Mathf.FloorToInt(policyItem.cost * multiple);
-        }
-        
         UpdateButtonDisplay();
     }
     
@@ -288,67 +287,41 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
         
         if (displayText != null)
         {
-            displayText.text = $"{policyItem.name}\n<color=#FFD700>{policyValue}年</color>";
+            displayText.text = policyItem.name;
         }
     }
 
-    public void ShowPurchaseConfirm()
+    public void ShowDiscardConfirm()
     {
-        if (purchaseConfirmParent == null || policyItem == null) return;
+        if (discardConfirmParent == null || policyItem == null) return;
 
-        bool canPurchase = CanPurchase();
-        if (purchaseConfirmButton != null)
-        {
-            purchaseConfirmButton.interactable = canPurchase;
-        }
-
-        purchaseConfirmParent.SetActive(true);
+        discardConfirmParent.SetActive(true);
     }
 
-    private bool CanPurchase()
-    {
-        if (GameControl.Instance == null) return false;
-        
-        int currency = GameControl.Instance.GetCurrency();
-        
-        if (currency < policyValue) return false;
-        if (GameControl.Instance.stats.policyBag.Count >= 5) return false;
-        if (GameControl.Instance.GetPolicy(policyItem.id) != null) return false;
-        
-        return true;
-    }
-
-    private void OnPurchaseConfirm()
+    private void OnDiscardConfirm()
     {
         if (policyItem == null || GameControl.Instance == null)
         {
-            OnPurchaseCancel();
+            OnDiscardCancel();
             return;
         }
 
-        GameControl.Instance.SpendCurrency(policyValue);
-
-        PolicyItem newItem = PolicyManager.Instance.GetPolicy(policyItem.id);
-        if (newItem != null)
-        {
-            GameControl.Instance.AddPolicy(newItem);
-        }
+        GameControl.Instance.RemovePolicy(policyItem.id);
 
         if (UIManager.Instance != null)
         {
-            UIManager.Instance.UpdateCurrencyDisplay();
             UIManager.Instance.RefreshShopInventoryDisplay();
         }
 
         gameObject.SetActive(false);
-        OnPurchaseCancel();
+        OnDiscardCancel();
     }
 
-    private void OnPurchaseCancel()
+    private void OnDiscardCancel()
     {
-        if (purchaseConfirmParent != null)
+        if (discardConfirmParent != null)
         {
-            purchaseConfirmParent.SetActive(false);
+            discardConfirmParent.SetActive(false);
         }
     }
 }
