@@ -133,9 +133,9 @@ public class GameControl : MonoBehaviour
         stats.year = 1;
         // stats.currency 保持不变，累计上一局的
         
-        // policyBag 已经在 stats 中，无需赋值
-        // 清空背包
-        ClearPolicies();
+        // policyBag 保留，不清空（道具可以累计到下一局）
+        // ClearPolicies(); // 注释掉，道具应该保留
+        Debug.Log($"[GameControl] 保留道具数量: {stats.policyBag.Count}");
         
         // 清除暂停快照
         pausedEventId = null;
@@ -350,7 +350,7 @@ public class GameControl : MonoBehaviour
             return;
         }
 
-        // 取阈值（先应用所有阈值道具）
+        // 直接使用 StatModel 中的阈值（阈值道具使用时已修改这些值）
         int kMin = useDynamicThreshold ? stats.kingMin : 20;
         int kMax = useDynamicThreshold ? stats.kingMax : 80;
         int nMin = useDynamicThreshold ? stats.nobleMin : 20;
@@ -362,89 +362,56 @@ public class GameControl : MonoBehaviour
         int pMin = useDynamicThreshold ? stats.peopleMin : 20;
         int pMax = useDynamicThreshold ? stats.peopleMax : 80;
 
-        // 应用所有阈值道具
-        if (stats.policyBag != null)
-        {
-            foreach (var item in stats.policyBag)
-            {
-                if (item.type == 1 && item.whichChange == "king")
-                {
-                    kMin += item.thresholdDeltadown;
-                    kMax += item.thresholdDeltaup;
-                }
-                if (item.type == 1 && item.whichChange == "noble")
-                {
-                    nMin += item.thresholdDeltadown;
-                    nMax += item.thresholdDeltaup;
-                }
-                if (item.type == 1 && item.whichChange == "scholar")
-                {
-                    sMin += item.thresholdDeltadown;
-                    sMax += item.thresholdDeltaup;
-                }
-                if (item.type == 1 && item.whichChange == "foreign")
-                {
-                    fMin += item.thresholdDeltadown;
-                    fMax += item.thresholdDeltaup;
-                }
-                if (item.type == 1 && item.whichChange == "people")
-                {
-                    pMin += item.thresholdDeltadown;
-                    pMax += item.thresholdDeltaup;
-                }
-            }
-        }
-
         // 各属性越界检测（按优先顺序，遇到死亡先判免死道具）
         if (stats.king <= kMin)
         {
             if (TryUseDeathImmunity(-1)) return; // -1 表示国君下限
-            TriggerEnding("KING_LOW", "国君势微，诸侯并起。"); return;
+            TriggerEnding("哀", "在你治下君主逐渐沦为群臣的傀儡，为了更好的掌控局面，他们为你呈上了一杯毒酒"); return;
         }
         if (stats.king >= kMax)
         {
             if (TryUseDeathImmunity(1)) return; // 1 表示国君上限
-            TriggerEnding("KING_HIGH", "国君权力过盛，天下动荡。"); return;
+            TriggerEnding("躁", "你刚愎自用，人们不满你的专横独断，一场政变宣告了你执政的终结"); return;
         }
         if (stats.noble <= nMin)
         {
             if (TryUseDeathImmunity(-3)) return; // -3 表示贵族下限
-            TriggerEnding("NOBLE_LOW", "贵族式微，权力真空。"); return;
+            TriggerEnding("灵", "你毫不遮掩对贵族的恶劣态度，一位贵族豢养的死士当庭刺死了你"); return;
         }
         if (stats.noble >= nMax)
         {
             if (TryUseDeathImmunity(3)) return; // 3 表示贵族上限
-            TriggerEnding("NOBLE_HIGH", "贵族权势滔天，王权旁落。"); return;
+            TriggerEnding("平", "在你治下贵族逐渐掌握朝中大权，你大权旁落，在宫墙之内了却残生"); return;
         }
         if (stats.scholar <= sMin)
         {
             if (TryUseDeathImmunity(-2)) return; // -2 表示卿士下限
-            TriggerEnding("SCHOLAR_LOW", "士族凋零，典章失传。"); return;
+            TriggerEnding("幽", "你并不在意卿士们，一些失意士人起兵作乱，你也在这场叛乱中被砍去头颅"); return;
         }
         if (stats.scholar >= sMax)
         {
             if (TryUseDeathImmunity(2)) return; // 2 表示卿士上限
-            TriggerEnding("SCHOLAR_HIGH", "士族擅权，政务迟滞。"); return;
+            TriggerEnding("废", "你将权力越来越多的让渡给士族，一家大族逼迫你禅位，你无奈顺从"); return;
         }
         if (stats.foreign <= fMin)
         {
             if (TryUseDeathImmunity(-4)) return; // -4 表示外臣下限
-            TriggerEnding("FOREIGN_LOW", "外臣尽失，朝堂孤立。"); return;
+            TriggerEnding("殇", "你听不进外臣的劝谏，一些失望的外臣找到大国发兵来犯，你死于战乱之中"); return;
         }
         if (stats.foreign >= fMax)
         {
             if (TryUseDeathImmunity(4)) return; // 4 表示外臣上限
-            TriggerEnding("FOREIGN_HIGH", "外臣干政，内权旁落。"); return;
+            TriggerEnding("纣", "你执政依赖外臣，本国利益被逐渐掏空，最后沦为了大国的傀儡"); return;
         }
         if (stats.people <= pMin)
         {
             if (TryUseDeathImmunity(-5)) return; // -5 表示庶人下限
-            TriggerEnding("PEOPLE_LOW", "民怨沸腾，天下反叛。"); return;
+            TriggerEnding("厉", "你的朝堂横征暴敛，国人不喜，一场国人暴动将你驱逐出了国家"); return;
         }
         if (stats.people >= pMax)
         {
             if (TryUseDeathImmunity(5)) return; // 5 表示庶人上限
-            TriggerEnding("PEOPLE_HIGH", "民意汹涌，改朝换代。"); return;
+            TriggerEnding("携", "你的朝堂软弱无力，国人拒不上税，在一次暴动后庶人们一脚踹开了你"); return;
         }
     }
 
@@ -550,7 +517,7 @@ public class GameControl : MonoBehaviour
 
         // 展示结局UI（需要 UIManager 实现 ShowEndingPanel）
         if (UIManager.Instance != null)
-            UIManager.Instance.ShowEndingPanel(endingDescription);
+            UIManager.Instance.ShowEndingPanel(endingId, endingDescription, year);
     }
 
     // ===== 重开游戏 =====
@@ -604,8 +571,13 @@ public class GameControl : MonoBehaviour
     {
         if(GamePaused)
         {
-            Debug.Log("[GameControl] continueGame - 调用 OnStartGameButtonClicked 恢复游戏");
-            OnStartGameButtonClicked();
+            Debug.Log("[GameControl] continueGame - 直接恢复游戏，不播放动画");
+            GamePaused = false;
+            GameOver = false;
+            
+            // 菜单面板的隐藏由按钮自己的 SetActive 控制
+            // 这里只需要取消暂停状态即可
+            
             return;
         }
     }

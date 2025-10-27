@@ -156,7 +156,7 @@ MonoBehaviour:
     deathdec: 
   tooltipPanel: {fileID: 0}
   tooltipText: {fileID: 0}
-  tooltipOffset: {x: 0, y: -200}
+  tooltipOffset: {x: -10, y: -300}
   discardConfirmParent: {fileID: 4048209008875911524}
   discardConfirmButton: {fileID: 87446054365711182}
   discardCancelButton: {fileID: 2282494297216678234}

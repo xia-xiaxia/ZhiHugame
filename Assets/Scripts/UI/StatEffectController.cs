@@ -67,11 +67,20 @@ public class StatEffectController : MonoBehaviour
         // 初始化特效图片
         InitializeEffectImages();
 
-        // 初始化填充图片
+        // 初始化填充图片（立即更新到当前数值）
         UpdateFilledImage();
 
         // 订阅数值变化事件
         SubscribeToEvents();
+    }
+
+    void OnEnable()
+    {
+        // 每次启用时也更新填充条，确保显示正确
+        if (stats != null && valueFilledImage != null)
+        {
+            UpdateFilledImage();
+        }
     }
 
     private void InitializeEffectImages()
@@ -292,10 +301,11 @@ public class StatEffectController : MonoBehaviour
 
         int currentValue = GetCurrentValue();
         int maxValue = GetMaxValue();
+        int minValue = GetMinValue();
 
         if (maxValue <= 0) return 0f;
 
-        return (float)currentValue / maxValue;
+        return (float)(currentValue - minValue) / (maxValue - minValue);
     }
 
     private int GetMaxValue()
@@ -319,12 +329,41 @@ public class StatEffectController : MonoBehaviour
         }
     }
 
+    private int GetMinValue()
+    {
+        if (stats == null) return 0;
+
+        switch (statType)
+        {
+            case StatType.King:
+                return stats.kingMin;
+            case StatType.Noble:
+                return stats.nobleMin;
+            case StatType.Scholar:
+                return stats.scholarMin;
+            case StatType.Foreign:
+                return stats.foreignMin;
+            case StatType.People:
+                return stats.peopleMin;
+            default:
+                return 0;
+        }
+    }
+
     // 可选：手动更新数值（用于测试或其他情况）
     public void ForceUpdate()
     {
         if (stats == null) return;
         
         int currentValue = GetCurrentValue();
-        OnValueChanged(currentValue);
+        previousValue = currentValue;
+        UpdateFilledImage();
+    }
+    
+    // 强制刷新填充条（不触发特效，只更新显示）
+    public void RefreshFilledImage()
+    {
+        if (stats == null) return;
+        UpdateFilledImage();
     }
 }

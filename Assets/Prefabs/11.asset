@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162da53cb023ce34bbddf3e852d3731d, type: 3}
   m_Name: 11
   m_EditorClassIdentifier: 
-  year: 16
-  _currency: 2
-  _king: 200
-  _noble: 40
-  _scholar: 30
+  year: 1
+  _currency: 6
+  _king: 50
+  _noble: 50
+  _scholar: 50
   _foreign: 50
-  _people: 60
+  _people: 50
   kingMin: 20
   kingMax: 80
   nobleMin: 20
@@ -29,21 +29,4 @@ MonoBehaviour:
   foreignMax: 80
   peopleMin: 20
   peopleMax: 80
-  policyBag:
-  - id: 043
-    type: 4
-    name: "\u6311\u52A8\u515A\u4E89"
-    desc: "\u6311\u8D77\u515A\u4E89\uFF0C\u8BA9\u537F\u58EB\u5185\u8BA7\uFF0C\u5185\u90E8\u6D88\u8017"
-    result: "\u537F\u58EB\u52BF\u529B\u6781\u5927\u5E45\u5EA6\u4E0B\u964D"
-    whichChange: 
-    thresholdDeltaup: 0
-    thresholdDeltadown: 0
-    deathImmunity: 
-    kingChange: 0
-    nobleChange: 0
-    scholarChange: -40
-    foreignChange: 0
-    peopleChange: 0
-    usageCount: 1
-    cost: 14
-    deathdec: 
+  policyBag: []

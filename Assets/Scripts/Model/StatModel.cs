@@ -122,7 +122,7 @@ public class StatModel : ScriptableObject
     public int peopleMax = 80;
 
     // 计算各属性百分比
-    public float Percent => kingMax > 0 ? (king - kingMin) / (kingMax - kingMin) : 0f;
+    public float KingPercent => kingMax > 0 ? (king - kingMin) / (kingMax - kingMin) : 0f;
     public float NoblePercent => nobleMax > 0 ? (noble - nobleMin) / (nobleMax - nobleMin) : 0f;
     public float ScholarPercent => scholarMax > 0 ? (scholar - scholarMin) / (scholarMax - scholarMin) : 0f;
     public float ForeignPercent => foreignMax > 0 ? (foreign - foreignMin) / (foreignMax - foreignMin) : 0f;

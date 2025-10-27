@@ -34,6 +34,8 @@ public class UIManager : MonoBehaviour
     // ===== 新增：结局面板（由 Game Control 统一触发）=====
     public GameObject endingPanel;
     public Text endingText;
+    public Image endingImage; // 结局图片
+    public Text endingYearText; // 存活年数显示（用于动画）
     public Button restartButton;
 
     // ===== 新增：免死道具确认弹窗 =====
@@ -466,10 +468,32 @@ public class UIManager : MonoBehaviour
     }
 
     // ===== 结局面板显示/隐藏（供 GameControl 调用）=====
-    public void ShowEndingPanel(string description)
+    public void ShowEndingPanel(string endingId, string description, int survivedYears)
     {
         if (endingPanel != null) endingPanel.SetActive(true);
         if (endingText != null) endingText.text = description;
+
+        // 显示结局图片（根据endingId加载对应资源）
+        if (endingImage != null)
+        {
+            Sprite endingSprite = Resources.Load<Sprite>($"Endings/{endingId}");
+            if (endingSprite != null)
+            {
+                endingImage.sprite = endingSprite;
+                endingImage.gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.LogWarning($"[UIManager] 未找到结局图片: Resources/Endings/{endingId}");
+                endingImage.gameObject.SetActive(false);
+            }
+        }
+
+        // 启动年数计数动画
+        if (endingYearText != null)
+        {
+            StartCoroutine(AnimateYearCounter(survivedYears));
+        }
 
         if (restartButton != null)
         {
@@ -484,6 +508,55 @@ public class UIManager : MonoBehaviour
         // 隐藏事件 UI
         HideEventOptions();
         ClearText();
+    }
+
+    // 年数计数动画协程
+    private IEnumerator AnimateYearCounter(int targetYear)
+    {
+        int currentYear = 0;
+        float duration = 2.0f; // 动画持续时间（秒），稍微加长以便看清效果
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float progress = elapsedTime / duration;
+            
+            // 使用 Ease-In-Out 曲线：慢 -> 快 -> 慢
+            // 这个函数会让动画开始和结束时慢，中间快
+            float easedProgress = EaseInOutCubic(progress);
+            
+            currentYear = Mathf.FloorToInt(Mathf.Lerp(0, targetYear, easedProgress));
+            
+            if (endingYearText != null)
+            {
+                endingYearText.text = $"执政:  {currentYear}  年";
+            }
+
+            yield return null;
+        }
+
+        // 确保最终显示精确的目标年数
+        if (endingYearText != null)
+        {
+            endingYearText.text = $"执政:  {targetYear}  年";
+        }
+    }
+
+    // Ease-In-Out 三次方缓动函数：慢 -> 快 -> 慢
+    private float EaseInOutCubic(float t)
+    {
+        if (t < 0.5f)
+        {
+            // 前半段：加速（Ease In）
+            return 4f * t * t * t;
+        }
+        else
+        {
+            // 后半段：减速（Ease Out）
+            float f = (2f * t - 2f);
+            return 0.5f * f * f * f + 1f;
+        }
     }
 
     public void HideEndingPanel()
@@ -583,18 +656,71 @@ public class UIManager : MonoBehaviour
         policyItemButtons.Clear();
 
         // 显示所有道具
-        if (GameControl.Instance == null || GameControl.Instance.stats == null || GameControl.Instance.stats.policyBag == null)
+        if (GameControl.Instance == null)
         {
-            Debug.LogWarning("[UIManager] 无法获取道具列表");
+            Debug.LogError("[UIManager] GameControl.Instance 为 null！");
+            return;
+        }
+        
+        if (GameControl.Instance.stats == null)
+        {
+            Debug.LogError("[UIManager] GameControl.Instance.stats 为 null！");
+            return;
+        }
+        
+        if (GameControl.Instance.stats.policyBag == null)
+        {
+            Debug.LogError("[UIManager] stats.policyBag 为 null！");
+            return;
+        }
+
+        Debug.Log($"[UIManager] 显示道具菜单，当前道具数量: {GameControl.Instance.stats.policyBag.Count}");
+        
+        // 检查关键 UI 引用
+        if (policyItemsParent == null)
+        {
+            Debug.LogError("[UIManager] policyItemsParent 为 NULL！请在 Inspector 中拖入容器对象！");
+            return;
+        }
+        
+        if (policyItemButtonPrefab == null)
+        {
+            Debug.LogError("[UIManager] policyItemButtonPrefab 为 NULL！请在 Inspector 中拖入预制体！");
+            return;
+        }
+        
+        Debug.Log($"[UIManager] UI 引用检查通过 - Parent: {policyItemsParent.name}, Prefab: {policyItemButtonPrefab.name}");
+        
+        if (GameControl.Instance.stats.policyBag.Count == 0)
+        {
+            Debug.LogWarning("[UIManager] policyBag 是空的，没有道具可显示");
             return;
         }
 
         int idx = 0;
         foreach (var item in GameControl.Instance.stats.policyBag)
         {
+            Debug.Log($"[UIManager] 正在生成道具按钮 {idx}: {item.name}");
             int index = idx++; // 捕获显示顺序索引
-
+            if (policyItemsParent != null && policyItemsParent.name != policyMenuPanel.name)
+            {
+                policyItemsParent = policyMenuPanel.transform.Find("layout");
+                Debug.Log($"[UIManager] 更新道具按钮父对象: {policyItemsParent.name}");
+            }
+            if(policyItemsParent == null)
+            {
+                Debug.LogError("[UIManager] policyItemsParent 仍为 NULL，无法创建道具按钮！");
+                continue;
+            }
             GameObject btn = Instantiate(policyItemButtonPrefab, policyItemsParent);
+            
+            if (btn == null)
+            {
+                Debug.LogError($"[UIManager] 实例化道具按钮失败！item: {item.name}");
+                continue;
+            }
+            
+            Debug.Log($"[UIManager] 成功创建按钮对象: {btn.name}，父对象: {policyItemsParent.parent.name} + {policyItemsParent.name}");
             
             // 设置 DestroyPolicy 组件的 policyItem 字段
             DestroyPolicy destroyPolicy = btn.GetComponent<DestroyPolicy>();
@@ -617,7 +743,7 @@ public class UIManager : MonoBehaviour
             {
                 string usageText = item.usageCount == -1 ? "无限" : item.usageCount.ToString();
                 string typeText = GetPolicyTypeName(item.type);
-                btnText.text = $"{item.name}\n类型：{typeText}\n次数：{usageText}\n{item.desc}";
+                btnText.text = $"{item.name} 类型：{typeText}\n次数：{usageText} {item.desc}";
             }
 
             // 绑定点击事件
@@ -628,8 +754,8 @@ public class UIManager : MonoBehaviour
                 button.onClick.AddListener(() => OnPolicyItemClicked(capturedItem, index));
                 
                 // 根据道具类型决定是否可点击
-                // 免死道具(2)和阈值道具(1)不可主动使用
-                if (item.type == 1 || item.type == 2)
+                // 免死道具(2)不可主动使用
+                if (item.type == 2)
                 {
                     button.interactable = false;
                 }
@@ -651,6 +777,9 @@ public class UIManager : MonoBehaviour
 
         switch (item.type)
         {
+            case 1: // 阈值道具
+                UseThresholdPolicy(item, index);
+                break;
             case 3: // 跳过道具
                 UseSkipPolicy(item, index);
                 break;
@@ -661,6 +790,59 @@ public class UIManager : MonoBehaviour
                 Debug.Log($"[UIManager] 道具类型{item.type}不可主动使用");
                 break;
         }
+    }
+
+    // 使用阈值道具
+    private void UseThresholdPolicy(PolicyItem item, int index)
+    {
+        if (item.usageCount == 0)
+        {
+            Debug.Log("[UIManager] 道具次数已用尽");
+            return;
+        }
+
+        // 消耗道具
+        if (item.usageCount > 0) item.usageCount--;
+        
+        Debug.Log($"[UIManager] 使用阈值道具：{item.name}，影响属性：{item.whichChange}");
+        
+        // 应用阈值变化到 StatModel
+        if (stats != null)
+        {
+            switch (item.whichChange)
+            {
+                case "king":
+                    stats.kingMin += item.thresholdDeltadown;
+                    stats.kingMax += item.thresholdDeltaup;
+                    Debug.Log($"[UIManager] 国君阈值变更：下限 {stats.kingMin}，上限 {stats.kingMax}");
+                    break;
+                case "noble":
+                    stats.nobleMin += item.thresholdDeltadown;
+                    stats.nobleMax += item.thresholdDeltaup;
+                    Debug.Log($"[UIManager] 权臣阈值变更：下限 {stats.nobleMin}，上限 {stats.nobleMax}");
+                    break;
+                case "scholar":
+                    stats.scholarMin += item.thresholdDeltadown;
+                    stats.scholarMax += item.thresholdDeltaup;
+                    Debug.Log($"[UIManager] 文人阈值变更：下限 {stats.scholarMin}，上限 {stats.scholarMax}");
+                    break;
+                case "foreign":
+                    stats.foreignMin += item.thresholdDeltadown;
+                    stats.foreignMax += item.thresholdDeltaup;
+                    Debug.Log($"[UIManager] 外邦阈值变更：下限 {stats.foreignMin}，上限 {stats.foreignMax}");
+                    break;
+                case "people":
+                    stats.peopleMin += item.thresholdDeltadown;
+                    stats.peopleMax += item.thresholdDeltaup;
+                    Debug.Log($"[UIManager] 百姓阈值变更：下限 {stats.peopleMin}，上限 {stats.peopleMax}");
+                    break;
+                default:
+                    Debug.LogWarning($"[UIManager] 未知的阈值影响属性：{item.whichChange}");
+                    break;
+            }
+        }
+        
+        HidePolicyMenu();
     }
 
     // 使用跳过道具

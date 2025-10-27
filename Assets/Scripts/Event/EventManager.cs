@@ -189,6 +189,28 @@ public class EventManager : MonoBehaviour
             return;
         }
 
+        // 检查特殊结局触发（骑马事件和盗匪事件）
+        if (opt.kingChange == 999)
+        {
+            // 骑马事件触发结局
+            Debug.Log("[EventManager] 触发骑马结局");
+            if (GameControl.Instance != null)
+            {
+                GameControl.Instance.TriggerEnding("神", "你骑上了那匹马，的确驾驭不住——随后坠马而死");
+            }
+            return;
+        }
+        else if (opt.kingChange == 666)
+        {
+            // 盗匪事件触发结局
+            Debug.Log("[EventManager] 触发盗匪结局");
+            if (GameControl.Instance != null)
+            {
+                GameControl.Instance.TriggerEnding("献", "你冲到战场之上拼杀，随后被敌人一剑刺死");
+            }
+            return;
+        }
+
         stats.king += opt.kingChange;
         stats.noble += opt.nobleChange;
         stats.scholar += opt.scholarChange;
