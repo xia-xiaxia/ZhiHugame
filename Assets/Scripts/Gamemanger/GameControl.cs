@@ -513,6 +513,12 @@ public class GameControl : MonoBehaviour
             UIManager.Instance.jinYan.SetActive(false);
         }
 
+        // 播放死亡音效
+        if (MusicManager.Instance != null)
+        {
+            MusicManager.Instance.PlayDeathSound();
+        }
+
         // 游戏结束时，将当前年数加到累计货币中
         stats.currency += year;
         Debug.Log($"[GameControl] 本局存活 {year} 年，累计货币: {stats.currency}");
@@ -521,9 +527,27 @@ public class GameControl : MonoBehaviour
         if (PolicyManager.Instance != null)
             PolicyManager.Instance.GenerateShopItems(5);
 
-        // 展示结局UI（需要 UIManager 实现 ShowEndingPanel）
+        // 延迟显示结局面板，等待死亡音效播放一段时间
+        StartCoroutine(ShowEndingAfterDelay(endingId, endingDescription, year));
+    }
+
+    // 延迟显示结局面板的协程
+    private IEnumerator ShowEndingAfterDelay(string endingId, string endingDescription, int survivedYears)
+    {
+        // 等待死亡音效播放一段时间（建议1-2秒）
+        yield return new WaitForSeconds(1.5f);
+
+        // 播放结局音乐
+        if (MusicManager.Instance != null)
+        {
+            MusicManager.Instance.PlayEndingMusic();
+        }
+
+        // 展示结局UI
         if (UIManager.Instance != null)
-            UIManager.Instance.ShowEndingPanel(endingId, endingDescription, year);
+        {
+            UIManager.Instance.ShowEndingPanel(endingId, endingDescription, survivedYears);
+        }
     }
 
     // ===== 重开游戏 =====

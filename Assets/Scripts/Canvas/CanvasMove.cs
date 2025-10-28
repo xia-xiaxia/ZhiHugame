@@ -58,6 +58,13 @@ public class CanvasMove : MonoBehaviour
         }
         
         isReady = false;
+        
+        // 播放开始界面音乐
+        if (MusicManager.Instance != null)
+        {
+            MusicManager.Instance.PlayMenuMusic();
+        }
+        
         Debug.Log("[CanvasMove] 初始化完成");
     }
 
@@ -133,6 +140,12 @@ public class CanvasMove : MonoBehaviour
 
         // 阶段2：黑屏持续一段时间
         yield return new WaitForSeconds(blackScreenDuration);
+
+        // 播放游戏音乐
+        if (MusicManager.Instance != null)
+        {
+            MusicManager.Instance.PlayGameMusic();
+        }
 
         // 阶段3：游戏界面淡入
         bool eventStarted = false;
@@ -222,6 +235,12 @@ public class CanvasMove : MonoBehaviour
 
         // 阶段2：黑屏持续一段时间
         yield return new WaitForSeconds(blackScreenDuration);
+
+        // 播放菜单音乐
+        if (MusicManager.Instance != null)
+        {
+            MusicManager.Instance.PlayMenuMusic();
+        }
 
         // 阶段3：开始界面淡入
         yield return StartCoroutine(FadeCanvasGroup(startPanelCanvasGroup, 0f, 1f, fadeInDuration));

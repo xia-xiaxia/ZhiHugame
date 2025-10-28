@@ -8178,6 +8178,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b6b3ad0a4689741a1dec733e051bbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuBgm: {fileID: 8300000, guid: 555fd99f304d5de44929c4a769c44c16, type: 3}
+  gameBgm: {fileID: 8300000, guid: 64d3ab9cb0b2a4547b8a8813f76cf97d, type: 3}
+  deathSound: {fileID: 8300000, guid: eb8b47210fc5b0b44a49339ae9f045ce, type: 3}
+  endingBgm: {fileID: 8300000, guid: b729d1fad9d6ccc409bddcc13c7fea54, type: 3}
+  bgmVolume: 0.7
+  deathSoundVolume: 1
 --- !u!4 &1225845774
 Transform:
   m_ObjectHideFlags: 0
