@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162da53cb023ce34bbddf3e852d3731d, type: 3}
   m_Name: 11
   m_EditorClassIdentifier: 
-  year: 1
-  _currency: 75
-  _king: 95
-  _noble: 35
+  year: 0
+  _currency: 0
+  _king: 50
+  _noble: 50
   _scholar: 50
   _foreign: 50
   _people: 50
@@ -29,72 +29,4 @@ MonoBehaviour:
   foreignMax: 80
   peopleMin: 20
   peopleMax: 80
-  policyBag:
-  - id: 008
-    type: 1
-    name: "\u6C42\u8D24\u4EE4"
-    desc: "\u5E7F\u62DB\u5929\u4E0B\u5916\u81E3\uFF0C\u4F7F\u4ED6\u4EEC\u613F\u610F\u6765\u5230\u6211\u56FD"
-    result: "\u5916\u81E3\u52BF\u529B\u4E0B\u9650\u62D3\u5BBD"
-    whichChange: foreign
-    thresholdDeltaup: 0
-    thresholdDeltadown: -20
-    deathImmunity: 
-    kingChange: 0
-    nobleChange: 0
-    scholarChange: 0
-    foreignChange: 0
-    peopleChange: 0
-    usageCount: -1
-    cost: 15
-    deathdec: 
-  - id: 014
-    type: 1
-    name: "\u653E\u6743\u5730\u65B9"
-    desc: "\u8BA9\u5730\u65B9\u7684\u81E3\u5B50\u53D1\u6325\u81EA\u5DF1\u7684\u80FD\u529B\uFF0C\u534F\u52A9\u6CBB\u56FD"
-    result: "\u56FD\u541B\u52BF\u529B\u4E0B\u9650\u62D3\u5BBD"
-    whichChange: king
-    thresholdDeltaup: 0
-    thresholdDeltadown: -20
-    deathImmunity: 
-    kingChange: 0
-    nobleChange: 0
-    scholarChange: 0
-    foreignChange: 0
-    peopleChange: 0
-    usageCount: -1
-    cost: 15
-    deathdec: 
-  - id: 007
-    type: 1
-    name: "\u5E7F\u5F00\u8A00\u8DEF"
-    desc: "\u5E7F\u6CDB\u542C\u53D6\u5916\u81E3\u7684\u610F\u89C1\uFF0C\u7075\u6D3B\u5BF9\u7B56"
-    result: "\u5916\u81E3\u52BF\u529B\u4E0A\u4E0B\u9650\u62D3\u5BBD"
-    whichChange: foreign
-    thresholdDeltaup: 10
-    thresholdDeltadown: -10
-    deathImmunity: 
-    kingChange: 0
-    nobleChange: 0
-    scholarChange: 0
-    foreignChange: 0
-    peopleChange: 0
-    usageCount: -1
-    cost: 18
-    deathdec: 
-  - id: 050
-    type: 4
-    name: "\u5B98\u4E0D\u6CBB\u4E61"
-    desc: "\u5C06\u537F\u58EB\u7684\u5B98\u804C\u8C03\u79BB\u5BB6\u4E61\uFF0C\u8BA9\u5916\u81E3\u6CBB\u7406\u537F\u58EB\u7684\u5BB6\u4E61"
-    result: "\u537F\u58EB\u52BF\u529B\u4E2D\u5E45\u4E0B\u964D\uFF0C\u5916\u81E3\u52BF\u529B\u5C0F\u5E45\u4E0A\u5347"
-    whichChange: 
-    thresholdDeltaup: 0
-    thresholdDeltadown: 0
-    deathImmunity: 
-    kingChange: 0
-    nobleChange: 0
-    scholarChange: -20
-    foreignChange: 10
-    peopleChange: 0
-    usageCount: 1
-    cost: 12
-    deathdec: 
+  policyBag: []
