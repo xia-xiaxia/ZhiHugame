@@ -159,9 +159,6 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log("ShowEvent被调用，事件ID: " + id);
         currentEventId = id; // 记录当前事件id
-        // 标记该事件为已使用，防止本局重复出现
-        if (EventManager.Instance != null)
-            EventManager.Instance.MarkEventUsed(id);
 
         if (EventManager.Instance == null)
         {
@@ -175,6 +172,10 @@ public class UIManager : MonoBehaviour
             Debug.LogError($"无法找到事件ID: {id}");
             return;
         }
+        
+        // 标记该事件为已使用，防止本局重复出现（需要传入事件集索引）
+        EventManager.Instance.MarkEventUsed(id, EventManager.Instance.fileIndex);
+
         if(evt.speaker != null && evt.speaker!="旁白")
         {
             CharacterManager.Instance.ShowCharacter(evt.speaker);

@@ -140,12 +140,12 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
                 if (buttonScreenPos.x < Screen.width / 2f)
                 {
                     // 左侧道具，tooltip 显示在鼠标右侧
-                    dynamicOffsetX = tooltipRect.rect.width / 2f + 5f;
+                    dynamicOffsetX = tooltipRect.rect.width / 2f + 1f;
                 }
                 else
                 {
                     // 右侧道具，tooltip 显示在鼠标左侧
-                    dynamicOffsetX = -tooltipRect.rect.width / 2f - 5f;
+                    dynamicOffsetX = -tooltipRect.rect.width / 2f - 1f;
                 }
             }
         }

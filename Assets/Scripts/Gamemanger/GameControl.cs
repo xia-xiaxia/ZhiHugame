@@ -362,76 +362,76 @@ public class GameControl : MonoBehaviour
         int pMin = useDynamicThreshold ? stats.peopleMin : 20;
         int pMax = useDynamicThreshold ? stats.peopleMax : 80;
 
-        // 各属性越界检测（按优先顺序，遇到死亡先判免死道具）
+        // 各属性越界检测（收集所有死亡类型，而不是立即触发）
+        List<DeathInfo> deathList = new List<DeathInfo>();
+        
         if (stats.king <= kMin)
         {
-            if (TryUseDeathImmunity(-1)) return; // -1 表示国君下限
-            TriggerEnding("哀", "在你治下君主逐渐沦为群臣的傀儡，为了更好的掌控局面，他们为你呈上了一杯毒酒"); return;
+            deathList.Add(new DeathInfo(-1, "哀", "在你治下君主逐渐沦为群臣的傀儡，为了更好的掌控局面，他们为你呈上了一杯毒酒"));
         }
         if (stats.king >= kMax)
         {
-            if (TryUseDeathImmunity(1)) return; // 1 表示国君上限
-            TriggerEnding("躁", "你刚愎自用，人们不满你的专横独断，一场政变宣告了你执政的终结"); return;
+            deathList.Add(new DeathInfo(1, "躁", "你刚愎自用，人们不满你的专横独断，一场政变宣告了你执政的终结"));
         }
         if (stats.noble <= nMin)
         {
-            if (TryUseDeathImmunity(-3)) return; // -3 表示贵族下限
-            TriggerEnding("灵", "你毫不遮掩对贵族的恶劣态度，一位贵族豢养的死士当庭刺死了你"); return;
+            deathList.Add(new DeathInfo(-3, "灵", "你毫不遮掩对贵族的恶劣态度，一位贵族豢养的死士当庭刺死了你"));
         }
         if (stats.noble >= nMax)
         {
-            if (TryUseDeathImmunity(3)) return; // 3 表示贵族上限
-            TriggerEnding("平", "在你治下贵族逐渐掌握朝中大权，你大权旁落，在宫墙之内了却残生"); return;
+            deathList.Add(new DeathInfo(3, "平", "在你治下贵族逐渐掌握朝中大权，你大权旁落，在宫墙之内了却残生"));
         }
         if (stats.scholar <= sMin)
         {
-            if (TryUseDeathImmunity(-2)) return; // -2 表示卿士下限
-            TriggerEnding("幽", "你并不在意卿士们，一些失意士人起兵作乱，你也在这场叛乱中被砍去头颅"); return;
+            deathList.Add(new DeathInfo(-2, "幽", "你并不在意卿士们，一些失意士人起兵作乱，你也在这场叛乱中被砍去头颅"));
         }
         if (stats.scholar >= sMax)
         {
-            if (TryUseDeathImmunity(2)) return; // 2 表示卿士上限
-            TriggerEnding("废", "你将权力越来越多的让渡给士族，一家大族逼迫你禅位，你无奈顺从"); return;
+            deathList.Add(new DeathInfo(2, "废", "你将权力越来越多的让渡给士族，一家大族逼迫你禅位，你无奈顺从"));
         }
         if (stats.foreign <= fMin)
         {
-            if (TryUseDeathImmunity(-4)) return; // -4 表示外臣下限
-            TriggerEnding("殇", "你听不进外臣的劝谏，一些失望的外臣找到大国发兵来犯，你死于战乱之中"); return;
+            deathList.Add(new DeathInfo(-4, "殇", "你听不进外臣的劝谏，一些失望的外臣找到大国发兵来犯，你死于战乱之中"));
         }
         if (stats.foreign >= fMax)
         {
-            if (TryUseDeathImmunity(4)) return; // 4 表示外臣上限
-            TriggerEnding("纣", "你执政依赖外臣，本国利益被逐渐掏空，最后沦为了大国的傀儡"); return;
+            deathList.Add(new DeathInfo(4, "纣", "你执政依赖外臣，本国利益被逐渐掏空，最后沦为了大国的傀儡"));
         }
         if (stats.people <= pMin)
         {
-            if (TryUseDeathImmunity(-5)) return; // -5 表示庶人下限
-            TriggerEnding("厉", "你的朝堂横征暴敛，国人不喜，一场国人暴动将你驱逐出了国家"); return;
+            deathList.Add(new DeathInfo(-5, "厉", "你的朝堂横征暴敛，国人不喜，一场国人暴动将你驱逐出了国家"));
         }
         if (stats.people >= pMax)
         {
-            if (TryUseDeathImmunity(5)) return; // 5 表示庶人上限
-            TriggerEnding("携", "你的朝堂软弱无力，国人拒不上税，在一次暴动后庶人们一脚踹开了你"); return;
+            deathList.Add(new DeathInfo(5, "携", "你的朝堂软弱无力，国人拒不上税，在一次暴动后庶人们一脚踹开了你"));
+        }
+
+        // 如果有死亡情况，依次处理免死道具
+        if (deathList.Count > 0)
+        {
+            Debug.Log($"[GameControl] 检测到 {deathList.Count} 个死亡类型，开始依次处理免死道具");
+            StartCoroutine(ProcessDeathListWithImmunity(deathList));
         }
     }
 
-    // 免死道具判定与消耗
-    private bool TryUseDeathImmunity(int deathType)
-    {
-        if (stats.policyBag != null)
-        {
-            foreach (var item in stats.policyBag)
-            {
-                if (item.type == 2 && item.usageCount != 0 && item.deathImmunity != null && item.deathImmunity.Contains(deathType))
-                {
-                    // 弹窗询问玩家是否使用免死道具
-                    StartCoroutine(AskDeathImmunityChoice(item, deathType));
-                    return true; // 暂停结局判定，等待玩家选择
-                }
-            }
-        }
-        return false;
-    }
+    // ===== 旧方法（已废弃，保留以供参考）=====
+    // 免死道具判定与消耗（旧版本，只处理单个死亡）
+    // private bool TryUseDeathImmunity(int deathType)
+    // {
+    //     if (stats.policyBag != null)
+    //     {
+    //         foreach (var item in stats.policyBag)
+    //         {
+    //             if (item.type == 2 && item.usageCount != 0 && item.deathImmunity != null && item.deathImmunity.Contains(deathType))
+    //             {
+    //                 // 弹窗询问玩家是否使用免死道具
+    //                 StartCoroutine(AskDeathImmunityChoice(item, deathType));
+    //                 return true; // 暂停结局判定，等待玩家选择
+    //             }
+    //         }
+    //     }
+    //     return false;
+    // }
 
     // 询问玩家是否使用免死道具的协程
     private System.Collections.IEnumerator AskDeathImmunityChoice(PolicyItem item, int deathType)
@@ -831,5 +831,80 @@ public class GameControl : MonoBehaviour
         {
             UIManager.Instance.UpdateCurrencyDisplay();
         }
+    }
+
+    // ===== 死亡信息结构 =====
+    private class DeathInfo
+    {
+        public int deathType;      // 死亡类型编号
+        public string endingId;    // 结局ID
+        public string endingDesc;  // 结局描述
+        
+        public DeathInfo(int type, string id, string desc)
+        {
+            deathType = type;
+            endingId = id;
+            endingDesc = desc;
+        }
+    }
+
+    // ===== 依次处理死亡列表，询问免死道具 =====
+    private System.Collections.IEnumerator ProcessDeathListWithImmunity(List<DeathInfo> deathList)
+    {
+        for (int i = 0; i < deathList.Count; i++)
+        {
+            DeathInfo deathInfo = deathList[i];
+            Debug.Log($"[GameControl] 处理第 {i+1}/{deathList.Count} 个死亡：类型 {deathInfo.deathType}");
+
+            // 尝试查找免死道具
+            PolicyItem immunityItem = FindDeathImmunityItem(deathInfo.deathType);
+            
+            if (immunityItem != null)
+            {
+                // 有免死道具，询问玩家
+                Debug.Log($"[GameControl] 找到免死道具：{immunityItem.name}，询问玩家是否使用");
+                yield return StartCoroutine(AskDeathImmunityChoice(immunityItem, deathInfo.deathType));
+                
+                if (deathImmunityChoiceResult)
+                {
+                    // 玩家使用了免死道具，该死亡被阻止，继续检查下一个
+                    Debug.Log($"[GameControl] 玩家使用免死道具，死亡类型 {deathInfo.deathType} 被阻止");
+                    continue;
+                }
+                else
+                {
+                    // 玩家拒绝使用，触发该结局
+                    Debug.Log($"[GameControl] 玩家拒绝使用免死道具，触发结局：{deathInfo.endingId}");
+                    TriggerEnding(deathInfo.endingId, deathInfo.endingDesc);
+                    yield break;
+                }
+            }
+            else
+            {
+                // 没有免死道具，直接触发该结局
+                Debug.Log($"[GameControl] 无免死道具，触发结局：{deathInfo.endingId}");
+                TriggerEnding(deathInfo.endingId, deathInfo.endingDesc);
+                yield break;
+            }
+        }
+        
+        // 所有死亡都被免死道具阻止了
+        Debug.Log($"[GameControl] 所有 {deathList.Count} 个死亡都被免死道具阻止，游戏继续");
+    }
+
+    // ===== 查找可用的免死道具 =====
+    private PolicyItem FindDeathImmunityItem(int deathType)
+    {
+        if (stats.policyBag != null)
+        {
+            foreach (var item in stats.policyBag)
+            {
+                if (item.type == 2 && item.usageCount != 0 && item.deathImmunity != null && item.deathImmunity.Contains(deathType))
+                {
+                    return item;
+                }
+            }
+        }
+        return null;
     }
 }

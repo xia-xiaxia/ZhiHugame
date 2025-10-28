@@ -30,7 +30,8 @@ public class EventManager : MonoBehaviour
     private List<(int triggerYear, string eventId)> delayedEvents = new List<(int, string)>();
 
     // 本局已出现过的事件集合（用于避免重复）
-    private HashSet<string> usedEventIds = new HashSet<string>();
+    // 修改：使用 (事件集索引, 事件ID) 的组合来跟踪，这样不同事件集中的相同ID事件可以分别抽取
+    private HashSet<(int setIndex, string eventId)> usedEvents = new HashSet<(int, string)>();
     // 白名单：每个事件集可抽取的事件ID集合
     private Dictionary<int, HashSet<string>> availableAllBySet = new Dictionary<int, HashSet<string>>();
     private Dictionary<int, HashSet<string>> available01BySet = new Dictionary<int, HashSet<string>>();
@@ -47,11 +48,23 @@ public class EventManager : MonoBehaviour
         LoadEvents();
     }
 
+    void Update()
+    {
+        // 调试信息：显示激活的事件集和可抽取事件总数
+        int totalAvailable = 0;
+        foreach (var kv in availableAllBySet)
+        {
+            totalAvailable += kv.Value.Count;
+        }
+        Debug.Log("当前激活的事件集有：" + string.Join(", ", activeRandomEventSetIndices));
+        Debug.Log("当前可抽取的事件总数为：" + totalAvailable);
+    }
+
     void LoadEvents()
     {
         randomEventList.Clear();
         activeRandomEventSetIndices.Clear();
-        usedEventIds.Clear();
+        usedEvents.Clear();
         availableAllBySet.Clear();
         available01BySet.Clear();
         buffEvents.Clear();
@@ -103,22 +116,26 @@ public class EventManager : MonoBehaviour
 
     public GameEvent GetEvent(string id, int randomEventSet = -1)
     {
-        foreach (int idx in activeRandomEventSetIndices)
+        // 优先从 fileIndex 指定的事件集中查找（抽取方法已经设置了正确的 fileIndex）
+        if (fileIndex >= 0 && fileIndex < randomEventList.Count)
+        {
+            if (randomEventList[fileIndex].TryGetValue(id, out var gePreferred))
+            {
+                // 找到了，直接返回（fileIndex 保持不变）
+                Debug.Log($"[EventManager] GetEvent({id}) 从事件集 {fileIndex} 中找到");
+                return gePreferred;
+            }
+        }
+
+        // 如果 fileIndex 指定的事件集中没有，再从所有事件集中查找
+        for (int idx = 0; idx < randomEventList.Count; idx++)
         {
             if (idx >= 0 && idx < randomEventList.Count &&
                 randomEventList[idx].TryGetValue(id, out var ge))
             {
                 fileIndex = idx;
+                Debug.Log($"[EventManager] GetEvent({id}) 从事件集 {idx} 中找到（回退查找）");
                 return ge;
-            }
-        }
-
-        foreach (var dict in randomEventList)
-        {
-            if (dict != null && dict.TryGetValue(id, out var ge2))
-            {
-                Debug.LogWarning($"[EventManager] 事件 {id} 在未激活事件集中被找到");
-                return ge2;
             }
         }
 
@@ -126,26 +143,36 @@ public class EventManager : MonoBehaviour
         return null;
     }
 
-    // 标记一个事件为已使用
-    public void MarkEventUsed(string id)
+    // 标记一个事件为已使用（需要知道是哪个事件集的事件）
+    public void MarkEventUsed(string id, int setIndex)
     {
         if (!string.IsNullOrEmpty(id))
         {
-            usedEventIds.Add(id);
-            // 从所有白名单中移除
-            foreach (var kv in availableAllBySet)
-                kv.Value.Remove(id);
-            foreach (var kv in available01BySet)
-                kv.Value.Remove(id);
+            var eventKey = (setIndex, id);
+            if (usedEvents.Contains(eventKey))
+            {
+                Debug.LogWarning($"[EventManager] 事件 ({setIndex}, {id}) 已经被使用过了！可能出现重复事件BUG");
+            }
+            else
+            {
+                usedEvents.Add(eventKey);
+                Debug.Log($"[EventManager] 标记事件为已使用: 事件集 {setIndex}, ID {id}");
+            }
+            
+            // 只从对应事件集的白名单中移除
+            if (availableAllBySet.TryGetValue(setIndex, out var allSet))
+                allSet.Remove(id);
+            if (available01BySet.TryGetValue(setIndex, out var set01))
+                set01.Remove(id);
             // 使用后清理已耗尽的激活事件集
             CleanupExhaustedSets();
         }
     }
 
-    // 查询事件是否已使用
-    private bool IsEventUsed(string id)
+    // 查询某个事件集中的某个事件是否已使用
+    private bool IsEventUsed(string id, int setIndex)
     {
-        return !string.IsNullOrEmpty(id) && usedEventIds.Contains(id);
+        return !string.IsNullOrEmpty(id) && usedEvents.Contains((setIndex, id));
     }
 
     // 判断某事件是否仍在白名单（可抽取）
@@ -237,10 +264,14 @@ public class EventManager : MonoBehaviour
                     availableAllBySet[act] = allSet;
                     available01BySet[act] = only01;
                 }
-                foreach (var used in usedEventIds)
+                // 从该事件集的白名单中移除已使用的事件
+                foreach (var (setIdx, eventId) in usedEvents)
                 {
-                    availableAllBySet[act].Remove(used);
-                    available01BySet[act].Remove(used);
+                    if (setIdx == act)
+                    {
+                        availableAllBySet[act].Remove(eventId);
+                        available01BySet[act].Remove(eventId);
+                    }
                 }
             }
         }
@@ -253,27 +284,43 @@ public class EventManager : MonoBehaviour
                 Debug.Log($"[EventManager] 隐藏事件集 {-opt.randomEventSet}");
             }
         }
+
         // 处理激活BUFF
         if (!string.IsNullOrEmpty(opt.activateBUFF))
         {
-            BuffDefinition buff = BuffManager.Instance.AddBuffById(opt.activateBUFF);
-            if (buff != null)
+            if (BuffManager.Instance != null)
             {
-                Debug.Log($"[EventManager] 激活BUFF: {buff.name}");
+                BuffDefinition buff = BuffManager.Instance.AddBuffById(opt.activateBUFF);
+                if (buff != null)
+                {
+                    Debug.Log($"[EventManager] 激活BUFF: {buff.name}");
+                }
+                else
+                {
+                    Debug.LogWarning($"[EventManager] 未找到要激活的BUFF: {opt.activateBUFF}");
+                }
             }
             else
             {
-                Debug.LogWarning($"[EventManager] 未找到要激活的BUFF: {opt.activateBUFF}");
+                Debug.LogError($"[EventManager] BuffManager.Instance 为 null，无法激活BUFF: {opt.activateBUFF}");
             }
         }
+
         // 处理后继事件
         if (!string.IsNullOrEmpty(opt.nextEventId) && opt.nextEventId != "0")
         {
             if (opt.interval > 0)
             {
-                int triggerYear = GameControl.Instance.year + opt.interval;
-                delayedEvents.Add((triggerYear, opt.nextEventId));
-                Debug.Log($"[EventManager] 延时插入事件 {opt.nextEventId}，将在第 {triggerYear} 年触发");
+                if (GameControl.Instance != null)
+                {
+                    int triggerYear = GameControl.Instance.year + opt.interval;
+                    delayedEvents.Add((triggerYear, opt.nextEventId));
+                    Debug.Log($"[EventManager] 延时插入事件 {opt.nextEventId}，将在第 {triggerYear} 年触发");
+                }
+                else
+                {
+                    Debug.LogError($"[EventManager] GameControl.Instance 为 null，无法处理延时事件");
+                }
             }
             else
             {
@@ -363,71 +410,74 @@ public class EventManager : MonoBehaviour
         // 没有后继决策：随机抽一个 00x 的事件，并跳到第一个决策 00x01
         return PickRandom01PatternEvent();
     }
-    // 只挑选以 01 结尾的事件（00x01）
+    // 只挑选以 01 结尾的事件（0??01 格式，例如：00101, 00201, 00301）
+    // 新逻辑：从所有未使用的事件中随机抽取（不再限制激活事件集）
+    // 白名单机制会自动排除已使用的事件，确保只抽取未使用的事件
     private string PickRandom01PatternEvent()
     {
-        // 清理白名单耗尽的激活事件集
-        CleanupExhaustedSets();
-        List<string> candidates = new List<string>();
+        // 注释掉激活事件集的清理和限制，改为从所有事件集中抽取
+        // CleanupExhaustedSets();
+        
+        // 注释掉激活事件集的检查
+        // if (activeRandomEventSetIndices == null || activeRandomEventSetIndices.Count == 0)
+        // {
+        //     Debug.LogWarning("[EventManager] 没有激活的事件集");
+        //     return "0";
+        // }
 
-        // 优先在激活事件集中挑选
-        foreach (int idx in activeRandomEventSetIndices)
+        // 从所有事件集中收集可用的 01 事件（不再限制激活事件集）
+        List<(int setIdx, string id)> pool = new List<(int, string)>();
+        
+        // 遍历所有事件集（不再限制为激活的事件集）
+        for (int idx = 0; idx < randomEventList.Count; idx++)
         {
-            if (!available01BySet.TryGetValue(idx, out var hs) || hs == null) continue;
-            foreach (var id in hs)
+            if (available01BySet.TryGetValue(idx, out var hs) && hs != null && hs.Count > 0)
             {
-                // 可选：避免非首回合再次进入开场事件
-                if (GameControl.Instance != null && GameControl.Instance.year > 1 && id == "00101")
-                    continue;
-                candidates.Add(id);
-            }
-        }
-
-        // 如果激活集中没有，则在全部事件中找
-        if (candidates.Count == 0)
-        {
-            foreach (var kv in available01BySet)
-            {
-                var hs = kv.Value;
-                if (hs == null) continue;
                 foreach (var id in hs)
                 {
-                    if (GameControl.Instance != null && GameControl.Instance.year > 1 && id == "00101")
-                        continue;
-                    candidates.Add(id);
+                    pool.Add((idx, id));
                 }
             }
         }
 
-        if (candidates.Count == 0)
+        if (pool.Count == 0)
         {
-            // 兜底：没有任何 01 事件时，退回到通用随机
-            Debug.LogWarning("[EventManager] 未找到任何未使用的 01 事件，回退到通用随机");
+            Debug.LogWarning("[EventManager] 所有事件集中没有可用的 0??01 格式事件，回退到通用随机");
             return PickRandomEventFromActiveSets();
         }
 
-        string pick = candidates[Random.Range(0, candidates.Count)];
-        Debug.Log($"[EventManager] PickRandom01PatternEvent -> {pick}");
-        return pick;
+        // 从所有可用的 01 事件中随机选择一个
+        var selected = pool[Random.Range(0, pool.Count)];
+        int selectedSetIndex = selected.setIdx;
+        string selectedId = selected.id;
+
+        // 设置 fileIndex，这样后续的 GetEvent() 和 MarkEventUsed() 能够正确识别事件集
+        fileIndex = selectedSetIndex;
+
+        Debug.Log($"[EventManager] PickRandom01PatternEvent -> 事件集 {selectedSetIndex}, ID: {selectedId} (格式: 0??01), 总池大小: {pool.Count}");
+        return selectedId;
     }
-    // 从激活集中随机
+    // 从所有事件集中随机（不再限制激活事件集）
     private string PickRandomEventFromActiveSets()
     {
-        // 清理白名单耗尽的激活事件集
-        CleanupExhaustedSets();
+        // 注释掉激活事件集的清理和限制
+        // CleanupExhaustedSets();
+        // Debug.Log("激活的事件集有：[" + string.Join(", ", activeRandomEventSetIndices) + "]");
+        
         if (randomEventList == null || randomEventList.Count == 0)
             return "0";
 
-        if (activeRandomEventSetIndices == null || activeRandomEventSetIndices.Count == 0)
-        {
-            activeRandomEventSetIndices = new List<int>();
-            for (int i = 0; i < randomEventList.Count; i++)
-                activeRandomEventSetIndices.Add(i);
-        }
+        // 注释掉激活事件集的初始化检查
+        // if (activeRandomEventSetIndices == null || activeRandomEventSetIndices.Count == 0)
+        // {
+        //     activeRandomEventSetIndices = new List<int>();
+        //     for (int i = 0; i < randomEventList.Count; i++)
+        //         activeRandomEventSetIndices.Add(i);
+        // }
 
-        // 从激活事件集的白名单中挑选
+        // 从所有事件集的白名单中挑选（不再限制激活事件集）
         List<(int setIdx, string id)> pool = new List<(int, string)>();
-        foreach (int idx in activeRandomEventSetIndices)
+        for (int idx = 0; idx < randomEventList.Count; idx++)
         {
             if (!availableAllBySet.TryGetValue(idx, out var hs) || hs == null || hs.Count == 0) continue;
             foreach (var id in hs)
@@ -435,11 +485,15 @@ public class EventManager : MonoBehaviour
         }
         if (pool.Count == 0)
         {
-            Debug.LogWarning("[EventManager] 激活事件集中无可抽取事件");
+            Debug.LogWarning("[EventManager] 所有事件集中无可抽取事件");
             return "0";
         }
         var pick = pool[Random.Range(0, pool.Count)];
-        Debug.Log($"[EventManager] 随机集 {pick.setIdx} -> {pick.id}");
+        
+        // 设置 fileIndex，这样后续的 GetEvent() 和 MarkEventUsed() 能够正确识别事件集
+        fileIndex = pick.setIdx;
+        
+        Debug.Log($"[EventManager] 随机集 {pick.setIdx} -> {pick.id}, 总池大小: {pool.Count}");
         return pick.id;
     }
 
@@ -460,8 +514,8 @@ public class EventManager : MonoBehaviour
     public void ReloadAllEventsForRestart()
     {
         nextEventId = "0";
-        LoadEvents();
-        usedEventIds.Clear();
+        LoadEvents();  // LoadEvents() 已经会清理 usedEvents 和重置白名单
+        // 不需要再次清理 usedEvents，因为 LoadEvents() 已经做了
     }
 
     public void OnRestartCleanup() { }

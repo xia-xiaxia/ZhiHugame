@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using JsonA;
 
 // Buff长期效果的辅助类
 [Serializable]
@@ -29,6 +30,10 @@ public class BuffDefinition
 public class BuffManager : MonoBehaviour
 {
     public static BuffManager Instance;
+    
+    // 用于在Inspector中绑定buff.json文件
+    public TextAsset buffJson;
+    
     public List<BuffDefinition> buffs = new List<BuffDefinition>();
 
     private List<BuffDefinition> activeBuffs = new List<BuffDefinition>();
@@ -36,6 +41,36 @@ public class BuffManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        LoadBuffs();
+    }
+
+    // 从JSON加载所有BUFF定义
+    void LoadBuffs()
+    {
+        buffs.Clear();
+        
+        if (buffJson == null)
+        {
+            Debug.LogError("[BuffManager] buffJson 未绑定，无法加载BUFF定义");
+            return;
+        }
+
+        try
+        {
+            BuffDefinition[] allBuffs = JsonHelper.FromJson<BuffDefinition>(buffJson.text);
+            buffs.AddRange(allBuffs);
+            Debug.Log($"[BuffManager] 加载了 {buffs.Count} 个BUFF定义");
+            
+            // 输出加载的BUFF ID用于调试
+            foreach (var buff in buffs)
+            {
+                Debug.Log($"[BuffManager] 加载BUFF: ID={buff.id}, Name={buff.name}");
+            }
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError($"[BuffManager] 解析BUFF JSON失败: {ex.Message}");
+        }
     }
 
     // 添加buff

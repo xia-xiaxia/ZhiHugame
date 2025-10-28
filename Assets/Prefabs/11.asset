@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162da53cb023ce34bbddf3e852d3731d, type: 3}
   m_Name: 11
   m_EditorClassIdentifier: 
-  year: 0
-  _currency: 980
+  year: 2
+  _currency: 1129
   _king: 50
   _noble: 50
   _scholar: 50
@@ -29,55 +29,4 @@ MonoBehaviour:
   foreignMax: 80
   peopleMin: 20
   peopleMax: 80
-  policyBag:
-  - id: 019
-    type: 2
-    name: "\u96F7\u9706\u624B\u6BB5"
-    desc: "\u5982\u679C\u8D35\u65CF\u80C6\u6562\u5A01\u80C1\u541B\u6743\uFF0C\u56FD\u541B\u5C06\u76F4\u63A5\u6253\u51FB"
-    result: "\u514D\u9664\u56E0\u4E3A\u8D35\u65CF\u8FC7\u9AD8\u5BFC\u81F4\u7684\u6E38\u620F\u7ED3\u675F"
-    whichChange: 
-    thresholdDeltaup: 0
-    thresholdDeltadown: 0
-    deathImmunity: 03000000
-    kingChange: 0
-    nobleChange: 0
-    scholarChange: 0
-    foreignChange: 0
-    peopleChange: 0
-    usageCount: 1
-    cost: 30
-    deathdec: "\u8D35\u65CF\u4F01\u56FE\u628A\u6301\u671D\u653F\uFF0C\u88AB\u4F60\u96F7\u9706\u624B\u6BB5\u6572\u6253\u653E\u5F03"
-  - id: 027
-    type: 2
-    name: "\u62FF\u634F\u628A\u67C4"
-    desc: "\u6211\u4EEC\u4F1A\u62FF\u634F\u5916\u81E3\u7684\u628A\u67C4\uFF0C\u8BA9\u4ED6\u4EEC\u4E0D\u6562\u9020\u6B21"
-    result: "\u514D\u9664\u56E0\u4E3A\u5916\u81E3\u8FC7\u9AD8\u5BFC\u81F4\u7684\u6E38\u620F\u7ED3\u675F"
-    whichChange: 
-    thresholdDeltaup: 0
-    thresholdDeltadown: 0
-    deathImmunity: 04000000
-    kingChange: 0
-    nobleChange: 0
-    scholarChange: 0
-    foreignChange: 0
-    peopleChange: 0
-    usageCount: 1
-    cost: 30
-    deathdec: "\u4E00\u4E9B\u5916\u81E3\u4F01\u56FE\u51FA\u5356\u4F60\u7684\u5229\u76CA\uFF0C\u88AB\u4F60\u5904\u6B7B"
-  - id: 024
-    type: 2
-    name: "\u53CD\u6297\u6743\u81E3"
-    desc: "\u5982\u679C\u6743\u81E3\u63A7\u5236\u671D\u653F\uFF0C\u56FD\u541B\u5C06\u4E0D\u4F1A\u5750\u4EE5\u5F85\u6BD9"
-    result: "\u514D\u9664\u56E0\u4E3A\u56FD\u541B\u8FC7\u4F4E\u5BFC\u81F4\u7684\u6E38\u620F\u7ED3\u675F"
-    whichChange: 
-    thresholdDeltaup: 0
-    thresholdDeltadown: 0
-    deathImmunity: ffffffff
-    kingChange: 0
-    nobleChange: 0
-    scholarChange: 0
-    foreignChange: 0
-    peopleChange: 0
-    usageCount: 1
-    cost: 30
-    deathdec: "\u4F60\u8BBE\u8BA1\u5904\u6B7B\u4E86\u6743\u81E3\uFF0C\u541B\u4E3B\u6743\u529B\u5F97\u5230\u6536\u62E2"
+  policyBag: []
