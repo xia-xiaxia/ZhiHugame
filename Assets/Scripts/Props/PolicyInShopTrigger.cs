@@ -126,8 +126,8 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
             // 强制重建布局以获取正确的尺寸
             Canvas.ForceUpdateCanvases();
             
-            // 垂直偏移：面板高度的一半，显示在鼠标下方
-            dynamicOffsetY = -tooltipRect.rect.height / 2f;
+            // 垂直偏移：面板高度的一半加额外间距，显示在鼠标上方
+            dynamicOffsetY = tooltipRect.rect.height / 2f + 20f;
             
             // 水平偏移：根据道具按钮在屏幕中的位置决定显示在左侧还是右侧
             RectTransform buttonRect = GetComponent<RectTransform>();
@@ -140,12 +140,12 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
                 if (buttonScreenPos.x < Screen.width / 2f)
                 {
                     // 左侧道具，tooltip 显示在鼠标右侧
-                    dynamicOffsetX = tooltipRect.rect.width / 2f + 40f;
+                    dynamicOffsetX = tooltipRect.rect.width / 2f + 5f;
                 }
                 else
                 {
                     // 右侧道具，tooltip 显示在鼠标左侧
-                    dynamicOffsetX = -tooltipRect.rect.width / 2f - 40f;
+                    dynamicOffsetX = -tooltipRect.rect.width / 2f - 5f;
                 }
             }
         }

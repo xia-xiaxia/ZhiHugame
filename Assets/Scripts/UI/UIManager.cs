@@ -747,7 +747,7 @@ public class UIManager : MonoBehaviour
             {
                 string usageText = item.usageCount == -1 ? "无限" : item.usageCount.ToString();
                 string typeText = GetPolicyTypeName(item.type);
-                btnText.text = $"{item.name} 类型：{typeText}\n次数：{usageText} {item.desc}";
+                btnText.text = $"{item.name} 类型：{typeText} 次数：{usageText}\n{item.desc}\n{item.result}";
             }
 
             // 绑定点击事件

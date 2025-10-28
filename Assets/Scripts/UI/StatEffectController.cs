@@ -356,7 +356,16 @@ public class StatEffectController : MonoBehaviour
     // 强制刷新填充条（不触发特效，只更新显示）
     public void RefreshFilledImage()
     {
-        if (stats == null) return;
+        if (stats == null)
+        {
+            Debug.LogWarning($"[StatEffectController] {statType} - RefreshFilledImage: stats 为空");
+            return;
+        }
+        
+        // 更新 previousValue 为当前值，避免触发特效
+        previousValue = GetCurrentValue();
+        
         UpdateFilledImage();
+        Debug.Log($"[StatEffectController] {statType} - RefreshFilledImage 完成");
     }
 }

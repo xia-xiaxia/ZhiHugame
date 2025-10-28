@@ -460,14 +460,54 @@ public class GameControl : MonoBehaviour
                 // 次数用尽，从背包移除
                 RemovePolicy(item.id);
             }
+
+            // 旧版本：恢复到快照数值（注释掉）
+            // stats.king = snapshotKing;
+            // stats.noble = snapshotNoble;
+            // stats.scholar = snapshotScholar;
+            // stats.foreign = snapshotForeign;
+            // stats.people = snapshotPeople;
+
+            // 新版本：根据死亡类型，将相应数值恢复到50
+            switch (deathType)
+            {
+                case 1:  // 国君上限
+                case -1: // 国君下限
+                    stats.king = 50;
+                    Debug.Log($"[GameControl] 免死道具生效：国君恢复到 50");
+                    break;
+                case 2:  // 卿士上限
+                case -2: // 卿士下限
+                    stats.scholar = 50;
+                    Debug.Log($"[GameControl] 免死道具生效：卿士恢复到 50");
+                    break;
+                case 3:  // 贵族上限
+                case -3: // 贵族下限
+                    stats.noble = 50;
+                    Debug.Log($"[GameControl] 免死道具生效：贵族恢复到 50");
+                    break;
+                case 4:  // 外臣上限
+                case -4: // 外臣下限
+                    stats.foreign = 50;
+                    Debug.Log($"[GameControl] 免死道具生效：外臣恢复到 50");
+                    break;
+                case 5:  // 庶人上限
+                case -5: // 庶人下限
+                    stats.people = 50;
+                    Debug.Log($"[GameControl] 免死道具生效：庶人恢复到 50");
+                    break;
+                case 6:  // 事件死亡（恢复所有数值）
+                    stats.king = 50;
+                    stats.noble = 50;
+                    stats.scholar = 50;
+                    stats.foreign = 50;
+                    stats.people = 50;
+                    Debug.Log($"[GameControl] 免死道具生效：事件死亡，所有数值恢复到 50");
+                    break;
+            }
             
-            stats.king = snapshotKing;
-            stats.noble = snapshotNoble;
-            stats.scholar = snapshotScholar;
-            stats.foreign = snapshotForeign;
-            stats.people = snapshotPeople;
-            
-            Debug.Log($"[GameControl] 玩家选择使用免死道具，类型{deathType}，道具ID:{item.id}，恢复到快照数值");
+            // Debug.Log($"[GameControl] 免死道具生效：数值恢复到快照 - K{snapshotKing} N{snapshotNoble} S{snapshotScholar} F{snapshotForeign} P{snapshotPeople}");
+            Debug.Log($"[GameControl] 玩家使用免死道具，类型{deathType}，道具ID:{item.id}");
             UIManager.Instance?.UpdateStatText();
             
             // 显示免死道具生效文案
@@ -565,7 +605,8 @@ public class GameControl : MonoBehaviour
         if (PolicyManager.Instance != null)
             PolicyManager.Instance.GenerateShopItems(5);
         
-        
+
+
         GameOver = false;
         endingTriggered = false;
         GamePaused = false; // 清除暂停状态
@@ -590,6 +631,9 @@ public class GameControl : MonoBehaviour
             UIManager.Instance.UpdateStatText();
         }
 
+        // 强制刷新所有数值填充图片
+        RefreshAllStatFilledImages();
+
         if (EventManager.Instance != null)
         {
             EventManager.Instance.ReloadAllEventsForRestart();
@@ -597,6 +641,26 @@ public class GameControl : MonoBehaviour
         }
 
         Debug.Log("[GameControl] 重开游戏准备完成");
+    }
+    
+    // ===== 刷新所有数值填充图片 =====
+    private void RefreshAllStatFilledImages()
+    {
+        StatEffectController[] controllers = FindObjectsOfType<StatEffectController>();
+        
+        if (controllers.Length > 0)
+        {
+            Debug.Log($"[GameControl] 找到 {controllers.Length} 个 StatEffectController，开始刷新填充图片");
+            
+            foreach (var controller in controllers)
+            {
+                controller.RefreshFilledImage();
+            }
+        }
+        else
+        {
+            Debug.LogWarning("[GameControl] 未找到任何 StatEffectController");
+        }
     }
     
     // ===== 重开游戏并播放动画 =====
@@ -630,6 +694,9 @@ public class GameControl : MonoBehaviour
         {
             objectsAboutEvent.SetActive(true);
         }
+        
+        // 再次刷新填充图片，确保显示正确
+        RefreshAllStatFilledImages();
         
         // 同时开始第一个事件
         ProcessNextTurn();
