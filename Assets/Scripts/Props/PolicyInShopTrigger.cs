@@ -116,9 +116,45 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
     {
         if (tooltipPanel == null) return;
 
+        // 获取 tooltip 面板的尺寸，动态计算偏移
+        RectTransform tooltipRect = tooltipPanel.GetComponent<RectTransform>();
+        float dynamicOffsetX = 0;
+        float dynamicOffsetY = 0;
+        
+        if (tooltipRect != null)
+        {
+            // 强制重建布局以获取正确的尺寸
+            Canvas.ForceUpdateCanvases();
+            
+            // 垂直偏移：面板高度的一半，显示在鼠标下方
+            dynamicOffsetY = -tooltipRect.rect.height / 2f;
+            
+            // 水平偏移：根据道具按钮在屏幕中的位置决定显示在左侧还是右侧
+            RectTransform buttonRect = GetComponent<RectTransform>();
+            if (buttonRect != null)
+            {
+                // 获取按钮在屏幕上的位置
+                Vector3 buttonScreenPos = RectTransformUtility.WorldToScreenPoint(canvas.worldCamera, buttonRect.position);
+                
+                // 判断按钮在屏幕左半部分还是右半部分
+                if (buttonScreenPos.x < Screen.width / 2f)
+                {
+                    // 左侧道具，tooltip 显示在鼠标右侧
+                    dynamicOffsetX = tooltipRect.rect.width / 2f + 40f;
+                }
+                else
+                {
+                    // 右侧道具，tooltip 显示在鼠标左侧
+                    dynamicOffsetX = -tooltipRect.rect.width / 2f - 40f;
+                }
+            }
+        }
+        
+        Vector2 dynamicOffset = new Vector2(dynamicOffsetX, dynamicOffsetY);
+
         if (canvas != null && canvas.renderMode == RenderMode.ScreenSpaceOverlay)
         {
-            tooltipPanel.transform.position = Input.mousePosition + new Vector3(tooltipOffset.x, tooltipOffset.y, 0);
+            tooltipPanel.transform.position = Input.mousePosition + new Vector3(dynamicOffset.x, dynamicOffset.y, 0);
         }
         else if (canvas != null)
         {
@@ -129,11 +165,11 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
                 canvas.worldCamera,
                 out localPoint
             );
-            tooltipPanel.transform.localPosition = localPoint + tooltipOffset;
+            tooltipPanel.transform.localPosition = localPoint + dynamicOffset;
         }
         else
         {
-            tooltipPanel.transform.position = Input.mousePosition + new Vector3(tooltipOffset.x, tooltipOffset.y, 0);
+            tooltipPanel.transform.position = Input.mousePosition + new Vector3(dynamicOffset.x, dynamicOffset.y, 0);
         }
     }
 
@@ -174,41 +210,41 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
             sb.AppendLine($"\n<color=#98FB98>效果：{policyItem.result}</color>");
         }
         
-        switch (policyItem.type)
-        {
-            case 1:
-                if (!string.IsNullOrEmpty(policyItem.whichChange))
-                {
-                    sb.AppendLine($"\n<color=#FFA500>影响：{GetStatName(policyItem.whichChange)}</color>");
-                    sb.AppendLine($"上限变化：{(policyItem.thresholdDeltaup >= 0 ? "+" : "")}{policyItem.thresholdDeltaup}");
-                    sb.AppendLine($"下限变化：{(policyItem.thresholdDeltadown >= 0 ? "+" : "")}{policyItem.thresholdDeltadown}");
-                }
-                break;
+        // switch (policyItem.type)
+        // {
+        //     case 1:
+        //         if (!string.IsNullOrEmpty(policyItem.whichChange))
+        //         {
+        //             sb.AppendLine($"\n<color=#FFA500>影响：{GetStatName(policyItem.whichChange)}</color>");
+        //             sb.AppendLine($"上限变化：{(policyItem.thresholdDeltaup >= 0 ? "+" : "")}{policyItem.thresholdDeltaup}");
+        //             sb.AppendLine($"下限变化：{(policyItem.thresholdDeltadown >= 0 ? "+" : "")}{policyItem.thresholdDeltadown}");
+        //         }
+        //         break;
                 
-            case 2:
-                if (policyItem.deathImmunity != null && policyItem.deathImmunity.Count > 0)
-                {
-                    sb.AppendLine($"\n<color=#FF6B6B>免死类型：</color>");
-                    foreach (int deathType in policyItem.deathImmunity)
-                    {
-                        sb.AppendLine($"   {GetDeathTypeName(deathType)}");
-                    }
-                }
-                break;
+        //     case 2:
+        //         if (policyItem.deathImmunity != null && policyItem.deathImmunity.Count > 0)
+        //         {
+        //             sb.AppendLine($"\n<color=#FF6B6B>免死类型：</color>");
+        //             foreach (int deathType in policyItem.deathImmunity)
+        //             {
+        //                 sb.AppendLine($"   {GetDeathTypeName(deathType)}");
+        //             }
+        //         }
+        //         break;
                 
-            case 3:
-                sb.AppendLine($"\n<color=#87CEEB>可跳过当前事件</color>");
-                break;
+        //     case 3:
+        //         sb.AppendLine($"\n<color=#87CEEB>可跳过当前事件</color>");
+        //         break;
                 
-            case 4:
-                sb.AppendLine($"\n<color=#FFB6C1>数值变化：</color>");
-                if (policyItem.kingChange != 0) sb.AppendLine($"  国君：{(policyItem.kingChange >= 0 ? "+" : "")}{policyItem.kingChange}");
-                if (policyItem.nobleChange != 0) sb.AppendLine($"  贵族：{(policyItem.nobleChange >= 0 ? "+" : "")}{policyItem.nobleChange}");
-                if (policyItem.scholarChange != 0) sb.AppendLine($"  卿士：{(policyItem.scholarChange >= 0 ? "+" : "")}{policyItem.scholarChange}");
-                if (policyItem.foreignChange != 0) sb.AppendLine($"  外臣：{(policyItem.foreignChange >= 0 ? "+" : "")}{policyItem.foreignChange}");
-                if (policyItem.peopleChange != 0) sb.AppendLine($"  庶人：{(policyItem.peopleChange >= 0 ? "+" : "")}{policyItem.peopleChange}");
-                break;
-        }
+        //     case 4:
+        //         sb.AppendLine($"\n<color=#FFB6C1>数值变化：</color>");
+        //         if (policyItem.kingChange != 0) sb.AppendLine($"  国君：{(policyItem.kingChange >= 0 ? "+" : "")}{policyItem.kingChange}");
+        //         if (policyItem.nobleChange != 0) sb.AppendLine($"  贵族：{(policyItem.nobleChange >= 0 ? "+" : "")}{policyItem.nobleChange}");
+        //         if (policyItem.scholarChange != 0) sb.AppendLine($"  卿士：{(policyItem.scholarChange >= 0 ? "+" : "")}{policyItem.scholarChange}");
+        //         if (policyItem.foreignChange != 0) sb.AppendLine($"  外臣：{(policyItem.foreignChange >= 0 ? "+" : "")}{policyItem.foreignChange}");
+        //         if (policyItem.peopleChange != 0) sb.AppendLine($"  庶人：{(policyItem.peopleChange >= 0 ? "+" : "")}{policyItem.peopleChange}");
+        //         break;
+        // }
         
         return sb.ToString();
     }

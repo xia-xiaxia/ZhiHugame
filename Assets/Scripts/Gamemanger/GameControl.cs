@@ -523,6 +523,14 @@ public class GameControl : MonoBehaviour
         stats.currency += year;
         Debug.Log($"[GameControl] 本局存活 {year} 年，累计货币: {stats.currency}");
 
+        // 死亡时立即重置 stats（除了货币）
+        int savedCurrency = stats.currency;
+        List<PolicyItem> savedPolicies = new List<PolicyItem>(stats.policyBag);
+        stats.ResetToDefault();
+        stats.currency = savedCurrency;
+        stats.policyBag = savedPolicies;
+        Debug.Log($"[GameControl] 死亡时重置数值，保留货币 {savedCurrency} 和道具");
+
         // 游戏结束时，先生成新一轮商店道具
         if (PolicyManager.Instance != null)
             PolicyManager.Instance.GenerateShopItems(5);
@@ -556,7 +564,8 @@ public class GameControl : MonoBehaviour
         // 重开时也生成新一轮商店道具
         if (PolicyManager.Instance != null)
             PolicyManager.Instance.GenerateShopItems(5);
-
+        
+        
         GameOver = false;
         endingTriggered = false;
         GamePaused = false; // 清除暂停状态
@@ -573,16 +582,12 @@ public class GameControl : MonoBehaviour
         pausedEventId = null;
         pausedSentenceIndex = 0;
 
-        if (stats != null)
-            stats.ResetToDefault();
-
+        // stats 已经在死亡时重置过了，这里不需要再重置
+        // 只需更新 UI
         if (UIManager.Instance != null)
         {
             UIManager.Instance.HideEndingPanel();
             UIManager.Instance.UpdateStatText();
-            // 重开时显示 jinYan
-            if (UIManager.Instance.jinYan != null)
-                UIManager.Instance.jinYan.SetActive(true);
         }
 
         if (EventManager.Instance != null)
@@ -591,10 +596,65 @@ public class GameControl : MonoBehaviour
             EventManager.Instance.OnRestartCleanup();
         }
 
-        BackToStartMenu();
-
-        Debug.Log("[GameControl] 重开完成，等待玩家点击开始游戏");
-        // 移除自动 ProcessNextTurn()，等待玩家手动点击开始游戏按钮
+        Debug.Log("[GameControl] 重开游戏准备完成");
+    }
+    
+    // ===== 重开游戏并播放动画 =====
+    public void RestartGameWithAnimation()
+    {
+        RestartGame();
+        
+        // 隐藏商店面板
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.HidePolicyShop();
+        }
+        
+        // 先隐藏事件面板，然后短暂延迟后显示并开始事件
+        StartCoroutine(RestartGameAnimationCoroutine());
+    }
+    
+    private IEnumerator RestartGameAnimationCoroutine()
+    {
+        // 隐藏事件面板
+        if (objectsAboutEvent != null)
+        {
+            objectsAboutEvent.SetActive(false);
+        }
+        
+        // 短暂延迟
+        yield return new WaitForSeconds(0.3f);
+        
+        // 显示事件面板
+        if (objectsAboutEvent != null)
+        {
+            objectsAboutEvent.SetActive(true);
+        }
+        
+        // 同时开始第一个事件
+        ProcessNextTurn();
+        
+        Debug.Log("[GameControl] 重开游戏动画完成，开始第一个事件");
+    }
+    
+    // ===== 回到主菜单 =====
+    public void BackToMainMenu()
+    {
+        RestartGame();
+        
+        // 隐藏商店面板
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.HidePolicyShop();
+        }
+        
+        // 隐藏游戏场景，返回主菜单
+        if (CanvasMove.Instance != null)
+        {
+            CanvasMove.Instance.BackToStart();
+        }
+        
+        Debug.Log("[GameControl] 回到主菜单");
     }
     
     public void continueGame()
@@ -604,6 +664,12 @@ public class GameControl : MonoBehaviour
             Debug.Log("[GameControl] continueGame - 直接恢复游戏，不播放动画");
             GamePaused = false;
             GameOver = false;
+            
+            // 恢复事件面板显示
+            if (objectsAboutEvent != null)
+            {
+                objectsAboutEvent.SetActive(true);
+            }
             
             // 菜单面板的隐藏由按钮自己的 SetActive 控制
             // 这里只需要取消暂停状态即可

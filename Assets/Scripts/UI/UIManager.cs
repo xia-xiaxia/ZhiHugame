@@ -62,7 +62,9 @@ public class UIManager : MonoBehaviour
     public Transform shopItemsParent;
     public GameObject shopItemButtonPrefab;
     public Text currencyText; // 显示可用货币（年数）
-    public Button closeShopButton; // 关闭商店继续结局流程
+    // public Button closeShopButton; // 关闭商店继续结局流程（已弃用，保留以兼容旧代码）
+    public Button restartGameButton; // 重开一局
+    public Button backToMenuButton; // 回到主界面
     private List<GameObject> shopItemButtons = new List<GameObject>();
 
     // ===== 新增：商店页面的背包显示区域 =====
@@ -253,8 +255,6 @@ public class UIManager : MonoBehaviour
         {
             for(int i = 0; i < evt.yearDelta; i++)
             {
-                // 注释掉不存在的方法
-                // GameControl.Instance.CheckAndTriggerYearEnding();
                 BuffManager.Instance?.OnYearEnd();
             }
         }
@@ -286,7 +286,7 @@ public class UIManager : MonoBehaviour
             {
                 // 全部显示完毕，显示选项
                 if (autoNextCoroutine != null) { StopCoroutine(autoNextCoroutine); autoNextCoroutine = null; }
-                StartCoroutine(ShowOptionsAfterDelay(1.0f));
+                StartCoroutine(ShowOptionsAfterDelay(0.2f));
             }
         }
     }
@@ -808,6 +808,13 @@ public class UIManager : MonoBehaviour
         // 消耗道具
         if (item.usageCount > 0) item.usageCount--;
         
+        // 使用次数为0时丢弃道具
+        if (item.usageCount == 0)
+        {
+            Debug.Log($"[UIManager] 道具 {item.name} 使用次数为0，从背包移除");
+            GameControl.Instance.RemovePolicy(item.id);
+        }
+        
         Debug.Log($"[UIManager] 使用阈值道具：{item.name}，影响属性：{item.whichChange}");
         
         // 应用阈值变化到 StatModel
@@ -861,6 +868,13 @@ public class UIManager : MonoBehaviour
         // 消耗道具
         if (item.usageCount > 0) item.usageCount--;
         
+        // 使用次数为0时丢弃道具
+        if (item.usageCount == 0)
+        {
+            Debug.Log($"[UIManager] 道具 {item.name} 使用次数为0，从背包移除");
+            GameControl.Instance.RemovePolicy(item.id);
+        }
+        
         Debug.Log($"[UIManager] 使用跳过道具：{item.name}");
         
         // 跳过当前事件，直接抽取新事件
@@ -880,6 +894,13 @@ public class UIManager : MonoBehaviour
 
         // 消耗道具
         if (item.usageCount > 0) item.usageCount--;
+        
+        // 使用次数为0时丢弃道具
+        if (item.usageCount == 0)
+        {
+            Debug.Log($"[UIManager] 道具 {item.name} 使用次数为0，从背包移除");
+            GameControl.Instance.RemovePolicy(item.id);
+        }
         
         Debug.Log($"[UIManager] 使用调控道具：{item.name}");
         
@@ -965,16 +986,39 @@ public class UIManager : MonoBehaviour
             shopItemButtons.Add(btn);
         }
 
-        // 绑定关闭按钮
-        if (closeShopButton != null)
+        // // 绑定按钮事件
+        // if (closeShopButton != null)
+        // {
+        //     closeShopButton.onClick.RemoveAllListeners();
+        //     closeShopButton.onClick.AddListener(() =>
+        //     {
+        //         // 旧版本兼容：关闭商店并重开游戏
+        //         if (GameControl.Instance != null)
+        //             GameControl.Instance.RestartGameWithAnimation();
+        //     });
+        // }
+        
+        // 绑定重开一局按钮
+        if (restartGameButton != null)
         {
-            closeShopButton.onClick.RemoveAllListeners();
-            closeShopButton.onClick.AddListener(() =>
+            restartGameButton.onClick.RemoveAllListeners();
+            restartGameButton.onClick.AddListener(() =>
             {
-                HidePolicyShop();
-                // 只重开游戏，不再生成商店道具（已在GameControl中生成）
+                Debug.Log("[UIManager] 点击重开一局");
                 if (GameControl.Instance != null)
-                    GameControl.Instance.RestartGame();
+                    GameControl.Instance.RestartGameWithAnimation();
+            });
+        }
+        
+        // 绑定回到主界面按钮
+        if (backToMenuButton != null)
+        {
+            backToMenuButton.onClick.RemoveAllListeners();
+            backToMenuButton.onClick.AddListener(() =>
+            {
+                Debug.Log("[UIManager] 点击回到主界面");
+                if (GameControl.Instance != null)
+                    GameControl.Instance.BackToMainMenu();
             });
         }
     }
@@ -1214,7 +1258,7 @@ public class UIManager : MonoBehaviour
         if (currencyText != null && GameControl.Instance != null)
         {
             int currency = GameControl.Instance.GetCurrency();
-            currencyText.text = $"货币：{currency}";
+            currencyText.text = $"经验：{currency}";
         }
     }
 

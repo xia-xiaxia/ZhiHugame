@@ -57,12 +57,29 @@ public class StatEffectController : MonoBehaviour
 
         if (stats == null)
         {
-            Debug.LogError($"[StatEffectController] 无法获取 StatModel，特效将不会工作");
+            Debug.LogError($"[StatEffectController] {statType} - 无法获取 StatModel，特效将不会工作");
             return;
+        }
+
+        Debug.Log($"[StatEffectController] {statType} - 初始化开始");
+
+        // 检查 valueFilledImage 配置
+        if (valueFilledImage != null)
+        {
+            Debug.Log($"[StatEffectController] {statType} - valueFilledImage 已配置: {valueFilledImage.name}, Type={valueFilledImage.type}");
+            if (valueFilledImage.type != Image.Type.Filled)
+            {
+                Debug.LogWarning($"[StatEffectController] {statType} - valueFilledImage 的 Image Type 不是 Filled！当前是 {valueFilledImage.type}");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"[StatEffectController] {statType} - valueFilledImage 未配置！");
         }
 
         // 初始化前一个数值
         previousValue = GetCurrentValue();
+        Debug.Log($"[StatEffectController] {statType} - 初始数值: {previousValue}");
 
         // 初始化特效图片
         InitializeEffectImages();
@@ -72,6 +89,8 @@ public class StatEffectController : MonoBehaviour
 
         // 订阅数值变化事件
         SubscribeToEvents();
+        
+        Debug.Log($"[StatEffectController] {statType} - 初始化完成");
     }
 
     void OnEnable()
@@ -192,6 +211,9 @@ public class StatEffectController : MonoBehaviour
     private void OnValueChanged(int newValue)
     {
         int delta = newValue - previousValue;
+        
+        Debug.Log($"[StatEffectController] {statType} - 数值变化: 旧值={previousValue}, 新值={newValue}, 变化量={delta}");
+        
         previousValue = newValue;
 
         if (delta > 0)
@@ -272,6 +294,10 @@ public class StatEffectController : MonoBehaviour
 
         float fillAmount = GetFillAmount();
         valueFilledImage.fillAmount = fillAmount;
+        
+        // 添加调试日志
+        int currentValue = GetCurrentValue();
+        Debug.Log($"[StatEffectController] {statType} - 更新填充: 当前值={currentValue}, fillAmount={fillAmount} (使用StatModel百分比属性)");
     }
 
     private int GetCurrentValue()
@@ -299,54 +325,21 @@ public class StatEffectController : MonoBehaviour
     {
         if (stats == null) return 0f;
 
-        int currentValue = GetCurrentValue();
-        int maxValue = GetMaxValue();
-        int minValue = GetMinValue();
-
-        if (maxValue <= 0) return 0f;
-
-        return (float)(currentValue - minValue) / (maxValue - minValue);
-    }
-
-    private int GetMaxValue()
-    {
-        if (stats == null) return 100;
-
+        // 直接使用 StatModel 中的百分比属性
         switch (statType)
         {
             case StatType.King:
-                return stats.kingMax;
+                return stats.KingPercent;
             case StatType.Noble:
-                return stats.nobleMax;
+                return stats.NoblePercent;
             case StatType.Scholar:
-                return stats.scholarMax;
+                return stats.ScholarPercent;
             case StatType.Foreign:
-                return stats.foreignMax;
+                return stats.ForeignPercent;
             case StatType.People:
-                return stats.peopleMax;
+                return stats.PeoplePercent;
             default:
-                return 100;
-        }
-    }
-
-    private int GetMinValue()
-    {
-        if (stats == null) return 0;
-
-        switch (statType)
-        {
-            case StatType.King:
-                return stats.kingMin;
-            case StatType.Noble:
-                return stats.nobleMin;
-            case StatType.Scholar:
-                return stats.scholarMin;
-            case StatType.Foreign:
-                return stats.foreignMin;
-            case StatType.People:
-                return stats.peopleMin;
-            default:
-                return 0;
+                return 0f;
         }
     }
 

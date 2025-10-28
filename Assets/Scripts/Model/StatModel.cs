@@ -122,11 +122,11 @@ public class StatModel : ScriptableObject
     public int peopleMax = 80;
 
     // 计算各属性百分比
-    public float KingPercent => kingMax > 0 ? (king - kingMin) / (kingMax - kingMin) : 0f;
-    public float NoblePercent => nobleMax > 0 ? (noble - nobleMin) / (nobleMax - nobleMin) : 0f;
-    public float ScholarPercent => scholarMax > 0 ? (scholar - scholarMin) / (scholarMax - scholarMin) : 0f;
-    public float ForeignPercent => foreignMax > 0 ? (foreign - foreignMin) / (foreignMax - foreignMin) : 0f;
-    public float PeoplePercent => peopleMax > 0 ? (people - peopleMin) / (peopleMax - peopleMin) : 0f;
+    public float KingPercent => kingMax > kingMin ? (float)(king - kingMin) / (float)(kingMax - kingMin) : 0f;
+    public float NoblePercent => nobleMax > nobleMin ? (float)(noble - nobleMin) / (float)(nobleMax - nobleMin) : 0f;
+    public float ScholarPercent => scholarMax > scholarMin ? (float)(scholar - scholarMin) / (float)(scholarMax - scholarMin) : 0f;
+    public float ForeignPercent => foreignMax > foreignMin ? (float)(foreign - foreignMin) / (float)(foreignMax - foreignMin) : 0f;
+    public float PeoplePercent => peopleMax > peopleMin ? (float)(people - peopleMin) / (float)(peopleMax - peopleMin) : 0f;
 
 
     // 判断是否越界（触发失败）

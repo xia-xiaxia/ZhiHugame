@@ -606,7 +606,7 @@ MonoBehaviour:
   policyValue: 0
   tooltipPanel: {fileID: 0}
   tooltipText: {fileID: 0}
-  tooltipOffset: {x: -200, y: 0}
+  tooltipOffset: {x: -500, y: 0}
   purchaseConfirmParent: {fileID: 1013655863207226339}
   purchaseConfirmButton: {fileID: 2153139288731551805}
   purchaseCancelButton: {fileID: 8682143383060975936}
