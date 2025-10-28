@@ -89,6 +89,7 @@ public class PolicyInInventoryTrigger : MonoBehaviour, IPointerEnterHandler, IPo
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        Debug.Log("[PolicyInInventoryTrigger] OnPointerEnter 触发");
         ShowTooltip();
     }
 
@@ -96,7 +97,7 @@ public class PolicyInInventoryTrigger : MonoBehaviour, IPointerEnterHandler, IPo
     {
         HideTooltip();
     }
-
+    
     private void ShowTooltip()
     {
         // 如果还没初始化，尝试重新初始化

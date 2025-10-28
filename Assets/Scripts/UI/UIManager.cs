@@ -35,6 +35,7 @@ public class UIManager : MonoBehaviour
     public GameObject endingPanel;
     public Text endingText;
     public Image endingImage; // 结局图片
+    public Image endingImageBottom; // 结局图片底图
     public Text endingYearText; // 存活年数显示（用于动画）
     public Button restartButton;
 
@@ -474,18 +475,21 @@ public class UIManager : MonoBehaviour
         if (endingText != null) endingText.text = description;
 
         // 显示结局图片（根据endingId加载对应资源）
-        if (endingImage != null)
+        if (endingImage != null && endingImageBottom != null)
         {
             Sprite endingSprite = Resources.Load<Sprite>($"Endings/{endingId}");
             if (endingSprite != null)
             {
                 endingImage.sprite = endingSprite;
+                endingImageBottom.sprite = endingSprite;
                 endingImage.gameObject.SetActive(true);
+                endingImageBottom.gameObject.SetActive(true);
             }
             else
             {
                 Debug.LogWarning($"[UIManager] 未找到结局图片: Resources/Endings/{endingId}");
                 endingImage.gameObject.SetActive(false);
+                endingImageBottom.gameObject.SetActive(false);
             }
         }
 

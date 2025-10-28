@@ -25,7 +25,7 @@ public class CharacterManager : MonoBehaviour
     void Start()
     {
         characterImages = new Dictionary<string, Sprite>(){
-            { "九溪", sprites[0]},
+            {"九溪", sprites[0]},
             {"共伯", sprites[1]},
             {"南生", sprites[2]},
             {"常万", sprites[3]},

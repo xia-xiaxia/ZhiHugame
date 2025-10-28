@@ -507,6 +507,12 @@ public class GameControl : MonoBehaviour
         GameOver = true;
         Debug.Log($"[GameControl] 结局触发: {endingId} - {endingDescription}");
 
+        // 游戏结束时，隐藏游戏主界面
+        if (UIManager.Instance != null && UIManager.Instance.jinYan != null)
+        {
+            UIManager.Instance.jinYan.SetActive(false);
+        }
+
         // 游戏结束时，将当前年数加到累计货币中
         stats.currency += year;
         Debug.Log($"[GameControl] 本局存活 {year} 年，累计货币: {stats.currency}");

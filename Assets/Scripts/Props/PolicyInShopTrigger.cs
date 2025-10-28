@@ -88,7 +88,7 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
     {
         HideTooltip();
     }
-
+    
     private void ShowTooltip()
     {
         if (tooltipPanel == null || policyItem == null) return;
