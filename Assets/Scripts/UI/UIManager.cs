@@ -234,6 +234,12 @@ public class UIManager : MonoBehaviour
                 optionButtons[i].onClick.RemoveAllListeners();
                 optionButtons[i].onClick.AddListener(() =>
                 {
+                    // 播放游戏中按钮音效
+                    if (MusicManager.Instance != null)
+                    {
+                        MusicManager.Instance.PlayButtonSound2();
+                    }
+                    
                     isShow = true;
                     GameControl.Instance.SaveStatsSnapshot();
                     EventManager.Instance.ApplyOption(opt, GameControl.Instance.year);
@@ -1020,6 +1026,12 @@ public class UIManager : MonoBehaviour
             restartGameButton.onClick.RemoveAllListeners();
             restartGameButton.onClick.AddListener(() =>
             {
+                // 播放商店/结局界面按钮音效
+                if (MusicManager.Instance != null)
+                {
+                    MusicManager.Instance.PlayButtonSound3();
+                }
+                
                 Debug.Log("[UIManager] 点击重开一局");
                 if (GameControl.Instance != null)
                     GameControl.Instance.RestartGameWithAnimation();
