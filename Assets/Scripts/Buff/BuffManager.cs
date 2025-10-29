@@ -36,7 +36,19 @@ public class BuffManager : MonoBehaviour
     
     public List<BuffDefinition> buffs = new List<BuffDefinition>();
 
-    private List<BuffDefinition> activeBuffs = new List<BuffDefinition>();
+    // activeBuffs 现在引用 stats.buffBag
+    // 不再使用私有列表，改为通过属性访问 StatModel 中的 buffBag
+    private List<BuffDefinition> ActiveBuffs
+    {
+        get
+        {
+            if (EventManager.Instance != null && EventManager.Instance.stats != null)
+            {
+                return EventManager.Instance.stats.buffBag;
+            }
+            return new List<BuffDefinition>(); // 返回空列表作为后备
+        }
+    }
 
     void Awake()
     {
@@ -73,42 +85,98 @@ public class BuffManager : MonoBehaviour
         }
     }
 
-    // 添加buff
+    // 添加buff（创建副本，避免修改原始定义）
     public void AddBuff(BuffDefinition buff)
     {
-        activeBuffs.Add(buff);
-        Debug.Log($"[BuffManager] 添加Buff: {buff.description}");
+        // 创建一个新的BUFF实例（深拷贝），避免修改原始定义
+        BuffDefinition buffInstance = new BuffDefinition
+        {
+            id = buff.id,
+            name = buff.name,
+            description = buff.description,
+            result = buff.result,
+            duration = buff.duration,
+            kingChange = buff.kingChange,
+            nobleChange = buff.nobleChange,
+            scholarChange = buff.scholarChange,
+            foreignChange = buff.foreignChange,
+            peopleChange = buff.peopleChange
+        };
+        
+        ActiveBuffs.Add(buffInstance);
+        Debug.Log($"[BuffManager] 添加Buff: {buffInstance.name} (ID: {buffInstance.id}, 时限: {buffInstance.duration})");
     }
 
     // 移除buff
     public void RemoveBuff(BuffDefinition buff)
     {
-        activeBuffs.Remove(buff);
-        Debug.Log($"[BuffManager] 移除Buff: {buff.description}");
+        ActiveBuffs.Remove(buff);
+        Debug.Log($"[BuffManager] 移除Buff: {buff.name} (ID: {buff.id})");
     }
 
     // 每年结束时调用
     public void OnYearEnd()
     {
-        foreach (var buff in new List<BuffDefinition>(activeBuffs))
+        Debug.Log($"[BuffManager] OnYearEnd 开始，当前激活BUFF数量: {ActiveBuffs.Count}");
+        
+        // 先应用所有BUFF的效果
+        foreach (var buff in ActiveBuffs)
         {
-            // 处理长期影响
-            ApplyLongTermEffect(new BuffLongTermEffect { stat = "king", delta = buff.kingChange });
-            ApplyLongTermEffect(new BuffLongTermEffect { stat = "noble", delta = buff.nobleChange });
-            ApplyLongTermEffect(new BuffLongTermEffect { stat = "scholar", delta = buff.scholarChange });
-            ApplyLongTermEffect(new BuffLongTermEffect { stat = "foreign", delta = buff.foreignChange });
-            ApplyLongTermEffect(new BuffLongTermEffect { stat = "people", delta = buff.peopleChange });
-
-            // 处理持续时间
+            Debug.Log($"[BuffManager] 应用BUFF效果: {buff.name}, 剩余时限: {buff.duration}");
+            
+            // 应用数值变化
+            if (buff.kingChange != 0)
+            {
+                ApplyLongTermEffect(new BuffLongTermEffect { stat = "king", delta = buff.kingChange });
+                Debug.Log($"[BuffManager] - 国君变化: {buff.kingChange}");
+            }
+            if (buff.nobleChange != 0)
+            {
+                ApplyLongTermEffect(new BuffLongTermEffect { stat = "noble", delta = buff.nobleChange });
+                Debug.Log($"[BuffManager] - 贵族变化: {buff.nobleChange}");
+            }
+            if (buff.scholarChange != 0)
+            {
+                ApplyLongTermEffect(new BuffLongTermEffect { stat = "scholar", delta = buff.scholarChange });
+                Debug.Log($"[BuffManager] - 士族变化: {buff.scholarChange}");
+            }
+            if (buff.foreignChange != 0)
+            {
+                ApplyLongTermEffect(new BuffLongTermEffect { stat = "foreign", delta = buff.foreignChange });
+                Debug.Log($"[BuffManager] - 外臣变化: {buff.foreignChange}");
+            }
+            if (buff.peopleChange != 0)
+            {
+                ApplyLongTermEffect(new BuffLongTermEffect { stat = "people", delta = buff.peopleChange });
+                Debug.Log($"[BuffManager] - 国人变化: {buff.peopleChange}");
+            }
+        }
+        
+        // 然后处理时限并移除过期的BUFF
+        List<BuffDefinition> buffsToRemove = new List<BuffDefinition>();
+        foreach (var buff in ActiveBuffs)
+        {
+            // 处理持续时间（-1表示永久，不处理）
             if (buff.duration > 0)
             {
                 buff.duration--;
+                Debug.Log($"[BuffManager] BUFF时限递减: {buff.name}, 剩余时限: {buff.duration}");
+                
                 if (buff.duration == 0)
                 {
-                    RemoveBuff(buff);
+                    buffsToRemove.Add(buff);
+                    Debug.Log($"[BuffManager] BUFF时限到期，标记移除: {buff.name}");
                 }
             }
         }
+        
+        // 移除过期的BUFF
+        foreach (var buff in buffsToRemove)
+        {
+            RemoveBuff(buff);
+        }
+        
+        Debug.Log($"[BuffManager] OnYearEnd 结束，当前激活BUFF数量: {ActiveBuffs.Count}");
     }
 
 
@@ -129,28 +197,44 @@ public class BuffManager : MonoBehaviour
     // 可扩展：通过ID查找并添加Buff
     public BuffDefinition AddBuffById(string id)
     {
+        Debug.Log($"[BuffManager] 尝试通过ID添加BUFF: {id}");
+        
         var buff = buffs.Find(b => b.id == id);
-        if (buff != null) AddBuff(buff);
-        return buff;
+        if (buff != null)
+        {
+            Debug.Log($"[BuffManager] 找到BUFF定义: {buff.name} (ID: {buff.id})");
+            AddBuff(buff);
+            return buff;
+        }
+        else
+        {
+            Debug.LogError($"[BuffManager] 未找到ID为 {id} 的BUFF定义！");
+            Debug.Log($"[BuffManager] 当前已加载的BUFF数量: {buffs.Count}");
+            foreach (var b in buffs)
+            {
+                Debug.Log($"[BuffManager] - 已加载BUFF: ID={b.id}, Name={b.name}");
+            }
+        }
+        return null;
     }
 
     public void ClearAllBuffs()
     {
         // 逆向撤销阈值
-        foreach (var b in new List<BuffDefinition>(activeBuffs))
+        foreach (var b in new List<BuffDefinition>(ActiveBuffs))
             RemoveBuff(b);
-        activeBuffs.Clear();
+        ActiveBuffs.Clear();
     }
 
     // ====== 新增：对外查询和移除接口，供UI调用 ======
     public IReadOnlyList<BuffDefinition> GetActiveBuffs()
     {
-        return activeBuffs.AsReadOnly();
+        return ActiveBuffs.AsReadOnly();
     }
 
     public bool RemoveBuffById(string id)
     {
-        var buff = activeBuffs.Find(b => b.id == id);
+        var buff = ActiveBuffs.Find(b => b.id == id);
         if (buff == null) return false;
         RemoveBuff(buff);
         return true;

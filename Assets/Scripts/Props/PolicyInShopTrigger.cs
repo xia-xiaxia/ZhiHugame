@@ -136,17 +136,17 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
                 // 获取按钮在屏幕上的位置
                 Vector3 buttonScreenPos = RectTransformUtility.WorldToScreenPoint(canvas.worldCamera, buttonRect.position);
                 
-                // 判断按钮在屏幕左半部分还是右半部分
-                if (buttonScreenPos.x < Screen.width / 2f)
-                {
-                    // 左侧道具，tooltip 显示在鼠标右侧
-                    dynamicOffsetX = tooltipRect.rect.width / 2f + 1f;
-                }
-                else
-                {
-                    // 右侧道具，tooltip 显示在鼠标左侧
-                    dynamicOffsetX = -tooltipRect.rect.width / 2f - 1f;
-                }
+                // // 判断按钮在屏幕左半部分还是右半部分
+                // if (buttonScreenPos.x < Screen.width / 2f)
+                // {
+                //     // 左侧道具，tooltip 显示在鼠标右侧
+                //     dynamicOffsetX = tooltipRect.rect.width / 2f + 1f;
+                // }
+                // else
+                // {
+                //     // 右侧道具，tooltip 显示在鼠标左侧
+                //     dynamicOffsetX = -tooltipRect.rect.width / 2f - 1f;
+                // }
             }
         }
         
@@ -254,7 +254,7 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
         switch (type)
         {
             case 1: return "阈值调整";
-            case 2: return "免死金牌";
+            case 2: return "免除死亡";
             case 3: return "跳过事件";
             case 4: return "数值调控";
             default: return "未知类型";

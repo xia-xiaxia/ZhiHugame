@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 136935436014816055}
   - component: {fileID: 3927293011208415824}
   - component: {fileID: 3411399704808064283}
+  - component: {fileID: 2395297780661931174}
   m_Layer: 5
   m_HasEditorInfo: 1
   m_Name: policyInBag
@@ -161,6 +162,19 @@ MonoBehaviour:
   discardConfirmButton: {fileID: 87446054365711182}
   discardCancelButton: {fileID: 2282494297216678234}
   discardInfoText: {fileID: 8991333832546995684}
+--- !u!114 &2395297780661931174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2682735885519388512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc62f5d3e6e5d4649a4150468b2239ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonType: 2
 --- !u!1 &3531219918051755346
 GameObject:
   m_ObjectHideFlags: 0

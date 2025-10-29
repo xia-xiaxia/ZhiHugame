@@ -239,7 +239,7 @@ public class PolicyInInventoryTrigger : MonoBehaviour, IPointerEnterHandler, IPo
         switch (type)
         {
             case 1: return "阈值调整";
-            case 2: return "免死金牌";
+            case 2: return "免除死亡";
             case 3: return "跳过事件";
             case 4: return "数值调控";
             default: return "未知类型";

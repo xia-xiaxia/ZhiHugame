@@ -124,6 +124,13 @@ public class GameControl : MonoBehaviour
         GamePaused = false;
         year = 1;
         
+        // 不再清除BUFF，让它们像道具一样累计到下一局
+        // if (BuffManager.Instance != null)
+        // {
+        //     BuffManager.Instance.ClearAllBuffs();
+        //     Debug.Log("[GameControl] 已清除所有BUFF");
+        // }
+        
         // 重置数值（但不重置 currency，让它累计）
         stats.king = 50;
         stats.noble = 50;
@@ -134,8 +141,9 @@ public class GameControl : MonoBehaviour
         // stats.currency 保持不变，累计上一局的
         
         // policyBag 保留，不清空（道具可以累计到下一局）
+        // buffBag 也保留，不清空（BUFF可以累计到下一局）
         // ClearPolicies(); // 注释掉，道具应该保留
-        Debug.Log($"[GameControl] 保留道具数量: {stats.policyBag.Count}");
+        Debug.Log($"[GameControl] 保留道具数量: {stats.policyBag.Count}, BUFF数量: {stats.buffBag.Count}");
         
         // 清除暂停快照
         pausedEventId = null;
@@ -367,7 +375,7 @@ public class GameControl : MonoBehaviour
         
         if (stats.king <= kMin)
         {
-            deathList.Add(new DeathInfo(-1, "哀", "在你治下君主逐渐沦为群臣的傀儡，为了更好的掌控局面，他们为你呈上了一杯毒酒"));
+            deathList.Add(new DeathInfo(-1, "哀", "在你治下君主沦为了群臣的傀儡，为了权力，他们为你呈上了一杯毒酒"));
         }
         if (stats.king >= kMax)
         {
@@ -379,31 +387,31 @@ public class GameControl : MonoBehaviour
         }
         if (stats.noble >= nMax)
         {
-            deathList.Add(new DeathInfo(3, "平", "在你治下贵族逐渐掌握朝中大权，你大权旁落，在宫墙之内了却残生"));
+            deathList.Add(new DeathInfo(3, "平", "在你治下贵族逐渐掌握朝中大权，无权的你只得在宫墙之内了却残生"));
         }
         if (stats.scholar <= sMin)
         {
-            deathList.Add(new DeathInfo(-2, "幽", "你并不在意卿士们，一些失意士人起兵作乱，你也在这场叛乱中被砍去头颅"));
+            deathList.Add(new DeathInfo(-2, "幽", "你并不在意卿士，一些失意士人起兵作乱，混乱之中你被砍去头颅"));
         }
         if (stats.scholar >= sMax)
         {
-            deathList.Add(new DeathInfo(2, "废", "你将权力越来越多的让渡给士族，一家大族逼迫你禅位，你无奈顺从"));
+            deathList.Add(new DeathInfo(2, "废", "你的权力逐渐让渡给士族，一家大族逼迫你禅位，你无奈顺从"));
         }
         if (stats.foreign <= fMin)
         {
-            deathList.Add(new DeathInfo(-4, "殇", "你听不进外臣的劝谏，一些失望的外臣找到大国发兵来犯，你死于战乱之中"));
+            deathList.Add(new DeathInfo(-4, "殇", "你轻视外臣，他们怀恨在心，转投他国，得势之后出兵将我国灭亡"));
         }
         if (stats.foreign >= fMax)
         {
-            deathList.Add(new DeathInfo(4, "纣", "你执政依赖外臣，本国利益被逐渐掏空，最后沦为了大国的傀儡"));
+            deathList.Add(new DeathInfo(4, "纣", "你执政依赖外臣，外国势力无孔不入，最后我们沦为了大国的傀儡"));
         }
         if (stats.people <= pMin)
         {
-            deathList.Add(new DeathInfo(-5, "厉", "你的朝堂横征暴敛，国人不喜，一场国人暴动将你驱逐出了国家"));
+            deathList.Add(new DeathInfo(-5, "厉", "你横征暴敛，国人不喜，一场国人暴动将你驱逐出了国家"));
         }
         if (stats.people >= pMax)
         {
-            deathList.Add(new DeathInfo(5, "携", "你的朝堂软弱无力，国人拒不上税，在一次暴动后庶人们一脚踹开了你"));
+            deathList.Add(new DeathInfo(5, "携", "朝堂软弱无力，国人拒不上税，在一次暴动后庶人们一脚踹开了你"));
         }
 
         // 如果有死亡情况，依次处理免死道具
@@ -563,13 +571,14 @@ public class GameControl : MonoBehaviour
         stats.currency += year;
         Debug.Log($"[GameControl] 本局存活 {year} 年，累计货币: {stats.currency}");
 
-        // 死亡时立即重置 stats（除了货币）
+        // 死亡时立即重置 stats（除了货币和道具，BUFF要清除）
         int savedCurrency = stats.currency;
         List<PolicyItem> savedPolicies = new List<PolicyItem>(stats.policyBag);
         stats.ResetToDefault();
         stats.currency = savedCurrency;
         stats.policyBag = savedPolicies;
-        Debug.Log($"[GameControl] 死亡时重置数值，保留货币 {savedCurrency} 和道具");
+        // buffBag 在 ResetToDefault() 中已被清空，死亡时不保留BUFF
+        Debug.Log($"[GameControl] 死亡时重置数值，保留货币 {savedCurrency} 和道具 {savedPolicies.Count} 个，清除所有BUFF");
 
         // 游戏结束时，先生成新一轮商店道具
         if (PolicyManager.Instance != null)
@@ -605,7 +614,12 @@ public class GameControl : MonoBehaviour
         if (PolicyManager.Instance != null)
             PolicyManager.Instance.GenerateShopItems(5);
         
-
+        // 不再清除BUFF，让它们像道具一样保留到下一局
+        // if (BuffManager.Instance != null)
+        // {
+        //     BuffManager.Instance.ClearAllBuffs();
+        //     Debug.Log("[GameControl] 已清除所有BUFF");
+        // }
 
         GameOver = false;
         endingTriggered = false;
@@ -672,6 +686,13 @@ public class GameControl : MonoBehaviour
         if (UIManager.Instance != null)
         {
             UIManager.Instance.HidePolicyShop();
+        }
+        
+        // 播放游戏音乐
+        if (MusicManager.Instance != null)
+        {
+            MusicManager.Instance.PlayGameMusic();
+            Debug.Log("[GameControl] 重开游戏，播放游戏音乐");
         }
         
         // 先隐藏事件面板，然后短暂延迟后显示并开始事件

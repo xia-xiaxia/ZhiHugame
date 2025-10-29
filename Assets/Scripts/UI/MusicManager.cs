@@ -10,14 +10,21 @@ public class MusicManager : MonoBehaviour
     public AudioClip deathSound;        // 音效3：数值超阈值（死亡音效）
     public AudioClip endingBgm;         // 音效4：结局图
 
+    [Header("按钮音效配置")]
+    public AudioClip buttonSound1;      // 按钮音效1：开始界面按钮
+    public AudioClip buttonSound2;      // 按钮音效2：游戏中按钮
+    public AudioClip buttonSound3;      // 按钮音效3：结局界面和道具购买界面按钮
+
     [Header("音量设置")]
     [Range(0f, 1f)]
     public float bgmVolume = 0.7f;
     [Range(0f, 1f)]
     public float deathSoundVolume = 1f;
+    [Range(0f, 1f)]
+    public float buttonSoundVolume = 0.8f;
 
     private AudioSource bgmSource;      // 背景音乐源
-    private AudioSource sfxSource;      // 音效源（用于死亡音效）
+    private AudioSource sfxSource;      // 音效源（用于死亡音效和按钮音效）
 
     private void Awake()
     {
@@ -95,6 +102,35 @@ public class MusicManager : MonoBehaviour
         if (bgmSource != null)
         {
             bgmSource.Stop();
+        }
+    }
+
+    // ===== 按钮音效方法 =====
+    
+    // 播放开始界面按钮音效
+    public void PlayButtonSound1()
+    {
+        PlayButtonSound(buttonSound1);
+    }
+
+    // 播放游戏中按钮音效
+    public void PlayButtonSound2()
+    {
+        PlayButtonSound(buttonSound2);
+    }
+
+    // 播放结局界面和道具购买界面按钮音效
+    public void PlayButtonSound3()
+    {
+        PlayButtonSound(buttonSound3);
+    }
+
+    // 通用按钮音效播放方法
+    private void PlayButtonSound(AudioClip clip)
+    {
+        if (clip != null && sfxSource != null)
+        {
+            sfxSource.PlayOneShot(clip, buttonSoundVolume);
         }
     }
 }

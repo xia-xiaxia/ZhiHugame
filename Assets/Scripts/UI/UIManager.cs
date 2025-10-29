@@ -79,6 +79,7 @@ public class UIManager : MonoBehaviour
     public GameObject buffItemButtonPrefab;
     public Text buffDetailText;
     public Button buffCloseButton;
+    public Button buffOpenButton;
     private readonly List<GameObject> buffItemButtons = new List<GameObject>();
     private string selectedBuffId = null;
 
@@ -130,6 +131,13 @@ public class UIManager : MonoBehaviour
             autoPlayButton.onClick.RemoveAllListeners();
             autoPlayButton.onClick.AddListener(OnAutoPlayClicked);
             UpdateAutoPlayButtonLabel();
+        }
+
+        // 绑定打开按钮
+        if (buffOpenButton != null)
+        {
+            buffOpenButton.onClick.RemoveAllListeners();
+            buffOpenButton.onClick.AddListener(() => ShowBuffPanel());
         }
 
     }
@@ -942,6 +950,13 @@ public class UIManager : MonoBehaviour
         // 隐藏结局面板
         HideEndingPanel();
 
+        // 停止结局音乐
+        if (MusicManager.Instance != null)
+        {
+            MusicManager.Instance.StopBgm();
+            Debug.Log("[UIManager] 显示道具商店，停止结局音乐");
+        }
+
         // 更新可用货币显示
         UpdateCurrencyDisplay();
 
@@ -1017,6 +1032,12 @@ public class UIManager : MonoBehaviour
             backToMenuButton.onClick.RemoveAllListeners();
             backToMenuButton.onClick.AddListener(() =>
             {
+                // 播放商店/结局界面按钮音效
+                if (MusicManager.Instance != null)
+                {
+                    MusicManager.Instance.PlayButtonSound3();
+                }
+                
                 Debug.Log("[UIManager] 点击回到主界面");
                 if (GameControl.Instance != null)
                     GameControl.Instance.BackToMainMenu();
@@ -1132,7 +1153,7 @@ public class UIManager : MonoBehaviour
     {
         if (buffPanel != null) buffPanel.SetActive(true);
         RefreshBuffListUI();
-
+        
         // 绑定关闭按钮
         if (buffCloseButton != null)
         {
@@ -1152,21 +1173,63 @@ public class UIManager : MonoBehaviour
 
     private void RefreshBuffListUI()
     {
+        Debug.Log("[UIManager] RefreshBuffListUI 开始");
+        
         // 清空旧的按钮
         foreach (var go in buffItemButtons)
             if (go != null) Destroy(go);
         buffItemButtons.Clear();
 
-        if (BuffManager.Instance == null || BuffManager.Instance.GetActiveBuffs() == null)
+        if (BuffManager.Instance == null)
         {
-            if (buffDetailText != null) buffDetailText.text = "暂无时局";
+            Debug.LogError("[UIManager] BuffManager.Instance 为 null！");
+            if (buffDetailText != null) buffDetailText.text = "BuffManager未初始化";
+            return;
+        }
+        
+        if (BuffManager.Instance.GetActiveBuffs() == null)
+        {
+            Debug.LogError("[UIManager] BuffManager.Instance.GetActiveBuffs() 返回 null！");
+            if (buffDetailText != null) buffDetailText.text = "BUFF列表为空";
             return;
         }
 
+        int buffCount = BuffManager.Instance.GetActiveBuffs().Count;
+        Debug.Log($"[UIManager] 当前激活的BUFF数量: {buffCount}");
+        
+        if (buffCount == 0)
+        {
+            if (buffDetailText != null) buffDetailText.text = "暂无时局";
+            Debug.Log("[UIManager] 没有激活的BUFF");
+            return;
+        }
+        
+        // 检查必要的UI引用
+        if (buffItemsParent == null)
+        {
+            Debug.LogError("[UIManager] buffItemsParent 为 null！请在Inspector中设置");
+            return;
+        }
+        
+        if (buffItemButtonPrefab == null)
+        {
+            Debug.LogError("[UIManager] buffItemButtonPrefab 为 null！请在Inspector中设置");
+            return;
+        }
+
+        Debug.Log($"[UIManager] 开始生成 {buffCount} 个BUFF按钮");
         int idx = 0;
         foreach (var buff in BuffManager.Instance.GetActiveBuffs())
         {
+            Debug.Log($"[UIManager] 生成BUFF按钮 {idx}: {buff.name} (ID: {buff.id})");
+            
             var btnGo = Instantiate(buffItemButtonPrefab, buffItemsParent);
+            if (btnGo == null)
+            {
+                Debug.LogError($"[UIManager] 实例化BUFF按钮失败！BUFF: {buff.name}");
+                continue;
+            }
+            
             var rect = btnGo.GetComponent<RectTransform>();
             if (rect != null)
             {
@@ -1174,12 +1237,22 @@ public class UIManager : MonoBehaviour
                 rect.anchoredPosition3D = Vector3.zero;
             }
 
-            // 按钮文字：显示名称 + 剩余时限
+            // 按钮文字：显示名称、描述和结果，格式类似道具
             var txt = btnGo.GetComponentInChildren<Text>();
             if (txt != null)
             {
-                string dur = buff.duration < 0 ? "∞" : buff.duration.ToString();
-                txt.text = $"{buff.name ?? buff.id}  (时限:{dur})";
+                string dur = buff.duration < 0 ? "永久" : $"{buff.duration}年";
+                string buffName = buff.name ?? buff.id;
+                string buffDesc = buff.description ?? "";
+                string buffResult = buff.result ?? "";
+                
+                // 格式：第一行：名称 + 剩余时限，第二行：描述，第三行：效果
+                txt.text = $"{buffName} (剩余{dur})\n{buffDesc}\n{buffResult}";
+                Debug.Log($"[UIManager] BUFF按钮文本设置为: {txt.text}");
+            }
+            else
+            {
+                Debug.LogWarning($"[UIManager] BUFF按钮缺少Text组件");
             }
 
             var button = btnGo.GetComponent<Button>();
@@ -1187,12 +1260,19 @@ public class UIManager : MonoBehaviour
             {
                 var captured = buff; // 捕获
                 button.onClick.AddListener(() => OnBuffItemClicked(captured));
+                Debug.Log($"[UIManager] BUFF按钮点击事件已绑定");
+            }
+            else
+            {
+                Debug.LogWarning($"[UIManager] BUFF按钮缺少Button组件");
             }
 
             buffItemButtons.Add(btnGo);
             idx++;
         }
 
+        Debug.Log($"[UIManager] 成功生成 {buffItemButtons.Count} 个BUFF按钮");
+        
         // 默认选中第一个，显示详情
         if (BuffManager.Instance.GetActiveBuffs().Count > 0)
         {
@@ -1203,6 +1283,8 @@ public class UIManager : MonoBehaviour
             selectedBuffId = null;
             if (buffDetailText != null) buffDetailText.text = "暂无时局";
         }
+        
+        Debug.Log("[UIManager] RefreshBuffListUI 完成");
     }
 
     private void OnBuffItemClicked(BuffDefinition buff)
@@ -1268,6 +1350,12 @@ public class UIManager : MonoBehaviour
     // 商店道具点击（显示购买确认面板）
     private void OnShopItemClicked(PolicyItem policy)
     {
+        // 播放商店按钮音效
+        if (MusicManager.Instance != null)
+        {
+            MusicManager.Instance.PlayButtonSound3();
+        }
+        
         if (GameControl.Instance == null || policy == null) return;
 
         // 从 PolicyInShopTrigger 获取实际价格

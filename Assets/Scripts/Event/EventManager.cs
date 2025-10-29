@@ -26,8 +26,8 @@ public class EventManager : MonoBehaviour
     // 下一个事件（仅选项强制指定时生效）
     private string nextEventId = "0";
 
-    // 延时事件队列：每项 (触发年份, 事件ID)
-    private List<(int triggerYear, string eventId)> delayedEvents = new List<(int, string)>();
+    // 延时事件队列已移至 StatModel.delayedEventQueue 实现持久化
+    // private List<(int triggerYear, string eventId)> delayedEvents = new List<(int, string)>();
 
     // 本局已出现过的事件集合（用于避免重复）
     // 修改：使用 (事件集索引, 事件ID) 的组合来跟踪，这样不同事件集中的相同ID事件可以分别抽取
@@ -233,7 +233,7 @@ public class EventManager : MonoBehaviour
             Debug.Log("[EventManager] 触发盗匪结局");
             if (GameControl.Instance != null)
             {
-                GameControl.Instance.TriggerEnding("献", "你冲到战场之上拼杀，随后被敌人一剑刺死");
+                GameControl.Instance.TriggerEnding("献", "你身先士卒，冲到战场之上拼杀，随后被敌人一剑刺死");
             }
             return;
         }
@@ -311,15 +311,16 @@ public class EventManager : MonoBehaviour
         {
             if (opt.interval > 0)
             {
-                if (GameControl.Instance != null)
+                if (GameControl.Instance != null && stats != null)
                 {
                     int triggerYear = GameControl.Instance.year + opt.interval;
-                    delayedEvents.Add((triggerYear, opt.nextEventId));
+                    // 使用 stats 中的队列
+                    stats.delayedEventQueue.Add(new DelayedEventData(triggerYear, opt.nextEventId));
                     Debug.Log($"[EventManager] 延时插入事件 {opt.nextEventId}，将在第 {triggerYear} 年触发");
                 }
                 else
                 {
-                    Debug.LogError($"[EventManager] GameControl.Instance 为 null，无法处理延时事件");
+                    Debug.LogError($"[EventManager] GameControl.Instance 或 stats 为 null，无法处理延时事件");
                 }
             }
             else
@@ -374,25 +375,30 @@ public class EventManager : MonoBehaviour
     // 核心决定逻辑
     public string DetermineNextEventId()
     {
+        if (stats == null)
+        {
+            Debug.LogError("[EventManager] stats 为 null，无法处理延时事件");
+            return PickRandom01PatternEvent();
+        }
+        
         int currentYear = GameControl.Instance.year;
         // 清理白名单耗尽的激活事件集
         CleanupExhaustedSets();
 
-        // 优先处理延时事件队列
-        for (int i = 0; i < delayedEvents.Count; i++)
+        // 优先处理延时事件队列（使用 stats 中的队列）
+        for (int i = stats.delayedEventQueue.Count - 1; i >= 0; i--)
         {
-            var (triggerYear, eventId) = delayedEvents[i];
-            if (triggerYear <= currentYear)
+            var delayedEvent = stats.delayedEventQueue[i];
+            if (delayedEvent.triggerYear <= currentYear)
             {
-                delayedEvents.RemoveAt(i);
-                if (!IsAvailable(eventId))
+                stats.delayedEventQueue.RemoveAt(i);
+                if (!IsAvailable(delayedEvent.eventId))
                 {
-                    Debug.Log($"[EventManager] 跳过不可抽取的延时事件 {eventId}");
-                    i--; // 调整索引，继续检查后续
+                    Debug.Log($"[EventManager] 跳过不可抽取的延时事件 {delayedEvent.eventId}");
                     continue;
                 }
-                Debug.Log($"[EventManager] 触发延时事件 {eventId} 于第 {currentYear} 年");
-                return eventId;
+                Debug.Log($"[EventManager] 触发延时事件 {delayedEvent.eventId} 于第 {currentYear} 年");
+                return delayedEvent.eventId;
             }
         }
 

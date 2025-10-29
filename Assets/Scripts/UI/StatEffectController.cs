@@ -38,6 +38,10 @@ public class StatEffectController : MonoBehaviour
     public float effectDuration = 0.8f; // 特效显示时长
     public AnimationCurve effectFadeCurve = AnimationCurve.EaseInOut(0, 1, 1, 0); // 淡入淡出曲线
     
+    [Header("填充条平滑设置")]
+    public float fillSmoothDuration = 0.3f; // 填充条平滑变化时长
+    public AnimationCurve fillSmoothCurve = AnimationCurve.EaseInOut(0, 0, 1, 1); // 填充平滑曲线
+    
     [Header("特效颜色（可选覆盖）")]
     public bool useCustomColors = false;
     public Color increaseColor = new Color(0, 1, 0, 1); // 增加特效颜色（绿色）
@@ -46,6 +50,7 @@ public class StatEffectController : MonoBehaviour
     private StatModel stats;
     private int previousValue;
     private Coroutine currentEffectCoroutine;
+    private Coroutine currentFillCoroutine; // 填充条平滑动画协程
 
     void Start()
     {
@@ -151,6 +156,19 @@ public class StatEffectController : MonoBehaviour
 
     void OnDestroy()
     {
+        // 停止所有协程
+        if (currentEffectCoroutine != null)
+        {
+            StopCoroutine(currentEffectCoroutine);
+            currentEffectCoroutine = null;
+        }
+        
+        if (currentFillCoroutine != null)
+        {
+            StopCoroutine(currentFillCoroutine);
+            currentFillCoroutine = null;
+        }
+        
         // 取消订阅事件
         UnsubscribeFromEvents();
     }
@@ -292,12 +310,51 @@ public class StatEffectController : MonoBehaviour
     {
         if (valueFilledImage == null || stats == null) return;
 
-        float fillAmount = GetFillAmount();
-        valueFilledImage.fillAmount = fillAmount;
+        float targetFillAmount = GetFillAmount();
+        
+        // 停止之前的平滑动画
+        if (currentFillCoroutine != null)
+        {
+            StopCoroutine(currentFillCoroutine);
+        }
+        
+        // 启动平滑填充动画
+        currentFillCoroutine = StartCoroutine(SmoothFillCoroutine(targetFillAmount));
+    }
+    
+    private IEnumerator SmoothFillCoroutine(float targetFillAmount)
+    {
+        if (valueFilledImage == null) yield break;
+        
+        float startFillAmount = valueFilledImage.fillAmount;
+        float elapsedTime = 0f;
+        
+        // 如果起始值和目标值相同，直接返回
+        if (Mathf.Approximately(startFillAmount, targetFillAmount))
+        {
+            yield break;
+        }
+        
+        while (elapsedTime < fillSmoothDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float progress = Mathf.Clamp01(elapsedTime / fillSmoothDuration);
+            
+            // 使用曲线进行平滑插值
+            float curveValue = fillSmoothCurve.Evaluate(progress);
+            valueFilledImage.fillAmount = Mathf.Lerp(startFillAmount, targetFillAmount, curveValue);
+            
+            yield return null;
+        }
+        
+        // 确保最终值精确
+        valueFilledImage.fillAmount = targetFillAmount;
         
         // 添加调试日志
         int currentValue = GetCurrentValue();
-        Debug.Log($"[StatEffectController] {statType} - 更新填充: 当前值={currentValue}, fillAmount={fillAmount} (使用StatModel百分比属性)");
+        Debug.Log($"[StatEffectController] {statType} - 平滑填充完成: 当前值={currentValue}, fillAmount={targetFillAmount}");
+        
+        currentFillCoroutine = null;
     }
 
     private int GetCurrentValue()

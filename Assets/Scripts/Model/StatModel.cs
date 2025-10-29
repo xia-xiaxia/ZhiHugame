@@ -2,6 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 延时事件数据（用于间隔事件持久化）
+/// </summary>
+[System.Serializable]
+public class DelayedEventData
+{
+    public int triggerYear;  // 触发年份
+    public string eventId;   // 事件ID
+    
+    public DelayedEventData(int year, string id)
+    {
+        triggerYear = year;
+        eventId = id;
+    }
+}
+
 [System.Serializable]
 [CreateAssetMenu(menuName = "Game/StatModel1")]
 public class StatModel : ScriptableObject
@@ -132,6 +148,12 @@ public class StatModel : ScriptableObject
     // 判断是否越界（触发失败）
     public List<PolicyItem> policyBag = new List<PolicyItem>();
     
+    // BUFF背包（持久化BUFF列表）
+    public List<BuffDefinition> buffBag = new List<BuffDefinition>();
+    
+    // 间隔事件队列（持久化延时事件）
+    public List<DelayedEventData> delayedEventQueue = new List<DelayedEventData>();
+    
     public bool IsOutOfBounds()
     {
         return king < kingMin || king > kingMax
@@ -157,6 +179,11 @@ public class StatModel : ScriptableObject
         scholarMin = 20; scholarMax = 80;
         foreignMin = 20; foreignMax = 80;
         peopleMin = 20; peopleMax = 80;
+        
+        // 清空背包
+        policyBag.Clear();
+        buffBag.Clear();
+        delayedEventQueue.Clear();
     }
 
     // 事件，当属性变化时触发
