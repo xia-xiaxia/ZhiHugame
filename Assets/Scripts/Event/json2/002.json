@@ -1,0 +1,613 @@
+[
+  {
+    "id": "00101",
+    "title": "名人之事00101",
+    "speaker": "共伯",
+    "body": "君上，近来臣翻阅史书，有所感悟\n臣听闻楚国曾有一位霸主，叫做楚庄王\n他曾问鼎中原，称霸天下\n他即位之初，国内贵族并不服他\n尤其以若敖氏的族主斗越椒为首\n若敖氏是楚国自立国以来的大族\n功勋卓著，族人往往身居高位\n斗越椒更是官至令尹，楚国最高职位\n在他的掣肘下，楚庄王处处受制，几乎不能处理朝政",
+    "options": [
+      {
+        "text": "要警惕贵族掣肘君王啊",
+        "nobleChange": -10,
+        "kingChange": 5,
+        "nextEventId": "00102",
+        "interval": 0,
+        "yearDelta": 1
+      },
+      {
+        "text": "不能忽略贵族对国家的功劳啊",
+        "kingChange": -15,
+        "nobleChange": 10,
+        "nextEventId": "00102",
+        "interval": 0,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00102",
+    "title": "名人之事00102",
+    "speaker": "共伯",
+    "body": "眼见朝政难以把控，楚庄王决定纵情声色犬马\n把朝政全部委任于斗越椒\n并且下令：劝谏者，杀无赦\n于是楚国的朝政在斗越椒的大权独揽下日益衰败\n楚庄王荒废三年光阴\n伍举于是劝谏他，说了一个谜语\n有只鸟落在王宫之上，三年不飞不鸣\n楚王笑笑，说：此鸟不飞则已，一飞冲天，不鸣则已，一鸣惊人\n三年之后，楚庄王一改风格\n提拔劝谏他的忠臣，处死奸臣\n从此走向霸业",
+    "options": [
+      {
+        "text": "真是机智的策略啊",
+        "kingChange": 15,
+        "yearDelta": 0
+      },
+      {
+        "text": "真是不畏死的直臣啊",
+        "scholarChange": 15,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00201",
+    "title": "名人之事00201",
+    "speaker": "共伯",
+    "body": "君上，您如何看待孔子？\n他是儒家学派的创始人\n他游学列国，有教无类\n将儒家学说推为显学\n您怎么看待他？",
+    "options": [
+      {
+        "text": "他说的尽是些歪理学说",
+        "foreignChange": -15,
+        "nextEventId": "00202",
+        "interval": 0,
+        "yearDelta": 1
+      },
+      {
+        "text": "他的思想很有深度，多加记载",
+        "foreignChange": 10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00202",
+    "title": "名人之事00202",
+    "speaker": "敬开",
+    "body": "君上，您的观点我不敢苟同\n夫子主张有教无类，让庶人也得到知识\n天不生仲尼，万古如长夜\n您不该如此低看他",
+    "options": [
+      {
+        "text": "寡人知道了",
+        "kingChange": -15,
+        "foreignChange": 5,
+        "yearDelta": 0
+      },
+      {
+        "text": "寡人偏说他是歪理学说",
+        "kingChange": 5,
+        "foreignChange": -10,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00301",
+    "title": "名人之事00301",
+    "speaker": "共伯",
+    "body": "君上，近来臣翻阅史书，有所感悟\n臣听说昔者齐桓公九合诸侯，一匡天下\n而这一伟业的造就者是齐国国相——管仲\n他选贤举能，发展商业\n组织会盟，尊王攘夷\n实在是一代名相\n您怎么看待他？",
+    "options": [
+      {
+        "text": "管仲实乃卿士的表率啊",
+        "scholarChange": 20,
+        "kingChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "还得是齐桓公眼光独到啊",
+        "kingChange": 15,
+        "scholarChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00401",
+    "title": "名人之事00401",
+    "speaker": "共伯",
+    "body": "君上，近来臣翻阅史书，有所感悟\n您可知道齐国的大夫鲍叔牙？\n他刚正不阿，驱逐齐桓公身旁的宠臣佞臣\n他与管仲相知相交，共同治理齐国\n他二人治下齐国迅速发展，成为霸主",
+    "options": [
+      {
+        "text": "可见卿士对治国意义重大啊",
+        "scholarChange": 15,
+        "kingChange": -5,
+        "yearDelta": 1
+      },
+      {
+        "text": "卿士怎能随意驱逐君主的宠臣呢？",
+        "kingChange": 5,
+        "scholarChange": -20,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00501",
+    "title": "名人之事00501",
+    "speaker": "共伯",
+    "body": "君上，您可知道齐国的大夫崔杼？\n崔杼是齐丁公后裔，属于贵族\n曾经齐庄公与他的妻子通奸\n还出言羞辱他\n崔杼恼羞成怒，设伏弑君\n齐庄公被乱箭射死在他府上",
+    "options": [
+      {
+        "text": "贵族可不能学崔杼弑君啊",
+        "nobleChange": -10,
+        "kingChange": 5,
+        "nextEventId": "00502",
+        "interval": 0,
+        "yearDelta": 1
+      },
+      {
+        "text": "君主可不能学齐庄公无理啊",
+        "kingChange": -5,
+        "nobleChange": 10,
+        "nextEventId": "00502",
+        "interval": 0,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00502",
+    "title": "名人之事00502",
+    "speaker": "共伯",
+    "body": "齐国太史把崔杼弑君记录在史册\n崔杼听说，怒不可遏，勒令太史修改记录\n将“弑君”改为“齐公死于疾病”\n太史不肯，他便砍杀太史\n新任太史依旧不肯修改记录\n于是他再度砍杀太史\n如此三次，三位太史都不肯篡改记录\n列国的太史听闻，纷纷前来齐国要继续记录崔杼弑君之举\n崔杼只好放弃篡改历史",
+    "options": [
+      {
+        "text": "有太史这样的臣子，君主无憾了",
+        "scholarChange": 15,
+        "yearDelta": 0
+      },
+      {
+        "text": "崔杼这样的乱臣贼子，真该遗臭万年",
+        "nobleChange": -10,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00601",
+    "title": "名人之事00601",
+    "speaker": "共伯",
+    "body": "君上，臣翻阅史书，有所感悟\n臣读到曾经越王勾践为了铸造宝剑\n招揽了越国最好的铸剑师\n于是铸造了越王勾践剑\n铸成之后，他非但没有赏赐铸剑师，还下令赐死了他\n因为他不希望铸剑师造出强过越王勾践剑的剑",
+    "options": [
+      {
+        "text": "越王勾践真是大丈夫，果断有谋",
+        "kingChange": 10,
+        "peopleChange": -15,
+        "yearDelta": 1
+      },
+      {
+        "text": "越王勾践真是暴戾无度，可怜铸剑师",
+        "peopleChange": 10,
+        "kingChange": -10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00701",
+    "title": "名人之事00701",
+    "speaker": "共伯",
+    "body": "君上，您可知秦国大夫百里奚？\n昔者秦穆公希望强大秦国，称霸中原\n但苦于没有人才\n而百里奚是虞国的亡国之臣，年老力衰\n秦穆公不忌惮他是外臣，不鄙视他贫困潦倒\n依旧招揽百里奚，委以重任\n在百里奚的辅助下，秦国果然独霸西戎",
+    "options": [
+      {
+        "text": "外臣之中不乏百里奚这样的能人啊",
+        "foreignChange": 20,
+        "yearDelta": 1
+      },
+      {
+        "text": "秦穆公果然是慧眼识珠啊",
+        "kingChange": 20,
+        "yearDelta": 1
+      },
+      {
+        "text": "穷困潦倒的庶人也不能轻视啊",
+        "peopleChange": 25,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00801",
+    "title": "名人之事00801",
+    "speaker": "共伯",
+    "body": "君上，您可知申包胥？\n申包胥是楚国的一位贵族\n曾经吴王阖闾兴兵动众，大举讨伐楚国\n结果楚军战败，吴师入郢\n楚国几乎有亡国的危机\n为了挽回颓势，申包胥只身前往秦国求援\n在秦公的大殿之前哭了七天七夜，直到昏厥\n秦公看到他的坚持，终于被他感动，出兵救楚\n楚国于是解除危机，一举击溃了吴军",
+    "options": [
+      {
+        "text": "申包胥这样的臣子真是贵族的榜样",
+        "nobleChange": 10,
+        "nextEventId": "00802",
+        "interval": 0,
+        "yearDelta": 1
+      },
+      {
+        "text": "此人沽名钓誉罢了",
+        "nobleChange": -15,
+        "nextEventId": "00802",
+        "interval": 0,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00802",
+    "title": "名人之事00802",
+    "speaker": "共伯",
+    "body": "申包胥救国后，楚王坚持要赏赐他\n结果他坚持不受，逃赏隐居",
+    "options": [
+      {
+        "text": "我看这也是沽名钓誉",
+        "nobleChange": -15,
+        "yearDelta": 0
+      },
+      {
+        "text": "申包胥真乃忠贞之人",
+        "nobleChange": 10,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00901",
+    "title": "名人之事00901",
+    "speaker": "共伯",
+    "body": "君上，臣读史书，有一人值得一提\n楚国大夫伍子胥\n楚平王当政时，不分忠奸，听信谗言\n下令将对楚国有大功的伍氏一家全部杀死\n为了逃避追杀，伍子胥向吴国逃亡\n路上，伍子胥得到一位渔夫搭救\n伍子胥十分感激，并恳求渔夫不要把他的行踪说出去\n渔夫却认为这是伍子胥不信任他，顿时寒了心\n于是渔夫自杀，以自证绝不会泄密",
+    "options": [
+      {
+        "text": "渔夫真是道德高尚的君子啊",
+        "peopleChange": 15,
+        "nextEventId": "00902",
+        "interval": 0,
+        "yearDelta": 0
+      },
+      {
+        "text": "这渔夫做事太偏激了些",
+        "peopleChange": -10,
+        "nextEventId": "00902",
+        "interval": 0,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00902",
+    "title": "名人之事00902",
+    "speaker": "共伯",
+    "body": "吴国是楚国的敌国\n在伍子胥帮助下吴国快速发展\n最终，在伍子胥率领下，吴军进攻楚国\n吴国军队屡战屡胜，一路凯歌，攻破楚国都城郢都\n伍子胥命人掘出楚平王的尸体\n楚平王的尸体早已化为白骨，伍子胥仍然一眼认出\n他鞭尸三百，将楚平王的白骨都打烂，挫骨扬灰",
+    "options": [
+      {
+        "text": "伍子胥真乃烈丈夫，昏君该打",
+        "kingChange": -15,
+        "scholarChange": 20,
+        "nextEventId": "00903",
+        "interval": 0,
+        "yearDelta": 0
+      },
+      {
+        "text": "楚平王罪不至此，伍子胥还是太偏激了",
+        "scholarChange": -5,
+        "kingChange": 5,
+        "nextEventId": "00903",
+        "interval": 0,
+        "yearDelta": 0
+      },
+      {
+        "text": "吴王阖闾有伍子胥，寡人何时能有他那样的人呢？",
+        "kingChange": 5,
+        "foreignChange": 15,
+        "scholarChange": 10,
+        "nextEventId": "00903",
+        "interval": 0,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00903",
+    "title": "名人之事00903",
+    "speaker": "共伯",
+    "body": "吴军从楚国撤走后，伍子胥继续辅佐吴王\n吴王阖闾死后，吴王夫差继位\n有奸臣向夫差说伍子胥的谗言\n吴王于是疑心伍子胥有不臣之心，下令处死他\n伍子胥无奈领死\n死前，他向吴王说\n“我死之后，把我的眼珠挖出来，放在国都城门之上”\n吴王问他为何\n他说\n“我要亲眼看见越王勾践杀入阖闾城”",
+    "options": [
+      {
+        "text": "非烈丈夫孰能如此！",
+        "scholarChange": 15,
+        "kingChange": -10,
+        "yearDelta": 0
+      },
+      {
+        "text": "吴王夫差实在是昏聩啊",
+        "kingChange": -15,
+        "yearDelta": 0
+      },
+      {
+        "text": "奸臣构陷实在是可恨啊",
+        "scholarChange": -5,
+        "kingChange": -5,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "01001",
+    "title": "名人之事01001",
+    "speaker": "共伯",
+    "body": "君上，您可知齐景公的国相是何人？\n此人是齐国大夫晏婴\n昔日齐景公有三位卿士\n是公孙接，田开疆，古冶子\n公孙接曾手擒猛虎\n田开疆曾从万军之中解救齐公\n古冶子曾斩杀袭击国君渡船的大鳖\n此三人勇武骄横，让齐景公头疼",
+    "options": [
+      {
+        "text": "这样的卿士贤臣，我可不头疼",
+        "scholarChange": 10,
+        "kingChange": -15,
+        "nextEventId": "01002",
+        "interval": 0,
+        "yearDelta": 1
+      },
+      {
+        "text": "他们一定居功自傲，掣肘君主啊",
+        "kingChange": 20,
+        "scholarChange": -10,
+        "nextEventId": "01002",
+        "interval": 0,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01002",
+    "title": "名人之事01002",
+    "speaker": "共伯",
+    "body": "此三人目无君主，做事无礼\n齐景公不堪其扰，于是拜托晏婴设计除掉他们\n晏婴思索再三，决定使用“二桃杀三士”之法\n他让国君赏赐两颗桃子给这三人\n让他们论功吃桃\n公孙接，田开疆自述功劳，随后吃桃\n但古冶子也有大功，却无桃可吃，顿感难堪\n而公孙接和田开疆也回过味来，发现自己的行为不妥\n两人认为他们自己不知谦让，害的古冶子无桃可吃\n于是两人自觉无颜以对古冶子，刎颈自杀\n古冶子则不忍兄弟三人只有他一人独活\n也挥剑自尽\n晏婴就这样除去了齐景公的心腹大患",
+    "options": [
+      {
+        "text": "这算什么，这简直是残害忠良",
+        "scholarChange": 15,
+        "kingChange": 5,
+        "yearDelta": 0
+      },
+      {
+        "text": "掣肘君主的臣子该杀啊",
+        "kingChange": 10,
+        "scholarChange": -20,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "01101",
+    "title": "名人之事01101",
+    "speaker": "共伯",
+    "body": "君上，您可知晋国士人程婴？\n昔者晋景公宠信奸臣屠岸贾\n屠岸贾因私仇构陷赵氏，晋公听信谗言，下令灭赵氏满门\n一时晋阳血流，赵氏三百余口俱殁\n只有赵朔的婴儿幸免\n程婴乃赵氏门客，感念赵氏的恩德\n于是把自己的儿子伪装成赵氏的儿子\n屠岸贾搜到了程婴之子，以为是赵氏之子，将其杀死\n而真正的赵氏孤儿则被屠岸贾收养，成为他的义子",
+    "options": [
+      {
+        "text": "程婴这样的门客真是值得敬佩",
+        "scholarChange": 10,
+        "nextEventId": "01102",
+        "interval": 0,
+        "yearDelta": 1
+      },
+      {
+        "text": "君主要警惕屠岸贾这样的佞臣啊",
+        "scholarChange": -10,
+        "kingChange": 10,
+        "nextEventId": "01102",
+        "interval": 0,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01102",
+    "title": "名人之事01102",
+    "speaker": "共伯",
+    "body": "十五年后，晋景公患疾逝世，新晋公继位\n屠岸贾手握大军，更加肆无忌惮\n而程婴眼见时机已到，当庭发难，怒骂屠岸贾恶贯满盈\n最重要的是，他指出：赵氏孤儿还活着\n这位赵氏孤儿便是屠岸贾的养子，名曰赵武\n众臣也早对屠岸贾不满，于是群起而攻之\n晋公也顺水推舟，下令恢复赵氏封地，让赵武为家报仇\n于是赵武杀死了屠岸贾\n而程婴拜为成卿，不过他并不在意虚名，辞官归隐",
+    "options": [
+      {
+        "text": "程婴这样的臣子值得肯定",
+        "scholarChange": 10,
+        "nextEventId": "01103",
+        "interval": 0,
+        "yearDelta": 0
+      },
+      {
+        "text": "赵武不应杀屠岸贾，毕竟是养父啊",
+        "scholarChange": -5,
+        "peopleChange": 10,
+        "nextEventId": "01103",
+        "interval": 0,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "01103",
+    "title": "名人之事01103",
+    "speaker": "共伯",
+    "body": "赵武长大成人后，也成为晋国重臣\n他主持盟会，维护晋国霸业\n他打击膨胀的卿族，维护晋公权威\n他温和、忠信，晋国在他治理下保持强大\n最终，他积劳成疾，死在冬天\n赵武之后，晋无公室之臣",
+    "options": [
+      {
+        "text": "寡人也希望得到赵武这样忠心的臣子啊",
+        "kingChange": -5,
+        "scholarChange": 20,
+        "yearDelta": 0
+      },
+      {
+        "text": "君主不能只倚仗于一两位臣子啊",
+        "kingChange": 20,
+        "scholarChange": 10,
+        "nobleChange": 5,
+        "foreignChange": 5,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "01201",
+    "title": "名人之事01201",
+    "speaker": "共伯",
+    "body": "君上，臣在整理周武王灭商的相关事迹\n关于周武王灭商的最大功臣有多种说法\n有人认为这是多亏了他本人武德充沛\n也有人认为这是靠周公旦的辅佐\n亦有人认为，是太师姜子牙指挥有方\n您怎么看？",
+    "options": [
+      {
+        "text": "当然是多亏了他本人",
+        "kingChange": 15,
+        "yearDelta": 1
+      },
+      {
+        "text": "当然是周公旦的辅佐",
+        "nobleChange": 15,
+        "yearDelta": 1
+      },
+      {
+        "text": "当然是姜子牙居功至伟",
+        "scholarChange": 10,
+        "foreignChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "明明是西土子民骁勇善战",
+        "peopleChange": 25,
+        "kingChange": -5,
+        "nobleChange": -5,
+        "foreignChange": -5,
+        "scholarChange": -5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01301",
+    "title": "名人之事01301",
+    "speaker": "共伯",
+    "body": "君上，臣读到了晋文公重耳的经历\n重耳还是公子的时候，君夫人骊姬就陷害于他\n于是年纪轻轻，公子重耳就被迫逃离晋国\n重耳和他的随从在翟国落脚\n翟国是重耳母亲的母国，因而款待他们\n可他们在这里一待就是十二年",
+    "options": [
+      {
+        "text": "外人去别人家白吃这么久可不好",
+        "foreignChange": -15,
+        "scholarChange": 5,
+        "nextEventId": "01302",
+        "interval": 0,
+        "yearDelta": 1
+      },
+      {
+        "text": "果然雄主就是要经历历练啊",
+        "kingChange": 20,
+        "nextEventId": "01302",
+        "interval": 0,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01302",
+    "title": "名人之事01302",
+    "speaker": "共伯",
+    "body": "重耳为了寻求更好的发展，离开翟国\n结果在卫国、齐国、曹国都遭到冷落\n曹公还对他无礼，偷看他洗澡\n重耳羞愤难当，离开曹国\n结果又在宋国、郑国被轻视\n穷困潦倒之时，他不得不向路边老农乞食\n那老农问他，为何要给他食物\n重耳说，他保证日后得势，一定会善待人民\n老农笑了笑，从地上拿起土块给他\n他说\n“你的诺言和我手中的土块哪个重？”\n重耳无言以对",
+    "options": [
+      {
+        "text": "老农的话颇有一番哲理啊",
+        "peopleChange": 15,
+        "nextEventId": "01303",
+        "interval": 0,
+        "yearDelta": 0
+      },
+      {
+        "text": "谁能想到一代霸主早年竟如此困窘？",
+        "kingChange": 5,
+        "nextEventId": "01303",
+        "interval": 0,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "01303",
+    "title": "名人之事01303",
+    "speaker": "共伯",
+    "body": "重耳在那之后前往楚国，秦国\n终于得到礼遇\n在秦穆公帮助下，重耳回国继位\n重耳的随从们也纷纷被委以重任\n这些人也没有辜负他的期许，各有建树\n仅仅数年，便带领晋国成为霸主\n最终称霸中原，晋文公的威名也流传至今",
+    "options": [
+      {
+        "text": "外国势力对重耳的帮助不可忽略啊",
+        "foreignChange": 15,
+        "kingChange": -5,
+        "yearDelta": 0
+      },
+      {
+        "text": "重耳的成功离不开他的忠臣啊",
+        "scholarChange": 15,
+        "kingChange": -5,
+        "yearDelta": 0
+      },
+      {
+        "text": "君主就该像重耳一样成就一番霸业",
+        "kingChange": 15,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "01401",
+    "title": "名人之事01401",
+    "speaker": "共伯",
+    "body": "君上，您可知“盗马无罪”的典故？\n此事乃是秦孝公所为\n昔日秦孝公骑马出巡\n部下看管不严，马匹被城外的野人抓去\n秦孝公的好马就这样让野人宰杀分食\n众人皆以为秦孝公要惩治这些刁民\n结果秦孝公名人端来好酒，让野人享用\n他说“寡人可不愿意为了几匹马伤害自己的子民”\n后来秦孝公率兵出征，战事不利，身陷重围\n这群野人冲入阵中，将他救出\n秦孝公才免于身死",
+    "options": [
+      {
+        "text": "野人无礼，秦孝公颇有王霸之气",
+        "kingChange": 15,
+        "peopleChange": -5,
+        "yearDelta": 1
+      },
+      {
+        "text": "野人忠义，秦孝公有仁爱之心啊",
+        "peopleChange": 15,
+        "kingChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "秦孝公假仁假义，做戏罢了",
+        "kingChange": -20,
+        "peopleChange": -10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01501",
+    "title": "名人之事01501",
+    "speaker": "共伯",
+    "body": "君上，您可知越国谋臣文种？\n昔日吴越争霸，吴国陷入灾荒\n吴国强大，要求越国献上粮食\n越国国小式微，只能答应\n文种不愿意让吴国凭空得利，于是提出一个主意\n将送给吴国的粮种统统蒸熟\n以为是赵氏之子，将其杀死\n而真正的赵氏孤儿则被屠岸贾收养，成为他的义子",
+    "options": [
+      {
+        "text": "程婴这样的门客真是值得敬佩",
+        "scholarChange": 10,
+        "nextEventId": "01102",
+        "interval": 0,
+        "yearDelta": 1
+      },
+      {
+        "text": "君主要警惕屠岸贾这样的佞臣啊",
+        "scholarChange": -10,
+        "kingChange": 10,
+        "nextEventId": "01102",
+        "interval": 0,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01601",
+    "title": "名人之事01601",
+    "speaker": "共伯",
+    "body": "君上，您可知孙叔敖？\n楚庄王初掌朝政之时，缺乏一个能臣治国\n他苦苦寻求人才\n而孙叔敖最早是期思一带的工匠\n地位低微，庶人而已\n但是楚庄王求贤若渴，提拔他为楚国令尹\n孙叔敖果然是大才，把内政打理的井井有条\n于是乎楚庄王得以击败晋国，称霸中原",
+    "options": [
+      {
+        "text": "可见君主用人的重要性啊",
+        "kingChange": 15,
+        "peopleChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "可见庶人之中亦有贤才啊",
+        "peopleChange": 20,
+        "kingChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  }
+]

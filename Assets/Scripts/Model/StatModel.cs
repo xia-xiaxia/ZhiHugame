@@ -190,9 +190,9 @@ public class StatModel : ScriptableObject
     public event System.Action OnStatsChanged;
     public event System.Action OnCurrencyChanged;
 
-    public event System.Action<StatModel> OnPolicyBagChanged;
+    // public event System.Action<StatModel> OnPolicyBagChanged;
 
-    public event System.Action<int> OnYearChanged;
+    // public event System.Action<int> OnYearChanged;
 
     public event System.Action<int> OnKingChanged;
     public event System.Action<int> OnNobleChanged;

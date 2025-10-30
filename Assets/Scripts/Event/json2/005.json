@@ -1,0 +1,448 @@
+[
+  {
+    "id": "00101",
+    "title": "星象之事00101",
+    "speaker": "南生",
+    "body": "君上，大事不好\n皇宫外的天空划过一颗星星\n国人传言那是凶兆",
+    "options": [
+      {
+        "text": "经济！傻瓜们",
+        "kingChange": 5,
+        "nobleChange": -5,
+        "scholarChange": -5,
+        "peopleChange": -5,
+        "foreignChange": -5,
+        "yearDelta": 1
+      },
+      {
+        "text": "寡人希望活在更开明的时代",
+        "kingChange": 5,
+        "nobleChange": -5,
+        "scholarChange": -5,
+        "peopleChange": -5,
+        "foreignChange": -5,
+        "yearDelta": 1
+      },
+      {
+        "text": "这是一个预兆",
+        "kingChange": -5,
+        "nobleChange": -5,
+        "scholarChange": -5,
+        "peopleChange": -5,
+        "foreignChange": -5,
+        "yearDelta": 1
+      },
+      {
+        "text": "这是神明赐福",
+        "kingChange": 5,
+        "nobleChange": 5,
+        "scholarChange": 5,
+        "peopleChange": 5,
+        "foreignChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00201",
+    "title": "星象之事00201",
+    "speaker": "南生",
+    "body": "君上，昨夜星象不妙\n星出于婺女，这预示君主将会殒命\n您的性命有危啊！",
+    "options": [
+      {
+        "text": "胡扯，叉出去！",
+        "kingChange": -5,
+        "yearDelta": 1
+      },
+      {
+        "text": "那寡人真该准备后事了",
+        "kingChange": -15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00301",
+    "title": "星象之事00301",
+    "speaker": "南生",
+    "body": "君上，昨夜彗星东指，长竟天\n民间讹言“泗君将主天下”\n臣稍加分析，果真如此",
+    "options": [
+      {
+        "text": "那可太好了",
+        "kingChange": 5,
+        "foreignChange": -10,
+        "yearDelta": 1
+      },
+      {
+        "text": "什么玩意，我可不敢僭越",
+        "kingChange": -5,
+        "yearDelta": 1
+      },
+      {
+        "text": "小声点，别说这些",
+        "kingChange": -5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00401",
+    "title": "星象之事00401",
+    "speaker": "南生",
+    "body": "君上，昨夜彗星滑落，长竟天\n民间讹言“君将失位”\n臣稍加分析，果真如此",
+    "options": [
+      {
+        "text": "开仓放粮，稳定人心",
+        "kingChange": -5,
+        "peopleChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "不信，边去",
+        "kingChange": -10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00501",
+    "title": "星象之事00501",
+    "speaker": "南生",
+    "body": "君上，臣观星象，有大事将要发生\n荧惑守心，主国君之亡\n也就是说您有性命之忧\n不过正所谓“天人感应”\n臣有一法，可把灾祸转给宰相、百姓或年成\n您觉得？",
+    "options": [
+      {
+        "text": "我不觉得这可信",
+        "peopleChange": 5,
+        "kingChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "让贵族、宰相受灾吧",
+        "nobleChange": -30,
+        "yearDelta": 1
+      },
+      {
+        "text": "让庶人、百姓受灾吧",
+        "peopleChange": -30,
+        "yearDelta": 1
+      },
+      {
+        "text": "让今年的收成受灾吧",
+        "peopleChange": -10,
+        "nobleChange": -10,
+        "foreignChange": -10,
+        "scholarChange": -10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00601",
+    "title": "星象之事00601",
+    "speaker": "南生",
+    "body": "君上，大事不好了\n君夫人重病，卧床不起，急需医治啊",
+    "options": [
+      {
+        "text": "快去请一位训练有素的医生",
+        "kingChange": -5,
+        "foreignChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "快去请一位远近闻名的巫师",
+        "kingChange": -5,
+        "nobleChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "为她的性命祈福吧",
+        "kingChange": -5,
+        "peopleChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00701",
+    "title": "星象之事00701",
+    "speaker": "南生",
+    "body": "君上，臣观昨夜星象，有大事将要发生\n金星昼见，恐怕国将有乱！",
+    "options": [
+      {
+        "text": "非得是我们国吗？",
+        "peopleChange": -5,
+        "yearDelta": 1
+      },
+      {
+        "text": "那可太坏了",
+        "peopleChange": -15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00801",
+    "title": "星象之事00801",
+    "speaker": "南生",
+    "body": "君上，臣观昨夜星象，有大事将要发生\n木星失次，恐怕会有兵祸啊",
+    "options": [
+      {
+        "text": "非得是我们国吗？",
+        "peopleChange": -5,
+        "yearDelta": 1
+      },
+      {
+        "text": "那可太坏了",
+        "peopleChange": -15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00901",
+    "title": "星象之事00901",
+    "speaker": "南生",
+    "body": "君上，臣观星象，有大事将要发生\n昨日恒星不见，夜中星陨如雨\n臣以为这是将有大雨，连绵不断",
+    "options": [
+      {
+        "text": "大雨好啊，正好浇地",
+        "peopleChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "可别浇了我的礼服",
+        "kingChange": 5,
+        "peopleChange": -5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01001",
+    "title": "星象之事01001",
+    "speaker": "南生",
+    "body": "君上，您看，今天有日食的景观\n这象征着“天子失德”\n周天子恐怕又要遭难了",
+    "options": [
+      {
+        "text": "周天子总也遭难，不关我们事",
+        "foreignChange": -5,
+        "yearDelta": 1
+      },
+      {
+        "text": "寡人可不是周天子",
+        "kingChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01101",
+    "title": "星象之事01101",
+    "speaker": "南生",
+    "body": "君上，臣观星象，有所预示\n大火星西沉，我们该准备秋收了",
+    "options": [
+      {
+        "text": "让贵族子弟去帮庶人收地",
+        "nobleChange": -10,
+        "peopleChange": 20,
+        "yearDelta": 1
+      },
+      {
+        "text": "让贵族们准备好吃秋收宴",
+        "peopleChange": -5,
+        "nobleChange": 15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01201",
+    "title": "星象之事01201",
+    "speaker": "南生",
+    "body": "君上，臣观星象，恐有大事将生\n月掩昴宿，边疆将要动荡啊",
+    "options": [
+      {
+        "text": "动荡去吧，胡人打不到我们这",
+        "foreignChange": -5,
+        "peopleChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "只希望华夏国家都能平安啊",
+        "foreignChange": 5,
+        "peopleChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01301",
+    "title": "星象之事01301",
+    "speaker": "南生",
+    "body": "君上，臣观星象，恐有大事将生\n木星淫行，怕是要有饥荒",
+    "options": [
+      {
+        "text": "下令今年减税三分，保全庶人",
+        "peopleChange": 10,
+        "nobleChange": -5,
+        "yearDelta": 1
+      },
+      {
+        "text": "让贵族们主动献出点粮食，救济斯人",
+        "nobleChange": -15,
+        "peopleChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "庶人哪年不喊饿，别大惊小怪的",
+        "peopleChange": -15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01401",
+    "title": "星象之事01401",
+    "speaker": "南生",
+    "body": "君上，臣观星象，大事不妙\n太白昼见，怕是要有权臣干政啊",
+    "options": [
+      {
+        "text": "让贵族权臣休休假",
+        "nobleChange": -10,
+        "yearDelta": 1
+      },
+      {
+        "text": "让卿士重臣歇几天",
+        "scholarChange": -10,
+        "yearDelta": 1
+      },
+      {
+        "text": "让外臣重臣回家探亲",
+        "foreignChange": -10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01501",
+    "title": "星象之事01501",
+    "speaker": "南生",
+    "body": "君上，臣观星象，有所预示\n辰星不出，必有淫雨\n连绵不断，将有水灾",
+    "options": [
+      {
+        "text": "召集庶人修护堤坝",
+        "peopleChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "去外国请水利专家前来修缮",
+        "foreignChange": 5,
+        "peopleChange": 15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01601",
+    "title": "星象之事01601",
+    "speaker": "南生",
+    "body": "君上，臣观星象，大事不妙\n镇星守斗，天下大疫\n瘟疫马上就要发生啊",
+    "options": [
+      {
+        "text": "快让去各国采买药物",
+        "foreignChange": 5,
+        "peopleChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "快让贵族祭司准备驱邪",
+        "nobleChange": 5,
+        "peopleChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01701",
+    "title": "星象之事01701",
+    "speaker": "南生",
+    "body": "君上，昨日天象极其奇怪\n有虹贯日，兵气冲天\n人们都说怕是将有大战啊",
+    "options": [
+      {
+        "text": "千万别是我们国家啊",
+        "peopleChange": -10,
+        "yearDelta": 1
+      },
+      {
+        "text": "真希望列国少些纷争",
+        "foreignChange": 5,
+        "peopleChange": -10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01801",
+    "title": "星象之事01801",
+    "speaker": "南生",
+    "body": "君上，臣观星象，上天似有预示\n太白当出不出，辰星乍见乍隐\n是谓“刑德失”’，是赏罚失度的征兆啊",
+    "options": [
+      {
+        "text": "速速命令官员重审最近的案件",
+        "scholarChange": 5,
+        "peopleChange": 10,
+        "kingChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "速速命令祭司准备做法免灾",
+        "nobleChange": 5,
+        "peopleChange": 5,
+        "kingChange": -5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01901",
+    "title": "星象之事01901",
+    "speaker": "南生",
+    "body": "君上，臣观星象，上天似有预示\n有三彗同出于斗\n这意味着“卿族祸乱朝纲”\n恐怕您得处理一下卿士了",
+    "options": [
+      {
+        "text": "将一批卿族官员罢免掉",
+        "scholarChange": -20,
+        "yearDelta": 1
+      },
+      {
+        "text": "把卿族权臣拘禁起来",
+        "scholarChange": -15,
+        "yearDelta": 1
+      },
+      {
+        "text": "没由头的事，休要再提",
+        "scholarChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "02001",
+    "title": "星象之事02001",
+    "speaker": "南生",
+    "body": "君上，臣观星象，上天似有预示\n岁星淫于玄枵，北狄怕是要南下劫掠",
+    "options": [
+      {
+        "text": "反正劫掠不到我们头上",
+        "foreignChange": -5,
+        "peopleChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "希望北方的诸侯能熬过灾祸啊",
+        "foreignChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  }
+]

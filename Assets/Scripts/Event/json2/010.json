@@ -1,0 +1,619 @@
+[
+  {
+    "id": "00101",
+    "title": "国家杂务00101",
+    "speaker": "白产",
+    "body": "君上，我国的“牧人”前些日子病故\n您的养牛场现在无人打理，得找个人接班\n我们可以找一个猎户来办，他们深谙动物习性\n也可以找一个贵族来办，他们办事可靠\n或者找一个士人来办，他们人闲事少\n也可以找个外国的专业牧人来办",
+    "options": [
+      {
+        "text": "那就找个猎户吧",
+        "peopleChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "那就找个贵族吧",
+        "nobleChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "那就找个士人吧",
+        "scholarChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "那就找个外臣吧",
+        "foreignChange": 10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00201",
+    "title": "国家杂务00201",
+    "speaker": "白产",
+    "body": "君上，暴雨冲了城南的麦场\n新收的春麦泡了大半！",
+    "options": [
+      {
+        "text": "别管是谁，抓紧抢救",
+        "peopleChange": -5,
+        "yearDelta": 1
+      },
+      {
+        "text": "没有麦子，为什么不吃稻子呢",
+        "peopleChange": -25,
+        "kingChange": -20,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00301",
+    "title": "国家杂务00301",
+    "speaker": "白产",
+    "body": "君上，马务官前往北方寻求种马了\n这段时间马务职位空缺\n我思来想去，一时找不到合适的人选\n反正您闲着也是闲着\n不知道您有没有兴趣暂理？",
+    "options": [
+      {
+        "text": "寡人正好闲着",
+        "nextEventId": "00302",
+        "interval": 0,
+        "yearDelta": 1
+      },
+      {
+        "text": "这种事还轮得到我管？",
+        "kingChange": -5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00302",
+    "title": "国家杂务00302",
+    "speaker": "白产",
+    "body": "君上，我们国家的马分六种\n种马育种，戎马打仗、齐马参与典礼\n道马运输要务、田马打猎骑乘、驽马则是杂役\n至于马务的繁杂事项，您得斟酌着来",
+    "options": [
+      {
+        "text": "寡人知道了",
+        "nextEventId": "00303",
+        "interval": 0,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00303",
+    "title": "国家杂务00303",
+    "speaker": "白产",
+    "body": "君上！国厩最好的种马昨夜破栏而走\n宋人说他们抓到了这匹马\n若无此马，下次配种将相当头疼啊",
+    "options": [
+      {
+        "text": "备金五镒，速速遣使赎马",
+        "foreignChange": 5,
+        "nextEventId": "00304",
+        "interval": 0,
+        "yearDelta": 0
+      },
+      {
+        "text": "随它去吧，寡人马上就有更好的马种了",
+        "kingChange": -5,
+        "nextEventId": "00304",
+        "interval": 0,
+        "yearDelta": 0
+      },
+      {
+        "text": "把弄丢马的人拖出去砍了",
+        "kingChange": 5,
+        "scholarChange": -10,
+        "nextEventId": "00304",
+        "interval": 0,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00304",
+    "title": "国家杂务00304",
+    "speaker": "白产",
+    "body": "君上！我们从西土引进的戎马野性未驯\n刚才它踢伤了三名骑士，皮甲都踢穿了\n现现如今军中惶恐，不敢上前",
+    "options": [
+      {
+        "text": "杀之祭旗，以儆后来",
+        "kingChange": 5,
+        "nextEventId": "00305",
+        "interval": 0,
+        "yearDelta": 0
+      },
+      {
+        "text": "如此好马，多点耐心！",
+        "kingChange": -5,
+        "nextEventId": "00305",
+        "interval": 0,
+        "yearDelta": 0
+      },
+      {
+        "text": "怎么这就恐慌了？你是不是治军不力？",
+        "scholarChange": -10,
+        "kingChange": -5,
+        "nextEventId": "00305",
+        "interval": 0,
+        "yearDelta": 0
+      },
+      {
+        "text": "一群饭桶，寡人自己来！",
+        "kingChange": 999,
+        "nextEventId": "00305",
+        "interval": 0,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00305",
+    "title": "国家杂务00305",
+    "speaker": "南生",
+    "body": "君上！不久后的祭祀需齐马数匹\n今早发现其中一匹颈生白斑，恐失礼数",
+    "options": [
+      {
+        "text": "连夜染毛，以漆涂之",
+        "kingChange": -10,
+        "nextEventId": "00306",
+        "interval": 0,
+        "yearDelta": 0
+      },
+      {
+        "text": "换驽马凑数，反正远观差不多",
+        "kingChange": -5,
+        "nextEventId": "00306",
+        "interval": 0,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00306",
+    "title": "国家杂务00306",
+    "speaker": "白产",
+    "body": "君上，马务官已经带着新的种马回来了",
+    "options": [
+      {
+        "text": "寡人终于可以歇息了",
+        "kingChange": -5,
+        "yearDelta": 0
+      },
+      {
+        "text": "感觉马务也就这点事",
+        "kingChange": 5,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00401",
+    "title": "国家杂务00401",
+    "speaker": "白产",
+    "body": "君上，祭稷神的黍米被老鼠啃去两斗\n我一时调不来库存，补不上\n本次祭祀的礼数恐怕不足",
+    "options": [
+      {
+        "text": "这点亏空就补不上了？",
+        "scholarChange": -5,
+        "kingChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "以粱代黍，重编祝辞就是了",
+        "nobleChange": -10,
+        "kingChange": -5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00501",
+    "title": "国家杂务00501",
+    "speaker": "白产",
+    "body": "君上，粮仓失修，去年存麦被仓蚁啃成粉了\n剩下的碎麦，蒸饼都发苦，可以说全废了\n不过也可以废物利用，要不要改喂军马？",
+    "options": [
+      {
+        "text": "喂马，马比人金贵",
+        "peopleChange": -10,
+        "yearDelta": 1
+      },
+      {
+        "text": "掺新麦卖给宋国，苦又吃不死",
+        "foreignChange": -10,
+        "yearDelta": 1
+      },
+      {
+        "text": "寡人带头吃三天，看谁再敢嫌弃",
+        "kingChange": 5,
+        "nobleChange": -10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00601",
+    "title": "国家杂务00601",
+    "speaker": "白产",
+    "body": "君上，今年大旱，城南溪水断流，井底生尘\n百姓争抢泥水，城南已渴死三头官牛",
+    "options": [
+      {
+        "text": "我大泗自有国情在此，泥水喝不死人",
+        "kingChange": -15,
+        "peopleChange": -20,
+        "yearDelta": 1
+      },
+      {
+        "text": "把泥水圈起来，交钱才能取水",
+        "peopleChange": -25,
+        "kingChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "速速从泗水引水！",
+        "peopleChange": -5,
+        "kingChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00701",
+    "title": "国家杂务00701",
+    "speaker": "白产",
+    "body": "君上，今年多灾，估计收成不太行\n到时候百姓恐无余粮\n要不要开仓放粮，以存民间种粮？",
+    "options": [
+      {
+        "text": "就按你说的办",
+        "kingChange": 10,
+        "peopleChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "寡人心里装的是九州万方，别问我要",
+        "peopleChange": -10,
+        "kingChange": -15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00801",
+    "title": "国家杂务00801",
+    "speaker": "白产",
+    "body": "君上，城南今年收成成极佳\n车拉船载，壅道数里，市上麦价极低\n官仓要不要收？",
+    "options": [
+      {
+        "text": "低价收，等价高了狠狠赚一笔",
+        "peopleChange": -15,
+        "kingChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "和往年平价收，可不敢谷贱伤农",
+        "peopleChange": 10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00901",
+    "title": "国家杂务00901",
+    "speaker": "白产",
+    "body": "君上，今年风调雨顺，秋收一定会是大丰收\n民众甚是期待，一片欢喜啊！",
+    "options": [
+      {
+        "text": "这都是寡人的功劳！",
+        "kingChange": 15,
+        "yearDelta": 1
+      },
+      {
+        "text": "这都是百官的功劳！",
+        "nobleChange": 5,
+        "scholarChange": 5,
+        "foreignChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "这都是上天的功劳！",
+        "nobleChange": 5,
+        "kingChange": 5,
+        "peopleChange": -15,
+        "yearDelta": 1
+      },
+      {
+        "text": "这都是农人的功劳！",
+        "peopleChange": 20,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01001",
+    "title": "国家杂务01001",
+    "speaker": "白产",
+    "body": "君上，齐商运来一批盐兜售\n盐粒匀如稷，色洁如玉\n盐价比旧盐贵三倍，国人依旧争购\n官市若从中额外征税，可获益不少啊",
+    "options": [
+      {
+        "text": "征，齐人赚钱也得让寡人分点",
+        "kingChange": 5,
+        "foreignChange": -15,
+        "yearDelta": 1
+      },
+      {
+        "text": "全禁，私盐收缴入官仓",
+        "kingChange": 10,
+        "foreignChange": -20,
+        "yearDelta": 1
+      },
+      {
+        "text": "买点来得了，寡人也想吃",
+        "kingChange": -5,
+        "foreignChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01101",
+    "title": "国家杂务01101",
+    "speaker": "白产",
+    "body": "君上！前些日子楚王派人送来了一盆兰花作为国礼\n但是我们没想到兰花娇贵，没两天就枯死了\n楚国使臣刚才来问他们送的兰花怎么样了\n这可如何是好啊？",
+    "options": [
+      {
+        "text": "养死了就养死了，实话实说",
+        "foreignChange": -5,
+        "kingChange": -10,
+        "yearDelta": 1
+      },
+      {
+        "text": "搪塞过去吧",
+        "kingChange": -5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01201",
+    "title": "国家杂务01201",
+    "speaker": "白产",
+    "body": "君上，今天晨起，君夫人发现丢失了玉簪\n那是大婚时君上所赐，意义重大\n君夫人都急哭了",
+    "options": [
+      {
+        "text": "封闭宫门，搜三日，必须找到下落",
+        "kingChange": -10,
+        "nobleChange": -5,
+        "yearDelta": 1
+      },
+      {
+        "text": "悬赏十金，只要得到玉簪，不问来路",
+        "kingChange": 10,
+        "nobleChange": 5,
+        "peopleChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01301",
+    "title": "国家杂务01301",
+    "speaker": "白产",
+    "body": "君上，今年国库有点超支\n现在不得不想想如何开源节流\n您可以考虑让国人今年额外贡上一部分收成\n再或者给贵族的禄米削减一二\n白产：又或者缩减宫中吃穿用度\n白产：亦或者干脆遣散一部分外臣谋士\n白产：您怎么看？",
+    "options": [
+      {
+        "text": "寡人节省一点便是了",
+        "kingChange": -15,
+        "yearDelta": 1
+      },
+      {
+        "text": "再苦一苦百姓，骂名你来担",
+        "peopleChange": -15,
+        "scholarChange": -10,
+        "kingChange": -5,
+        "yearDelta": 1
+      },
+      {
+        "text": "削减贵族福利，雷霆雨露俱是君恩",
+        "nobleChange": -20,
+        "kingChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "遣散一部分外臣，下逐客书",
+        "foreignChange": -15,
+        "kingChange": -5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01401",
+    "title": "国家杂务01401",
+    "speaker": "白产",
+    "body": "君上，贾人常万有不妥行为\n他在丰年压价买粮，又在荒年高价出售\n如此囤货居奇，获利颇丰，伤及民本\n而且庶人多有不满",
+    "options": [
+      {
+        "text": "为了庶人，制止他的行为",
+        "peopleChange": 5,
+        "scholarChange": -15,
+        "nextEventId": "01402",
+        "interval": 0,
+        "yearDelta": 1
+      },
+      {
+        "text": "让他多交点钱给我们就是了",
+        "scholarChange": -5,
+        "peopleChange": -10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01402",
+    "title": "国家杂务01402",
+    "speaker": "常万",
+    "body": "君上，臣绝非囤货居奇\n丰年，粮食供大于求\n我国粮食如果不外销只会烂在仓库里\n以至于粮价不压也会下跌\n臣已经是高于底价购入，再自寻外国销路\n荒年，我们一介小国，存粮不足\n非不得去外国购粮\n过境关税、运输之耗费无不是成本\n如此一来，粮价不得不上升\n臣之购粮卖粮，实在是合情合理之举\n不应怪罪臣啊",
+    "options": [
+      {
+        "text": "听不懂，总之以后不许了",
+        "peopleChange": 5,
+        "scholarChange": -10,
+        "yearDelta": 0
+      },
+      {
+        "text": "事已至此，那不为难你了",
+        "scholarChange": 10,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "01501",
+    "title": "国家杂务01501",
+    "speaker": "白产",
+    "body": "君上，我国市场上缺盐，得专门去外国采买\n我们也许可以让卿士常万去齐国买海盐\n不过齐国海盐最近价格水涨船高\n一个在朝中供职的魏人表示可以去买魏国的池盐\n价格可便宜不少，要不要让他去采购？",
+    "options": [
+      {
+        "text": "肥水不流外人田，让卿士去买",
+        "scholarChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "省钱最重要，让他去试试",
+        "foreignChange": 10,
+        "scholarChange": -5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01601",
+    "title": "国家杂务01601",
+    "speaker": "白产",
+    "body": "君上，有人反映城西的市场缺乏监管\n有奸商缺斤短两\n臣建议在城西市场设置官吏，监督交易",
+    "options": [
+      {
+        "text": "准了，百利而无一弊",
+        "scholarChange": 5,
+        "peopleChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "多事，商人总会钻漏子",
+        "peopleChange": -10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01701",
+    "title": "国家杂务01701",
+    "speaker": "白产",
+    "body": "君上，城南有一片地，那里的农人多种稻子\n但是近年来，上游的邹国人种稻子的越来越多\n他们拦河取水，开垦土地\n到我们这，水已经不够种稻子了\n国人只能种麦子",
+    "options": [
+      {
+        "text": "找几个邹国来的外臣去交涉一下",
+        "foreignChange": 10,
+        "peopleChange": 5,
+        "nextEventId": "01701",
+        "interval": 0,
+        "yearDelta": 1
+      },
+      {
+        "text": "吃麦子又没啥不好的",
+        "peopleChange": -15,
+        "kingChange": -10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01702",
+    "title": "国家杂务01702",
+    "speaker": "白产",
+    "body": "君上，已经派在我国供职的邹人去交涉\n结果是，邹国可以放水\n但代价是我们得让出点好处，比如珠宝",
+    "options": [
+      {
+        "text": "给就完了，稻子比珠宝能吃",
+        "peopleChange": 10,
+        "kingChange": -10,
+        "yearDelta": 0
+      },
+      {
+        "text": "想得美，这就是趁火打劫",
+        "peopleChange": -5,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "01801",
+    "title": "国家杂务01801",
+    "speaker": "白产",
+    "body": "君上，近年城南的麦子总也闹灾\n一束麦穗有多半是空的\n农人也为此犯愁啊",
+    "options": [
+      {
+        "text": "这是灾，去外国找懂的人来治",
+        "foreignChange": 5,
+        "kingChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "减税，先熬过这几年",
+        "peopleChange": 5,
+        "kingChange": -5,
+        "yearDelta": 1
+      },
+      {
+        "text": "天谴！组织贵族准备祭祀",
+        "nobleChange": 10,
+        "kingChange": -15,
+        "yearDelta": 1
+      },
+      {
+        "text": "寡人不在乎",
+        "kingChange": -15,
+        "peopleChange": -15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01901",
+    "title": "国家杂务01901",
+    "speaker": "白产",
+    "body": "君上，有一个棘手的问题\n我国人口日益增多\n过冬需要的柴火也越来越多\n东山山脚的树都快被砍秃了\n庶人砍柴也是越来越困难了",
+    "options": [
+      {
+        "text": "东山大得很，去山腰砍",
+        "peopleChange": -5,
+        "kingChange": -10,
+        "yearDelta": 1
+      },
+      {
+        "text": "庶人苦啊，给他们发点过冬的粮吧",
+        "kingChange": -5,
+        "peopleChange": 10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "02001",
+    "title": "国家杂务02001",
+    "speaker": "白产",
+    "body": "君上，我们面临着一个问题\n我国的渔夫在城南的河里打鱼为生\n但是近年来，鱼获越发稀薄\n上游的邹国，下游的薛国都要打鱼\n人越来越多，鱼却越来越少\n长此以往，岂不是要无鱼了？",
+    "options": [
+      {
+        "text": "给他们安排些地，改种地吧",
+        "peopleChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "你又不是鱼，你怎么知道鱼变少了呢？",
+        "kingChange": -10,
+        "peopleChange": -10,
+        "yearDelta": 1
+      }
+    ]
+  }
+]

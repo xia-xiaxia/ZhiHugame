@@ -184,6 +184,13 @@ public class UIManager : MonoBehaviour
         // 标记该事件为已使用，防止本局重复出现（需要传入事件集索引）
         EventManager.Instance.MarkEventUsed(id, EventManager.Instance.fileIndex);
 
+        // 调试：显示speaker信息
+        Debug.Log($"[UIManager] ShowEvent - speaker: '{evt.speaker}' (长度: {evt.speaker?.Length ?? 0})");
+        if (!string.IsNullOrEmpty(evt.speaker))
+        {
+            Debug.Log($"[UIManager] speaker字符编码: {string.Join(", ", System.Array.ConvertAll(evt.speaker.ToCharArray(), c => $"{c}(U+{((int)c):X4})"))}");
+        }
+
         if(evt.speaker != null && evt.speaker!="旁白")
         {
             CharacterManager.Instance.ShowCharacter(evt.speaker);

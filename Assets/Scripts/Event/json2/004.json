@@ -1,0 +1,520 @@
+[
+  {
+    "id": "00101",
+    "title": "奇珍异宝00101",
+    "speaker": "常万",
+    "body": "君上，臣前些日子去楚国跑了一趟\n此乃臣从南方楚国带来的香草\n香味浓烈，沁人心脾\n还能消除灯油燃烧的腥臭味\n臣以为宫中可以从我这采购一些",
+    "options": [
+      {
+        "text": "有点意思，买买买",
+        "scholarChange": 5,
+        "kingChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "呛得慌，算了吧",
+        "scholarChange": -5,
+        "yearDelta": 1
+      },
+      {
+        "text": "我还要花钱买？拿来吧你",
+        "scholarChange": -15,
+        "kingChange": 10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00201",
+    "title": "奇珍异宝00201",
+    "speaker": "常万",
+    "body": "君上，今年有瘴气肆虐\n臣派人从东山寻来草药\n当地人称此药可解瘴气之毒\n不过苦的要死\n更要命的是，国人信巫不信药\n宁可跳大神也不吃草药\n这可如何是好？",
+    "options": [
+      {
+        "text": "你掺点蜜糖不就好了",
+        "scholarChange": 5,
+        "peopleChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "巫蛊、跳大神又有何不可呢",
+        "nextEventId": "00202",
+        "interval": 0,
+        "yearDelta": 1
+      },
+      {
+        "text": "寡人将下令强行让国人服药",
+        "kingChange": 10,
+        "peopleChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00202",
+    "title": "奇珍异宝00202",
+    "speaker": "南生",
+    "body": "君上，寡人对巫蛊之术颇有一番研究\n只要让寡人做法三日，瘴气自解",
+    "options": [
+      {
+        "text": "好，要让人们都看到",
+        "peopleChange": 10,
+        "scholarChange": -5,
+        "yearDelta": 0
+      },
+      {
+        "text": "你偷偷的跳，别让人知道",
+        "scholarChange": -5,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00301",
+    "title": "奇珍异宝00301",
+    "speaker": "常万",
+    "body": "君上，最近宋国蜂蜜成风\n于是价格飞涨\n这让我想到，我们国家东边的山林中有很多野蜜蜂\n如果我们动员国人采蜜，卖给宋国\n那一定能大赚一笔啊",
+    "options": [
+      {
+        "text": "立刻发动国人，别管农事了，先采蜜",
+        "peopleChange": 10,
+        "nextEventId": "00302",
+        "interval": 0,
+        "yearDelta": 1
+      },
+      {
+        "text": "说到底就是甜水，没啥意思",
+        "scholarChange": -5,
+        "yearDelta": 1
+      },
+      {
+        "text": "任命你为蜂蜜使，找些士人把这事办了",
+        "scholarChange": 15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00302",
+    "title": "奇珍异宝00302",
+    "speaker": "白产",
+    "body": "君上，这样做是不合理的\n如果发动农人采蜜，那将无人耕作\n如此一来，今年庄稼歉收\n到时候还得花钱去宋国买粮\n到时候宋人抬价，我们赚的钱都要赔进去\n很可能还会倒欠\n正所谓无夺农时啊",
+    "options": [
+      {
+        "text": "有道理，不采蜜了",
+        "peopleChange": 10,
+        "yearDelta": 0
+      },
+      {
+        "text": "听不懂，采就完了",
+        "scholarChange": -15,
+        "peopleChange": -10,
+        "kingChange": -10,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00401",
+    "title": "奇珍异宝00401",
+    "speaker": "常万",
+    "body": "君上，我从北地贩来三十匹良马\n这种马肩高近丈，日行三百\n不过性子烈的很，已经踢伤我三个随从了\n您可要挑两匹自己骑着玩？",
+    "options": [
+      {
+        "text": "正好改善我国礼仪马种",
+        "nobleChange": 15,
+        "yearDelta": 1
+      },
+      {
+        "text": "寡人现在就要亲自试骑，摔也认",
+        "kingChange": 999,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00501",
+    "title": "奇珍异宝00501",
+    "speaker": "常万",
+    "body": "君上，城西路上外有一伙盗匪\n他们拦路收钱，威胁商道\n匪首叫什么林登万\n臣认为这需要立即处理",
+    "options": [
+      {
+        "text": "寡人将安排人立刻剿灭之",
+        "kingChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "寡人亲自下场戡乱",
+        "kingChange": 666,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00601",
+    "title": "奇珍异宝00601",
+    "speaker": "常万",
+    "body": "君上，这是鲁国新产的织品\n采用蚕丝，反复钩织\n柔软亲肤，轻盈透气，品质上乘\n您觉得应该做成什么衣服呢？",
+    "options": [
+      {
+        "text": "做成国人的素衣常服",
+        "peopleChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "做成朝官的官服",
+        "scholarChange": 15,
+        "foreignChange": 15,
+        "yearDelta": 1
+      },
+      {
+        "text": "这么好的料子只有寡人可以享有",
+        "kingChange": 20,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00701",
+    "title": "奇珍异宝00701",
+    "speaker": "常万",
+    "body": "君上，臣购入了两批漆器\n一批是北方形制的，镶金嵌贝\n雕龙画凤，兼以云纹\n另一批是楚国形制，红黑彩绘\n奔放狂野，颇有地方风格\n您更喜欢哪种呢？",
+    "options": [
+      {
+        "text": "北方形制可是传统",
+        "nobleChange": 15,
+        "yearDelta": 1
+      },
+      {
+        "text": "楚国形制颇有异域风情",
+        "foreignChange": 15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00801",
+    "title": "奇珍异宝00801",
+    "speaker": "常万",
+    "body": "君上，这是宋国新产的漆器\n臣购入了一批\n有盒、奁、杯、盘，形制优美\n臣以为非王亲贵胄不可享有\n愿意献给君上",
+    "options": [
+      {
+        "text": "漆器嘛，庶人卿士也能用",
+        "peopleChange": 10,
+        "scholarChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "这才配得上寡人的地位",
+        "kingChange": 15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00901",
+    "title": "奇珍异宝00901",
+    "speaker": "常万",
+    "body": "君上，臣有一事相请\n臣在列国之间奔走商贸\n奈何各国之间皆有关税，往来多有耗费\n因而臣请君上赐我使节\n这样一来，臣就可以享受使臣待遇\n货物也不用交关税了\n为此，臣愿意每年向您进献珍宝",
+    "options": [
+      {
+        "text": "准了，给寡人弄点好东西来",
+        "kingChange": 15,
+        "scholarChange": 15,
+        "foreignChange": -20,
+        "yearDelta": 1
+      },
+      {
+        "text": "算了吧，我可不想得罪外国人",
+        "foreignChange": 10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01001",
+    "title": "奇珍异宝01001",
+    "speaker": "常万",
+    "body": "君上，这是臣费劲心思购得的白狐裘\n毛料产自秦国，整件裘通体雪白，柔软保暖\n此等珍宝，非一国之君不能享有\n特此进献给您",
+    "options": [
+      {
+        "text": "你做的好啊 重重有赏",
+        "scholarChange": 5,
+        "kingChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "好东西，转赠给楚王",
+        "scholarChange": -5,
+        "foreignChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "拿人手短，你自己留着吧",
+        "scholarChange": -5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01101",
+    "title": "奇珍异宝01101",
+    "speaker": "常万",
+    "body": "君上，近日贵族之中有木雕之风\n尤其欣赏楚国的木雕屏风\n楚人好木雕，这些屏风更是耗费工时\n雕有各种动物，蟒、凤、雀、鹿、蛙云云\n简直叹为观止",
+    "options": [
+      {
+        "text": "寡人都不敢如此奢靡，他们也别",
+        "kingChange": 15,
+        "nobleChange": -20,
+        "yearDelta": 1
+      },
+      {
+        "text": "贵族有品，给寡人也弄一份",
+        "kingChange": 10,
+        "nobleChange": 10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01201",
+    "title": "奇珍异宝01201",
+    "speaker": "常万",
+    "body": "君上，前些日子臣去越国采购\n发现越国陶壶质量出奇的好\n质地坚硬，印文彩绘，而且几乎不渗水\n实乃如今天下最佳的陶器了\n我已经请来几个越国陶人，传播技术",
+    "options": [
+      {
+        "text": "越国人不可信，赶走",
+        "scholarChange": -5,
+        "foreignChange": -15,
+        "yearDelta": 1
+      },
+      {
+        "text": "巧夺天工，要好生待他们",
+        "foreignChange": 10,
+        "peopleChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "让他们把技术传给我们自己的陶人",
+        "peopleChange": 15,
+        "foreignChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01301",
+    "title": "奇珍异宝01301",
+    "speaker": "常万",
+    "body": "君上，此乃臣购得的珠串\n此串绝非普通的小手串\n这里的珠子，用料极尽奢靡\n云梦的犀角，南阳的龟珠，南楚的象牙\n巴国的朱砂，邹国的玛瑙，庸地的绿松石\n蓝田的美玉，燕蓟的黄金，东海的砗磲\n简直是天下之至美",
+    "options": [
+      {
+        "text": "我看是假的",
+        "scholarChange": -10,
+        "kingChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "拿来吧你！",
+        "kingChange": 15,
+        "scholarChange": -20,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01401",
+    "title": "奇珍异宝01401",
+    "speaker": "常万",
+    "body": "君上，臣新从邹国购得一批玛瑙\n红白交错，色泽圆润\n您觉得卖给谁合适？",
+    "options": [
+      {
+        "text": "卖给贵族，他们钱多",
+        "nobleChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "卖给士人，他们喜欢小玩意",
+        "scholarChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "卖给庶人，没人不喜欢美物",
+        "peopleChange": 10,
+        "scholarChange": -5,
+        "nobleChange": -5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01501",
+    "title": "奇珍异宝01501",
+    "speaker": "常万",
+    "body": "君上，臣低价购得一块宝玉\n那农家不认识玉石，只以为是块普通石头\n报价不及市价十分之一，就卖了给我",
+    "options": [
+      {
+        "text": "你也是撞了好运",
+        "scholarChange": 10,
+        "peopleChange": -10,
+        "yearDelta": 1
+      },
+      {
+        "text": "给那农家再补些钱，莫要欺负人家",
+        "nextEventId": "01502",
+        "interval": 0,
+        "peopleChange": 15,
+        "scholarChange": -5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01502",
+    "title": "奇珍异宝01502",
+    "speaker": "常万",
+    "body": "君上，此言差矣\n商人赚钱，靠的就是低买高出\n从中获利多少，看的就是商人的认知\n我认知比他广，就该从中获利",
+    "options": [
+      {
+        "text": "叽里呱啦说什么呢，给农家赔钱",
+        "peopleChange": 15,
+        "scholarChange": -10,
+        "yearDelta": 0
+      },
+      {
+        "text": "到也有道理",
+        "scholarChange": 5,
+        "peopleChange": 5,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "01601",
+    "title": "奇珍异宝01601",
+    "speaker": "常万",
+    "body": "君上，臣从楚商手里购得一手杖\n乃是象牙制成，通体雪白，价格不菲\n其上雕有鸠鸟，乃是“咽食不噎”的长寿寓意\n如此宝物，臣愿意献给君上，聊表祝寿之意",
+    "options": [
+      {
+        "text": "有心了，寡人就好这个",
+        "kingChange": 15,
+        "scholarChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "寡人年轻，把这个送给贵族长老",
+        "nobleChange": 15,
+        "scholarChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01701",
+    "title": "奇珍异宝01701",
+    "speaker": "常万",
+    "body": "君上，臣从宋商手里购得一金杯\n纹路精美，熠熠生辉\n结果昨日被一工匠认出此杯材质不对\n是拿杂铜伪造成的黄金质地\n那宋国商人制假贩假，害我钱财\n请求君上还臣一个公道",
+    "options": [
+      {
+        "text": "宋人果然不可信，把那宋商抓起来",
+        "foreignChange": -10,
+        "scholarChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "这也只能怪你眼拙，怨不得别人",
+        "scholarChange": -10,
+        "foreignChange": 15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01801",
+    "title": "奇珍异宝01801",
+    "speaker": "常万",
+    "body": "君上，齐国丝绸为天下所喜\n臣也从临淄购得一批上等丝绸\n奈何我国之人爱麻布胜过丝绸\n以至于我这销路难开啊",
+    "options": [
+      {
+        "text": "庶人劳作，用不上你这绸缎",
+        "peopleChange": -10,
+        "yearDelta": 1
+      },
+      {
+        "text": "寡人和贵族才配得上这么好的料子",
+        "kingChange": 15,
+        "nobleChange": 15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01901",
+    "title": "奇珍异宝01901",
+    "speaker": "常万",
+    "body": "君上，臣从越国购得宝剑一柄\n此剑乃是青铜制成，剑身修长\n剑刃锋利，挥动有破风之音\n此等宝剑该配何人？",
+    "options": [
+      {
+        "text": "配乾纲独断的君王",
+        "kingChange": 15,
+        "yearDelta": 1
+      },
+      {
+        "text": "配意气风发的贵族",
+        "nobleChange": 15,
+        "yearDelta": 1
+      },
+      {
+        "text": "配游走列国的游士",
+        "foreignChange": 15,
+        "yearDelta": 1
+      },
+      {
+        "text": "配锐意进取的诤臣",
+        "scholarChange": 15,
+        "foreignChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "02001",
+    "title": "奇珍异宝02001",
+    "speaker": "常万",
+    "body": "君上，臣从越国购得水晶杯一个\n这杯由透明水晶制成\n通体洁净，无雕琢之痕迹，浑然天成\n简直是仙人饮酒之杯啊\n如此宝物，何人能享？",
+    "options": [
+      {
+        "text": "寡人这样的勋贵",
+        "nobleChange": 10,
+        "kingChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "天下之人，有德者取之",
+        "foreignChange": 5,
+        "scholarChange": 5,
+        "peopleChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "02101",
+    "title": "奇珍异宝02101",
+    "speaker": "常万",
+    "body": "君上，臣有一事纠结\n臣有一匹骏马，陪臣周游列国\n前些日子他病死了，我很是伤心\n我想为他专门修墓，加以安葬\n但您那个厨娘谷雨，竟然说“还不如烤了吃了”\n她还说我这是奢靡浪费，就应该把马安葬在肚子里",
+    "options": [
+      {
+        "text": "她说的有道理，牲畜就该用来吃",
+        "peopleChange": 15,
+        "yearDelta": 1
+      },
+      {
+        "text": "人非草木，孰能无情？该安葬",
+        "nobleChange": 10,
+        "scholarChange": 10,
+        "yearDelta": 1
+      }
+    ]
+  }
+]

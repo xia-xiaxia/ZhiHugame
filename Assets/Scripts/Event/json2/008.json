@@ -1,0 +1,241 @@
+[
+  {
+    "id": "00101",
+    "title": "外臣讲学00101",
+    "speaker": "敬开",
+    "body": "君上，臣已经募集二三学子\n希望在城东的树下讲学\n正所谓“有教无类”\n臣希望让庶人也来听课",
+    "options": [
+      {
+        "text": "如此甚好",
+        "scholarChange": 5,
+        "peopleChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "别叨扰庶人种田",
+        "scholarChange": -5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00201",
+    "title": "外臣讲学00201",
+    "speaker": "敬开",
+    "body": "君上，臣本是鲁国人\n如今在泗国供职，深感邦交的重要性\n臣希望您能派臣为使节，去鲁国外交和好\n并招纳鲁国贤才，为泗国所用",
+    "options": [
+      {
+        "text": "你想让我国变成鲁国的傀儡吗？",
+        "scholarChange": 10,
+        "foreignChange": -20,
+        "yearDelta": 1
+      },
+      {
+        "text": "人才多多益善",
+        "foreignChange": 10,
+        "nextEventId": "00202",
+        "interval": 0,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00202",
+    "title": "外臣讲学00202",
+    "speaker": "白产",
+    "body": "君上，您广招鲁国人才，我国卿士和贵族恐怕会不满\n请您深思",
+    "options": [
+      {
+        "text": "就招就招，不服受着",
+        "scholarChange": -20,
+        "yearDelta": 0
+      },
+      {
+        "text": "你说的有道理，遣散一部分鲁国臣子",
+        "foreignChange": -15,
+        "scholarChange": 10,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00301",
+    "title": "外臣讲学00301",
+    "speaker": "敬开",
+    "body": "君上，臣认识几个宋国人\n他们表示可以从宋国低价弄来一批漆木家具\n这批家具价格远低于我国行情\n他们愿意把利润上交三成给您\n不过这样一来，本国从事漆器制作的庶人将难以开张\n您怎么看？",
+    "options": [
+      {
+        "text": "让外臣来，钱最重要",
+        "foreignChange": 15,
+        "peopleChange": -15,
+        "yearDelta": 1
+      },
+      {
+        "text": "寡人可不会为了外人伤及本国人的利益",
+        "peopleChange": 15,
+        "foreignChange": -5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00401",
+    "title": "外臣讲学00401",
+    "speaker": "敬开",
+    "body": "君上，臣认识几个鲁国人\n他们是农家学士，对精耕细作颇有一番见解\n要不要聘请他们，传授耕作之术？",
+    "options": [
+      {
+        "text": "国人自己就会种地，还用他们教？",
+        "peopleChange": 5,
+        "foreignChange": -10,
+        "yearDelta": 1
+      },
+      {
+        "text": "农为国本，速速请来",
+        "foreignChange": 10,
+        "peopleChange": 10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00501",
+    "title": "外臣讲学00501",
+    "speaker": "敬开",
+    "body": "君上，臣认识几个齐国学子\n他们精通“计然管仲之学”，对经商颇有见解\n如果请他们来管理我们的城西市场\n一定会大大促进我国商业发展",
+    "options": [
+      {
+        "text": "让外人管我国商业？信不过",
+        "foreignChange": -5,
+        "scholarChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "如此甚好，用人不疑",
+        "foreignChange": 10,
+        "scholarChange": -5,
+        "kingChange": 10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00601",
+    "title": "外臣讲学00601",
+    "speaker": "敬开",
+    "body": "君上，有几个鲁国学子请见\n他们是墨家学派，相里氏之人\n精通工程建设之术，尤其擅长木工\n如果安排他们来建设工程\n我国的建筑将可用百年而不损耗分毫啊",
+    "options": [
+      {
+        "text": "真有这么神？不信",
+        "foreignChange": -5,
+        "yearDelta": 1
+      },
+      {
+        "text": "速速请来",
+        "foreignChange": 10,
+        "peopleChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00701",
+    "title": "外臣讲学00701",
+    "speaker": "敬开",
+    "body": "君上，有几个墨家学士希望来到我国\n他们是相夫氏的学子，尤其擅长辩论\n有他们在，我国的学宫会更加热闹\n不过他们言辞直率，不喜欢贵族的作风\n招揽他们可能让贵族们不快",
+    "options": [
+      {
+        "text": "贤人啊！速速请来",
+        "nobleChange": -20,
+        "foreignChange": 15,
+        "yearDelta": 1
+      },
+      {
+        "text": "他们也就会嘴上功夫",
+        "foreignChange": -10,
+        "nobleChange": 15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00801",
+    "title": "外臣讲学00801",
+    "speaker": "敬开",
+    "body": "君上，有几个墨家邓陵氏之学子造访我国\n邓陵氏之墨，以侠客自居\n他们惩奸除恶，反对战争\n面对他们眼中的“暴君”，他们甚至会直接刺杀\n不知道您想不想见一见？",
+    "options": [
+      {
+        "text": "寡人不是暴君，坦坦荡荡",
+        "kingChange": 15,
+        "foreignChange": 15,
+        "yearDelta": 1
+      },
+      {
+        "text": "一群疯子",
+        "kingChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00901",
+    "title": "外臣讲学00901",
+    "speaker": "敬开",
+    "body": "君上，臣请来了几位西河学派的名士\n所谓西河学派，是大儒子夏在魏国西河讲学形成的\n他们务实，经世致用\n魏文侯之所以成为霸主，靠的就是他们",
+    "options": [
+      {
+        "text": "快让贵族子弟和他们好好学习",
+        "nobleChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "快让卿士新人向他们探讨一番",
+        "scholarChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "真务实，还至于流落到我们这小国？",
+        "foreignChange": -15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01001",
+    "title": "外臣讲学01001",
+    "speaker": "敬开",
+    "body": "君上，有几位宋尹的后学来到我国造访\n所谓宋尹，是指宋钘、尹文二人\n他们二人主张宽容、和谐\n反对战争，鼓励和平清贫的生活\n这几位他们的后学来我国，正是为了传播这一思想",
+    "options": [
+      {
+        "text": "真那么宽容，就别想改变别人思想",
+        "foreignChange": -10,
+        "yearDelta": 1
+      },
+      {
+        "text": "有点意思，让他们在我国住几天",
+        "foreignChange": 10,
+        "peopleChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01101",
+    "title": "外臣讲学01101",
+    "speaker": "敬开",
+    "body": "君上，有几位儒家学生来我国造访\n他们立志效仿孔子，传播学派\n希望在我国讲学，以传播大义",
+    "options": [
+      {
+        "text": "免费的课堂，爱开就开吧",
+        "foreignChange": 10,
+        "peopleChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "看着像丧家之犬，快赶走",
+        "foreignChange": -10,
+        "yearDelta": 1
+      }
+    ]
+  }
+]

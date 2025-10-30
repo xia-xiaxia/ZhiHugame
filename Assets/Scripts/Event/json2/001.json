@@ -1,0 +1,421 @@
+[
+  {
+    "id": "00101",
+    "title": "国史实录00101",
+    "speaker": "共伯",
+    "body": "君上，您今天穿礼鞋时恐怕有所失礼\n按《小仪》规定，您应当先穿左脚再穿右脚\n可您今早是右脚先穿的\n这样是不合乎礼制的\n臣将记录在实录上……",
+    "options": [
+      {
+        "text": "这种细枝末节的事就不要记了吧",
+        "nextEventId": "00102",
+        "interval": 0,
+        "yearDelta": 1
+      },
+      {
+        "text": "你跟我说礼制我都觉得好笑",
+        "nextEventId": "00103",
+        "interval": 0,
+        "yearDelta": 1
+      },
+      {
+        "text": "寡人知错了",
+        "kingChange": -10,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00102",
+    "title": "国史实录00102",
+    "speaker": "共伯",
+    "body": "史家秉笔直书，一字不改",
+    "options": [
+      {
+        "text": "好吧",
+        "kingChange": -15,
+        "yearDelta": 0
+      },
+      {
+        "text": "叉出去",
+        "kingChange": 5,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00103",
+    "title": "国史实录00103",
+    "speaker": "共伯",
+    "body": "这句臣也记下来了",
+    "options": [
+      {
+        "text": "叉出去",
+        "kingChange": 5,
+        "yearDelta": 0
+      },
+      {
+        "text": "记就记",
+        "kingChange": -20,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00201",
+    "title": "国史实录00201",
+    "speaker": "共伯",
+    "body": "君上，今年新写国史造了些变故\n采购来用的墨质量不佳\n写好的竹简不足三日就纷纷掉色\n以至于记录严重缺失……",
+    "options": [
+      {
+        "text": "重写，顺便好好美化一下寡人",
+        "nextEventId": "00202",
+        "interval": 0,
+        "yearDelta": 1
+      },
+      {
+        "text": "拨钱，用好墨重写",
+        "kingChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "天意如此，随它去吧",
+        "kingChange": -5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00202",
+    "title": "国史实录00202",
+    "speaker": "共伯",
+    "body": "史家秉笔直书，一字不改",
+    "options": [
+      {
+        "text": "好吧",
+        "kingChange": -15,
+        "yearDelta": 0
+      },
+      {
+        "text": "叉出去",
+        "kingChange": 5,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00301",
+    "title": "国史实录00301",
+    "speaker": "共伯",
+    "body": "君上，这是臣勘定的我国去年实录\n三月，君打喷嚏三；五月，碎玉璧一双\n七月，失冠缨一根；九月，遗履于庙阶\n十月，与宋国使者竞歌而破音",
+    "options": [
+      {
+        "text": "你是在消遣寡人吗！",
+        "nextEventId": "00303",
+        "interval": 0,
+        "kingChange": -10,
+        "yearDelta": 1
+      },
+      {
+        "text": "记得挺好，以后别记了",
+        "nextEventId": "00302",
+        "interval": 0,
+        "yearDelta": 1
+      },
+      {
+        "text": "叉出去！",
+        "kingChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00302",
+    "title": "国史实录00302",
+    "speaker": "共伯",
+    "body": "史家秉笔直书，一字不改",
+    "options": [
+      {
+        "text": "好吧",
+        "kingChange": -15,
+        "yearDelta": 0
+      },
+      {
+        "text": "叉出去",
+        "kingChange": 5,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00303",
+    "title": "国史实录00303",
+    "speaker": "共伯",
+    "body": "（记下“君览实录而破防”）",
+    "options": [
+      {
+        "text": "叉出去",
+        "yearDelta": 0
+      },
+      {
+        "text": "（没招了）",
+        "kingChange": -10,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00401",
+    "title": "国史实录00401",
+    "speaker": "共伯",
+    "body": "君上，前些日子臣清点了史册库存\n记录您祖父事迹的那部分竹简很久没有修缮了\n这部分书规模庞大\n但可惜保管不佳，虫蛀鼠蚀，字迹难以辨识\n臣需要一系列人手来帮忙修缮",
+    "options": [
+      {
+        "text": "那我给你安排几个贵族子弟",
+        "nextEventId": "00402",
+        "interval": 0,
+        "yearDelta": 1
+      },
+      {
+        "text": "那我给你安排几个闲着的卿士",
+        "nextEventId": "00403",
+        "interval": 0,
+        "yearDelta": 1
+      },
+      {
+        "text": "那我给你安排几个讲学的游士",
+        "nextEventId": "00404",
+        "interval": 0,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00402",
+    "title": "国史实录00402",
+    "speaker": "共伯",
+    "body": "君上，您派来的贵族子弟工作不甚认真\n他们嫌文字模糊，看起来累，整日偷闲\n修缮进度实在是很慢啊",
+    "options": [
+      {
+        "text": "寡人将训斥他们",
+        "nobleChange": -10,
+        "kingChange": 5,
+        "yearDelta": 0
+      },
+      {
+        "text": "不要过多苛责他们嘛",
+        "nobleChange": 10,
+        "kingChange": -5,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00403",
+    "title": "国史实录00403",
+    "speaker": "共伯",
+    "body": "君上，你安排来的卿士果然工作认真\n不过工作辛苦，他们请求多发一点禄米",
+    "options": [
+      {
+        "text": "这简直是漫天要价，驳回",
+        "scholarChange": -20,
+        "kingChange": 10,
+        "yearDelta": 0
+      },
+      {
+        "text": "那就发，好好犒劳",
+        "scholarChange": 20,
+        "kingChange": -5,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00404",
+    "title": "国史实录00404",
+    "speaker": "共伯",
+    "body": "君上，您安排的外臣游士已经在工作了\n但他们本身来自不同的国家，各国记载总有偏差\n而且对于我国的记载，他们总也指指点点，随意修改\n此外他们自己的观点也不一致同\n于是相互撕扯，彼此争论，修缮进度迟滞不前",
+    "options": [
+      {
+        "text": "反了他们了，一律按我们的记载走",
+        "foreignChange": -20,
+        "kingChange": 10,
+        "yearDelta": 0
+      },
+      {
+        "text": "结合他们意见，就当勘误了",
+        "foreignChange": 15,
+        "kingChange": -10,
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00501",
+    "title": "国史实录00501",
+    "speaker": "共伯",
+    "body": "君上，臣翻阅史册，发现我们国史的一则错漏\n此处记载同时存在两个版本，彼此矛盾\n一个版本记载的是，某年大旱，颗粒无收，我国陷入饥荒\n一位贵族主动献出半数家产，救济灾民\n另一个版本记载的是，这位贵族并不在乎灾民\n一位卿士青年屡次劝说，甚至于以死相逼\n贵族不堪其扰，才给灾民施舍小恩小惠\n事情太过久远了，真相已经不可考\n但是史书的记载需要明确，请君上定夺",
+    "options": [
+      {
+        "text": "保留贵族主动救济的说法吧",
+        "nobleChange": 15,
+        "scholarChange": -5,
+        "yearDelta": 1
+      },
+      {
+        "text": "保留士族青年为民请命的说法吧",
+        "scholarChange": 15,
+        "nobleChange": -15,
+        "yearDelta": 1
+      },
+      {
+        "text": "同时保留两种说法，留给后人评说",
+        "scholarChange": 5,
+        "nobleChange": -5,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00601",
+    "title": "国史实录00601",
+    "speaker": "共伯",
+    "body": "君上，前些日子有几位游士造访\n他们从鲁国而来，带有鲁国史书\n臣翻阅一二，其中内容和我国记载互有出入，可以彼此补充\n如此一来我们的史书可以更加详尽\n不过他们也有些请求\n就是希望能在我国求得一官半职",
+    "options": [
+      {
+        "text": "那就招揽他们，修史为大",
+        "foreignChange": 10,
+        "yearDelta": 1
+      },
+      {
+        "text": "历史是任人打扮的小妮子，修它作甚",
+        "nextEventId": "00602",
+        "interval": 0,
+        "yearDelta": 1
+      },
+      {
+        "text": "把史书扣下，把人赶走",
+        "foreignChange": -20,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00602",
+    "title": "国史实录00602",
+    "speaker": "共伯",
+    "body": "君上这句话似乎很有哲理\n臣将记在史书里",
+    "options": [
+      {
+        "text": "寡人就是这么英明",
+        "kingChange": 10,
+        "yearDelta": 0
+      },
+      {
+        "text": "倒也不必连这个都记录",
+        "yearDelta": 0
+      }
+    ]
+  },
+  {
+    "id": "00701",
+    "title": "国史实录00701",
+    "speaker": "共伯",
+    "body": "君上，臣正在修订国史\n国史按国君分册，一君一册\n臣思虑再三，认为可以在国史当中为卿士单开一部\n士族在我们朝堂堪称中流砥柱\n出任了我国的大部分官职\n他们对我国有大功，该单开一册",
+    "options": [
+      {
+        "text": "寡人也就一册，他们不配",
+        "scholarChange": -10,
+        "kingChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "贵族们会红眼的，不准",
+        "scholarChange": -10,
+        "nobleChange": 5,
+        "yearDelta": 1
+      },
+      {
+        "text": "倒也有理，就这么办",
+        "scholarChange": 15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00801",
+    "title": "国史实录00801",
+    "speaker": "共伯",
+    "body": "君上，臣有一事不知当讲不当讲\n您的父亲，也就是先君，只有您一个子嗣\n但据臣考证，先君夫人和先君婚配十多年未育子\n坊间有传言，声称君上您实非先君血脉……\n当然，这只是传言",
+    "options": [
+      {
+        "text": "你发癫了？叉出去！",
+        "kingChange": -5,
+        "yearDelta": 1
+      },
+      {
+        "text": "我不是我爹亲生的！",
+        "kingChange": -10,
+        "nobleChange": -15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00901",
+    "title": "国史实录00901",
+    "speaker": "共伯",
+    "body": "君上，我国史书的修缮日臻完善\n宋国派使臣来我国，请求借阅\n他们要求把我国史册搬到宋国\n臣以为这怕是要有去无回啊",
+    "options": [
+      {
+        "text": "宋人不可信，不准",
+        "foreignChange": -15,
+        "yearDelta": 1
+      },
+      {
+        "text": "对外臣要有礼节，借",
+        "nextEventId": "00902",
+        "interval": 3,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "00902",
+    "title": "国史实录00902",
+    "speaker": "共伯",
+    "body": "君上，给宋国借史册已经三年了\n宋国仍未归还我国史书\n臣派人去索取，先是被宋人以延期的理由搪塞\n最后宋人眼见瞒不住，竟然把使臣轰回来了",
+    "options": [
+      {
+        "text": "欺人太甚，驱逐所有宋国人！",
+        "foreignChange": -25,
+        "yearDelta": 1
+      },
+      {
+        "text": "我们惹不起宋国，你重写一套便是",
+        "scholarChange": -5,
+        "foreignChange": 15,
+        "yearDelta": 1
+      }
+    ]
+  },
+  {
+    "id": "01001",
+    "title": "国史实录01001",
+    "speaker": "共伯",
+    "body": "君上，臣有一事相请\n我国国史有一册前些年修缮才好\n去年有贵族子弟借去阅览\n臣说好三月之内要归还，结果到了时间也不见其人\n臣多次催促，他或是闭门不见，或是拖延搪塞\n臣向他询问，才知他已经把国史遗失了\n现如今那竹简恐怕已经当柴烧了",
+    "options": [
+      {
+        "text": "烧就烧了，你再写一套",
+        "nobleChange": 5,
+        "scholarChange": -15,
+        "yearDelta": 1
+      },
+      {
+        "text": "罚那贵族子弟修史抄书",
+        "nobleChange": -10,
+        "scholarChange": 5,
+        "yearDelta": 1
+      }
+    ]
+  }
+]

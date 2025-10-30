@@ -43,14 +43,35 @@ public class CharacterManager : MonoBehaviour
     
     public void ShowCharacter(string name)
     {
-        if (characterImages.ContainsKey(name))
+        // 防御性检查：去除空白字符和特殊字符
+        if (string.IsNullOrEmpty(name))
+        {
+            Debug.LogWarning("[CharacterManager] ShowCharacter 收到空字符串或null");
+            return;
+        }
+
+        // 去除前后空白字符
+        string cleanName = name.Trim();
+        
+        // 调试：显示原始名称和清理后的名称
+        if (cleanName != name)
+        {
+            Debug.Log($"[CharacterManager] 清理角色名称: 原始='{name}' (长度:{name.Length}), 清理后='{cleanName}' (长度:{cleanName.Length})");
+        }
+        
+        // 调试：显示每个字符的Unicode编码
+        Debug.Log($"[CharacterManager] 角色名称字符编码: {string.Join(", ", System.Array.ConvertAll(cleanName.ToCharArray(), c => $"{c}(U+{((int)c):X4})"))}");
+        
+        if (characterImages.ContainsKey(cleanName))
         {
             character.SetActive(true);
-            character.GetComponent<Image>().sprite = characterImages[name];
+            character.GetComponent<Image>().sprite = characterImages[cleanName];
+            Debug.Log($"[CharacterManager] 成功显示角色: {cleanName}");
         }
         else
         {
-            Debug.LogWarning($"[CharacterManager] 未找到角色图片: {name}");
+            Debug.LogWarning($"[CharacterManager] 未找到角色图片: '{cleanName}' (原始: '{name}')");
+            Debug.Log($"[CharacterManager] 可用角色列表: {string.Join(", ", characterImages.Keys)}");
         }
     }
 }
