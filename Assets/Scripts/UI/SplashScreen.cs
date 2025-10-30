@@ -30,10 +30,13 @@ public class SplashScreen : MonoBehaviour
 
     private void Start()
     {
-        if(!logoCanvasGroup.gameObject.activeSelf)
+        Debug.Log("[SplashScreen] Start 初始化");
+        
+        if(logoCanvasGroup != null && !logoCanvasGroup.gameObject.activeSelf)
         {
             logoCanvasGroup.gameObject.SetActive(true);
         }
+        
         // 初始化：隐藏开始界面，显示Logo
         if (startMenuPanel != null)
         {
@@ -48,6 +51,9 @@ public class SplashScreen : MonoBehaviour
         if (logoCanvasGroup != null)
         {
             logoCanvasGroup.alpha = 1f;
+            // 确保 Logo 不会阻挡射线检测
+            logoCanvasGroup.blocksRaycasts = false;
+            logoCanvasGroup.interactable = false;
         }
         
         // 开始播放开屏动画
@@ -59,8 +65,9 @@ public class SplashScreen : MonoBehaviour
         // 检测跳过输入
         if (canSkip && isPlaying && !isSkipped)
         {
-            if (Input.GetKeyDown(skipKey) || Input.GetMouseButtonDown(0))
+            if (Input.GetKeyDown(skipKey))
             {
+                Debug.Log("[SplashScreen] 检测到空格键跳过");
                 Skip();
             }
         }
@@ -118,9 +125,9 @@ public class SplashScreen : MonoBehaviour
         Debug.Log("[SplashScreen] 显示开始界面");
         
         // 隐藏Logo
-        if (gameObject != null)
+        if (logoCanvasGroup != null)
         {
-            gameObject.SetActive(false);
+            logoCanvasGroup.gameObject.SetActive(false);
         }
         
         // 显示开始界面
@@ -138,6 +145,12 @@ public class SplashScreen : MonoBehaviour
         {
             // 直接显示
             startMenuCanvasGroup.alpha = 1f;
+        }
+        
+        // 最后禁用本脚本所在的GameObject（如果Logo和脚本在同一个对象上）
+        if (gameObject != logoCanvasGroup.gameObject)
+        {
+            gameObject.SetActive(false);
         }
     }
 
