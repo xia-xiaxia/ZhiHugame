@@ -5513,8 +5513,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549c72129eb70d54386b381e3ccbb2a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  logoImage: {fileID: 0}
-  logoCanvasGroup: {fileID: 0}
+  logoImage: {fileID: 1759335405}
+  logoCanvasGroup: {fileID: 866498009}
   startMenuPanel: {fileID: 0}
   startMenuCanvasGroup: {fileID: 0}
   logoDisplayTime: 2
