@@ -474,7 +474,7 @@
     "desc": "国君收拢权力，把持朝政",
     "result": "国君势力中幅上升",
     "kingChange": 20,
-    "cost": 110,
+    "cost": 11,
     "usageCount": 1
   },
   {

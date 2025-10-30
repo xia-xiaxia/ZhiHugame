@@ -49,6 +49,8 @@
             {
                 "text": "贵族童子该死，男子无罪",
                 "peopleChange": 10,
+                "nobleChange": -10,
+                "nextEventId": "00202",
                 "interval": 0,
                 "yearDelta": 0
             },
@@ -82,7 +84,7 @@
                 "scholarChange": 5,
                 "peopleChange": 5,
                 "foreignChange": 5,
-                "buff": "buff002",
+                "activateBUFF":"002",
                 "yearDelta": 0
             },
             {
@@ -107,14 +109,14 @@
                 "text": "明天起所有贵族采邑全部收归中央",
                 "nobleChange": -80,
                 "kingChange": 30,
-                "buff": "buff003",
+                "activateBUFF":"003",
                 "nextEventId": "00302",
                 "interval": 3,
                 "yearDelta": 1
             },
             {
                 "text": "不要一步到位，渐进改革",
-                "buff": "buff003",
+                "activateBUFF":"003",
                 "nextEventId": "00302",
                 "interval": 3,
                 "yearDelta": 1
@@ -234,7 +236,7 @@
         "options": [
             {
                 "text": "贵族官职，三世无功者不得传承！",
-                "buff": "buff004",
+                "activateBUFF":"004",
                 "yearDelta": 0
             },
             {
@@ -252,7 +254,7 @@
         "options": [
             {
                 "text": "妙极，多来点靠谱的人才",
-                "buff": "buff005",
+                "activateBUFF":"005",
                 "nobleChange": -20,
                 "yearDelta": 0
             },
@@ -271,7 +273,7 @@
         "options": [
             {
                 "text": "颁布垦荒令，奖励勤劳者",
-                "buff": "buff006",
+                "activateBUFF":"006",
                 "yearDelta": 0
             },
             {
@@ -282,7 +284,7 @@
             },
             {
                 "text": "找些外臣，懂农业的，帮他们养地开荒",
-                "buff": "buff006",
+                "activateBUFF":"006",
                 "foreignChange": 10,
                 "yearDelta": 0
             }

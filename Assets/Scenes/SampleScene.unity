@@ -1498,7 +1498,7 @@ GameObject:
   - component: {fileID: 180657633}
   m_Layer: 5
   m_HasEditorInfo: 1
-  m_Name: "\u6E38\u620F\u8BBE\u7F6E"
+  m_Name: "\u6E38\u620F\u8BF4\u660E"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6973,7 +6973,7 @@ MonoBehaviour:
   - {fileID: 4900000, guid: c445d205e8e34c546bf7f2c68dd5fa62, type: 3}
   - {fileID: 4900000, guid: 52435f309071c1b44a966c505f856aea, type: 3}
   - {fileID: 4900000, guid: 93c70e141e235df4fb4d9e727f5c1153, type: 3}
-  - {fileID: 4900000, guid: e9f90c98d3d321547a8a1f57ca353052, type: 3}
+  - {fileID: 4900000, guid: e8acdb306ea092349b96bea480fea839, type: 3}
   - {fileID: 4900000, guid: 78874ee817c8d44448ada61651dc37aa, type: 3}
   - {fileID: 4900000, guid: b093d24bfcbd8b541b7092438414fd27, type: 3}
   - {fileID: 4900000, guid: 1ae5d6a8edfbcb94cbd0dd49edb4db72, type: 3}
@@ -14017,6 +14017,7 @@ GameObject:
   - component: {fileID: 1875534080}
   - component: {fileID: 1875534079}
   - component: {fileID: 1875534078}
+  - component: {fileID: 1875534081}
   m_Layer: 0
   m_HasEditorInfo: 1
   m_Name: EventSystem
@@ -14075,6 +14076,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1875534081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875534077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4419864c874cd5a4cb07fa91c3e1fbc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: 88af981aebd9a164c873c7866cec4707, type: 2}
+  autoSaveOnExit: 1
+  autoLoadOnStart: 1
 --- !u!1 &1900151486
 GameObject:
   m_ObjectHideFlags: 0
@@ -15397,7 +15413,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6E38\u620F\u8BBE\u7F6E"
+  m_Text: "\u6E38\u620F\u8BF4\u660E"
 --- !u!222 &2047848369
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -140,7 +140,7 @@ public class PolicyInInventoryTrigger : MonoBehaviour, IPointerEnterHandler, IPo
             // 强制重建布局以获取正确的高度
             Canvas.ForceUpdateCanvases();
             // 正数表示向上，面板高度的一半加上额外间距，显示在鼠标上方
-            dynamicOffsetY = tooltipRect.rect.height / 2f + 60f;
+            dynamicOffsetY = tooltipRect.rect.height;
         }
         
         Vector2 dynamicOffset = new Vector2(tooltipOffset.x, dynamicOffsetY);

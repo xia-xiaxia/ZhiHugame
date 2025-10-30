@@ -127,7 +127,7 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
             Canvas.ForceUpdateCanvases();
             
             // 垂直偏移：面板高度的一半加额外间距，显示在鼠标上方
-            dynamicOffsetY = tooltipRect.rect.height / 2f + 60f;
+            dynamicOffsetY = tooltipRect.rect.height;
             
             // 水平偏移：根据道具按钮在屏幕中的位置决定显示在左侧还是右侧
             RectTransform buttonRect = GetComponent<RectTransform>();
