@@ -47,6 +47,9 @@ public class SaveData
     // 激活的事件集索引
     public List<int> activeRandomEventSetIndices = new List<int>();
     
+    // 新手教程标记
+    public bool hasSeenTutorial = false;
+    
     // 存档时间戳
     public string saveTime;
     
@@ -77,6 +80,7 @@ public class SaveData
             foreignMax = stats.foreignMax,
             peopleMin = stats.peopleMin,
             peopleMax = stats.peopleMax,
+            hasSeenTutorial = stats.hasSeenTutorial,
             saveTime = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
         };
         
@@ -172,6 +176,7 @@ public class SaveData
         stats.foreignMax = foreignMax;
         stats.peopleMin = peopleMin;
         stats.peopleMax = peopleMax;
+        stats.hasSeenTutorial = hasSeenTutorial;
         
         // 恢复政策背包
         stats.policyBag.Clear();

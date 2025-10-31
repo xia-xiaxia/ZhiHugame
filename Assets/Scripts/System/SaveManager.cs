@@ -261,4 +261,46 @@ public class SaveManager : MonoBehaviour
             Debug.Log("[SaveManager] 手动加载成功");
         }
     }
+    
+    /// <summary>
+    /// 获取存档文件路径
+    /// </summary>
+    public string GetSaveFilePath()
+    {
+        return saveFilePath;
+    }
+    
+    /// <summary>
+    /// 在文件资源管理器中打开存档文件夹
+    /// </summary>
+    public void OpenSaveFolder()
+    {
+        string folderPath = Path.GetDirectoryName(saveFilePath);
+        
+        if (Directory.Exists(folderPath))
+        {
+            #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+            System.Diagnostics.Process.Start("explorer.exe", folderPath.Replace("/", "\\"));
+            #elif UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
+            System.Diagnostics.Process.Start("open", folderPath);
+            #elif UNITY_EDITOR_LINUX || UNITY_STANDALONE_LINUX
+            System.Diagnostics.Process.Start("xdg-open", folderPath);
+            #endif
+            
+            Debug.Log($"[SaveManager] 打开文件夹: {folderPath}");
+        }
+        else
+        {
+            Debug.LogWarning($"[SaveManager] 文件夹不存在: {folderPath}");
+        }
+    }
+    
+    /// <summary>
+    /// 复制存档路径到剪贴板
+    /// </summary>
+    public void CopySavePathToClipboard()
+    {
+        GUIUtility.systemCopyBuffer = saveFilePath;
+        Debug.Log($"[SaveManager] 已复制存档路径到剪贴板: {saveFilePath}");
+    }
 }

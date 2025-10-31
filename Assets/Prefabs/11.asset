@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162da53cb023ce34bbddf3e852d3731d, type: 3}
   m_Name: 11
   m_EditorClassIdentifier: 
-  year: 0
+  year: 1
   _currency: 0
   _king: 50
   _noble: 50
@@ -29,57 +29,7 @@ MonoBehaviour:
   foreignMax: 80
   peopleMin: 20
   peopleMax: 80
-  policyBag:
-  - id: 047
-    type: 4
-    name: "\u5F00\u8BBE\u5B66\u5BAB"
-    desc: "\u5F00\u8BBE\u5B66\u5BAB\uFF0C\u5E7F\u62DB\u5929\u4E0B\u624D\u5B50\u5916\u81E3\uFF0C\u4E3A\u6211\u6240\u7528"
-    result: "\u5916\u81E3\u52BF\u529B\u7279\u5927\u5E45\u5EA6\u4E0A\u5347"
-    whichChange: 
-    thresholdDeltaup: 0
-    thresholdDeltadown: 0
-    deathImmunity: 
-    kingChange: 0
-    nobleChange: 0
-    scholarChange: 0
-    foreignChange: 40
-    peopleChange: 0
-    usageCount: 1
-    cost: 14
-    deathdec: 
-  - id: 023
-    type: 2
-    name: "\u53CD\u653F\u53D8"
-    desc: "\u8B66\u60D5\u53CD\u5BF9\u56FD\u541B\u7684\u4EBA\u5728\u9634\u5F71\u4E2D\u7684\u653F\u53D8\u4F01\u5212"
-    result: "\u514D\u9664\u56E0\u4E3A\u56FD\u541B\u8FC7\u9AD8\u5BFC\u81F4\u7684\u6E38\u620F\u7ED3\u675F"
-    whichChange: 
-    thresholdDeltaup: 0
-    thresholdDeltadown: 0
-    deathImmunity: 01000000
-    kingChange: 0
-    nobleChange: 0
-    scholarChange: 0
-    foreignChange: 0
-    peopleChange: 0
-    usageCount: 1
-    cost: 30
-    deathdec: "\u53CD\u5BF9\u4F60\u7684\u4EBA\u7EC4\u7EC7\u4E86\u4E00\u573A\u653F\u53D8\uFF0C\u88AB\u4F60\u6210\u529F\u6D88\u89E3"
-  - id: 009
-    type: 1
-    name: "\u4E0D\u95EE\u51FA\u5904"
-    desc: "\u4E0D\u95EE\u5916\u81E3\u7684\u6765\u8DEF\uFF0C\u4EFB\u7528\u4ED6\u4EEC"
-    result: "\u5916\u81E3\u52BF\u529B\u4E0A\u9650\u62D3\u5BBD"
-    whichChange: foreign
-    thresholdDeltaup: 20
-    thresholdDeltadown: 0
-    deathImmunity: 
-    kingChange: 0
-    nobleChange: 0
-    scholarChange: 0
-    foreignChange: 0
-    peopleChange: 0
-    usageCount: -1
-    cost: 15
-    deathdec: 
+  policyBag: []
   buffBag: []
   delayedEventQueue: []
+  hasSeenTutorial: 1

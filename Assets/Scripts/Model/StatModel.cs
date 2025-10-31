@@ -154,6 +154,9 @@ public class StatModel : ScriptableObject
     // 间隔事件队列（持久化延时事件）
     public List<DelayedEventData> delayedEventQueue = new List<DelayedEventData>();
     
+    // 新手教程标记（是否已看过教程）
+    public bool hasSeenTutorial = false;
+    
     public bool IsOutOfBounds()
     {
         return king < kingMin || king > kingMax

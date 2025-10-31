@@ -14,19 +14,19 @@ public class BuffManagerDebug : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.F1))
         {
             CheckBuffManager();
         }
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.F2))
         {
             TestAddBuff001();
         }
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.F3))
         {
             TestYearEnd();
         }
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.F4))
         {
             ShowActiveBuffs();
         }
