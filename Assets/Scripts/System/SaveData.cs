@@ -145,6 +145,23 @@ public class SaveData
             data.delayedEventQueue = new List<DelayedEventData>(stats.delayedEventQueue);
         }
         
+        // 保存事件使用状态（从 EventDatabase 获取）
+        if (EventDatabase.Instance != null)
+        {
+            List<string> usedIds = EventDatabase.Instance.GetUsedEventIds();
+            data.usedEvents.Clear();
+            foreach (var id in usedIds)
+            {
+                data.usedEvents.Add(new UsedEventData(id));
+            }
+        }
+        
+        // 保存延时事件（从 EventSelector 获取）
+        if (EventSelector.Instance != null)
+        {
+            data.delayedEventQueue = EventSelector.Instance.GetSaveData();
+        }
+        
         return data;
     }
     
@@ -291,12 +308,16 @@ public class BuffData
 [System.Serializable]
 public class UsedEventData
 {
-    public int setIndex;
     public string eventId;
     
-    public UsedEventData(int set, string id)
+    public UsedEventData(string id)
     {
-        setIndex = set;
         eventId = id;
+    }
+    
+    // 无参构造函数（Unity JsonUtility 需要）
+    public UsedEventData()
+    {
+        eventId = "";
     }
 }

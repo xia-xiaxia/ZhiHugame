@@ -112,17 +112,26 @@ public class EventDatabase : MonoBehaviour
             Debug.Log("没有更多随机事件了！");
             return null;
         }
+        bool isEndWithOne = false;
+        while (!isEndWithOne)
+        {
+            // 1. 随机选
+            int index = Random.Range(0, availableEventIds.Count);
+            string pickedId = availableEventIds[index];
 
-        // 1. 随机选
-        int index = Random.Range(0, availableEventIds.Count);
-        string pickedId = availableEventIds[index];
+            if (!string.IsNullOrEmpty(pickedId) && pickedId[^1] == '1')
+            {
+                Debug.Log($"[EventDatabase] 抽取到事件: {pickedId}");
+                isEndWithOne = true;
+                // 2. 从池中移除 (洗牌移除法，效率最高)
+                availableEventIds[index] = availableEventIds[availableEventIds.Count - 1];
+                availableEventIds.RemoveAt(availableEventIds.Count - 1);
 
-        // 2. 从池中移除 (洗牌移除法，效率最高)
-        availableEventIds[index] = availableEventIds[availableEventIds.Count - 1];
-        availableEventIds.RemoveAt(availableEventIds.Count - 1);
-
-        // 3. 返回
-        return globalEventDict[pickedId];
+                // 3. 返回
+                return globalEventDict[pickedId];
+            }
+        }
+        return null;
     }
     
     // 把事件放回池子（例如读档重置时）
@@ -133,5 +142,41 @@ public class EventDatabase : MonoBehaviour
         {
             availableEventIds.Add(key);
         }
+        Debug.Log($"[EventDatabase] 事件池已重置，可用事件: {availableEventIds.Count}");
+    }
+
+    /// <summary>
+    /// 获取已使用的事件ID列表（用于存档）
+    /// </summary>
+    public List<string> GetUsedEventIds()
+    {
+        List<string> usedIds = new List<string>();
+        foreach (var id in globalEventDict.Keys)
+        {
+            if (!availableEventIds.Contains(id))
+            {
+                usedIds.Add(id);
+            }
+        }
+        return usedIds;
+    }
+
+    /// <summary>
+    /// 从存档恢复已使用事件状态
+    /// </summary>
+    public void RestoreUsedEvents(List<string> usedIds)
+    {
+        if (usedIds == null) return;
+
+        // 先重置池子
+        ResetPool();
+
+        // 移除已使用的事件
+        foreach (var usedId in usedIds)
+        {
+            availableEventIds.Remove(usedId);
+        }
+
+        Debug.Log($"[EventDatabase] 从存档恢复，移除 {usedIds.Count} 个已使用事件，剩余 {availableEventIds.Count} 个可用");
     }
 }

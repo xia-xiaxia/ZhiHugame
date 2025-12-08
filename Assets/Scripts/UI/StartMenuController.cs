@@ -55,11 +55,11 @@ public class StartMenuController : MonoBehaviour
     }
     
     /// <summary>
-    /// 实际开始游戏的逻辑
+    /// 实际开始游戏的逻辑（触发淡入动画）
     /// </summary>
     private void StartGame()
     {
-        Debug.Log("[StartMenu] 开始游戏");
+        Debug.Log("[StartMenu] 触发淡入动画");
         
         // 隐藏开始界面
         if (startMenuPanel != null)
@@ -67,11 +67,15 @@ public class StartMenuController : MonoBehaviour
             startMenuPanel.SetActive(false);
         }
         
-        // 通知 GameControl 开始游戏
-        // 注意：这里只调用一次 GameControl.Instance.StartGame()
-        if (GameControl.Instance != null)
+        // 触发淡入动画（CanvasMove 会在动画达到阈值时调用 GameControl.StartGame）
+        // 不要在这里调用 GameControl.StartGame()，否则会导致事件被提前抽取
+        if (CanvasMove.Instance != null)
         {
-            GameControl.Instance.StartGame();
+            CanvasMove.Instance.StartGame();
+        }
+        else
+        {
+            Debug.LogError("[StartMenu] CanvasMove.Instance 为 null，无法启动游戏动画");
         }
     }
     

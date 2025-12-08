@@ -79,16 +79,8 @@ public class SaveManager : MonoBehaviour
         
         try
         {
-            // 从StatModel创建存档数据
+            // 从StatModel创建存档数据（包含事件使用状态和延时事件）
             SaveData saveData = SaveData.FromStatModel(stats);
-            
-            // 如果需要保存EventManager的数据
-            if (EventManager.Instance != null)
-            {
-                // 保存已使用的事件
-                // saveData.usedEvents = EventManager.Instance.GetUsedEvents();
-                // saveData.activeRandomEventSetIndices = EventManager.Instance.GetActiveEventSets();
-            }
             
             // 序列化为JSON
             string json = JsonUtility.ToJson(saveData, true);
@@ -143,11 +135,24 @@ public class SaveManager : MonoBehaviour
             // 应用到StatModel
             saveData.ApplyToStatModel(stats);
             
-            // 如果需要恢复EventManager的数据
-            if (EventManager.Instance != null)
+            // 恢复事件使用状态
+            if (EventDatabase.Instance != null && saveData.usedEvents != null)
             {
-                // EventManager.Instance.RestoreUsedEvents(saveData.usedEvents);
-                // EventManager.Instance.RestoreActiveEventSets(saveData.activeRandomEventSetIndices);
+                List<string> usedIds = new List<string>();
+                foreach (var usedEvent in saveData.usedEvents)
+                {
+                    if (!string.IsNullOrEmpty(usedEvent.eventId))
+                    {
+                        usedIds.Add(usedEvent.eventId);
+                    }
+                }
+                EventDatabase.Instance.RestoreUsedEvents(usedIds);
+            }
+            
+            // 恢复延时事件
+            if (EventSelector.Instance != null && saveData.delayedEventQueue != null)
+            {
+                EventSelector.Instance.LoadFromSave(saveData.delayedEventQueue);
             }
             
             Debug.Log($"[SaveManager] 游戏已加载: 年份={saveData.year}, 存档时间={saveData.saveTime}");
