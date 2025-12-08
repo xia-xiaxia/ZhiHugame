@@ -49,6 +49,13 @@ public class CustomCursorManager : MonoBehaviour
     {
         if (defaultCursor != null)
         {
+            if (!defaultCursor.isReadable)
+            {
+                Debug.LogError($"[CustomCursorManager] 纹理 '{defaultCursor.name}' 未启用 Read/Write！\n" +
+                    "请在 Inspector 中选中该纹理，勾选 'Read/Write Enabled'，然后点击 Apply。");
+                Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+                return;
+            }
             Cursor.SetCursor(defaultCursor, hotspot, CursorMode.Auto);
         }
         else
@@ -64,6 +71,11 @@ public class CustomCursorManager : MonoBehaviour
     {
         if (interactCursor != null)
         {
+            if (!interactCursor.isReadable)
+            {
+                Debug.LogError($"[CustomCursorManager] 纹理 '{interactCursor.name}' 未启用 Read/Write！");
+                return;
+            }
             Cursor.SetCursor(interactCursor, hotspot, CursorMode.Auto);
         }
     }
@@ -75,6 +87,11 @@ public class CustomCursorManager : MonoBehaviour
     {
         if (clickCursor != null)
         {
+            if (!clickCursor.isReadable)
+            {
+                Debug.LogError($"[CustomCursorManager] 纹理 '{clickCursor.name}' 未启用 Read/Write！");
+                return;
+            }
             Cursor.SetCursor(clickCursor, hotspot, CursorMode.Auto);
         }
     }
