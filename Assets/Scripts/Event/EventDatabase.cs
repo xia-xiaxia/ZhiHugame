@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class EventDatabase : MonoBehaviour
 {
-    // 管理事件的加载和查询
     public static EventDatabase Instance;
-    JsonHelper jsonHelper = new JsonHelper();
-    public List<TextAsset> eventJsons; // 用于在Inspector中绑定多个事件JSON文件
-    public Dictionary<string, Dictionary<string, GameEvent>> eventDictionaries = new Dictionary<string, Dictionary<string, GameEvent>>();
+
+    // 存储所有事件，Key 是处理后的 "文件名_ID"
+    private Dictionary<string, GameEvent> globalEventDict = new Dictionary<string, GameEvent>();
+    
+    // 随机池：存储处理后的 "文件名_ID"，用于随机抽取
+    private List<string> availableEventIds = new List<string>();
+
+    public List<TextAsset> eventJsons;
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -22,30 +27,111 @@ public class EventDatabase : MonoBehaviour
             LoadEvents();
         }
     }
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
 
     public void LoadEvents()
     {
-        eventDictionaries.Clear();
-        foreach (var json in eventJsons)
+        globalEventDict.Clear();
+        availableEventIds.Clear();
+
+        foreach (var jsonAsset in eventJsons)
         {
-            string speaker = "";
-            GameEvent[] events = JsonHelper.FromJson<GameEvent>(json.text);
-            Dictionary<string, GameEvent> eventDict = new Dictionary<string, GameEvent>();
-            foreach (var gameEvent in events)
+            if (jsonAsset == null) continue;
+
+            string fileName = jsonAsset.name; // 使用文件名作为命名空间
+            GameEvent[] events = JsonHelper.FromJson<GameEvent>(jsonAsset.text);
+
+            if (events == null) continue;
+
+            foreach (var evt in events)
             {
-                eventDict[gameEvent.id] = gameEvent;
-                speaker = gameEvent.speaker.ToString();
+                // 在内存中修改 ID，避免冲突，且无需修改类定义
+
+                // 1. 记录原始 ID (用于调试)
+                string originalId = evt.id;
+                
+                // 2. 生成全局唯一 ID (文件名_原始ID)
+                string uniqueId = $"{fileName}_{originalId}";
+
+                // 3. 修改内存中对象的 ID
+                evt.id = uniqueId;
+
+                // 4. 处理选项 (Option) 中的连接关系
+                if (evt.options != null)
+                {
+                    foreach (var opt in evt.options)
+                    {
+                        if (!string.IsNullOrEmpty(opt.nextEventId))
+                        {
+                            // 如果 nextEventId 还没包含前缀，就加上前缀
+                            // (这里加个判断防止你手动写了跨文件跳转)
+                            if (!opt.nextEventId.Contains("_")) 
+                            {
+                                opt.nextEventId = $"{fileName}_{opt.nextEventId}";
+                            }
+                        }
+                    }
+                }
+
+                // 存入字典和随机池
+                if (!globalEventDict.ContainsKey(uniqueId))
+                {
+                    globalEventDict.Add(uniqueId, evt);
+                    availableEventIds.Add(uniqueId);
+                }
+                else
+                {
+                    Debug.LogError($"[EventDatabase] ID冲突警告: 文件 {fileName} 中的事件 {originalId} 在合并后重复，请检查。");
+                }
             }
-            eventDictionaries.Add(speaker,eventDict);
+        }
+
+        Debug.Log($"加载完毕。事件库大小: {globalEventDict.Count}，随机池剩余: {availableEventIds.Count}");
+    }
+
+    // 根据 ID 获取事件 (这里的 ID 必须是带前缀的唯一 ID)
+    public GameEvent GetEvent(string globalId)
+    {
+        if (string.IsNullOrEmpty(globalId)) return null;
+
+        if (globalEventDict.TryGetValue(globalId, out GameEvent evt))
+        {
+            return evt;
+        }
+        else
+        {
+            Debug.LogWarning($"[EventDatabase] 找不到事件: {globalId}");
+            return null;
+        }
+    }
+
+    // 随机抽取一个不重复的事件
+    public GameEvent GetRandomEventUnique()
+    {
+        if (availableEventIds.Count == 0)
+        {
+            Debug.Log("没有更多随机事件了！");
+            return null;
+        }
+
+        // 1. 随机选
+        int index = Random.Range(0, availableEventIds.Count);
+        string pickedId = availableEventIds[index];
+
+        // 2. 从池中移除 (洗牌移除法，效率最高)
+        availableEventIds[index] = availableEventIds[availableEventIds.Count - 1];
+        availableEventIds.RemoveAt(availableEventIds.Count - 1);
+
+        // 3. 返回
+        return globalEventDict[pickedId];
+    }
+    
+    // 把事件放回池子（例如读档重置时）
+    public void ResetPool()
+    {
+        availableEventIds.Clear();
+        foreach(var key in globalEventDict.Keys)
+        {
+            availableEventIds.Add(key);
         }
     }
 }
