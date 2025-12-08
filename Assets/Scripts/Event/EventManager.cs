@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System.IO;
-using JsonA;
 
 public class EventManager : MonoBehaviour
 {

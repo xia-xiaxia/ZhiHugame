@@ -59,13 +59,19 @@ public class StartMenuController : MonoBehaviour
     /// </summary>
     private void StartGame()
     {
-        Debug.Log("[StartMenu] 开始游戏 - 隐藏开始界面");
+        Debug.Log("[StartMenu] 开始游戏");
         
-        // 只负责隐藏开始界面
-        // GameControl.StartGame() 会由 CanvasMove 在游戏界面淡入到合适亮度时自动调用
+        // 隐藏开始界面
         if (startMenuPanel != null)
         {
             startMenuPanel.SetActive(false);
+        }
+        
+        // 通知 GameControl 开始游戏
+        // 注意：这里只调用一次 GameControl.Instance.StartGame()
+        if (GameControl.Instance != null)
+        {
+            GameControl.Instance.StartGame();
         }
     }
     
