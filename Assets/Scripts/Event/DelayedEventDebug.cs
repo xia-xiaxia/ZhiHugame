@@ -73,9 +73,11 @@ public class DelayedEventDebug : MonoBehaviour
         
         // 添加一个3年后触发的测试事件
         int triggerYear = GameControl.Instance.year + 3;
-        string testEventId = "00101"; // 使用一个已知的事件ID
+        string testEventId = "005_00101"; // 使用一个已知的事件ID
+        string testEventId2 = "005_00401"; // 使用一个已知的事件ID
         
         EventManager.Instance.stats.delayedEventQueue.Add(new DelayedEventData(triggerYear, testEventId));
+        EventManager.Instance.stats.delayedEventQueue.Add(new DelayedEventData(triggerYear, testEventId2));
         
         Debug.Log($"[DelayedEventDebug] 已添加测试延时事件: ID={testEventId}, 触发年份={triggerYear}");
         ShowDelayedEventQueue();
