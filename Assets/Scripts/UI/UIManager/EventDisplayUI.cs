@@ -195,7 +195,7 @@ public class EventDisplayUI : MonoBehaviour
 
                     // 应用选项效果
                     GameControl.Instance?.SaveStatsSnapshot();
-                    EventManager.Instance?.ApplyOption(opt, GameControl.Instance.year);
+                    EventManager.Instance?.ApplyOption(opt, GameControl.Instance.year,evt.yearDelta);
 
                     // 设置后继事件
                     if (!string.IsNullOrEmpty(opt.nextEventId))
@@ -216,18 +216,6 @@ public class EventDisplayUI : MonoBehaviour
             }
         }
 
-        // 年份增加和BUFF处理
-        if (GameControl.Instance != null)
-        {
-            GameControl.Instance.year += evt.yearDelta;
-            if (evt.yearDelta != 0)
-            {
-                for (int i = 0; i < evt.yearDelta; i++)
-                {
-                    BuffManager.Instance?.OnYearEnd();
-                }
-            }
-        }
     }
 
     /// <summary>

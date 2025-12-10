@@ -70,7 +70,7 @@ public class EventManager : MonoBehaviour
     /// <summary>
     /// 应用选项效果（代理到 OptionEffectHandler）
     /// </summary>
-    public void ApplyOption(Option opt, int year)
+    public void ApplyOption(Option opt, int year, int yearDelta)
     {
         if (OptionEffectHandler.Instance == null)
         {
@@ -78,7 +78,8 @@ public class EventManager : MonoBehaviour
             return;
         }
 
-        OptionEffectHandler.Instance.ApplyOption(opt, year);
+        OptionEffectHandler.Instance.ApplyOption(opt, year,yearDelta);
+        
     }
 
     /// <summary>
