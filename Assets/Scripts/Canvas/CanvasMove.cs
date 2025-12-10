@@ -73,6 +73,13 @@ public class CanvasMove : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
+        // 如果正在播放教程，不要启动游戏动画，等教程结束后再启动
+        if (TutorialManager.Instance != null && TutorialManager.Instance.isPlayingTutorial)
+        {
+            Debug.Log("[CanvasMove] 教程正在播放中，延迟启动游戏动画");
+            return;
+        }
+        
         // 如果正在进行转场动画，忽略重复调用
         if (isTransitioning)
         {
@@ -140,6 +147,11 @@ public class CanvasMove : MonoBehaviour
 
         // 阶段2：黑屏持续一段时间
         yield return new WaitForSeconds(blackScreenDuration);
+        while(TutorialManager.Instance!=null && TutorialManager.Instance.isPlayingTutorial)
+        {
+            Debug.Log("[CanvasMove] 教程正在播放中，等待教程结束后再继续淡入游戏界面");
+            yield return null;
+        }
 
         // 播放游戏音乐
         if (MusicManager.Instance != null)
