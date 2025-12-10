@@ -29,6 +29,7 @@ public class TutorialManager : MonoBehaviour
     [Header("其他设置")]
     public StatModel stats;                 // 关联的StatModel
     public GameObject startMenuPanel;       // 开始界面面板（教程结束后返回）
+    public bool isPlayingTutorial = false;   // 现在是否在播放教程
     
     private int currentImageIndex = 0;      // 当前显示的图片索引
     private bool isPlaying = false;         // 是否正在播放教程
@@ -44,6 +45,7 @@ public class TutorialManager : MonoBehaviour
         }
         
         Instance = this;
+        isPlayingTutorial = false;
     }
     
     private void Start()
@@ -86,7 +88,7 @@ public class TutorialManager : MonoBehaviour
             return;
         }
         
-        // 如果没有看过教程，播放教程
+        // 如果没有看过教程，先播放教程，完成后再调用回调
         if (!stats.hasSeenTutorial)
         {
             Debug.Log("[TutorialManager] 检测到第一次游戏，播放新手教程");
@@ -94,7 +96,7 @@ public class TutorialManager : MonoBehaviour
         }
         else
         {
-            // 已经看过教程，直接开始游戏
+            // 已经看过教程，直接执行回调（开始游戏）
             Debug.Log("[TutorialManager] 已看过教程，直接开始游戏");
             onComplete?.Invoke();
         }
@@ -130,6 +132,7 @@ public class TutorialManager : MonoBehaviour
         
         // 重置状态
         currentImageIndex = 0;
+        isPlayingTutorial = true;
         isPlaying = true;
         
         // 显示教程面板
@@ -137,6 +140,8 @@ public class TutorialManager : MonoBehaviour
         {
             tutorialPanel.SetActive(true);
         }
+        
+        Debug.Log("[TutorialManager] 教程标志设置完成，isPlayingTutorial = true");
         
         // 开始播放
         StartCoroutine(ShowTutorialSequence());
@@ -335,10 +340,14 @@ public class TutorialManager : MonoBehaviour
             tutorialPanel.SetActive(false);
         }
         
-        // 如果有回调函数（第一次游戏），执行回调（开始游戏）
+        // 先清除教程标志
+        isPlayingTutorial = false;
+        Debug.Log("[TutorialManager] 教程标志已清除，isPlayingTutorial = false");
+        
+        // 如果有回调函数（第一次游戏），直接执行回调（让 CanvasMove 继续）
         if (onTutorialComplete != null)
         {
-            Debug.Log("[TutorialManager] 教程完成，执行回调（开始游戏）");
+            Debug.Log("[TutorialManager] 教程完成，执行回调继续游戏动画");
             System.Action callback = onTutorialComplete;
             onTutorialComplete = null; // 清空回调
             callback.Invoke();
@@ -347,7 +356,7 @@ public class TutorialManager : MonoBehaviour
         {
             // 没有回调（从"游戏说明"进入），返回开始界面
             Debug.Log("[TutorialManager] 教程完成，返回开始界面");
-            StartCoroutine(ShowStartMenu());
+            yield return StartCoroutine(ShowStartMenu());
         }
     }
     

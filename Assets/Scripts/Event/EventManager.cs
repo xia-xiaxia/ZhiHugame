@@ -93,15 +93,6 @@ public class EventManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 获取下一个事件ID（用于兼容旧代码）
-    /// </summary>
-    public string GetNextEventId()
-    {
-        // 这个方法在重构后不再需要，但保留以防其他代码调用
-        return "0";
-    }
-
-    /// <summary>
     /// 游戏结束处理
     /// </summary>
     public void HandleGameOver(string reason)
