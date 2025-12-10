@@ -1,5 +1,7 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +11,21 @@ public class CharacterManager : MonoBehaviour
     public List<Sprite> sprites;
     public Dictionary<string, Sprite> characterImages = new Dictionary<string, Sprite>();
     public GameObject character;
+
+ 
+    public float entryTime = 2f;
+
+    public float minBrightness = 0.3f;
+    public float maxBrightness = 1.0f;
+
+    public bool isAnimeComplete = false;
+    private Image image;
+
+    private bool isFirst = true;
+
+    public RectTransform leftRectTransform;
+    public RectTransform rightRectTransform;
+    public RectTransform rectTransform;
 
     void Awake()
     {
@@ -34,13 +51,51 @@ public class CharacterManager : MonoBehaviour
             {"谷雨", sprites[6]}
         };
 
+        image = character.GetComponent<Image>();
     }
 
     void Update()
     {
 
     }
-    
+
+    IEnumerator CharacterExit(string cleanName)
+    {
+        float duration = 0f;
+        while(duration < entryTime)
+        {
+            duration += Time.deltaTime;
+            float k = Mathf.Lerp(maxBrightness, minBrightness, duration / entryTime);
+            Color newColor = new Color(k, k, k, 1);
+            image.color = newColor;
+            float newx = Mathf.Lerp(leftRectTransform.position.x, rightRectTransform.position.x, duration /  entryTime);
+            Vector2 position = rectTransform.position;
+            position.x = newx;
+            rectTransform.position = position;
+            yield return null;
+        }
+        StartCoroutine(CharacterEntry(cleanName));
+    }
+
+    IEnumerator CharacterEntry(string cleanName)
+    {
+        image.sprite = characterImages[cleanName];
+        float duration = 0f;
+        while (duration < entryTime)
+        {
+            duration += Time.deltaTime;
+            float k = Mathf.Lerp(minBrightness, maxBrightness, duration / entryTime);
+            Color newColor = new Color(k, k, k, 1);
+            image.color = newColor;
+            float newx = Mathf.Lerp(rightRectTransform.position.x, leftRectTransform.position.x, duration / entryTime);
+            Vector2 position = rectTransform.position;
+            position.x = newx;
+            rectTransform.position = position;
+            yield return null;
+        }
+    }
+
+
     public void ShowCharacter(string name)
     {
         // 防御性检查：去除空白字符和特殊字符
@@ -65,7 +120,13 @@ public class CharacterManager : MonoBehaviour
         if (characterImages.ContainsKey(cleanName))
         {
             character.SetActive(true);
-            character.GetComponent<Image>().sprite = characterImages[cleanName];
+            if(isFirst)
+            {
+                StartCoroutine(CharacterEntry(cleanName));
+                isFirst = false;
+                return;
+            }
+            StartCoroutine(CharacterExit(cleanName));
             Debug.Log($"[CharacterManager] 成功显示角色: {cleanName}");
         }
         else
