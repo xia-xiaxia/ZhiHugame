@@ -1,0 +1,143 @@
+using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
+
+/// <summary>
+/// 结局UI：负责结局面板的显示和动画
+/// </summary>
+public class EndingUI : MonoBehaviour
+{
+    public static EndingUI Instance;
+
+    [Header("结局面板组件")]
+    public GameObject endingPanel;
+    public Text endingText;
+    public Image endingImage;
+    public Image endingImageBottom;
+    public Text endingYearText;
+    public Button restartButton;
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
+    void Start()
+    {
+        if (endingPanel != null)
+        {
+            endingPanel.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// 显示结局面板
+    /// </summary>
+    public void ShowEnding(string endingId, string description, int survivedYears)
+    {
+        if (endingPanel != null) endingPanel.SetActive(true);
+        if (endingText != null) endingText.text = description;
+
+        // 加载结局图片
+        LoadEndingImage(endingId);
+
+        // 启动年数计数动画
+        if (endingYearText != null)
+        {
+            StartCoroutine(AnimateYearCounter(survivedYears));
+        }
+
+        // 绑定重开按钮
+        if (restartButton != null)
+        {
+            restartButton.onClick.RemoveAllListeners();
+            restartButton.onClick.AddListener(() =>
+            {
+                // 显示商店
+                PolicyShopUI.Instance?.ShowShop();
+            });
+        }
+    }
+
+    /// <summary>
+    /// 加载结局图片
+    /// </summary>
+    private void LoadEndingImage(string endingId)
+    {
+        if (endingImage == null || endingImageBottom == null) return;
+
+        Sprite endingSprite = Resources.Load<Sprite>($"Endings/{endingId}");
+        if (endingSprite != null)
+        {
+            endingImage.sprite = endingSprite;
+            endingImageBottom.sprite = endingSprite;
+            endingImage.gameObject.SetActive(true);
+            endingImageBottom.gameObject.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning($"[EndingUI] 未找到结局图片: Resources/Endings/{endingId}");
+            endingImage.gameObject.SetActive(false);
+            endingImageBottom.gameObject.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// 年数计数动画
+    /// </summary>
+    private IEnumerator AnimateYearCounter(int targetYear)
+    {
+        int currentYear = 0;
+        float duration = 2.0f;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float progress = elapsedTime / duration;
+            float easedProgress = EaseInOutCubic(progress);
+            
+            currentYear = Mathf.FloorToInt(Mathf.Lerp(0, targetYear, easedProgress));
+            
+            if (endingYearText != null)
+            {
+                endingYearText.text = $"执政:  {currentYear}  年";
+            }
+
+            yield return null;
+        }
+
+        // 确保最终显示精确值
+        if (endingYearText != null)
+        {
+            endingYearText.text = $"执政:  {targetYear}  年";
+        }
+    }
+
+    /// <summary>
+    /// 缓动函数：慢 -> 快 -> 慢
+    /// </summary>
+    private float EaseInOutCubic(float t)
+    {
+        if (t < 0.5f)
+        {
+            return 4f * t * t * t;
+        }
+        else
+        {
+            float f = (2f * t - 2f);
+            return 0.5f * f * f * f + 1f;
+        }
+    }
+
+    /// <summary>
+    /// 隐藏结局面板
+    /// </summary>
+    public void HideEnding()
+    {
+        if (endingPanel != null)
+        {
+            endingPanel.SetActive(false);
+        }
+    }
+}

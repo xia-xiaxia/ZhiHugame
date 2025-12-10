@@ -74,4 +74,11 @@ public class CharacterManager : MonoBehaviour
             Debug.Log($"[CharacterManager] 可用角色列表: {string.Join(", ", characterImages.Keys)}");
         }
     }
+
+    public void CharacterAnime()
+    {
+        
+
+        
+    }
 }
