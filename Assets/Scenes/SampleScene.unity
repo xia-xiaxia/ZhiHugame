@@ -6117,7 +6117,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 88af981aebd9a164c873c7866cec4707, type: 2}
-  dataAbout: {fileID: 0}
   yearLimit: 100
   useDynamicThreshold: 1
 --- !u!114 &705617799
@@ -8335,7 +8334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44e3dea23ff8dce47ba60db863b73db3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  policyJson: {fileID: 4900000, guid: a4b723ab60098584d87f404a78033cd3, type: 3}
+  policyJson: {fileID: 4900000, guid: cc9006157cc0eb94887cf31d19c08b51, type: 3}
 --- !u!4 &981328575
 Transform:
   m_ObjectHideFlags: 0
@@ -14848,7 +14847,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 766299596}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: ShowPolicyMenu
         m_Mode: 1

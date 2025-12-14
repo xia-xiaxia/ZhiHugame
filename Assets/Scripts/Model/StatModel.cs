@@ -22,22 +22,22 @@ public class DelayedEventData
 [CreateAssetMenu(menuName = "Game/StatModel1")]
 public class StatModel : ScriptableObject
 {
-    // 初始值均为 50
+    // 初始值均为 阈值的一半
     public int year = 0;      // 当前年份
     
     // 私有字段
     [SerializeField]
     private int _currency = 0;  // 当前资金（累计）
     [SerializeField]
-    private int _king = 50;
+    private int _king = 30;
     [SerializeField]
-    private int _noble = 50;
+    private int _noble = 30;
     [SerializeField]
-    private int _scholar = 50;
+    private int _scholar = 30;
     [SerializeField]
-    private int _foreign = 50;
+    private int _foreign = 30;
     [SerializeField]
-    private int _people = 50;
+    private int _people = 30;
     
     // 货币属性（带事件触发）
     public int currency
@@ -126,16 +126,16 @@ public class StatModel : ScriptableObject
 
     // 失败阈值常量
 
-    public int kingMin = 20;
-    public int kingMax = 80;
-    public int nobleMin = 20;
-    public int nobleMax = 80;
-    public int scholarMin = 20;
-    public int scholarMax = 80;
-    public int foreignMin = 20;
-    public int foreignMax = 80;
-    public int peopleMin = 20;
-    public int peopleMax = 80;
+    public int kingMin = 0;
+    public int kingMax = 60;
+    public int nobleMin = 0;
+    public int nobleMax = 60;
+    public int scholarMin = 0;
+    public int scholarMax = 60;
+    public int foreignMin = 0;
+    public int foreignMax = 60;
+    public int peopleMin = 0;
+    public int peopleMax = 60;
 
     // 计算各属性百分比
     public float KingPercent => kingMax > kingMin ? (float)(king - kingMin) / (float)(kingMax - kingMin) : 0f;
@@ -157,6 +157,24 @@ public class StatModel : ScriptableObject
     // 新手教程标记（是否已看过教程）
     public bool hasSeenTutorial = false;
     
+    // 锁定系统
+    [System.Serializable]
+    public class LayerLock
+    {
+        public int layer;           // 阶层：1国君 2卿士 3宗族 4外臣 5庶人
+        public bool lockIncrease;   // true=禁止上升, false=禁止下降
+        public int remainingYears;  // 剩余回合数
+        
+        public LayerLock(int layer, bool lockIncrease, int duration)
+        {
+            this.layer = layer;
+            this.lockIncrease = lockIncrease;
+            this.remainingYears = duration;
+        }
+    }
+    
+    public List<LayerLock> activeLayerLocks = new List<LayerLock>();
+    
     public bool IsOutOfBounds()
     {
         return king < kingMin || king > kingMax
@@ -170,23 +188,156 @@ public class StatModel : ScriptableObject
     public void ResetToDefault()
     {
         year = 0;
-        _king = _noble = _scholar = _foreign = _people = 50;
+        
+        // 设置默认上下限（如果被修改过，这里会重置为默认值；如果需要保留修改，请在调用前保存）
+        kingMin = 0; kingMax = 60;
+        nobleMin = 0; nobleMax = 60;
+        scholarMin = 0; scholarMax = 60;
+        foreignMin = 0; foreignMax = 60;
+        peopleMin = 0; peopleMax = 60;
+        
+        // 根据上下限计算中间值
+        int kingMid = (kingMin + kingMax) / 2;
+        int nobleMid = (nobleMin + nobleMax) / 2;
+        int scholarMid = (scholarMin + scholarMax) / 2;
+        int foreignMid = (foreignMin + foreignMax) / 2;
+        int peopleMid = (peopleMin + peopleMax) / 2;
+        
         // 通过属性触发事件
-        king = 50;
-        noble = 50;
-        scholar = 50;
-        foreign = 50;
-        people = 50;
-        kingMin = 20; kingMax = 80;
-        nobleMin = 20; nobleMax = 80;
-        scholarMin = 20; scholarMax = 80;
-        foreignMin = 20; foreignMax = 80;
-        peopleMin = 20; peopleMax = 80;
+        king = kingMid;
+        noble = nobleMid;
+        scholar = scholarMid;
+        foreign = foreignMid;
+        people = peopleMid;
         
         // 清空背包
         policyBag.Clear();
         buffBag.Clear();
         delayedEventQueue.Clear();
+        activeLayerLocks.Clear();
+        
+        Debug.Log($"[StatModel] 重置完成 - 国君:{king} 宗族:{noble} 卿士:{scholar} 外臣:{foreign} 庶人:{people}");
+    }
+    
+    /// <summary>
+    /// 添加阶层锁定
+    /// </summary>
+    public void AddLayerLock(int layer, bool lockIncrease, int duration)
+    {
+        // 检查是否已有相同的锁定
+        LayerLock existingLock = activeLayerLocks.Find(l => l.layer == layer && l.lockIncrease == lockIncrease);
+        if (existingLock != null)
+        {
+            // 叠加时长
+            existingLock.remainingYears += duration;
+            Debug.Log($"[StatModel] 叠加锁定: 阶层{layer} {(lockIncrease ? "禁止上升" : "禁止下降")} 新时长:{existingLock.remainingYears}年");
+        }
+        else
+        {
+            // 新增锁定
+            activeLayerLocks.Add(new LayerLock(layer, lockIncrease, duration));
+            Debug.Log($"[StatModel] 添加锁定: 阶层{layer} {(lockIncrease ? "禁止上升" : "禁止下降")} 时长:{duration}年");
+        }
+    }
+    
+    /// <summary>
+    /// 减少所有锁定的剩余回合（每回合调用）
+    /// </summary>
+    public void DecrementLayerLocks()
+    {
+        for (int i = activeLayerLocks.Count - 1; i >= 0; i--)
+        {
+            activeLayerLocks[i].remainingYears--;
+            if (activeLayerLocks[i].remainingYears <= 0)
+            {
+                Debug.Log($"[StatModel] 锁定解除: 阶层{activeLayerLocks[i].layer} {(activeLayerLocks[i].lockIncrease ? "禁止上升" : "禁止下降")}");
+                activeLayerLocks.RemoveAt(i);
+            }
+        }
+    }
+    
+    /// <summary>
+    /// 检查某阶层某方向是否被锁定
+    /// </summary>
+    public bool IsLayerLocked(int layer, bool isIncrease)
+    {
+        return activeLayerLocks.Exists(l => l.layer == layer && l.lockIncrease == isIncrease);
+    }
+    
+    /// <summary>
+    /// 应用数值变化（带锁定检查）
+    /// </summary>
+    public void ApplyStatChange(int kingDelta, int nobleDelta, int scholarDelta, int foreignDelta, int peopleDelta)
+    {
+        // 国君 (layer 1)
+        if (kingDelta > 0 && IsLayerLocked(1, true))
+        {
+            Debug.Log("[StatModel] 国君上升被锁定，变化无效");
+        }
+        else if (kingDelta < 0 && IsLayerLocked(1, false))
+        {
+            Debug.Log("[StatModel] 国君下降被锁定，变化无效");
+        }
+        else
+        {
+            king += kingDelta;
+        }
+        
+        // 卿士 (layer 2)
+        if (scholarDelta > 0 && IsLayerLocked(2, true))
+        {
+            Debug.Log("[StatModel] 卿士上升被锁定，变化无效");
+        }
+        else if (scholarDelta < 0 && IsLayerLocked(2, false))
+        {
+            Debug.Log("[StatModel] 卿士下降被锁定，变化无效");
+        }
+        else
+        {
+            scholar += scholarDelta;
+        }
+        
+        // 宗族 (layer 3)
+        if (nobleDelta > 0 && IsLayerLocked(3, true))
+        {
+            Debug.Log("[StatModel] 宗族上升被锁定，变化无效");
+        }
+        else if (nobleDelta < 0 && IsLayerLocked(3, false))
+        {
+            Debug.Log("[StatModel] 宗族下降被锁定，变化无效");
+        }
+        else
+        {
+            noble += nobleDelta;
+        }
+        
+        // 外臣 (layer 4)
+        if (foreignDelta > 0 && IsLayerLocked(4, true))
+        {
+            Debug.Log("[StatModel] 外臣上升被锁定，变化无效");
+        }
+        else if (foreignDelta < 0 && IsLayerLocked(4, false))
+        {
+            Debug.Log("[StatModel] 外臣下降被锁定，变化无效");
+        }
+        else
+        {
+            foreign += foreignDelta;
+        }
+        
+        // 庶人 (layer 5)
+        if (peopleDelta > 0 && IsLayerLocked(5, true))
+        {
+            Debug.Log("[StatModel] 庶人上升被锁定，变化无效");
+        }
+        else if (peopleDelta < 0 && IsLayerLocked(5, false))
+        {
+            Debug.Log("[StatModel] 庶人下降被锁定，变化无效");
+        }
+        else
+        {
+            people += peopleDelta;
+        }
     }
 
     // 事件，当属性变化时触发

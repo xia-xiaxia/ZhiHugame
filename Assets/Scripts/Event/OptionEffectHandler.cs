@@ -99,11 +99,8 @@ public class OptionEffectHandler : MonoBehaviour
     /// </summary>
     private void ApplyStatChanges(Option opt)
     {
-        stats.king += opt.kingChange;
-        stats.noble += opt.nobleChange;
-        stats.scholar += opt.scholarChange;
-        stats.foreign += opt.foreignChange;
-        stats.people += opt.peopleChange;
+        // 使用带锁定检查的方法
+        stats.ApplyStatChange(opt.kingChange, opt.nobleChange, opt.scholarChange, opt.foreignChange, opt.peopleChange);
 
         Debug.Log($"[OptionEffectHandler] 数值变化: " +
             $"王权{opt.kingChange:+#;-#;0} " +

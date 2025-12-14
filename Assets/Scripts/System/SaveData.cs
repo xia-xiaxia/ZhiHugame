@@ -47,6 +47,9 @@ public class SaveData
     // 激活的事件集索引
     public List<int> activeRandomEventSetIndices = new List<int>();
     
+    // 锁定系统
+    public List<LayerLockData> activeLayerLocks = new List<LayerLockData>();
+    
     // 新手教程标记
     public bool hasSeenTutorial = false;
     
@@ -142,6 +145,23 @@ public class SaveData
         if (stats.delayedEventQueue != null)
         {
             data.delayedEventQueue = new List<DelayedEventData>(stats.delayedEventQueue);
+        }
+        
+        // 复制锁定系统
+        if (stats.activeLayerLocks != null)
+        {
+            foreach (var layerLock in stats.activeLayerLocks)
+            {
+                if (layerLock != null)
+                {
+                    data.activeLayerLocks.Add(new LayerLockData
+                    {
+                        layer = layerLock.layer,
+                        lockIncrease = layerLock.lockIncrease,
+                        remainingYears = layerLock.remainingYears
+                    });
+                }
+            }
         }
         
         // 保存事件使用状态（从 EventDatabase 获取）
@@ -253,6 +273,16 @@ public class SaveData
             stats.delayedEventQueue = new List<DelayedEventData>(delayedEventQueue);
         }
         
+        // 恢复锁定系统
+        stats.activeLayerLocks.Clear();
+        if (activeLayerLocks != null)
+        {
+            foreach (var lockData in activeLayerLocks)
+            {
+                stats.activeLayerLocks.Add(new StatModel.LayerLock(lockData.layer, lockData.lockIncrease, lockData.remainingYears));
+            }
+        }
+        
         Debug.Log($"[SaveData] 存档已加载: 年份={year}, 君主={king}, 贵族={noble}");
     }
 }
@@ -297,6 +327,17 @@ public class BuffData
     public int scholarChange;
     public int foreignChange;
     public int peopleChange;
+}
+
+/// <summary>
+/// 锁定数据（用于序列化）
+/// </summary>
+[System.Serializable]
+public class LayerLockData
+{
+    public int layer;
+    public bool lockIncrease;
+    public int remainingYears;
 }
 
 /// <summary>

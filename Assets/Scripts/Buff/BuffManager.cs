@@ -183,14 +183,19 @@ public class BuffManager : MonoBehaviour
     private void ApplyLongTermEffect(BuffLongTermEffect eff)
     {
         var stats = EventManager.Instance.stats;
+        int kingDelta = 0, nobleDelta = 0, scholarDelta = 0, foreignDelta = 0, peopleDelta = 0;
+        
         switch (eff.stat)
         {
-            case "king": stats.king += eff.delta; break;
-            case "noble": stats.noble += eff.delta; break;
-            case "scholar": stats.scholar += eff.delta; break;
-            case "foreign": stats.foreign += eff.delta; break;
-            case "people": stats.people += eff.delta; break;
+            case "king": kingDelta = eff.delta; break;
+            case "noble": nobleDelta = eff.delta; break;
+            case "scholar": scholarDelta = eff.delta; break;
+            case "foreign": foreignDelta = eff.delta; break;
+            case "people": peopleDelta = eff.delta; break;
         }
+        
+        // 使用带锁定检查的方法
+        stats.ApplyStatChange(kingDelta, nobleDelta, scholarDelta, foreignDelta, peopleDelta);
     }
 
     // 可扩展：通过ID查找并添加Buff
