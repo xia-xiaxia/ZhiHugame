@@ -39,7 +39,7 @@ public class StatModel : ScriptableObject
     [SerializeField]
     private int _people = 30;
     
-    // 货币属性（带事件触发）
+    // 货币属性
     public int currency
     {
         get => _currency;
@@ -52,8 +52,8 @@ public class StatModel : ScriptableObject
             }
         }
     }
-    
-    // 公开属性（带事件触发）
+
+    // 公开属性
     public int king
     {
         get => _king;
@@ -189,7 +189,6 @@ public class StatModel : ScriptableObject
     {
         year = 0;
         
-        // 设置默认上下限（如果被修改过，这里会重置为默认值；如果需要保留修改，请在调用前保存）
         kingMin = 0; kingMax = 60;
         nobleMin = 0; nobleMax = 60;
         scholarMin = 0; scholarMax = 60;
@@ -269,85 +268,36 @@ public class StatModel : ScriptableObject
     /// </summary>
     public void ApplyStatChange(int kingDelta, int nobleDelta, int scholarDelta, int foreignDelta, int peopleDelta)
     {
-        // 国君 (layer 1)
-        if (kingDelta > 0 && IsLayerLocked(1, true))
+        ApplyStatChangeWithLock(1, "国君", kingDelta, ref _king, () => OnKingChanged?.Invoke(_king));
+        ApplyStatChangeWithLock(2, "卿士", scholarDelta, ref _scholar, () => OnScholarChanged?.Invoke(_scholar));
+        ApplyStatChangeWithLock(3, "宗族", nobleDelta, ref _noble, () => OnNobleChanged?.Invoke(_noble));
+        ApplyStatChangeWithLock(4, "外臣", foreignDelta, ref _foreign, () => OnForeignChanged?.Invoke(_foreign));
+        ApplyStatChangeWithLock(5, "庶人", peopleDelta, ref _people, () => OnPeopleChanged?.Invoke(_people));
+        
+        OnStatsChanged?.Invoke();
+    }
+    
+    /// <summary>
+    /// 对单个属性应用带锁定检查的数值变化
+    /// </summary>
+    private void ApplyStatChangeWithLock(int layer, string layerName, int delta, ref int statValue, System.Action onChanged)
+    {
+        if (delta == 0) return;
+        
+        bool isIncrease = delta > 0;
+        if (IsLayerLocked(layer, isIncrease))
         {
-            Debug.Log("[StatModel] 国君上升被锁定，变化无效");
-        }
-        else if (kingDelta < 0 && IsLayerLocked(1, false))
-        {
-            Debug.Log("[StatModel] 国君下降被锁定，变化无效");
-        }
-        else
-        {
-            king += kingDelta;
+            Debug.Log($"[StatModel] {layerName}{(isIncrease ? "上升" : "下降")}被锁定，变化无效");
+            return;
         }
         
-        // 卿士 (layer 2)
-        if (scholarDelta > 0 && IsLayerLocked(2, true))
-        {
-            Debug.Log("[StatModel] 卿士上升被锁定，变化无效");
-        }
-        else if (scholarDelta < 0 && IsLayerLocked(2, false))
-        {
-            Debug.Log("[StatModel] 卿士下降被锁定，变化无效");
-        }
-        else
-        {
-            scholar += scholarDelta;
-        }
-        
-        // 宗族 (layer 3)
-        if (nobleDelta > 0 && IsLayerLocked(3, true))
-        {
-            Debug.Log("[StatModel] 宗族上升被锁定，变化无效");
-        }
-        else if (nobleDelta < 0 && IsLayerLocked(3, false))
-        {
-            Debug.Log("[StatModel] 宗族下降被锁定，变化无效");
-        }
-        else
-        {
-            noble += nobleDelta;
-        }
-        
-        // 外臣 (layer 4)
-        if (foreignDelta > 0 && IsLayerLocked(4, true))
-        {
-            Debug.Log("[StatModel] 外臣上升被锁定，变化无效");
-        }
-        else if (foreignDelta < 0 && IsLayerLocked(4, false))
-        {
-            Debug.Log("[StatModel] 外臣下降被锁定，变化无效");
-        }
-        else
-        {
-            foreign += foreignDelta;
-        }
-        
-        // 庶人 (layer 5)
-        if (peopleDelta > 0 && IsLayerLocked(5, true))
-        {
-            Debug.Log("[StatModel] 庶人上升被锁定，变化无效");
-        }
-        else if (peopleDelta < 0 && IsLayerLocked(5, false))
-        {
-            Debug.Log("[StatModel] 庶人下降被锁定，变化无效");
-        }
-        else
-        {
-            people += peopleDelta;
-        }
+        statValue += delta;
+        onChanged?.Invoke();
     }
 
     // 事件，当属性变化时触发
     public event System.Action OnStatsChanged;
     public event System.Action OnCurrencyChanged;
-
-    // public event System.Action<StatModel> OnPolicyBagChanged;
-
-    // public event System.Action<int> OnYearChanged;
-
     public event System.Action<int> OnKingChanged;
     public event System.Action<int> OnNobleChanged;
     public event System.Action<int> OnScholarChanged;
