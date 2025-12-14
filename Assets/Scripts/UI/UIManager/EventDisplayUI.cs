@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
@@ -49,6 +50,22 @@ public class EventDisplayUI : MonoBehaviour
             autoPlayButton.onClick.RemoveAllListeners();
             autoPlayButton.onClick.AddListener(OnAutoPlayClicked);
             UpdateAutoPlayButtonLabel();
+        }
+    }
+
+    private void Update()
+    {
+        GameObject go = GetHoveredUI();
+        if(go != null && HasParent(go.transform, "下一句")) 
+        {
+            float scroll = Input.GetAxis("Mouse ScrollWheel");
+            if (scroll < 0)
+            {
+                OnNextSentenceClicked();
+            } else if(scroll > 0)
+            {
+                OnPrevSentenceClicked();
+            }
         }
     }
 
@@ -143,6 +160,44 @@ public class EventDisplayUI : MonoBehaviour
         }
     }
 
+    private void ShowPrevSentence()
+    {
+        // 隐藏选项
+        HideOptions();
+        Debug.Log("Called");
+        if (currentSentenceIndex <= currentEventSentences.Count)
+        {
+            if (currentSentenceIndex != 0) currentSentenceIndex--;
+            else return;
+
+            waitingForSentence = true;
+
+            if (dialoguePanel != null)
+                dialoguePanel.SetBody(currentEventSentences[currentSentenceIndex]);
+
+            // 停止之前的自动播放
+            if (autoNextCoroutine != null)
+            {
+                StopCoroutine(autoNextCoroutine);
+                autoNextCoroutine = null;
+            }
+
+            if (currentSentenceIndex < currentEventSentences.Count)
+            {
+                // 还有下一句
+                if (autoPlayEnabled)
+                {
+                    autoNextCoroutine = StartCoroutine(AutoShowNextSentence(1.0f));
+                }
+            }
+            else
+            {
+                // 全部显示完毕，显示选项
+                StartCoroutine(ShowOptionsAfterDelay(0.2f));
+            }
+        }
+    }
+
     /// <summary>
     /// 自动显示下一句（协程）
     /// </summary>
@@ -163,6 +218,7 @@ public class EventDisplayUI : MonoBehaviour
     private IEnumerator ShowOptionsAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
+
         ShowEventOptions(currentEventId);
         waitingForSentence = false;
     }
@@ -252,6 +308,26 @@ public class EventDisplayUI : MonoBehaviour
         }
 
         ShowCurrentSentence();
+    }
+
+    private void OnPrevSentenceClicked()
+    {
+
+        // 若正在打字，先完成打字
+        if (dialoguePanel != null && dialoguePanel.IsTyping)
+        {
+            dialoguePanel.ForceCompleteTyping();
+            return;
+        }
+
+        // 停止自动播放
+        if (autoNextCoroutine != null)
+        {
+            StopCoroutine(autoNextCoroutine);
+            autoNextCoroutine = null;
+        }
+
+        ShowPrevSentence();
     }
 
     /// <summary>
@@ -375,5 +451,36 @@ public class EventDisplayUI : MonoBehaviour
         {
             ShowCurrentSentence();
         }
+    }
+
+    public GameObject GetHoveredUI()
+    {
+        PointerEventData pointerData = new PointerEventData(EventSystem.current);
+        pointerData.position = Input.mousePosition; 
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointerData, results);
+
+        if (results.Count > 0)
+        {
+            return results[0].gameObject;
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// 检查父级链中是否包含指定名称的物体
+    /// </summary>
+    public bool HasParent(Transform transform, string parentName)
+    {
+        Transform curr = transform.parent;
+        while (curr != null)
+        {
+            if (curr.name == parentName)
+                return true;
+
+            curr = curr.parent;
+        }
+        return false;
     }
 }
