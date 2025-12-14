@@ -139,7 +139,7 @@ public class CharacterManager : MonoBehaviour
     public void CharacterAnime()
     {
         
-
+        
         
     }
 }

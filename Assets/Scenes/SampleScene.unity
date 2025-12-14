@@ -1831,7 +1831,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &223359540
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3757,7 +3757,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u4E09\u5206\u7403"
+  m_Text: 
 --- !u!222 &465659662
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5995,7 +5995,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 613b93d0e0fac6c4b92c3b4695dda8ae, type: 3}
   - {fileID: 21300000, guid: 3257cee88055bc04b9b12dbf8b111cdd, type: 3}
   - {fileID: 21300000, guid: 6fa3f4c8082778241b35278362ef3bcf, type: 3}
-  - {fileID: 21300000, guid: e969495fa6bedf749b0f6dfc8dc8d05a, type: 3}
   tutorialPanel: {fileID: 791556972}
   tutorialImageDisplay: {fileID: 1303867228}
   tutorialCanvasGroup: {fileID: 791556974}
@@ -7726,7 +7725,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.1
-  m_Text: "\u6211\u7684\u5929\u54EA"
+  m_Text: ' '
 --- !u!222 &868584822
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8120,7 +8119,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u4E09\u5206\u7403"
+  m_Text: 
 --- !u!222 &962547890
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9507,7 +9506,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1176762179
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11248,7 +11247,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1342903681
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14214,7 +14213,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1822574303
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14416,7 +14415,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.1
-  m_Text: "\u6211\u7684\u5929\u54EA"
+  m_Text: ' '
 --- !u!222 &1830617474
 CanvasRenderer:
   m_ObjectHideFlags: 0
