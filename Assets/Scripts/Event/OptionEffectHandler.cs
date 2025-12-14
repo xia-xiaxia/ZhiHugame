@@ -24,7 +24,7 @@ public class OptionEffectHandler : MonoBehaviour
     /// <summary>
     /// 应用选项效果
     /// </summary>
-    public void ApplyOption(Option opt, int currentYear)
+    public void ApplyOption(Option opt, int currentYear, int yearDelta)
     {
         if (opt == null)
         {
@@ -54,6 +54,19 @@ public class OptionEffectHandler : MonoBehaviour
         HandleNextEvent(opt, currentYear);
 
         // 5. 更新 UI 和通知游戏控制器
+        // 年份增加和BUFF处理
+        if (GameControl.Instance != null)
+        {
+            GameControl.Instance.year += yearDelta;
+            if (yearDelta != 0)
+            {
+                for (int i = 0; i < yearDelta; i++)
+                {
+                    BuffManager.Instance?.OnYearEnd();
+                }
+            }
+        }
+
         UIManager.Instance?.UpdateStatText();
         UIManager.Instance?.ClearText();
         GameControl.Instance?.OnStatsChanged();

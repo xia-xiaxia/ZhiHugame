@@ -95,7 +95,7 @@ public class TurnManager : MonoBehaviour
         if (objectsAboutEvent != null)
             objectsAboutEvent.SetActive(false);
 
-        yield return new WaitForSeconds(0.5f);
+        //yield return new WaitForSeconds(0.5f);
 
         if (!GameLifecycleManager.Instance.GameOver && UIManager.Instance != null)
         {

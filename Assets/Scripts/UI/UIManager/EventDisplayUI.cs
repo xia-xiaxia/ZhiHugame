@@ -29,10 +29,12 @@ public class EventDisplayUI : MonoBehaviour
     private string currentEventId = "";
     private Coroutine autoNextCoroutine = null;
     private bool autoPlayEnabled = false;
+    private bool isFirstShow = true;
 
     void Awake()
     {
         Instance = this;
+        isFirstShow = true;
     }
 
     void Start()
@@ -90,21 +92,50 @@ public class EventDisplayUI : MonoBehaviour
             return;
         }
 
-        // 显示角色立绘
+        // 开始协程：先播放角色动画，再显示对话内容
+        StartCoroutine(ShowEventWithAnimation(evt));
+    }
+
+    /// <summary>
+    /// 带动画的事件显示：先播放角色动画，等待完成后再显示对话
+    /// </summary>
+    private IEnumerator ShowEventWithAnimation(GameEvent evt)
+    {
+        // 1. 先显示角色立绘并播放动画
         if (!string.IsNullOrEmpty(evt.speaker) && evt.speaker != "旁白")
         {
             CharacterManager.Instance?.ShowCharacter(evt.speaker);
+            
+            // 等待角色动画播放完成
+            if(isFirstShow)
+            {
+                isFirstShow = false;
+                if(speakerName != null) speakerName.text = evt.speaker ?? string.Empty;
+                float initialWaitTime = CharacterManager.Instance != null ? CharacterManager.Instance.entryTime : 2f;
+                Debug.Log($"[EventDisplayUI] 首次显示，等待角色初始动画完成，时长: {initialWaitTime}秒");
+                yield return new WaitForSeconds(initialWaitTime);
+            }
+            else
+            {
+                float exitAnimationTime = CharacterManager.Instance != null ? CharacterManager.Instance.entryTime : 2f;
+                Debug.Log($"[EventDisplayUI] 等待角色动画完成，时长: {exitAnimationTime}秒");
+                yield return new WaitForSeconds(exitAnimationTime);
+                if (speakerName != null) speakerName.text = evt.speaker ?? string.Empty;
+                Debug.Log($"[EventDisplayUI] 角色动画完成，显示说话人: {evt.speaker}");
+                float entryAnimationTime = CharacterManager.Instance != null ? CharacterManager.Instance.entryTime : 2f;
+                yield return StartCoroutine(WaitForAnimation(entryAnimationTime));
+            }
         }
 
-        // 显示标题和说话人
+        // 2. 角色动画播放完成后，显示标题
         if (titleText != null) titleText.text = evt.title ?? string.Empty;
-        if (speakerName != null) speakerName.text = evt.speaker ?? string.Empty;
 
-        // 分割对话句子
+        // 3. 分割对话句子
         string body = evt.body ?? string.Empty;
         currentEventSentences = new List<string>(body.Split('\n'));
         currentSentenceIndex = 0;
 
+        // 4. 显示对话内容
         if (currentEventSentences.Count <= 1)
         {
             // 只有一句，直接显示后显示选项
@@ -120,6 +151,12 @@ public class EventDisplayUI : MonoBehaviour
             waitingForSentence = true;
             ShowCurrentSentence();
         }
+    }
+
+    // 等待相应的动画播放的时间
+    IEnumerator WaitForAnimation(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
     }
 
     /// <summary>
@@ -251,7 +288,7 @@ public class EventDisplayUI : MonoBehaviour
 
                     // 应用选项效果
                     GameControl.Instance?.SaveStatsSnapshot();
-                    EventManager.Instance?.ApplyOption(opt, GameControl.Instance.year);
+                    EventManager.Instance?.ApplyOption(opt, GameControl.Instance.year,evt.yearDelta);
 
                     // 设置后继事件
                     if (!string.IsNullOrEmpty(opt.nextEventId))
@@ -272,18 +309,6 @@ public class EventDisplayUI : MonoBehaviour
             }
         }
 
-        // 年份增加和BUFF处理
-        if (GameControl.Instance != null)
-        {
-            GameControl.Instance.year += evt.yearDelta;
-            if (evt.yearDelta != 0)
-            {
-                for (int i = 0; i < evt.yearDelta; i++)
-                {
-                    BuffManager.Instance?.OnYearEnd();
-                }
-            }
-        }
     }
 
     /// <summary>
