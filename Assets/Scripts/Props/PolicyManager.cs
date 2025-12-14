@@ -61,23 +61,33 @@ public class PolicyManager : MonoBehaviour
     {
         return new PolicyItem
         {
+            // 基础信息
             id = original.id,
-            type = original.type,
             name = original.name,
-            desc = original.desc,
-            cost = original.cost,
             result = original.result,
-            whichChange = original.whichChange,
-            thresholdDeltaup = original.thresholdDeltaup,
-            thresholdDeltadown = original.thresholdDeltadown,
-            deathImmunity = original.deathImmunity != null ? new List<int>(original.deathImmunity) : new List<int>(),
+            desc = original.desc,
+            type = original.type,
+            usageCount = original.usageCount,
+            cost = original.cost,
+            
+            // 互动阶层
+            targetLayers = original.targetLayers != null ? new List<int>(original.targetLayers) : new List<int>(),
+            
+            // 免死道具
+            deathEffectText = original.deathEffectText,
+            
+            // 五大数值变化
             kingChange = original.kingChange,
             nobleChange = original.nobleChange,
             scholarChange = original.scholarChange,
             foreignChange = original.foreignChange,
             peopleChange = original.peopleChange,
-            usageCount = original.usageCount,
-            deathdec = original.deathdec
+            
+            // 时局道具
+            triggeredBuffId = original.triggeredBuffId,
+            
+            // 锁定道具
+            lockDuration = original.lockDuration
         };
     }
 

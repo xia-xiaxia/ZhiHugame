@@ -177,9 +177,9 @@ public class EndingManager : MonoBehaviour
             
             UIManager.Instance?.UpdateStatText();
             
-            if (!string.IsNullOrEmpty(item.deathdec))
+            if (!string.IsNullOrEmpty(item.deathEffectText))
             {
-                UIManager.Instance?.ShowDeathImmunityMessage(item.deathdec);
+                UIManager.Instance?.ShowDeathImmunityMessage(item.deathEffectText);
             }
         }
     }

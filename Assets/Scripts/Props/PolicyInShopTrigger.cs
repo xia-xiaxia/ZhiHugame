@@ -358,16 +358,25 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
     {
         if (policyItem == null || GameControl.Instance == null)
         {
+            Debug.LogError("[PolicyInShopTrigger] policyItem 或 GameControl.Instance 为空");
             OnPurchaseCancel();
             return;
         }
 
+        Debug.Log($"[PolicyInShopTrigger] 购买道具: {policyItem.name} (ID: {policyItem.id})");
+        
         GameControl.Instance.SpendCurrency(policyValue);
 
         PolicyItem newItem = PolicyManager.Instance.GetPolicy(policyItem.id);
         if (newItem != null)
         {
-            GameControl.Instance.AddPolicy(newItem);
+            Debug.Log($"[PolicyInShopTrigger] 获取道具副本成功: {newItem.name}");
+            bool success = GameControl.Instance.AddPolicy(newItem);
+            Debug.Log($"[PolicyInShopTrigger] 添加到背包结果: {success}");
+        }
+        else
+        {
+            Debug.LogError($"[PolicyInShopTrigger] 无法获取道具副本: {policyItem.id}");
         }
 
         if (UIManager.Instance != null)

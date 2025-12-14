@@ -98,18 +98,17 @@ public class SaveData
                         name = policy.name,
                         desc = policy.desc,
                         result = policy.result,
-                        whichChange = policy.whichChange,
-                        thresholdDeltaup = policy.thresholdDeltaup,
-                        thresholdDeltadown = policy.thresholdDeltadown,
-                        deathImmunity = policy.deathImmunity != null ? new List<int>(policy.deathImmunity) : new List<int>(),
+                        targetLayers = policy.targetLayers != null ? new List<int>(policy.targetLayers) : new List<int>(),
+                        deathEffectText = policy.deathEffectText,
                         kingChange = policy.kingChange,
                         nobleChange = policy.nobleChange,
                         scholarChange = policy.scholarChange,
                         foreignChange = policy.foreignChange,
                         peopleChange = policy.peopleChange,
+                        triggeredBuffId = policy.triggeredBuffId,
+                        lockDuration = policy.lockDuration,
                         usageCount = policy.usageCount,
-                        cost = policy.cost,
-                        deathdec = policy.deathdec
+                        cost = policy.cost
                     });
                 }
             }
@@ -208,18 +207,17 @@ public class SaveData
                     name = policyData.name,
                     desc = policyData.desc,
                     result = policyData.result,
-                    whichChange = policyData.whichChange,
-                    thresholdDeltaup = policyData.thresholdDeltaup,
-                    thresholdDeltadown = policyData.thresholdDeltadown,
-                    deathImmunity = policyData.deathImmunity != null ? new List<int>(policyData.deathImmunity) : new List<int>(),
+                    targetLayers = policyData.targetLayers != null ? new List<int>(policyData.targetLayers) : new List<int>(),
+                    deathEffectText = policyData.deathEffectText,
                     kingChange = policyData.kingChange,
                     nobleChange = policyData.nobleChange,
                     scholarChange = policyData.scholarChange,
                     foreignChange = policyData.foreignChange,
                     peopleChange = policyData.peopleChange,
+                    triggeredBuffId = policyData.triggeredBuffId,
+                    lockDuration = policyData.lockDuration,
                     usageCount = policyData.usageCount,
-                    cost = policyData.cost,
-                    deathdec = policyData.deathdec
+                    cost = policyData.cost
                 };
                 stats.policyBag.Add(policy);
             }
@@ -270,18 +268,17 @@ public class PolicyItemData
     public string name;
     public string desc;
     public string result;
-    public string whichChange;
-    public int thresholdDeltaup;
-    public int thresholdDeltadown;
-    public List<int> deathImmunity = new List<int>();
+    public List<int> targetLayers = new List<int>();
+    public string deathEffectText;
     public int kingChange;
     public int nobleChange;
     public int scholarChange;
     public int foreignChange;
     public int peopleChange;
+    public string triggeredBuffId;
+    public int lockDuration;
     public int usageCount;
     public int cost;
-    public string deathdec;
 }
 
 /// <summary>

@@ -29,7 +29,17 @@ public class PolicyMenuUI : MonoBehaviour
     /// </summary>
     public void ShowMenu()
     {
-        if (policyMenuPanel != null) policyMenuPanel.SetActive(true);
+        Debug.Log("[PolicyMenuUI] ShowMenu 被调用");
+        
+        if (policyMenuPanel != null) 
+        {
+            policyMenuPanel.SetActive(true);
+            Debug.Log("[PolicyMenuUI] 道具菜单面板已激活");
+        }
+        else
+        {
+            Debug.LogError("[PolicyMenuUI] policyMenuPanel 为空！");
+        }
 
         RefreshPolicyList();
     }
@@ -39,24 +49,49 @@ public class PolicyMenuUI : MonoBehaviour
     /// </summary>
     private void RefreshPolicyList()
     {
+        Debug.Log("[PolicyMenuUI] RefreshPolicyList 开始");
+        
         // 清理旧按钮
         foreach (var btn in policyItemButtons)
             if (btn != null) Destroy(btn);
         policyItemButtons.Clear();
 
-        if (GameControl.Instance == null || stats == null || stats.policyBag == null)
+        if (GameControl.Instance == null)
         {
-            Debug.LogError("[PolicyMenuUI] 数据源未设置");
+            Debug.LogError("[PolicyMenuUI] GameControl.Instance 为空");
+            return;
+        }
+        
+        if (stats == null)
+        {
+            Debug.LogError("[PolicyMenuUI] stats 为空，尝试从 GameControl 获取");
+            stats = GameControl.Instance.stats;
+            if (stats == null)
+            {
+                Debug.LogError("[PolicyMenuUI] 从 GameControl 也无法获取 stats");
+                return;
+            }
+        }
+        
+        if (stats.policyBag == null)
+        {
+            Debug.LogError("[PolicyMenuUI] stats.policyBag 为空");
             return;
         }
 
-        if (policyItemsParent == null || policyItemButtonPrefab == null)
+        if (policyItemsParent == null)
         {
-            Debug.LogError("[PolicyMenuUI] UI组件未设置");
+            Debug.LogError("[PolicyMenuUI] policyItemsParent 为空");
+            return;
+        }
+        
+        if (policyItemButtonPrefab == null)
+        {
+            Debug.LogError("[PolicyMenuUI] policyItemButtonPrefab 为空");
             return;
         }
 
-        Debug.Log($"[PolicyMenuUI] 显示 {stats.policyBag.Count} 个道具");
+        Debug.Log($"[PolicyMenuUI] 背包中有 {stats.policyBag.Count} 个道具，开始创建UI");
 
         int idx = 0;
         foreach (var item in stats.policyBag)
@@ -130,7 +165,7 @@ public class PolicyMenuUI : MonoBehaviour
     }
 
     /// <summary>
-    /// 使用阈值道具
+    /// 使用锁定道具
     /// </summary>
     private void UseThresholdPolicy(PolicyItem item)
     {
@@ -143,32 +178,25 @@ public class PolicyMenuUI : MonoBehaviour
             GameControl.Instance?.RemovePolicy(item.id);
         }
 
-        // 应用阈值变化
-        if (stats != null)
+        // 应用锁定效果
+        if (stats != null && item.targetLayers != null)
         {
-            switch (item.whichChange)
+            // 根据 targetLayers 锁定对应的数值
+            // 这里需要实现锁定逻辑，例如设置锁定标志
+            // TODO: 实现具体的锁定机制（例如在StatModel中添加锁定字段）
+            
+            foreach (int layer in item.targetLayers)
             {
-                case "king":
-                    stats.kingMin += item.thresholdDeltadown;
-                    stats.kingMax += item.thresholdDeltaup;
-                    break;
-                case "noble":
-                    stats.nobleMin += item.thresholdDeltadown;
-                    stats.nobleMax += item.thresholdDeltaup;
-                    break;
-                case "scholar":
-                    stats.scholarMin += item.thresholdDeltadown;
-                    stats.scholarMax += item.thresholdDeltaup;
-                    break;
-                case "foreign":
-                    stats.foreignMin += item.thresholdDeltadown;
-                    stats.foreignMax += item.thresholdDeltaup;
-                    break;
-                case "people":
-                    stats.peopleMin += item.thresholdDeltadown;
-                    stats.peopleMax += item.thresholdDeltaup;
-                    break;
+                int absLayer = System.Math.Abs(layer);
+                bool lockIncrease = layer > 0; // 正数禁止上升，负数禁止下降
+                
+                Debug.Log($"[PolicyMenuUI] 锁定道具效果：阶层{absLayer}，{(lockIncrease ? "禁止上升" : "禁止下降")}，持续{item.lockDuration}年");
+                
+                // 这里应该调用相应的锁定方法
+                // 例如: stats.LockLayer(absLayer, lockIncrease, item.lockDuration);
             }
+            
+            Debug.Log($"[PolicyMenuUI] 使用锁定道具：{item.name}");
         }
 
         HideMenu();
