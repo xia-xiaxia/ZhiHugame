@@ -38,6 +38,8 @@ public class OptionEffectHandler : MonoBehaviour
             return;
         }
 
+        EventDisplayUI.Instance.currentEventSentences.Clear();
+
         // 1. 检查特殊结局
         if (TryTriggerSpecialEnding(opt))
         {

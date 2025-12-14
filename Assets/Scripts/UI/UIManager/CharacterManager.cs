@@ -62,9 +62,16 @@ public class CharacterManager : MonoBehaviour
     /// <summary>
     /// 先快后慢的缓动函数（EaseOutExpo）
     /// </summary>
-    private float EaseOutExpo(float t)
+    private float EaseOutExpo(float x)
     {
-        return t >= 1f ? 1f : 1f - Mathf.Pow(2f, -10f * t);
+        float factor = 10f;
+        return (factor * x) / (factor * x + 1);
+    }
+
+    private float EaseInExpo(float x)
+    {
+        float factor = 10f;
+        return x / (1 + factor * (1 - x));
     }
 
     IEnumerator CharacterExit(string cleanName)
@@ -98,8 +105,8 @@ public class CharacterManager : MonoBehaviour
             duration += Time.deltaTime;
             float t = duration / entryTime;
             // 颜色使用缓动函数
-            //float easedT = EaseOutExpo(t);
-            float k = Mathf.Lerp(minBrightness, maxBrightness,t);
+            float easedT = EaseInExpo(t);
+            float k = Mathf.Lerp(minBrightness, maxBrightness,easedT);
             Color newColor = new Color(k, k, k, 1);
             image.color = newColor;
             // 位置使用线性插值

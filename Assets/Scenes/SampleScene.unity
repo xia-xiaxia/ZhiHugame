@@ -959,7 +959,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2213, y: 0}
+  m_AnchoredPosition: {x: 1742, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &96456198
@@ -6625,6 +6625,7 @@ MonoBehaviour:
   - {fileID: 1822574304}
   nextSentenceButton: {fileID: 1334062432}
   autoPlayButton: {fileID: 624428555}
+  currentEventSentences: []
 --- !u!114 &766299590
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -23,7 +23,7 @@ public class EventDisplayUI : MonoBehaviour
     public Button autoPlayButton;
 
     // 内部状态
-    private List<string> currentEventSentences = new List<string>();
+    public List<string> currentEventSentences = new List<string>();
     private int currentSentenceIndex = 0;
     private bool waitingForSentence = false;
     private string currentEventId = "";
@@ -201,7 +201,7 @@ public class EventDisplayUI : MonoBehaviour
     {
         // 隐藏选项
         HideOptions();
-        Debug.Log("Called");
+        if (currentEventSentences.Count == 0) return;
         if (currentSentenceIndex <= currentEventSentences.Count)
         {
             if (currentSentenceIndex != 0) currentSentenceIndex--;
