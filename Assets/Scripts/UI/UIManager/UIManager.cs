@@ -42,7 +42,7 @@ public class UIManager : MonoBehaviour
     }
 
     // ===== 游戏菜单控制 =====
-    
+
     /// <summary>
     /// 暂停游戏
     /// </summary>
@@ -60,7 +60,7 @@ public class UIManager : MonoBehaviour
     }
 
     // ===== 事件显示（委托给 EventDisplayUI）=====
-    
+
     /// <summary>
     /// 显示事件
     /// </summary>
@@ -119,7 +119,7 @@ public class UIManager : MonoBehaviour
     }
 
     // ===== 数值显示（委托给 StatsDisplayUI）=====
-    
+
     /// <summary>
     /// 更新数值显示
     /// </summary>
@@ -137,7 +137,7 @@ public class UIManager : MonoBehaviour
     }
 
     // ===== 结局面板（委托给 EndingUI）=====
-    
+
     /// <summary>
     /// 显示结局面板
     /// </summary>
@@ -155,7 +155,7 @@ public class UIManager : MonoBehaviour
     }
 
     // ===== 免死道具UI（委托给 DeathImmunityUI）=====
-    
+
     /// <summary>
     /// 显示免死道具确认弹窗
     /// </summary>
@@ -173,7 +173,7 @@ public class UIManager : MonoBehaviour
     }
 
     // ===== 道具菜单（委托给 PolicyMenuUI）=====
-    
+
     /// <summary>
     /// 显示道具菜单
     /// </summary>
@@ -191,7 +191,7 @@ public class UIManager : MonoBehaviour
     }
 
     // ===== 道具商店（委托给 PolicyShopUI）=====
-    
+
     /// <summary>
     /// 显示道具商店
     /// </summary>
@@ -217,7 +217,7 @@ public class UIManager : MonoBehaviour
     }
 
     // ===== BUFF面板（委托给 BuffUI）=====
-    
+
     /// <summary>
     /// 显示BUFF面板
     /// </summary>

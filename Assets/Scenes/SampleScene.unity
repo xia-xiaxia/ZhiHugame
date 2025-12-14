@@ -5995,7 +5995,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 613b93d0e0fac6c4b92c3b4695dda8ae, type: 3}
   - {fileID: 21300000, guid: 3257cee88055bc04b9b12dbf8b111cdd, type: 3}
   - {fileID: 21300000, guid: 6fa3f4c8082778241b35278362ef3bcf, type: 3}
-  - {fileID: 21300000, guid: e969495fa6bedf749b0f6dfc8dc8d05a, type: 3}
   tutorialPanel: {fileID: 791556972}
   tutorialImageDisplay: {fileID: 1303867228}
   tutorialCanvasGroup: {fileID: 791556974}
