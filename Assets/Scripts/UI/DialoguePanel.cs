@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class DialoguePanel : MonoBehaviour
+public class  DialoguePanel : MonoBehaviour
 {
     public Text bodyText;            
     public float typeInterval = 0.05f;

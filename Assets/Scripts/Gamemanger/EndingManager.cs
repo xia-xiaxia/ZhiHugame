@@ -246,7 +246,7 @@ public class EndingManager : MonoBehaviour
         
         endingTriggered = true;
         GameLifecycleManager.Instance.GameOver = true;
-        
+
         Debug.Log($"[EndingManager] 结局触发: {endingId} - {endingDescription}");
 
         UIManager.Instance?.jinYan?.SetActive(false);

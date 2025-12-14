@@ -79,8 +79,8 @@ public class CharacterManager : MonoBehaviour
             float k = Mathf.Lerp(maxBrightness, minBrightness, easedT);
             Color newColor = new Color(k, k, k, 1);
             image.color = newColor;
-            // 位置使用线性插值
-            float newx = Mathf.Lerp(leftRectTransform.position.x, rightRectTransform.position.x, t);
+            // 位置使用缓动函数
+            float newx = Mathf.Lerp(leftRectTransform.position.x, rightRectTransform.position.x, easedT);
             Vector2 position = rectTransform.position;
             position.x = newx;
             rectTransform.position = position;
@@ -98,12 +98,12 @@ public class CharacterManager : MonoBehaviour
             duration += Time.deltaTime;
             float t = duration / entryTime;
             // 颜色使用缓动函数
-            //float easedT = EaseOutExpo(t);
-            float k = Mathf.Lerp(minBrightness, maxBrightness,t);
+            float easedT = EaseOutExpo(t);
+            float k = Mathf.Lerp(minBrightness, maxBrightness, easedT);
             Color newColor = new Color(k, k, k, 1);
             image.color = newColor;
-            // 位置使用线性插值
-            float newx = Mathf.Lerp(rightRectTransform.position.x, leftRectTransform.position.x, t);
+            // 位置使用缓动函数
+            float newx = Mathf.Lerp(rightRectTransform.position.x, leftRectTransform.position.x, easedT);
             Vector2 position = rectTransform.position;
             position.x = newx;
             rectTransform.position = position;
