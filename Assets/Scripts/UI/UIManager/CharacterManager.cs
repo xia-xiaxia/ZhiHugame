@@ -13,7 +13,7 @@ public class CharacterManager : MonoBehaviour
     public GameObject character;
 
  
-    public float entryTime = 2f;
+    public float entryTime = 0.8f;
 
     public float minBrightness = 0.3f;
     public float maxBrightness = 1.0f;
@@ -59,16 +59,28 @@ public class CharacterManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 先快后慢的缓动函数（EaseOutExpo）
+    /// </summary>
+    private float EaseOutExpo(float t)
+    {
+        return t >= 1f ? 1f : 1f - Mathf.Pow(2f, -10f * t);
+    }
+
     IEnumerator CharacterExit(string cleanName)
     {
         float duration = 0f;
         while(duration < entryTime)
         {
             duration += Time.deltaTime;
-            float k = Mathf.Lerp(maxBrightness, minBrightness, duration / entryTime);
+            float t = duration / entryTime;
+            // 颜色使用缓动函数
+            float easedT = EaseOutExpo(t);
+            float k = Mathf.Lerp(maxBrightness, minBrightness, easedT);
             Color newColor = new Color(k, k, k, 1);
             image.color = newColor;
-            float newx = Mathf.Lerp(leftRectTransform.position.x, rightRectTransform.position.x, duration /  entryTime);
+            // 位置使用线性插值
+            float newx = Mathf.Lerp(leftRectTransform.position.x, rightRectTransform.position.x, t);
             Vector2 position = rectTransform.position;
             position.x = newx;
             rectTransform.position = position;
@@ -84,10 +96,14 @@ public class CharacterManager : MonoBehaviour
         while (duration < entryTime)
         {
             duration += Time.deltaTime;
-            float k = Mathf.Lerp(minBrightness, maxBrightness, duration / entryTime);
+            float t = duration / entryTime;
+            // 颜色使用缓动函数
+            //float easedT = EaseOutExpo(t);
+            float k = Mathf.Lerp(minBrightness, maxBrightness,t);
             Color newColor = new Color(k, k, k, 1);
             image.color = newColor;
-            float newx = Mathf.Lerp(rightRectTransform.position.x, leftRectTransform.position.x, duration / entryTime);
+            // 位置使用线性插值
+            float newx = Mathf.Lerp(rightRectTransform.position.x, leftRectTransform.position.x, t);
             Vector2 position = rectTransform.position;
             position.x = newx;
             rectTransform.position = position;
@@ -139,7 +155,7 @@ public class CharacterManager : MonoBehaviour
     public void CharacterAnime()
     {
         
-        
+
         
     }
 }
