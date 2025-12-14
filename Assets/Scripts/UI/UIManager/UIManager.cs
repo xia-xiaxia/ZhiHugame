@@ -1,3 +1,4 @@
+using UnityEditor.ProjectWindowCallback;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -143,7 +144,8 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void ShowEndingPanel(string endingId, string description, int survivedYears)
     {
-        EndingUI.Instance?.ShowEnding(endingId, description, survivedYears);
+        // EndingUI.Instance?.ShowEnding(endingId, description, survivedYears);
+        EndingUI.Instance?.ShowEndingWithAnimation(endingId, description, survivedYears);
     }
 
     /// <summary>

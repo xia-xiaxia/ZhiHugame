@@ -16,10 +16,13 @@ public class EndingUI : MonoBehaviour
     public Image endingImageBottom;
     public Text endingYearText;
     public Button restartButton;
+    public GameObject endImageContainer;
+    public Image endAnimationImage; // the white image for splash
 
     void Awake()
     {
         Instance = this;
+        endImageContainer.SetActive(false);
     }
 
     void Start()
@@ -35,7 +38,9 @@ public class EndingUI : MonoBehaviour
     /// </summary>
     public void ShowEnding(string endingId, string description, int survivedYears)
     {
-        if (endingPanel != null) endingPanel.SetActive(true);
+        if(endImageContainer != null)
+            endImageContainer.SetActive(true);
+
         if (endingText != null) endingText.text = description;
 
         // 加载结局图片
@@ -57,6 +62,56 @@ public class EndingUI : MonoBehaviour
                 PolicyShopUI.Instance?.ShowShop();
             });
         }
+    }
+
+    // 加上了演出动画的结局显示
+    public void ShowEndingWithAnimation(string endingId, string description, int survivedYears)
+    {
+        StartCoroutine(ShowEndingSequence(endingId, description, survivedYears));
+    }
+
+    IEnumerator ShowEndingSequence(string endingId, string description, int survivedYears)
+    {
+        // 显示白色闪屏动画
+        if (endingPanel != null) endingPanel.SetActive(true);
+        
+        if (endAnimationImage != null)
+        {
+            endAnimationImage.gameObject.SetActive(true);
+            Color color = endAnimationImage.color;
+            color.a = 0f;
+            endAnimationImage.color = color;
+
+            // 渐显效果
+            float duration = 2f;
+            float elapsedTime = 0f;
+            while (elapsedTime < duration)
+            {
+                elapsedTime += Time.deltaTime;
+                color.a = Mathf.Lerp(0f, 0.6f, elapsedTime / duration);
+                endAnimationImage.color = color;
+                yield return null;
+            }
+
+            ShowEnding(endingId, description, survivedYears);
+
+            // 渐隐效果
+            duration = 1.5f;
+            elapsedTime = 0f;
+            while(elapsedTime < duration)
+            {
+                elapsedTime += Time.deltaTime;
+                color.a = Mathf.Lerp(0.6f, 0f, elapsedTime / duration);
+                endAnimationImage.color = color;
+                yield return null;
+            }
+            endAnimationImage.gameObject.SetActive(false);
+        }
+        else 
+        {
+            ShowEnding(endingId, description, survivedYears);
+        }
+
     }
 
     /// <summary>
@@ -140,4 +195,6 @@ public class EndingUI : MonoBehaviour
             endingPanel.SetActive(false);
         }
     }
+
+   
 }
