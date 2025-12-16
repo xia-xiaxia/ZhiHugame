@@ -98,6 +98,7 @@ public class StatEffectController : MonoBehaviour
         Debug.Log($"[StatEffectController] {statType} - 初始化完成");
     }
 
+
     void OnEnable()
     {
         // 每次启用时也更新填充条，确保显示正确
