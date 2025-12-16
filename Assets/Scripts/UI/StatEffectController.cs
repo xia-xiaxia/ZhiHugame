@@ -35,7 +35,7 @@ public class StatEffectController : MonoBehaviour
     public Image valueFilledImage; // 数值填充图片（显示当前数值百分比）
 
     [Header("特效设置")]
-    public float effectDuration = 0.8f; // 特效显示时长
+    public float effectDuration = 1.5f; // 特效显示时长
     public AnimationCurve effectFadeCurve = AnimationCurve.EaseInOut(0, 1, 1, 0); // 淡入淡出曲线
     
     [Header("填充条平滑设置")]
@@ -304,6 +304,7 @@ public class StatEffectController : MonoBehaviour
         effectImage.color = originalColor;
 
         currentEffectCoroutine = null;
+
     }
 
     private void UpdateFilledImage()
