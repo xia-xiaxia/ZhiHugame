@@ -248,6 +248,14 @@ public class EndingManager : MonoBehaviour
         GameLifecycleManager.Instance.GameOver = true;
 
         Debug.Log($"[EndingManager] 结局触发: {endingId} - {endingDescription}");
+        
+        // 设置所有 StatEffectController 为游戏结束状态
+        StatEffectController[] controllers = Object.FindObjectsOfType<StatEffectController>();
+        foreach (var controller in controllers)
+        {
+            controller.SetGameOver(true);
+        }
+        Debug.Log($"[EndingManager] 已设置 {controllers.Length} 个 StatEffectController 为游戏结束状态");
 
         UIManager.Instance?.jinYan?.SetActive(false);
         MusicManager.Instance?.PlayDeathSound();
@@ -274,7 +282,8 @@ public class EndingManager : MonoBehaviour
     // ===== 延迟显示结局面板 =====
     private IEnumerator ShowEndingAfterDelay(string endingId, string endingDescription, int survivedYears)
     {
-        yield return new WaitForSeconds(1.5f);
+        // 等待2秒，让最后的数值变化动画播放完成
+        yield return new WaitForSeconds(2f);
 
         MusicManager.Instance?.PlayEndingMusic();
         UIManager.Instance?.ShowEndingPanel(endingId, endingDescription, survivedYears);
