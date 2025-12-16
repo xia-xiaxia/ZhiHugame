@@ -106,24 +106,38 @@ public class EventDisplayUI : MonoBehaviour
         {
             CharacterManager.Instance?.ShowCharacter(evt.speaker);
             
-            // 等待角色动画播放完成
-            if(isFirstShow)
+            // 检查角色是否真的显示了（可能因为找不到角色图片而没有显示）
+            bool characterIsShown = CharacterManager.Instance != null && 
+                                   CharacterManager.Instance.character != null && 
+                                   CharacterManager.Instance.character.activeSelf;
+            
+            // 只有角色真正显示时才等待动画
+            if (characterIsShown)
             {
-                isFirstShow = false;
-                if(speakerName != null) speakerName.text = evt.speaker ?? string.Empty;
-                float initialWaitTime = CharacterManager.Instance != null ? CharacterManager.Instance.entryTime : 2f;
-                Debug.Log($"[EventDisplayUI] 首次显示，等待角色初始动画完成，时长: {initialWaitTime}秒");
-                yield return new WaitForSeconds(initialWaitTime);
+                // 等待角色动画播放完成
+                if(isFirstShow)
+                {
+                    isFirstShow = false;
+                    if(speakerName != null) speakerName.text = evt.speaker ?? string.Empty;
+                    float initialWaitTime = CharacterManager.Instance.entryTime;
+                    Debug.Log($"[EventDisplayUI] 首次显示，等待角色初始动画完成，时长: {initialWaitTime}秒");
+                    yield return new WaitForSeconds(initialWaitTime);
+                }
+                else
+                {
+                    float exitAnimationTime = CharacterManager.Instance.entryTime;
+                    Debug.Log($"[EventDisplayUI] 等待角色退场动画，时长: {exitAnimationTime}秒");
+                    yield return new WaitForSeconds(exitAnimationTime);
+                    if (speakerName != null) speakerName.text = evt.speaker ?? string.Empty;
+                    Debug.Log($"[EventDisplayUI] 等待角色入场动画");
+                    float entryAnimationTime = CharacterManager.Instance.entryTime;
+                    yield return new WaitForSeconds(entryAnimationTime);
+                }
             }
             else
             {
-                float exitAnimationTime = CharacterManager.Instance != null ? CharacterManager.Instance.entryTime : 2f;
-                Debug.Log($"[EventDisplayUI] 等待角色动画完成，时长: {exitAnimationTime}秒");
-                yield return new WaitForSeconds(exitAnimationTime);
+                // 角色没有显示，直接显示说话人不等待
                 if (speakerName != null) speakerName.text = evt.speaker ?? string.Empty;
-                Debug.Log($"[EventDisplayUI] 角色动画完成，显示说话人: {evt.speaker}");
-                float entryAnimationTime = CharacterManager.Instance != null ? CharacterManager.Instance.entryTime : 2f;
-                yield return StartCoroutine(WaitForAnimation(entryAnimationTime));
             }
         }
 
@@ -507,5 +521,25 @@ public class EventDisplayUI : MonoBehaviour
             curr = curr.parent;
         }
         return false;
+    }
+
+    /// <summary>
+    /// 重置事件显示UI（重开游戏时调用）
+    /// </summary>
+    public void ResetEventDisplayUI()
+    {
+        isFirstShow = true;
+        currentEventSentences.Clear();
+        currentSentenceIndex = 0;
+        waitingForSentence = false;
+        currentEventId = "";
+        
+        if (autoNextCoroutine != null)
+        {
+            StopCoroutine(autoNextCoroutine);
+            autoNextCoroutine = null;
+        }
+        
+        Debug.Log("[EventDisplayUI] 已重置事件显示UI");
     }
 }

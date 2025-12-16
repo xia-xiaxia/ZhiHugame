@@ -47,6 +47,9 @@ public class SaveData
     // 激活的事件集索引
     public List<int> activeRandomEventSetIndices = new List<int>();
     
+    // 锁定系统
+    public List<LayerLockData> activeLayerLocks = new List<LayerLockData>();
+    
     // 新手教程标记
     public bool hasSeenTutorial = false;
     
@@ -98,18 +101,17 @@ public class SaveData
                         name = policy.name,
                         desc = policy.desc,
                         result = policy.result,
-                        whichChange = policy.whichChange,
-                        thresholdDeltaup = policy.thresholdDeltaup,
-                        thresholdDeltadown = policy.thresholdDeltadown,
-                        deathImmunity = policy.deathImmunity != null ? new List<int>(policy.deathImmunity) : new List<int>(),
+                        targetLayers = policy.targetLayers != null ? new List<int>(policy.targetLayers) : new List<int>(),
+                        deathEffectText = policy.deathEffectText,
                         kingChange = policy.kingChange,
                         nobleChange = policy.nobleChange,
                         scholarChange = policy.scholarChange,
                         foreignChange = policy.foreignChange,
                         peopleChange = policy.peopleChange,
+                        triggeredBuffId = policy.triggeredBuffId,
+                        lockDuration = policy.lockDuration,
                         usageCount = policy.usageCount,
-                        cost = policy.cost,
-                        deathdec = policy.deathdec
+                        cost = policy.cost
                     });
                 }
             }
@@ -143,6 +145,23 @@ public class SaveData
         if (stats.delayedEventQueue != null)
         {
             data.delayedEventQueue = new List<DelayedEventData>(stats.delayedEventQueue);
+        }
+        
+        // 复制锁定系统
+        if (stats.activeLayerLocks != null)
+        {
+            foreach (var layerLock in stats.activeLayerLocks)
+            {
+                if (layerLock != null)
+                {
+                    data.activeLayerLocks.Add(new LayerLockData
+                    {
+                        layer = layerLock.layer,
+                        lockIncrease = layerLock.lockIncrease,
+                        remainingYears = layerLock.remainingYears
+                    });
+                }
+            }
         }
         
         // 保存事件使用状态（从 EventDatabase 获取）
@@ -208,18 +227,17 @@ public class SaveData
                     name = policyData.name,
                     desc = policyData.desc,
                     result = policyData.result,
-                    whichChange = policyData.whichChange,
-                    thresholdDeltaup = policyData.thresholdDeltaup,
-                    thresholdDeltadown = policyData.thresholdDeltadown,
-                    deathImmunity = policyData.deathImmunity != null ? new List<int>(policyData.deathImmunity) : new List<int>(),
+                    targetLayers = policyData.targetLayers != null ? new List<int>(policyData.targetLayers) : new List<int>(),
+                    deathEffectText = policyData.deathEffectText,
                     kingChange = policyData.kingChange,
                     nobleChange = policyData.nobleChange,
                     scholarChange = policyData.scholarChange,
                     foreignChange = policyData.foreignChange,
                     peopleChange = policyData.peopleChange,
+                    triggeredBuffId = policyData.triggeredBuffId,
+                    lockDuration = policyData.lockDuration,
                     usageCount = policyData.usageCount,
-                    cost = policyData.cost,
-                    deathdec = policyData.deathdec
+                    cost = policyData.cost
                 };
                 stats.policyBag.Add(policy);
             }
@@ -255,6 +273,16 @@ public class SaveData
             stats.delayedEventQueue = new List<DelayedEventData>(delayedEventQueue);
         }
         
+        // 恢复锁定系统
+        stats.activeLayerLocks.Clear();
+        if (activeLayerLocks != null)
+        {
+            foreach (var lockData in activeLayerLocks)
+            {
+                stats.activeLayerLocks.Add(new StatModel.LayerLock(lockData.layer, lockData.lockIncrease, lockData.remainingYears));
+            }
+        }
+        
         Debug.Log($"[SaveData] 存档已加载: 年份={year}, 君主={king}, 贵族={noble}");
     }
 }
@@ -270,18 +298,17 @@ public class PolicyItemData
     public string name;
     public string desc;
     public string result;
-    public string whichChange;
-    public int thresholdDeltaup;
-    public int thresholdDeltadown;
-    public List<int> deathImmunity = new List<int>();
+    public List<int> targetLayers = new List<int>();
+    public string deathEffectText;
     public int kingChange;
     public int nobleChange;
     public int scholarChange;
     public int foreignChange;
     public int peopleChange;
+    public string triggeredBuffId;
+    public int lockDuration;
     public int usageCount;
     public int cost;
-    public string deathdec;
 }
 
 /// <summary>
@@ -300,6 +327,17 @@ public class BuffData
     public int scholarChange;
     public int foreignChange;
     public int peopleChange;
+}
+
+/// <summary>
+/// 锁定数据（用于序列化）
+/// </summary>
+[System.Serializable]
+public class LayerLockData
+{
+    public int layer;
+    public bool lockIncrease;
+    public int remainingYears;
 }
 
 /// <summary>

@@ -135,18 +135,7 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
             {
                 // 获取按钮在屏幕上的位置
                 Vector3 buttonScreenPos = RectTransformUtility.WorldToScreenPoint(canvas.worldCamera, buttonRect.position);
-                
-                // // 判断按钮在屏幕左半部分还是右半部分
-                // if (buttonScreenPos.x < Screen.width / 2f)
-                // {
-                //     // 左侧道具，tooltip 显示在鼠标右侧
-                //     dynamicOffsetX = tooltipRect.rect.width / 2f + 1f;
-                // }
-                // else
-                // {
-                //     // 右侧道具，tooltip 显示在鼠标左侧
-                //     dynamicOffsetX = -tooltipRect.rect.width / 2f - 1f;
-                // }
+
             }
         }
         
@@ -210,41 +199,6 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
             sb.AppendLine($"\n<color=#98FB98>效果：{policyItem.result}</color>");
         }
         
-        // switch (policyItem.type)
-        // {
-        //     case 1:
-        //         if (!string.IsNullOrEmpty(policyItem.whichChange))
-        //         {
-        //             sb.AppendLine($"\n<color=#FFA500>影响：{GetStatName(policyItem.whichChange)}</color>");
-        //             sb.AppendLine($"上限变化：{(policyItem.thresholdDeltaup >= 0 ? "+" : "")}{policyItem.thresholdDeltaup}");
-        //             sb.AppendLine($"下限变化：{(policyItem.thresholdDeltadown >= 0 ? "+" : "")}{policyItem.thresholdDeltadown}");
-        //         }
-        //         break;
-                
-        //     case 2:
-        //         if (policyItem.deathImmunity != null && policyItem.deathImmunity.Count > 0)
-        //         {
-        //             sb.AppendLine($"\n<color=#FF6B6B>免死类型：</color>");
-        //             foreach (int deathType in policyItem.deathImmunity)
-        //             {
-        //                 sb.AppendLine($"   {GetDeathTypeName(deathType)}");
-        //             }
-        //         }
-        //         break;
-                
-        //     case 3:
-        //         sb.AppendLine($"\n<color=#87CEEB>可跳过当前事件</color>");
-        //         break;
-                
-        //     case 4:
-        //         sb.AppendLine($"\n<color=#FFB6C1>数值变化：</color>");
-        //         if (policyItem.kingChange != 0) sb.AppendLine($"  国君：{(policyItem.kingChange >= 0 ? "+" : "")}{policyItem.kingChange}");
-        //         if (policyItem.nobleChange != 0) sb.AppendLine($"  贵族：{(policyItem.nobleChange >= 0 ? "+" : "")}{policyItem.nobleChange}");
-        //         if (policyItem.scholarChange != 0) sb.AppendLine($"  卿士：{(policyItem.scholarChange >= 0 ? "+" : "")}{policyItem.scholarChange}");
-        //         if (policyItem.foreignChange != 0) sb.AppendLine($"  外臣：{(policyItem.foreignChange >= 0 ? "+" : "")}{policyItem.foreignChange}");
-        //         if (policyItem.peopleChange != 0) sb.AppendLine($"  庶人：{(policyItem.peopleChange >= 0 ? "+" : "")}{policyItem.peopleChange}");
-        //         break;
-        // }
         
         return sb.ToString();
     }
@@ -253,10 +207,11 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
     {
         switch (type)
         {
-            case 1: return "阈值调整";
-            case 2: return "免除死亡";
-            case 3: return "跳过事件";
-            case 4: return "数值调控";
+            case 1: return "锁定道具";
+            case 2: return "免死道具";
+            case 3: return "跳过道具";
+            case 4: return "调控道具";
+            case 5: return "时局道具";
             default: return "未知类型";
         }
     }
@@ -282,8 +237,8 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
             case -1: return "国君下限";
             case 2: return "卿士上限";
             case -2: return "卿士下限";
-            case 3: return "贵族上限";
-            case -3: return "贵族下限";
+            case 3: return "宗族上限";
+            case -3: return "宗族下限";
             case 4: return "外臣上限";
             case -4: return "外臣下限";
             case 5: return "庶人上限";
@@ -358,16 +313,25 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
     {
         if (policyItem == null || GameControl.Instance == null)
         {
+            Debug.LogError("[PolicyInShopTrigger] policyItem 或 GameControl.Instance 为空");
             OnPurchaseCancel();
             return;
         }
 
+        Debug.Log($"[PolicyInShopTrigger] 购买道具: {policyItem.name} (ID: {policyItem.id})");
+        
         GameControl.Instance.SpendCurrency(policyValue);
 
         PolicyItem newItem = PolicyManager.Instance.GetPolicy(policyItem.id);
         if (newItem != null)
         {
-            GameControl.Instance.AddPolicy(newItem);
+            Debug.Log($"[PolicyInShopTrigger] 获取道具副本成功: {newItem.name}");
+            bool success = GameControl.Instance.AddPolicy(newItem);
+            Debug.Log($"[PolicyInShopTrigger] 添加到背包结果: {success}");
+        }
+        else
+        {
+            Debug.LogError($"[PolicyInShopTrigger] 无法获取道具副本: {policyItem.id}");
         }
 
         if (UIManager.Instance != null)

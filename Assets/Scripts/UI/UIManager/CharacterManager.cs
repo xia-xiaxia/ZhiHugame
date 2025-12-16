@@ -22,6 +22,7 @@ public class CharacterManager : MonoBehaviour
     private Image image;
 
     private bool isFirst = true;
+    private Coroutine currentAnimationCoroutine = null;
 
     public RectTransform leftRectTransform;
     public RectTransform rightRectTransform;
@@ -86,8 +87,8 @@ public class CharacterManager : MonoBehaviour
             float k = Mathf.Lerp(maxBrightness, minBrightness, easedT);
             Color newColor = new Color(k, k, k, 1);
             image.color = newColor;
-            // 位置使用线性插值
-            float newx = Mathf.Lerp(leftRectTransform.position.x, rightRectTransform.position.x, t);
+            // 位置使用缓动函数
+            float newx = Mathf.Lerp(leftRectTransform.position.x, rightRectTransform.position.x, easedT);
             Vector2 position = rectTransform.position;
             position.x = newx;
             rectTransform.position = position;
@@ -109,15 +110,14 @@ public class CharacterManager : MonoBehaviour
             float k = Mathf.Lerp(minBrightness, maxBrightness,easedT);
             Color newColor = new Color(k, k, k, 1);
             image.color = newColor;
-            // 位置使用线性插值
-            float newx = Mathf.Lerp(rightRectTransform.position.x, leftRectTransform.position.x, t);
+            // 位置使用缓动函数
+            float newx = Mathf.Lerp(rightRectTransform.position.x, leftRectTransform.position.x, easedT);
             Vector2 position = rectTransform.position;
             position.x = newx;
             rectTransform.position = position;
             yield return null;
         }
     }
-
 
     public void ShowCharacter(string name)
     {
@@ -142,14 +142,21 @@ public class CharacterManager : MonoBehaviour
         
         if (characterImages.ContainsKey(cleanName))
         {
+            // 停止之前的动画
+            if (currentAnimationCoroutine != null)
+            {
+                StopCoroutine(currentAnimationCoroutine);
+                currentAnimationCoroutine = null;
+            }
+            
             character.SetActive(true);
             if(isFirst)
             {
-                StartCoroutine(CharacterEntry(cleanName));
+                currentAnimationCoroutine = StartCoroutine(CharacterEntry(cleanName));
                 isFirst = false;
                 return;
             }
-            StartCoroutine(CharacterExit(cleanName));
+            currentAnimationCoroutine = StartCoroutine(CharacterExit(cleanName));
             Debug.Log($"[CharacterManager] 成功显示角色: {cleanName}");
         }
         else
@@ -164,5 +171,26 @@ public class CharacterManager : MonoBehaviour
         
 
         
+    }
+
+    /// <summary>
+    /// 重置角色管理器（重开游戏时调用）
+    /// </summary>
+    public void ResetCharacterManager()
+    {
+        // 停止所有正在运行的协程
+        StopAllCoroutines();
+        currentAnimationCoroutine = null;
+        
+        // 重置状态
+        isFirst = true;
+        
+        // 隐藏角色
+        if (character != null)
+        {
+            character.SetActive(false);
+        }
+        
+        Debug.Log("[CharacterManager] 已重置角色管理器");
     }
 }

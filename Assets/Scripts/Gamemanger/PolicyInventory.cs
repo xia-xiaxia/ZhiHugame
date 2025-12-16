@@ -20,14 +20,21 @@ public class PolicyInventory : MonoBehaviour
     // ===== 添加道具 =====
     public bool AddPolicy(PolicyItem item)
     {
-        if (stats == null || stats.policyBag == null) return false;
-        if (stats.policyBag.Count >= 5) return false;
+        if (stats == null || stats.policyBag == null) 
+        {
+            Debug.LogError("[PolicyInventory] stats 或 policyBag 为空");
+            return false;
+        }
         
-        // 检查是否已存在
-        if (stats.policyBag.Any(p => p.id == item.id)) return false;
+        if (stats.policyBag.Count >= 5) 
+        {
+            Debug.LogWarning("[PolicyInventory] 背包已满(5/5)");
+            return false;
+        }
         
+        // 所有道具都可以叠加，直接添加
         stats.policyBag.Add(item);
-        Debug.Log($"[PolicyInventory] 添加道具: {item.name}");
+        Debug.Log($"[PolicyInventory] 添加道具: {item.name} (背包: {stats.policyBag.Count}/5)");
         return true;
     }
 
@@ -70,8 +77,8 @@ public class PolicyInventory : MonoBehaviour
             {
                 if (item.type == 2 && 
                     item.usageCount != 0 && 
-                    item.deathImmunity != null && 
-                    item.deathImmunity.Contains(deathType))
+                    item.targetLayers != null && 
+                    item.targetLayers.Contains(deathType))
                 {
                     return item;
                 }

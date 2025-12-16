@@ -1,4 +1,5 @@
 using System.Collections;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ public class EndingUI : MonoBehaviour
     public static EndingUI Instance;
 
     [Header("结局面板组件")]
+    public GameObject blackEnd;
     public GameObject endingPanel;
     public Text endingText;
     public Image endingImage;
@@ -18,6 +20,7 @@ public class EndingUI : MonoBehaviour
     public Button restartButton;
     public GameObject endImageContainer;
     public Image endAnimationImage; // the white image for splash
+    public float animationDuration = 0.8f;
 
     void Awake()
     {
@@ -67,6 +70,7 @@ public class EndingUI : MonoBehaviour
     // 加上了演出动画的结局显示
     public void ShowEndingWithAnimation(string endingId, string description, int survivedYears)
     {
+        blackEnd.SetActive(true);
         StartCoroutine(ShowEndingSequence(endingId, description, survivedYears));
     }
 
@@ -83,7 +87,7 @@ public class EndingUI : MonoBehaviour
             endAnimationImage.color = color;
 
             // 渐显效果
-            float duration = 2f;
+            float duration = animationDuration;
             float elapsedTime = 0f;
             while (elapsedTime < duration)
             {
@@ -92,11 +96,11 @@ public class EndingUI : MonoBehaviour
                 endAnimationImage.color = color;
                 yield return null;
             }
-
+            blackEnd.SetActive(false);
             ShowEnding(endingId, description, survivedYears);
 
             // 渐隐效果
-            duration = 1.5f;
+            duration = animationDuration;
             elapsedTime = 0f;
             while(elapsedTime < duration)
             {

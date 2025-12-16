@@ -62,6 +62,9 @@ public class TurnManager : MonoBehaviour
             StatsDisplayUI.Instance.currentYearText.text = "第" + year.ToString() + "年";
         }
 
+        // 减少锁定时长
+        stats.DecrementLayerLocks();
+
         // 检查结局
         EndingManager.Instance?.CheckAndTriggerEnding();
         

@@ -183,6 +183,12 @@ public class GameLifecycleManager : MonoBehaviour
         EventManager.Instance?.ReloadAllEventsForRestart();
         EventManager.Instance?.OnRestartCleanup();
 
+        // 重置角色管理器，清除上一局的动画
+        CharacterManager.Instance?.ResetCharacterManager();
+        
+        // 重置事件显示UI，清除isFirstShow标志
+        EventDisplayUI.Instance?.ResetEventDisplayUI();
+
         Debug.Log("[GameLifecycle] 重开游戏准备完成");
     }
 
