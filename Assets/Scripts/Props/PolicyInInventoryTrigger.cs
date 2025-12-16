@@ -73,10 +73,7 @@ public class PolicyInInventoryTrigger : MonoBehaviour, IPointerEnterHandler, IPo
 
     void Update()
     {
-        if (tooltipPanel != null && tooltipPanel.activeSelf)
-        {
-            UpdateTooltipPosition();
-        }
+
     }
     
     void OnDestroy()
@@ -116,7 +113,6 @@ public class PolicyInInventoryTrigger : MonoBehaviour, IPointerEnterHandler, IPo
         }
 
         tooltipPanel.SetActive(true);
-        UpdateTooltipPosition();
     }
 
     private void HideTooltip()
@@ -126,46 +122,6 @@ public class PolicyInInventoryTrigger : MonoBehaviour, IPointerEnterHandler, IPo
             tooltipPanel.SetActive(false);
         }
     }
-
-    private void UpdateTooltipPosition()
-    {
-        if (tooltipPanel == null) return;
-
-        // 获取 tooltip 面板的高度，动态计算垂直偏移
-        RectTransform tooltipRect = tooltipPanel.GetComponent<RectTransform>();
-        float dynamicOffsetY = 0;
-        
-        if (tooltipRect != null)
-        {
-            // 强制重建布局以获取正确的高度
-            Canvas.ForceUpdateCanvases();
-            // 正数表示向上，面板高度的一半加上额外间距，显示在鼠标上方
-            dynamicOffsetY = tooltipRect.rect.height;
-        }
-        
-        Vector2 dynamicOffset = new Vector2(tooltipOffset.x, dynamicOffsetY);
-
-        if (canvas != null && canvas.renderMode == RenderMode.ScreenSpaceOverlay)
-        {
-            tooltipPanel.transform.position = Input.mousePosition + new Vector3(dynamicOffset.x, dynamicOffset.y, 0);
-        }
-        else if (canvas != null)
-        {
-            Vector2 localPoint;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                canvas.transform as RectTransform,
-                Input.mousePosition,
-                canvas.worldCamera,
-                out localPoint
-            );
-            tooltipPanel.transform.localPosition = localPoint + dynamicOffset;
-        }
-        else
-        {
-            tooltipPanel.transform.position = Input.mousePosition + new Vector3(dynamicOffset.x, dynamicOffset.y, 0);
-        }
-    }
-
     private string BuildTooltipText()
     {
         if (policyItem == null) return "无物品信息";

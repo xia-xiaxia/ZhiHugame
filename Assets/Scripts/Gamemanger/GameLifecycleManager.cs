@@ -164,7 +164,7 @@ public class GameLifecycleManager : MonoBehaviour
     public void RestartGame()
     {
         if (PolicyManager.Instance != null)
-            PolicyManager.Instance.GenerateShopItems(5);
+            PolicyManager.Instance.GenerateShopItems(8);
 
         GameOver = false;
         GamePaused = false;

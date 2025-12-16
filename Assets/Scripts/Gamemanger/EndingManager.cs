@@ -270,11 +270,12 @@ public class EndingManager : MonoBehaviour
         stats.ResetToDefault();
         stats.currency = savedCurrency;
         stats.policyBag = savedPolicies;
+        PolicyShopUI.Instance?.reRefreshCount(0);
         
         Debug.Log($"[EndingManager] 死亡时重置数值，保留货币 {savedCurrency} 和道具 {savedPolicies.Count} 个，清除所有BUFF");
 
         // 生成新商店道具
-        PolicyManager.Instance?.GenerateShopItems(5);
+        PolicyManager.Instance?.GenerateShopItems(8);
 
         StartCoroutine(ShowEndingAfterDelay(endingId, endingDescription, TurnManager.Instance.year));
     }

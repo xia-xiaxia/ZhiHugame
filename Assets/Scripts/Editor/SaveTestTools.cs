@@ -125,18 +125,18 @@ public class SaveTestTools : EditorWindow
     private void ResetToDefault()
     {
         if (!EditorUtility.DisplayDialog("重置存档", 
-            "确定要重置存档为初始值吗？\n年份=0, 五维属性=50", "确定", "取消"))
+            "确定要重置存档为初始值吗？\n年份=0, 五维属性=30", "确定", "取消"))
         {
             return;
         }
         
         testYear = 0;
         testCurrency = 0;
-        testKing = 50;
-        testNoble = 50;
-        testScholar = 50;
-        testForeign = 50;
-        testPeople = 50;
+        testKing = 30;
+        testNoble = 30;
+        testScholar = 30;
+        testForeign = 30;
+        testPeople = 30;
         
         ApplyCustomValues();
         Debug.Log("[测试工具] 存档已重置为初始值");
@@ -148,20 +148,20 @@ public class SaveTestTools : EditorWindow
     private void SetToHighLimit()
     {
         if (!EditorUtility.DisplayDialog("设置极限值", 
-            "将所有属性设置为接近上限的值（79）\n用于测试上限失败机制", "确定", "取消"))
+            "将所有属性设置为接近上限的值（59）\n用于测试上限失败机制", "确定", "取消"))
         {
             return;
         }
         
         testYear = 5;
-        testKing = 79;
-        testNoble = 79;
-        testScholar = 79;
-        testForeign = 79;
-        testPeople = 79;
+        testKing = 59;
+        testNoble = 59;
+        testScholar = 59;
+        testForeign = 59;
+        testPeople = 59;
         
         ApplyCustomValues();
-        Debug.Log("[测试工具] 已设置为高极限值（79）");
+        Debug.Log("[测试工具] 已设置为高极限值（59）");
     }
     
     /// <summary>
@@ -170,20 +170,20 @@ public class SaveTestTools : EditorWindow
     private void SetToLowLimit()
     {
         if (!EditorUtility.DisplayDialog("设置极限值", 
-            "将所有属性设置为接近下限的值（21）\n用于测试下限失败机制", "确定", "取消"))
+            "将所有属性设置为接近下限的值（1）\n用于测试下限失败机制", "确定", "取消"))
         {
             return;
         }
         
         testYear = 5;
-        testKing = 21;
-        testNoble = 21;
-        testScholar = 21;
-        testForeign = 21;
-        testPeople = 21;
+        testKing = 1;
+        testNoble = 1;
+        testScholar = 1;
+        testForeign = 1;
+        testPeople = 1;
         
         ApplyCustomValues();
-        Debug.Log("[测试工具] 已设置为低极限值（21）");
+        Debug.Log("[测试工具] 已设置为低极限值（1）");
     }
     
     /// <summary>
@@ -192,17 +192,17 @@ public class SaveTestTools : EditorWindow
     private void SetToCriticalValues()
     {
         if (!EditorUtility.DisplayDialog("设置临界值", 
-            "设置混合极限值用于测试：\n君主=79, 贵族=21, 士族=50, 外臣=79, 国人=21", "确定", "取消"))
+            "设置混合极限值用于测试：\n君主=59, 贵族=1, 士族=50, 外臣=9, 国人=51", "确定", "取消"))
         {
             return;
         }
         
-        testYear = 10;
-        testKing = 79;
-        testNoble = 21;
+        testYear = 1;
+        testKing = 59;
+        testNoble = 1;
         testScholar = 50;
-        testForeign = 79;
-        testPeople = 21;
+        testForeign = 9;
+        testPeople = 51;
         
         ApplyCustomValues();
         Debug.Log("[测试工具] 已设置为临界值（混合高低）");
@@ -227,16 +227,16 @@ public class SaveTestTools : EditorWindow
                 scholar = testScholar,
                 foreign = testForeign,
                 people = testPeople,
-                kingMin = 20,
-                kingMax = 80,
-                nobleMin = 20,
-                nobleMax = 80,
-                scholarMin = 20,
-                scholarMax = 80,
-                foreignMin = 20,
-                foreignMax = 80,
-                peopleMin = 20,
-                peopleMax = 80,
+                kingMin = 0,
+                kingMax = 60,
+                nobleMin = 00,
+                nobleMax = 60,
+                scholarMin = 0,
+                scholarMax = 60,
+                foreignMin = 0,
+                foreignMax = 60,
+                peopleMin = 0,
+                peopleMax = 60,
                 saveTime = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                 gameVersion = "1.0.0 [测试版本]"
             };
