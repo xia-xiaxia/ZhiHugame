@@ -38,6 +38,19 @@ public class StatModel : ScriptableObject
     private int _foreign = 30;
     [SerializeField]
     private int _people = 30;
+
+    //统计变化量，在year_end统一执行动画及数值改动
+    private int king_delta = 0;
+    private int noble_delta = 0;
+    private int scholar_delta = 0;
+    private int foreign_delta = 0;
+    private int people_delta = 0;
+
+    private int buff_king_delta = 0;
+    private int buff_noble_delta = 0;
+    private int buff_scholar_delta = 0;
+    private int buff_foreign_delta = 0;
+    private int buff_people_delta = 0;
     
     // 货币属性
     public int currency
@@ -264,35 +277,69 @@ public class StatModel : ScriptableObject
     }
     
     /// <summary>
-    /// 应用数值变化（带锁定检查）
+    /// 统计变化量
     /// </summary>
-    public void ApplyStatChange(int kingDelta, int nobleDelta, int scholarDelta, int foreignDelta, int peopleDelta)
+    public void ApplyStatChange(int kingDelta, int nobleDelta, int scholarDelta, int foreignDelta, int peopleDelta, bool isBuff=false)
     {
-        ApplyStatChangeWithLock(1, "国君", kingDelta, ref _king, () => OnKingChanged?.Invoke(_king));
-        ApplyStatChangeWithLock(2, "卿士", scholarDelta, ref _scholar, () => OnScholarChanged?.Invoke(_scholar));
-        ApplyStatChangeWithLock(3, "宗族", nobleDelta, ref _noble, () => OnNobleChanged?.Invoke(_noble));
-        ApplyStatChangeWithLock(4, "外臣", foreignDelta, ref _foreign, () => OnForeignChanged?.Invoke(_foreign));
-        ApplyStatChangeWithLock(5, "庶人", peopleDelta, ref _people, () => OnPeopleChanged?.Invoke(_people));
-        
-        OnStatsChanged?.Invoke();
+        king_delta += kingDelta;
+        noble_delta += nobleDelta;
+        scholar_delta += scholarDelta;
+        foreign_delta += foreignDelta;
+        people_delta += peopleDelta;
+
+        if(isBuff)
+        {
+            buff_king_delta += kingDelta;
+            buff_noble_delta += nobleDelta;
+            buff_scholar_delta += scholarDelta;
+            buff_foreign_delta += foreignDelta;
+            buff_people_delta += peopleDelta;
+        }
     }
     
+    public void PlayBuffAnime()
+    {
+        
+    }
+    
+    public void OnYearEnd()
+    {
+        ApplyStatChangeWithLock(1, "国君", king_delta, ref _king, () => OnKingChanged?.Invoke(_king), () => BuffOnKingChanged(buff_king_delta));
+        ApplyStatChangeWithLock(2, "卿士", noble_delta, ref _scholar, () => OnScholarChanged?.Invoke(_scholar), () => BuffOnNobleChanged(buff_noble_delta));
+        ApplyStatChangeWithLock(3, "宗族", scholar_delta, ref _noble, () => OnNobleChanged?.Invoke(_noble), () => BuffOnScholarChanged(buff_scholar_delta));
+        ApplyStatChangeWithLock(4, "外臣", foreign_delta, ref _foreign, () => OnForeignChanged?.Invoke(_foreign), () => BuffOnForeignChanged(buff_foreign_delta));
+        ApplyStatChangeWithLock(5, "庶人", people_delta, ref _people, () => OnPeopleChanged?.Invoke(_people), () => BuffOnPeopleChanged(buff_people_delta));
+        OnStatsChanged?.Invoke();
+        king_delta = 0;
+        noble_delta = 0;
+        scholar_delta = 0;
+        foreign_delta = 0;
+        people_delta = 0;
+        buff_king_delta = 0;
+        buff_noble_delta = 0;
+        buff_scholar_delta = 0;
+        buff_foreign_delta = 0;
+        buff_people_delta = 0;
+
+    }
+
     /// <summary>
     /// 对单个属性应用带锁定检查的数值变化
     /// </summary>
-    private void ApplyStatChangeWithLock(int layer, string layerName, int delta, ref int statValue, System.Action onChanged)
+    private void ApplyStatChangeWithLock(int layer, string layerName, int delta, ref int statValue, System.Action onChanged, System.Action BuffonChanged)
     {
         if (delta == 0) return;
-        
+
         bool isIncrease = delta > 0;
         if (IsLayerLocked(layer, isIncrease))
         {
             Debug.Log($"[StatModel] {layerName}{(isIncrease ? "上升" : "下降")}被锁定，变化无效");
             return;
         }
-        
+
         statValue += delta;
         onChanged?.Invoke();
+        BuffonChanged?.Invoke();
     }
 
     // 事件，当属性变化时触发
@@ -303,5 +350,12 @@ public class StatModel : ScriptableObject
     public event System.Action<int> OnScholarChanged;
     public event System.Action<int> OnForeignChanged;
     public event System.Action<int> OnPeopleChanged;
+
+    //For buff
+    public event System.Action<int> BuffOnKingChanged;
+    public event System.Action<int> BuffOnNobleChanged;
+    public event System.Action<int> BuffOnScholarChanged;
+    public event System.Action<int> BuffOnForeignChanged;
+    public event System.Action<int> BuffOnPeopleChanged;
 
 }

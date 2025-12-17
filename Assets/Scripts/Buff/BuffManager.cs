@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 // Buff长期效果的辅助类
@@ -48,6 +49,7 @@ public class BuffManager : MonoBehaviour
             return new List<BuffDefinition>(); // 返回空列表作为后备
         }
     }
+
 
     void Awake()
     {
@@ -116,6 +118,7 @@ public class BuffManager : MonoBehaviour
     // 每年结束时调用
     public void OnYearEnd()
     {
+
         Debug.Log($"[BuffManager] OnYearEnd 开始，当前激活BUFF数量: {ActiveBuffs.Count}");
         
         // 先应用所有BUFF的效果
@@ -151,6 +154,7 @@ public class BuffManager : MonoBehaviour
             }
         }
         
+
         // 然后处理时限并移除过期的BUFF
         List<BuffDefinition> buffsToRemove = new List<BuffDefinition>();
         foreach (var buff in ActiveBuffs)
@@ -187,15 +191,15 @@ public class BuffManager : MonoBehaviour
         
         switch (eff.stat)
         {
-            case "king": kingDelta = eff.delta; break;
-            case "noble": nobleDelta = eff.delta; break;
-            case "scholar": scholarDelta = eff.delta; break;
-            case "foreign": foreignDelta = eff.delta; break;
-            case "people": peopleDelta = eff.delta; break;
+            case "king": kingDelta = eff.delta;  break; 
+            case "noble":  nobleDelta = eff.delta; break; 
+            case "scholar":  scholarDelta = eff.delta;  break; 
+            case "foreign":  foreignDelta = eff.delta; break; 
+            case "people":  peopleDelta = eff.delta;  break; 
         }
         
         // 使用带锁定检查的方法
-        stats.ApplyStatChange(kingDelta, nobleDelta, scholarDelta, foreignDelta, peopleDelta);
+        stats.ApplyStatChange(kingDelta, nobleDelta, scholarDelta, foreignDelta, peopleDelta, true);
     }
 
     // 可扩展：通过ID查找并添加Buff
