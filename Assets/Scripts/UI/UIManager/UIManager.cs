@@ -20,6 +20,11 @@ public class UIManager : MonoBehaviour
     public GameObject policyTooltipPanel;
     public Text policyTooltipText;
 
+    [Header("道具商店")]
+    public int maxRefreshCount = 4;
+    public int[] refreshCosts = new int[4] { 5, 10, 20, 50 };
+    public Text CurrencyText;   
+
     // 兼容性字段（用于Inspector引用，会转发到子系统）
     [HideInInspector] public bool isShow;
 

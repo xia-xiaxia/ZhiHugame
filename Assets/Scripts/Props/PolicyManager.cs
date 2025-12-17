@@ -117,16 +117,22 @@ public class PolicyManager : MonoBehaviour
     }
 
     // 随机抽取n个道具作为商店商品
-    public void GenerateShopItems(int count = 5)
+    public void GenerateShopItems(int count = 8)
     {
+        Debug.Log($"[PolicyManager] 开始生成商店道具，请求数量={count}，可用道具总数={allPolicies.Count}");
+        
         var all = new List<PolicyItem>(allPolicies.Values);
         currentShopItems.Clear();
+        
         if (all.Count <= count)
         {
+            // 如果可用道具少于请求数量，全部添加
             foreach (var p in all) currentShopItems.Add(CopyPolicy(p));
+            Debug.Log($"[PolicyManager] 可用道具不足，添加了全部 {currentShopItems.Count} 个道具");
         }
         else
         {
+            // 随机抽取
             System.Random rnd = new System.Random();
             var picked = new HashSet<int>();
             while (currentShopItems.Count < count)
@@ -138,6 +144,13 @@ public class PolicyManager : MonoBehaviour
                     currentShopItems.Add(CopyPolicy(all[idx]));
                 }
             }
+            Debug.Log($"[PolicyManager] 随机生成了 {currentShopItems.Count} 个商店道具");
+        }
+        
+        // 打印生成的道具列表
+        for (int i = 0; i < currentShopItems.Count; i++)
+        {
+            Debug.Log($"[PolicyManager] 商店道具{i+1}: ID={currentShopItems[i].id}, 名称={currentShopItems[i].name}, 类型={currentShopItems[i].type}");
         }
     }
 

@@ -65,10 +65,7 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
 
     void Update()
     {
-        if (tooltipPanel != null && tooltipPanel.activeSelf)
-        {
-            UpdateTooltipPosition();
-        }
+
     }
     
     void OnDestroy()
@@ -101,7 +98,6 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
         }
 
         tooltipPanel.SetActive(true);
-        UpdateTooltipPosition();
     }
 
     private void HideTooltip()
@@ -112,55 +108,6 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
         }
     }
 
-    private void UpdateTooltipPosition()
-    {
-        if (tooltipPanel == null) return;
-
-        // 获取 tooltip 面板的尺寸，动态计算偏移
-        RectTransform tooltipRect = tooltipPanel.GetComponent<RectTransform>();
-        float dynamicOffsetX = 0;
-        float dynamicOffsetY = 0;
-        
-        if (tooltipRect != null)
-        {
-            // 强制重建布局以获取正确的尺寸
-            Canvas.ForceUpdateCanvases();
-            
-            // 垂直偏移：面板高度的一半加额外间距，显示在鼠标上方
-            dynamicOffsetY = tooltipRect.rect.height;
-            
-            // 水平偏移：根据道具按钮在屏幕中的位置决定显示在左侧还是右侧
-            RectTransform buttonRect = GetComponent<RectTransform>();
-            if (buttonRect != null)
-            {
-                // 获取按钮在屏幕上的位置
-                Vector3 buttonScreenPos = RectTransformUtility.WorldToScreenPoint(canvas.worldCamera, buttonRect.position);
-
-            }
-        }
-        
-        Vector2 dynamicOffset = new Vector2(dynamicOffsetX, dynamicOffsetY);
-
-        if (canvas != null && canvas.renderMode == RenderMode.ScreenSpaceOverlay)
-        {
-            tooltipPanel.transform.position = Input.mousePosition + new Vector3(dynamicOffset.x, dynamicOffset.y, 0);
-        }
-        else if (canvas != null)
-        {
-            Vector2 localPoint;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                canvas.transform as RectTransform,
-                Input.mousePosition,
-                canvas.worldCamera,
-                out localPoint
-            );
-            tooltipPanel.transform.localPosition = localPoint + dynamicOffset;
-        }
-        else
-        {
-            tooltipPanel.transform.position = Input.mousePosition + new Vector3(dynamicOffset.x, dynamicOffset.y, 0);
-        }
-    }
 
     private string BuildTooltipText()
     {
