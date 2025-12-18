@@ -226,12 +226,25 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
         
         if (displayText != null)
         {
-            displayText.text = $"{policyItem.name}\n<color=#FFD700>{policyValue}年</color>";
+            displayText.text = $"{policyItem.name}";
         }
     }
 
     public void ShowPurchaseConfirm()
     {
+        int activePurchaseConfirmCount = PolicyShopUI.Instance?.GetActivePurchaseConfirmCount() ?? 0;
+        if (activePurchaseConfirmCount >= 1)
+        {
+            Debug.LogWarning("[PolicyInShopTrigger] 已有购买确认面板打开，无法再次打开");
+            for(int i = 0; i < activePurchaseConfirmCount; i++)
+            {
+                GameObject purchaseConfirm = PolicyShopUI.Instance.activePurchaseConfirms.Dequeue();
+                if (purchaseConfirm != null)
+                {
+                    purchaseConfirm.SetActive(false);
+                }
+            }
+        }
         if (purchaseConfirmParent == null || policyItem == null) return;
 
         bool canPurchase = CanPurchase();
@@ -241,6 +254,7 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
         }
 
         purchaseConfirmParent.SetActive(true);
+        PolicyShopUI.Instance?.activePurchaseConfirms.Enqueue(purchaseConfirmParent);
     }
 
     private bool CanPurchase()
