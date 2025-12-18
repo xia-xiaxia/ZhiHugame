@@ -205,7 +205,7 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
             policyValue = Mathf.FloorToInt(policyItem.cost * multiple);
         }
         
-        UpdateButtonDisplay();
+         // UpdateButtonDisplay();
     }
     
     private void UpdateButtonDisplay()
@@ -250,7 +250,7 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
         int currency = GameControl.Instance.GetCurrency();
         
         if (currency < policyValue) return false;
-        if (GameControl.Instance.stats.policyBag.Count >= 5) return false;
+        if (GameControl.Instance.stats.policyBag.Count >= GameControl.Instance.stats.maxPolicyCount) return false;
         if (GameControl.Instance.GetPolicy(policyItem.id) != null) return false;
         
         return true;

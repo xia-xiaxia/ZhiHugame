@@ -24,6 +24,7 @@ public class StatModel : ScriptableObject
 {
     // 初始值均为 阈值的一半
     public int year = 0;      // 当前年份
+    public int maxPolicyCount = 8; // 最大道具数量
     
     // 私有字段
     [SerializeField]

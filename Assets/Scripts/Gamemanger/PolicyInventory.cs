@@ -26,15 +26,15 @@ public class PolicyInventory : MonoBehaviour
             return false;
         }
         
-        if (stats.policyBag.Count >= 5) 
+        if (stats.policyBag.Count >= stats.maxPolicyCount) 
         {
-            Debug.LogWarning("[PolicyInventory] 背包已满(5/5)");
+            Debug.LogWarning("[PolicyInventory] 背包已满(8/8)");
             return false;
         }
         
         // 所有道具都可以叠加，直接添加
         stats.policyBag.Add(item);
-        Debug.Log($"[PolicyInventory] 添加道具: {item.name} (背包: {stats.policyBag.Count}/5)");
+        Debug.Log($"[PolicyInventory] 添加道具: {item.name} (背包: {stats.policyBag.Count}/8)");
         return true;
     }
 
