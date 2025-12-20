@@ -26,6 +26,9 @@ public class PolicyShopUI : MonoBehaviour
 
     private List<GameObject> shopItemButtons = new List<GameObject>();
     private List<GameObject> shopInventoryButtons = new List<GameObject>();
+    
+    // 避免显示多个确认面版导致覆盖
+    public Queue<GameObject> activePurchaseConfirms = new Queue<GameObject>();
 
     // 刷新相关
     private int maxRefreshCount = 4;
@@ -386,6 +389,25 @@ public class PolicyShopUI : MonoBehaviour
     /// </summary>
     public void HideShop()
     {
+        if(activePurchaseConfirms.Count > 0)
+        {
+            while(activePurchaseConfirms.Count > 0)
+            {
+                GameObject purchaseConfirm = activePurchaseConfirms.Dequeue();
+                if (purchaseConfirm != null)
+                {
+                    purchaseConfirm.SetActive(false);
+                }
+            }
+        }
+        if(UIManager.Instance != null)
+        {
+            if(UIManager.Instance.policyTooltipPanel != null)
+            {
+                UIManager.Instance.policyTooltipText.text = "";
+                UIManager.Instance.policyTooltipPanel.SetActive(false);
+            };
+        }
         if (policyShopPanel != null)
         {
             policyShopPanel.SetActive(false);
@@ -433,6 +455,12 @@ public class PolicyShopUI : MonoBehaviour
             float f = (2f * t - 2f);
             return 0.5f * f * f * f + 1f;
         }
+    }
+
+    // 获取打开的确认面板数量
+    public int GetActivePurchaseConfirmCount()
+    {
+        return activePurchaseConfirms.Count;
     }
 
 }

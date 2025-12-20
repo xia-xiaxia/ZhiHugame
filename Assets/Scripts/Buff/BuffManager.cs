@@ -103,6 +103,17 @@ public class BuffManager : MonoBehaviour
             foreignChange = buff.foreignChange,
             peopleChange = buff.peopleChange
         };
+
+        //重复添加buff覆盖时间
+        foreach(var abuff in ActiveBuffs)
+        {
+            if(abuff.id == buffInstance.id)
+            {
+                abuff.duration = buffInstance.duration;
+                Debug.Log($"[BuffManager] 重复添加Buff: {buffInstance.name} (ID: {buffInstance.id}, 时限: {buffInstance.duration})");
+                return;
+            }
+        }
         
         ActiveBuffs.Add(buffInstance);
         Debug.Log($"[BuffManager] 添加Buff: {buffInstance.name} (ID: {buffInstance.id}, 时限: {buffInstance.duration})");

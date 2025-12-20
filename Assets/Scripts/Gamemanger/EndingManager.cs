@@ -191,36 +191,36 @@ public class EndingManager : MonoBehaviour
         {
             case 1:
             case -1:
-                stats.king = 50;
-                Debug.Log($"[EndingManager] 免死道具生效：国君恢复到 50");
+                stats.king = stats.kingMin + (stats.kingMax - stats.kingMin) / 2;
+                Debug.Log($"[EndingManager] 免死道具生效：国君恢复到 一半");
                 break;
             case 2:
             case -2:
-                stats.scholar = 50;
-                Debug.Log($"[EndingManager] 免死道具生效：卿士恢复到 50");
+                stats.scholar = stats.scholarMin + (stats.scholarMax - stats.scholarMin) / 2;
+                Debug.Log($"[EndingManager] 免死道具生效：卿士恢复到 一半");
                 break;
             case 3:
             case -3:
-                stats.noble = 50;
-                Debug.Log($"[EndingManager] 免死道具生效：贵族恢复到 50");
+                stats.noble = stats.nobleMin + (stats.nobleMax - stats.nobleMin) / 2;
+                Debug.Log($"[EndingManager] 免死道具生效：贵族恢复到 一半");
                 break;
             case 4:
             case -4:
-                stats.foreign = 50;
-                Debug.Log($"[EndingManager] 免死道具生效：外臣恢复到 50");
+                stats.foreign = stats.foreignMin + (stats.foreignMin - stats.foreignMax) / 2;
+                Debug.Log($"[EndingManager] 免死道具生效：外臣恢复到 一半");
                 break;
             case 5:
             case -5:
-                stats.people = 50;
-                Debug.Log($"[EndingManager] 免死道具生效：庶人恢复到 50");
+                stats.people = stats.peopleMin + (stats.peopleMax - stats.peopleMin) / 2;
+                Debug.Log($"[EndingManager] 免死道具生效：庶人恢复到 一半");
                 break;
             case 6:
-                stats.king = 50;
-                stats.noble = 50;
-                stats.scholar = 50;
-                stats.foreign = 50;
-                stats.people = 50;
-                Debug.Log($"[EndingManager] 免死道具生效：事件死亡，所有数值恢复到 50");
+                stats.king = stats.kingMin + (stats.kingMax - stats.kingMin) / 2;
+                stats.noble = stats.nobleMin + (stats.nobleMax - stats.nobleMin) / 2;
+                stats.scholar = stats.scholarMin + (stats.scholarMax - stats.scholarMin) / 2;
+                stats.foreign = stats.foreignMin + (stats.foreignMax - stats.foreignMin) / 2;
+                stats.people = stats.peopleMin + (stats.peopleMax - stats.peopleMin) / 2;
+                Debug.Log($"[EndingManager] 免死道具生效：事件死亡，所有数值恢复到 一半");
                 break;
         }
     }

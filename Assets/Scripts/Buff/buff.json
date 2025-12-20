@@ -50,5 +50,97 @@
     "result": "庶人势力持续小幅上升，持续一段时间",
     "duration": 5,
     "peopleChange": 5
+  },
+  {
+    "id": "051",
+    "name": "崇礼兴贵",
+    "description": "颁布崇礼兴邦诏令，明确贵族在祭祀、朝会中的核心地位",
+    "result": "贵族势力小幅上升，持续一段时间",
+    "duration": 5,
+    "nobleChange": 5
+  },
+  {
+    "id": "052",
+    "name": "休养生息",
+    "description": "颁布民本政策，减免庶人五年赋税，放宽农田开垦限制",
+    "result": "庶人势力小幅上升，持续一段时间",
+    "duration": 5,
+    "peopleChange": 5
+  },
+  {
+    "id": "053",
+    "name": "重卿抑外",
+    "description": "修改卿士职权，擢升卿士在贸易稽查、技艺准入的审核权",
+    "result": "卿士势力持续小幅提升，外臣势力持续小幅下降",
+    "duration": -1,
+    "scholarChange": 2,
+    "foreignChange": -2
+  },
+  {
+    "id": "054",
+    "name": "共议朝政",
+    "description": "开设朝堂议事会，允许庶人代表、外臣学者参与议政，防止卿士贵族独断",
+    "result": "庶人、外臣势力持续小幅上升，贵族、卿士势力持续小幅下降",
+    "duration": -1,
+    "nobleChange": -2,
+    "scholarChange": -2,
+    "foreignChange": 2,
+    "peopleChange": 2
+  },
+  {
+    "id": "055",
+    "name": "粮谷征调",
+    "description": "强制征调庶人存粮充作军饷，优先保障卿士的粮食供应",
+    "result": "庶人势力中幅下降，卿士势力小幅上升，持续一段时间",
+    "duration": 3,
+    "scholarChange": 5,
+    "peopleChange": -10
+  },
+  {
+    "id": "056",
+    "name": "客卿擢用",
+    "description": "设立 “客卿署”，外臣人才可凭专长直接授中阶官职，与卿士共议技术 / 贸易事务",
+    "result": "外臣势力中幅上升，卿士势力小幅上升，持续一段时间",
+    "duration": 3,
+    "scholarChange": 3,
+    "foreignChange": 8
+  },
+  {
+    "id": "057",
+    "name": "禁异术",
+    "description": "严禁外臣学者传授本国未有记载的 “异术”，限制外臣收徒规模，管控人民思维",
+    "result": "外臣势力小幅下降，国君势力小幅上升，持续一段时间",
+    "duration": 5,
+    "kingChange": 3,
+    "foreignChange": -5
+  },
+  {
+    "id": "058",
+    "name": "宫室奢靡",
+    "description": "征调民力修筑豪华宫苑、离宫别馆，耗费国库储备以满足个人享乐",
+    "result": "国君势力中幅下降，庶人势力小幅下降，持续一段时间",
+    "duration": 3,
+    "kingChange": -10,
+    "peopleChange": -5
+  },
+  {
+    "id": "059",
+    "name": "卿禄相传",
+    "description": "恢复贵族世代承袭官职与封地的旧制",
+    "result": "国君势力小幅下降，贵族势力中幅上升，持续一段时间",
+    "duration": 3,
+    "kingChange": -5,
+    "nobleChange": 10
+  },
+  {
+    "id": "060",
+    "name": "邻姻久固",
+    "description": "与邻国联姻，赠送财宝，开放贸易与文化交流，和平发展",
+    "result": "国君、贵族势力小幅下降，外臣、庶人势力小幅上升，持续一段时间",
+    "duration": 3,
+    "kingChange": -5,
+    "nobleChange": -5,
+    "foreignChange": 5,
+    "peopleChange": 5
   }
 ]
