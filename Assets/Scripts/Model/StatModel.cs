@@ -279,16 +279,20 @@ public class StatModel : ScriptableObject
     
     /// <summary>
     /// 统计变化量
+    /// type=0代表Option 1代表buff 2代表道具
     /// </summary>
-    public void ApplyStatChange(int kingDelta, int nobleDelta, int scholarDelta, int foreignDelta, int peopleDelta, bool isBuff=false)
+    public void ApplyStatChange(int kingDelta, int nobleDelta, int scholarDelta, int foreignDelta, int peopleDelta, int type=0)
     {
-        king_delta += kingDelta;
-        noble_delta += nobleDelta;
-        scholar_delta += scholarDelta;
-        foreign_delta += foreignDelta;
-        people_delta += peopleDelta;
+        if(type == 0 ||  type == 1)
+        {
+            king_delta += kingDelta;
+            noble_delta += nobleDelta;
+            scholar_delta += scholarDelta;
+            foreign_delta += foreignDelta;
+            people_delta += peopleDelta;
+        }
 
-        if(isBuff)
+        if(type == 1)
         {
             buff_king_delta += kingDelta;
             buff_noble_delta += nobleDelta;
@@ -296,6 +300,21 @@ public class StatModel : ScriptableObject
             buff_foreign_delta += foreignDelta;
             buff_people_delta += peopleDelta;
         }
+
+        if(type == 2)
+        {
+            ApplyAllStat(kingDelta, nobleDelta, scholarDelta, foreignDelta, peopleDelta);
+        }
+    }
+
+    private void ApplyAllStat(int _king_delta, int _noble_delta, int _scholar_delta, int _foreign_delta, int _people_delta)
+    {
+        ApplyStatChangeWithLock(1, "国君", _king_delta, ref _king, () => OnKingChanged?.Invoke(_king), () => BuffOnKingChanged(buff_king_delta));
+        ApplyStatChangeWithLock(2, "卿士", _noble_delta, ref _scholar, () => OnScholarChanged?.Invoke(_scholar), () => BuffOnNobleChanged(buff_noble_delta));
+        ApplyStatChangeWithLock(3, "宗族", _scholar_delta, ref _noble, () => OnNobleChanged?.Invoke(_noble), () => BuffOnScholarChanged(buff_scholar_delta));
+        ApplyStatChangeWithLock(4, "外臣", _foreign_delta, ref _foreign, () => OnForeignChanged?.Invoke(_foreign), () => BuffOnForeignChanged(buff_foreign_delta));
+        ApplyStatChangeWithLock(5, "庶人", _people_delta, ref _people, () => OnPeopleChanged?.Invoke(_people), () => BuffOnPeopleChanged(buff_people_delta));
+        OnStatsChanged?.Invoke();
     }
     
     public void PlayBuffAnime()
@@ -305,12 +324,8 @@ public class StatModel : ScriptableObject
     
     public void OnYearEnd()
     {
-        ApplyStatChangeWithLock(1, "国君", king_delta, ref _king, () => OnKingChanged?.Invoke(_king), () => BuffOnKingChanged(buff_king_delta));
-        ApplyStatChangeWithLock(2, "卿士", noble_delta, ref _scholar, () => OnScholarChanged?.Invoke(_scholar), () => BuffOnNobleChanged(buff_noble_delta));
-        ApplyStatChangeWithLock(3, "宗族", scholar_delta, ref _noble, () => OnNobleChanged?.Invoke(_noble), () => BuffOnScholarChanged(buff_scholar_delta));
-        ApplyStatChangeWithLock(4, "外臣", foreign_delta, ref _foreign, () => OnForeignChanged?.Invoke(_foreign), () => BuffOnForeignChanged(buff_foreign_delta));
-        ApplyStatChangeWithLock(5, "庶人", people_delta, ref _people, () => OnPeopleChanged?.Invoke(_people), () => BuffOnPeopleChanged(buff_people_delta));
-        OnStatsChanged?.Invoke();
+        ApplyAllStat(king_delta, noble_delta, scholar_delta, foreign_delta, people_delta);
+
         king_delta = 0;
         noble_delta = 0;
         scholar_delta = 0;

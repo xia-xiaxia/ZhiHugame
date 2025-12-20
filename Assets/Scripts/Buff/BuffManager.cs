@@ -210,7 +210,7 @@ public class BuffManager : MonoBehaviour
         }
         
         // 使用带锁定检查的方法
-        stats.ApplyStatChange(kingDelta, nobleDelta, scholarDelta, foreignDelta, peopleDelta, true);
+        stats.ApplyStatChange(kingDelta, nobleDelta, scholarDelta, foreignDelta, peopleDelta, 1);
     }
 
     // 可扩展：通过ID查找并添加Buff

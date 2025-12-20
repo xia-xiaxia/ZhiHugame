@@ -145,7 +145,7 @@ public class PolicyMenuUI : MonoBehaviour
         
         if (stats != null)
         {
-            stats.ApplyStatChange(item.kingChange, item.nobleChange, item.scholarChange, item.foreignChange, item.peopleChange);
+            stats.ApplyStatChange(item.kingChange, item.nobleChange, item.scholarChange, item.foreignChange, item.peopleChange, 2);
             StatsDisplayUI.Instance?.UpdateStatText();
             GameControl.Instance?.OnStatsChanged();
         }
@@ -164,7 +164,7 @@ public class PolicyMenuUI : MonoBehaviour
     {
         if (stats != null)
         {
-            stats.ApplyStatChange(item.kingChange, item.nobleChange, item.scholarChange, item.foreignChange, item.peopleChange);
+            stats.ApplyStatChange(item.kingChange, item.nobleChange, item.scholarChange, item.foreignChange, item.peopleChange, 2);
             StatsDisplayUI.Instance?.UpdateStatText();
             GameControl.Instance?.OnStatsChanged();
         }
