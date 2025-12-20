@@ -331,6 +331,7 @@ public class StatModel : ScriptableObject
         scholar_delta = 0;
         foreign_delta = 0;
         people_delta = 0;
+
         buff_king_delta = 0;
         buff_noble_delta = 0;
         buff_scholar_delta = 0;
