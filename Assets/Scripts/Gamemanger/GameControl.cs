@@ -10,6 +10,7 @@ public class GameControl : MonoBehaviour
 
     [Header("数据引用")]
     public StatModel stats;
+    public GameStatistics gameStatistics;
     public GameObject objectsAboutEvent;
 
     [Header("配置")]
