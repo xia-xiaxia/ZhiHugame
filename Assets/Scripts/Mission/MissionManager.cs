@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 
@@ -16,24 +17,64 @@ public class MissionData
     public int rewardPolicyId;
     public List<int> preMissionIds;
     public List<MissionCondition> conditions; // 检测条件
+
+    public bool CheckComplete(GameStatistics gs)
+    {
+        foreach(var con in conditions)
+        {
+            if(con.CheckComplete(gs) == false)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public bool CheckPreMissions()
+    {
+        foreach (var premission in preMissionIds)
+        {
+            if (!MissionManager.Instance.isComplete(premission))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void MissionComplete()
+    {
+        /*
+         * Undo: 任务做完的逻辑
+         */
+    }
 }
 
 public class MissionManager : MonoBehaviour
 {
 
-    public static MissionManager instance;
+    public static MissionManager Instance;
     
     private GameStatistics statistics;
 
     public List<MissionData> missionList = new List<MissionData>();
+
+    /*
+      当前已激活的任务
+      目前采用遍历missionList的方式发放后续任务
+      可以用建图拓扑的方式优化
+      
+      现在存储已激活任务是missionList中的下标
+    */
+    public List<int> activeMissions = new List<int>();
     public TextAsset missionJson;
 
     //任务是否完成
-    private Dictionary<string, bool> isComplete = new Dictionary<string, bool>();
+    private Dictionary<int, bool> _isComplete = new Dictionary<int, bool>();
 
     private void Awake()
     {
-        instance = this; 
+        Instance = this; 
         LoadMissions();
     }
 
@@ -53,6 +94,11 @@ public class MissionManager : MonoBehaviour
         {
             Debug.Log($"[MissionManager] 加载Mission: ID={m.id}, Name={m.name} Condition: count:{m.conditions.Count} ");
         }
+    }
+
+    public bool isComplete(int id)
+    {
+        return _isComplete.TryGetValue(id, out bool res) ? res : false;
     }
 
     void ConvertConditionsToDerived()
@@ -97,19 +143,28 @@ public class MissionManager : MonoBehaviour
         };
     }
 
-    bool CheckPreMissions(List<int> preMissions)
+    public void CheckComplete()
     {
-        foreach(var premission in preMissions)
+        foreach(var m in activeMissions)
         {
-            string preId = premission.ToString("000");
-            if(isComplete.ContainsKey(preId) == false || isComplete[preId] == false)
+            if (missionList[m].CheckComplete(statistics))
             {
-                return false;
+                missionList[m].MissionComplete();
+                _isComplete[int.Parse(missionList[m].id)] = true;
             }
         }
-        return true;
     }
 
+    public void Dispatch()
+    {
+        foreach(var m in missionList)
+        {
+            if(!isComplete(int.Parse(m.id)) && m.CheckPreMissions())
+            {
+                activeMissions.Add(int.Parse(m.id) - 1);
+            }
+        }
+    }
 }
 
 [Serializable]
@@ -156,8 +211,7 @@ public class PolicyUsageCondition : MissionCondition
 {
     public override bool CheckComplete(GameStatistics gameStatistics)
     {
-        if (gameStatistics.policyUsageCount.ContainsKey(paramList[1].ToString("000")) == false) return false;
-        return gameStatistics.policyUsageCount[paramList[1].ToString("000")] >= paramList[0];
+        return gameStatistics.GetPolicyUsage(paramList[1]) >= paramList[0];
     }
 }
 
@@ -166,8 +220,8 @@ public class SurvivalPolicyCondition : MissionCondition
 {
     public override bool CheckComplete(GameStatistics gameStatistics)
     {
-        if (gameStatistics.policyFirstYear.ContainsKey(paramList[1].ToString("000")) == false) return false;
-        return gameStatistics.currentReignYears - gameStatistics.policyFirstYear[paramList[1].ToString("000")] >= paramList[0];
+        int firstYear = gameStatistics.GetPolicyFirstYear(paramList[1]);
+        return firstYear != -1 && (gameStatistics.currentReignYears - firstYear) >= paramList[0];
     }
 }
 
@@ -176,8 +230,8 @@ public class SurvivalOptionCondition : MissionCondition
 {
     public override bool CheckComplete(GameStatistics gameStatistics)
     {
-        if (gameStatistics.judgeFirstYear[paramList[1]] == -1) return false;
-        return gameStatistics.currentReignYears - gameStatistics.judgeFirstYear[paramList[1]] >= paramList[0];
+        int firstYear = gameStatistics.judgeFirstYear[paramList[1]];
+        return firstYear != -1 && (gameStatistics.currentReignYears - firstYear) >= paramList[0];
     }
 }
 

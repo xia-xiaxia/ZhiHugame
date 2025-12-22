@@ -134,7 +134,10 @@ public class PolicyMenuUI : MonoBehaviour
     private void UseThresholdPolicy(PolicyItem item)
     {
         if (item.usageCount == 0) return;
-        
+
+        //全局统计
+        GameControl.Instance.gameStatistics.usePolicy(item.id);
+
         if (stats != null && item.targetLayers != null)
         {
             foreach (int layer in item.targetLayers)
@@ -154,6 +157,9 @@ public class PolicyMenuUI : MonoBehaviour
 
     private void UseSkipPolicy(PolicyItem item)
     {
+        //全局统计
+        GameControl.Instance.gameStatistics.usePolicy(item.id);
+
         GameControl.Instance.year++;
         ConsumePolicy(item);
         EventDisplayUI.Instance?.ClearText();
@@ -162,6 +168,9 @@ public class PolicyMenuUI : MonoBehaviour
 
     private void UseAdjustPolicy(PolicyItem item)
     {
+        //全局统计
+        GameControl.Instance.gameStatistics.usePolicy(item.id);
+
         if (stats != null)
         {
             stats.ApplyStatChange(item.kingChange, item.nobleChange, item.scholarChange, item.foreignChange, item.peopleChange, 2);
@@ -173,6 +182,9 @@ public class PolicyMenuUI : MonoBehaviour
 
     private void UseSituationPolicy(PolicyItem item)
     {
+        //全局统计
+        GameControl.Instance.gameStatistics.usePolicy(item.id);
+
         if (!string.IsNullOrEmpty(item.triggeredBuffId))
         {
             BuffManager.Instance?.AddBuffById(item.triggeredBuffId);
