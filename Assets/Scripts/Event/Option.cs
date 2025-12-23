@@ -15,7 +15,7 @@ public class Option
     public string specialChange;
     public string nextEventId;
     public int interval;
-    public int randomEventSet;
+    public int[] randomEventSet;
     public string activateBUFF; // 激活BUFF
 
     public int eventFlags; //事件判定值

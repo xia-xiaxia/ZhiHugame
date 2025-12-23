@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 using UnityEngine;
 
 public class EventDatabase : MonoBehaviour
@@ -28,12 +29,17 @@ public class EventDatabase : MonoBehaviour
         }
     }
 
-    public void LoadEvents()
+    public void LoadEvents(List<TextAsset> availableJsons = null)
     {
+        if (availableJsons == null)
+        {
+            availableJsons = eventJsons;
+        }
+
         globalEventDict.Clear();
         availableEventIds.Clear();
 
-        foreach (var jsonAsset in eventJsons)
+        foreach (var jsonAsset in availableJsons)
         {
             if (jsonAsset == null) continue;
 
@@ -178,5 +184,43 @@ public class EventDatabase : MonoBehaviour
         }
 
         Debug.Log($"[EventDatabase] 从存档恢复，移除 {usedIds.Count} 个已使用事件，剩余 {availableEventIds.Count} 个可用");
+    }
+    /// <summary>
+    /// 根据事件集ID激活或关闭事件集
+    /// </summary>
+    public void ActivateEventSetById(int[] randomEventSet)
+    {
+        List<TextAsset> activeEventJsons = eventJsons;
+        foreach (var fileid in randomEventSet)
+        {
+            if(fileid < 0)
+            {
+                int index = -fileid - 1;
+                if(index >= 0 && index < eventJsons.Count)
+                {
+                    activeEventJsons.Remove(eventJsons[index]);
+                    Debug.Log($"[EventDatabase] 关闭事件集: {eventJsons[index].name}");
+                } 
+                Debug.LogWarning($"[EventDatabase] 关闭事件集失败: 索引 {index} 越界");
+                continue;
+            }
+            else if(fileid > 0)
+            {
+                int index = fileid - 1;
+                if(index >= 0 && index < eventJsons.Count)
+                {
+                    if(!activeEventJsons.Contains(eventJsons[index]))
+                    {
+                        activeEventJsons.Add(eventJsons[index]);
+                        Debug.Log($"[EventDatabase] 激活事件集: {eventJsons[index].name}");
+                    }
+                } 
+                else
+                {
+                    Debug.LogWarning($"[EventDatabase] 激活事件集失败: 索引 {index} 越界");
+                }
+            }
+        }
+        LoadEvents(activeEventJsons);
     }
 }

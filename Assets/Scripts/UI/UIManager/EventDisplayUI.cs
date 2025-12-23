@@ -30,11 +30,13 @@ public class EventDisplayUI : MonoBehaviour
     private Coroutine autoNextCoroutine = null;
     private bool autoPlayEnabled = false;
     private bool isFirstShow = true;
+    private bool isDebugMode = false;
 
     void Awake()
     {
         Instance = this;
         isFirstShow = true;
+        isDebugMode = false;
     }
 
     void Start()
@@ -68,6 +70,11 @@ public class EventDisplayUI : MonoBehaviour
             {
                 OnPrevSentenceClicked();
             }
+        }
+        if(Input.GetKeyDown(KeyCode.F9))
+        {
+            isDebugMode = !isDebugMode;
+            Debug.Log($"[EventDisplayUI] 切换调试模式: {isDebugMode}");
         }
     }
 
@@ -154,8 +161,12 @@ public class EventDisplayUI : MonoBehaviour
         {
             // 只有一句，直接显示后显示选项
             if (dialoguePanel != null)
-                dialoguePanel.SetBody(body);
-            
+            {
+                if(isDebugMode)
+                    dialoguePanel.SetBody($"{GetCurrentEventId()}"+body);
+                else
+                    dialoguePanel.SetBody(body);
+            }
             waitingForSentence = true;
             StartCoroutine(ShowOptionsAfterDelay(0.8f));
         }
@@ -184,8 +195,12 @@ public class EventDisplayUI : MonoBehaviour
         if (currentSentenceIndex < currentEventSentences.Count)
         {
             if (dialoguePanel != null)
-                dialoguePanel.SetBody(currentEventSentences[currentSentenceIndex]);
-
+            {
+                if(currentSentenceIndex == 0 && isDebugMode)
+                    dialoguePanel.SetBody($"{GetCurrentEventId()}"+currentEventSentences[currentSentenceIndex]);
+                else
+                    dialoguePanel.SetBody(currentEventSentences[currentSentenceIndex]);
+            }
             currentSentenceIndex++;
 
             // 停止之前的自动播放

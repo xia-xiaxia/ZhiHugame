@@ -16,7 +16,7 @@ public class MissionData
     public int rewardTalent;
     public int rewardPolicyId;
     public List<int> preMissionIds;
-    public List<MissionCondition> conditions; // ¼ì²âÌõ¼ş
+    public List<MissionCondition> conditions; // æ£€æµ‹æ¡ä»¶
 
     public bool CheckComplete(GameStatistics gs)
     {
@@ -45,7 +45,7 @@ public class MissionData
     public void MissionComplete()
     {
         /*
-         * Undo: ÈÎÎñ×öÍêµÄÂß¼­
+         * Undo: ä»»åŠ¡åšå®Œçš„é€»è¾‘
          */
     }
 }
@@ -60,16 +60,16 @@ public class MissionManager : MonoBehaviour
     public List<MissionData> missionList = new List<MissionData>();
 
     /*
-      µ±Ç°ÒÑ¼¤»îµÄÈÎÎñ
-      Ä¿Ç°²ÉÓÃ±éÀúmissionListµÄ·½Ê½·¢·ÅºóĞøÈÎÎñ
-      ¿ÉÒÔÓÃ½¨Í¼ÍØÆËµÄ·½Ê½ÓÅ»¯
+      å½“å‰å·²æ¿€æ´»çš„ä»»åŠ¡
+      ç›®å‰é‡‡ç”¨éå†missionListçš„æ–¹å¼å‘æ”¾åç»­ä»»åŠ¡
+      å¯ä»¥ç”¨å»ºå›¾æ‹“æ‰‘çš„æ–¹å¼ä¼˜åŒ–
       
-      ÏÖÔÚ´æ´¢ÒÑ¼¤»îÈÎÎñÊÇmissionListÖĞµÄÏÂ±ê
+      ç°åœ¨å­˜å‚¨å·²æ¿€æ´»ä»»åŠ¡æ˜¯missionListä¸­çš„ä¸‹æ ‡
     */
     public List<int> activeMissions = new List<int>();
     public TextAsset missionJson;
 
-    //ÈÎÎñÊÇ·ñÍê³É
+    //ä»»åŠ¡æ˜¯å¦å®Œæˆ
     private Dictionary<int, bool> _isComplete = new Dictionary<int, bool>();
 
     private void Awake()
@@ -88,11 +88,11 @@ public class MissionManager : MonoBehaviour
         MissionData[] allMissions = JsonHelper.FromJson<MissionData>(missionJson.text);
         missionList.AddRange(allMissions);
 
-        Debug.Log($"[MissionManager] ¼ÓÔØÁË {missionList.Count} ¸öMission");
+        Debug.Log($"[MissionManager] åŠ è½½äº† {missionList.Count} ä¸ªMission");
         ConvertConditionsToDerived();
         foreach (var m in missionList)
         {
-            Debug.Log($"[MissionManager] ¼ÓÔØMission: ID={m.id}, Name={m.name} Condition: count:{m.conditions.Count} ");
+            Debug.Log($"[MissionManager] åŠ è½½Mission: ID={m.id}, Name={m.name} Condition: count:{m.conditions.Count} ");
         }
     }
 
@@ -123,7 +123,7 @@ public class MissionManager : MonoBehaviour
                 }
             }
         }
-        Debug.Log("ËùÓĞ MissionCondition ÒÑ³É¹¦Ìæ»»Îª¶ÔÓ¦µÄÅÉÉúÀàÊµÀı¡£");
+        Debug.Log("æ‰€æœ‰ MissionCondition å·²æˆåŠŸæ›¿æ¢ä¸ºå¯¹åº”çš„æ´¾ç”Ÿç±»å®ä¾‹ã€‚");
     }
 
     private MissionCondition CreateDerivedCondition(string type)
@@ -170,7 +170,7 @@ public class MissionManager : MonoBehaviour
 public class MissionCondition
 {
     public string type;
-    public int[] paramList;   // ²ÎÊıÁĞ±í
+    public int[] paramList;   // å‚æ•°åˆ—è¡¨
 
     public virtual bool CheckComplete(GameStatistics gameStatistics)
     {
