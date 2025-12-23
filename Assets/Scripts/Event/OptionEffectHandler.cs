@@ -68,7 +68,7 @@ public class OptionEffectHandler : MonoBehaviour
                 }
             }
         }
-
+        stats.OnYearEnd();
         UIManager.Instance?.UpdateStatText();
         UIManager.Instance?.ClearText();
         GameControl.Instance?.OnStatsChanged();

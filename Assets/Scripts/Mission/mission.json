@@ -1,0 +1,58 @@
+[
+  {
+    "id": "001",
+    "name": "测试任务1",
+    "description": "xxxx",
+    "rewardTalent": 1,
+    "rewardPolicyId": 1,
+    "preMissionIds": [1, 2, 3],
+    "conditions": [
+      {
+        "type": "currentReign",
+        "paramList": [20]
+      },
+      {
+        "type": "totalReign",
+        "paramList": [100]
+      },
+      {
+        "type": "runsWithLongReign",
+        "paramList": [2, 50]
+      },
+      {
+        "type": "policyUsageCount",
+        "paramList": [3, 5]
+      },
+      {
+        "type": "survivalAfterPolicy",
+        "paramList": [30, 40]
+      },
+      {
+        "type": "survivalAfterOption",
+        "paramList": [30, 55]
+      },
+      {
+        "type": "requiredEventFlags",
+        "paramList": [1, 4, 77]
+      }
+    ]
+  }, 
+    {
+    "id": "002",
+    "name": "测试任务2",
+    "description": "yyyy",
+    "rewardTalent": 2,
+    "rewardPolicyId": 2,
+    "preMissionIds": [5, 6],
+    "conditions": [
+      {
+        "type": "totalReign",
+        "paramList": [1]
+      },
+      {
+        "type": "requiredEventFlags",
+        "paramList": [5, 6]
+      }
+    ]
+  }
+]

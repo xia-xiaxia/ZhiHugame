@@ -57,9 +57,12 @@ public class StatEffectController : MonoBehaviour
     private Color increaseOriginalColor; // 保存增加特效的初始颜色
     private Color decreaseOriginalColor; // 保存下降特效的初始颜色
 
+    private Buffanime buffanime;
+
     void Start()
     {
         InitializeController();
+        buffanime = GetComponent<Buffanime>();
     }
 
     void OnEnable()
@@ -200,18 +203,24 @@ public class StatEffectController : MonoBehaviour
         switch (statType)
         {
             case StatType.King:
+                stats.BuffOnKingChanged += PlayBuffAnime;
                 stats.OnKingChanged += OnValueChanged;
                 break;
+                
             case StatType.Noble:
+                stats.BuffOnNobleChanged += PlayBuffAnime;
                 stats.OnNobleChanged += OnValueChanged;
                 break;
             case StatType.Scholar:
+                stats.BuffOnScholarChanged += PlayBuffAnime;
                 stats.OnScholarChanged += OnValueChanged;
                 break;
             case StatType.Foreign:
+                stats.BuffOnForeignChanged += PlayBuffAnime;
                 stats.OnForeignChanged += OnValueChanged;
                 break;
             case StatType.People:
+                stats.BuffOnPeopleChanged += PlayBuffAnime;
                 stats.OnPeopleChanged += OnValueChanged;
                 break;
         }
@@ -227,23 +236,33 @@ public class StatEffectController : MonoBehaviour
         switch (statType)
         {
             case StatType.King:
+                stats.BuffOnKingChanged -= PlayBuffAnime;
                 stats.OnKingChanged -= OnValueChanged;
                 break;
             case StatType.Noble:
+                stats.BuffOnNobleChanged -= PlayBuffAnime;
                 stats.OnNobleChanged -= OnValueChanged;
                 break;
             case StatType.Scholar:
+                stats.BuffOnScholarChanged -= PlayBuffAnime;
                 stats.OnScholarChanged -= OnValueChanged;
                 break;
             case StatType.Foreign:
+                stats.BuffOnForeignChanged -= PlayBuffAnime;
                 stats.OnForeignChanged -= OnValueChanged;
                 break;
             case StatType.People:
+                stats.BuffOnPeopleChanged -= PlayBuffAnime;
                 stats.OnPeopleChanged -= OnValueChanged;
                 break;
         }
 
         stats.OnStatsChanged -= OnStatsChanged;
+    }
+
+    private void PlayBuffAnime(int delta)
+    {
+        buffanime.PlayBuffAnime(delta);
     }
 
     private void OnValueChanged(int newValue)

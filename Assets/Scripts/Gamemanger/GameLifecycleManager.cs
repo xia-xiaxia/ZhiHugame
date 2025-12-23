@@ -148,6 +148,9 @@ public class GameLifecycleManager : MonoBehaviour
         {
             UIManager.Instance.jinYan.SetActive(true);
         }
+
+        //全局统计的初始化
+        GameControl.Instance.gameStatistics.Restart();
         
         UIManager.Instance?.UpdateStatText();
         UIManager.Instance?.UpdateCurrencyDisplay();
@@ -165,6 +168,9 @@ public class GameLifecycleManager : MonoBehaviour
     {
         if (PolicyManager.Instance != null)
             PolicyManager.Instance.GenerateShopItems(8);
+
+        //全局统计的初始化
+        GameControl.Instance.gameStatistics.Restart();
 
         GameOver = false;
         GamePaused = false;

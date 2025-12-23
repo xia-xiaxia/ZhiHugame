@@ -7,21 +7,30 @@ public class Buffanime : MonoBehaviour
     public static Buffanime Instance;
     public GameObject buffImage1;
     public GameObject buffImage2;
+
+    private Coroutine currentCoroutine = null;
+
+    //设置为和光效持续时间相同
+    float duration;
     void Start()
     {
         buffImage1.SetActive(false);
         buffImage2.SetActive(false);
+
+        duration = GetComponent<StatEffectController>().effectDuration;
     }
 
-    void Update()
+    public void PlayBuffAnime(int delta)
     {
 
-    }
+       if(currentCoroutine != null)
+       {
+           StopCoroutine(currentCoroutine);
+           buffImage1.SetActive(false);
+           buffImage2.SetActive(false);
+       }
 
-    public void Buffstart()
-    {
-        buffImage1.SetActive(false);
-        buffImage2.SetActive(false);
+       currentCoroutine = StartCoroutine(playAnime(delta));
     }
 
     public IEnumerator playAnime(int x)
@@ -30,22 +39,19 @@ public class Buffanime : MonoBehaviour
         {
             buffImage1.SetActive(true);
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(duration);
             buffImage1.SetActive(false);
         }
         else if (x < 0)
         {
             buffImage2.SetActive(true);
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(duration);
             buffImage2.SetActive(false);
         }
 
         yield break;
     }
     
-    public void BuffStay()
-    {
-        StartCoroutine(playAnime(1));
-    }
+
 }

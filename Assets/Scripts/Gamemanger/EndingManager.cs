@@ -243,6 +243,9 @@ public class EndingManager : MonoBehaviour
     public void TriggerEnding(string endingId, string endingDescription)
     {
         if (endingTriggered) return;
+
+        //全局数据收集
+        GameControl.Instance.gameStatistics.GameEnd();
         
         endingTriggered = true;
         GameLifecycleManager.Instance.GameOver = true;

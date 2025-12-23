@@ -79,8 +79,8 @@ public class BuffManagerDebug : MonoBehaviour
     {
         if (BuffManager.Instance != null)
         {
-            Debug.Log("[BuffManagerDebug] 测试添加BUFF 001");
-            var buff = BuffManager.Instance.AddBuffById("001");
+            Debug.Log("[BuffManagerDebug] 测试添加BUFF 005");
+            var buff = BuffManager.Instance.AddBuffById("005");
             if (buff != null)
             {
                 Debug.Log($"[BuffManagerDebug] 成功添加BUFF: {buff.name}");
