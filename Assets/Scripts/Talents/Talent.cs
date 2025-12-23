@@ -8,12 +8,16 @@ public class Talent
 {
     public string id;
     public string name;
-    public string description;
+    [TextArea] public string description;
     public int cost;
-    public List<Talent> preTanlents = new List<Talent>();
+
+    public List<string> preTanlents; 
+
+    // [NonSerialized] 防止 JsonUtility 试图去序列化它导致死循环或报错
+    [NonSerialized] 
+    public List<Talent> preTalentObjects = new List<Talent>();
 
     public TalentEffect talentEffect = new TalentEffect();
-
 }
 
 [Serializable]
@@ -30,4 +34,10 @@ public class TalentEffect
     public float currencyMult;
     public int policyBagSizeChange;
     public int payBackCurrency;
+}
+
+[Serializable]
+public class TalentRoot
+{
+    public List<Talent> talents = new List<Talent>();
 }
