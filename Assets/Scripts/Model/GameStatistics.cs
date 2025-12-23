@@ -11,6 +11,8 @@ public class GameStatistics : ScriptableObject
     private int _currentReignYears;
     [SerializeField]
     private int _totalReginYears;
+    [SerializeField]
+    private int _policyUseOutCount;
 
     public Dictionary<int, int> policyUsageCount = new Dictionary<int, int>();
     public Dictionary<int, int> policyFirstYear = new Dictionary<int, int>();
@@ -34,6 +36,15 @@ public class GameStatistics : ScriptableObject
         set
         {
             _totalReginYears = value;
+        }
+    }
+
+    public int policyUseOutCount
+    {
+        get => _policyUseOutCount;
+        set
+        {
+            _policyUseOutCount = value;
         }
     }
 
@@ -65,11 +76,15 @@ public class GameStatistics : ScriptableObject
         totalReginYears += TurnManager.Instance.year;
     }
 
-    public void usePolicy(string id)
+    public void usePolicy(PolicyItem item)
     {
-        int key = int.Parse(id);
+        int key = int.Parse(item.id);
         policyUsageCount[key] = policyUsageCount.GetValueOrDefault(key, 0) + 1;
         policyFirstYear.TryAdd(key, TurnManager.Instance.year);
+        if(item.usageCount == 1)
+        {
+            policyUseOutCount++;
+        }
     }
 
     public void setJudgeValue(int id)
@@ -78,6 +93,18 @@ public class GameStatistics : ScriptableObject
         {
             judgeValue[id] = true;
             judgeFirstYear[id] = TurnManager.Instance.year;
+        }
+    }
+
+    public void setJudgeValue(List<int> ids)
+    {
+        foreach (int id in ids)
+        {
+            if (judgeValue[id] == false)
+            {
+                judgeValue[id] = true;
+                judgeFirstYear[id] = TurnManager.Instance.year;
+            }
         }
     }
 }

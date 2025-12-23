@@ -113,8 +113,6 @@ public class MissionManager : MonoBehaviour
             {
 
                 MissionCondition raw = mission.conditions[i];
-
-
                 MissionCondition derived = CreateDerivedCondition(raw.type);
 
                 if (derived != null)
@@ -139,6 +137,7 @@ public class MissionManager : MonoBehaviour
             "survivalAfterPolicy" => new SurvivalPolicyCondition(),
             "survivalAfterOption" => new SurvivalOptionCondition(),
             "requiredEventFlags" => new EventFlagsCondition(),
+            "policyUseOutCount" => new PolicyUseOutCondition(),
             _ => null
         };
     }
@@ -245,5 +244,13 @@ public class EventFlagsCondition : MissionCondition
             if (gameStatistics.judgeValue[id] == false) return false;
         }
         return true;
+    }
+}
+
+public class PolicyUseOutCondition : MissionCondition
+{
+    public override bool CheckComplete(GameStatistics gameStatistics)
+    {
+        return gameStatistics.policyUseOutCount > paramList[0];
     }
 }

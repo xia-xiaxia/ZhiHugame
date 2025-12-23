@@ -126,6 +126,9 @@ public class PolicyMenuUI : MonoBehaviour
 
     private void ConsumePolicy(PolicyItem item)
     {
+        //全局统计
+        GameControl.Instance.gameStatistics.usePolicy(item);
+
         if (item.usageCount > 0) item.usageCount--;
         if (item.usageCount == 0) GameControl.Instance?.RemovePolicy(item.id);
         HideMenu();
@@ -135,8 +138,7 @@ public class PolicyMenuUI : MonoBehaviour
     {
         if (item.usageCount == 0) return;
 
-        //全局统计
-        GameControl.Instance.gameStatistics.usePolicy(item.id);
+
 
         if (stats != null && item.targetLayers != null)
         {
@@ -157,8 +159,7 @@ public class PolicyMenuUI : MonoBehaviour
 
     private void UseSkipPolicy(PolicyItem item)
     {
-        //全局统计
-        GameControl.Instance.gameStatistics.usePolicy(item.id);
+      
 
         GameControl.Instance.year++;
         ConsumePolicy(item);
@@ -168,8 +169,7 @@ public class PolicyMenuUI : MonoBehaviour
 
     private void UseAdjustPolicy(PolicyItem item)
     {
-        //全局统计
-        GameControl.Instance.gameStatistics.usePolicy(item.id);
+
 
         if (stats != null)
         {
@@ -182,8 +182,7 @@ public class PolicyMenuUI : MonoBehaviour
 
     private void UseSituationPolicy(PolicyItem item)
     {
-        //全局统计
-        GameControl.Instance.gameStatistics.usePolicy(item.id);
+
 
         if (!string.IsNullOrEmpty(item.triggeredBuffId))
         {

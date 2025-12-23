@@ -34,6 +34,10 @@
       {
         "type": "requiredEventFlags",
         "paramList": [1, 4, 77]
+      },
+      {
+        "type": "policyUseOutCount",
+        "paramList": [5]
       }
     ]
   }, 
