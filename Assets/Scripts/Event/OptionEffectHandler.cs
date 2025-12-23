@@ -55,7 +55,14 @@ public class OptionEffectHandler : MonoBehaviour
         // 4. 处理后继事件
         HandleNextEvent(opt, currentYear);
 
-        // 5. 更新 UI 和通知游戏控制器
+        // 5. 处理激活或关闭事件集
+        if (opt.randomEventSet != null && opt.randomEventSet.Length > 0)
+        {
+            EventDatabase.Instance?.ActivateEventSetById(opt.randomEventSet);
+            Debug.Log($"[OptionEffectHandler] 更新激活事件集: {opt.randomEventSet}");
+        }
+
+        // 6. 更新 UI 和通知游戏控制器
         // 年份增加和BUFF处理
         if (GameControl.Instance != null)
         {
