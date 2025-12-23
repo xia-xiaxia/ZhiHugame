@@ -49,6 +49,9 @@ public class OptionEffectHandler : MonoBehaviour
         // 2. 应用数值变化
         ApplyStatChanges(opt);
 
+        // 处理事件判定值
+        GameControl.Instance.gameStatistics.setJudgeValue(opt.eventFlags);
+
         // 3. 处理 BUFF 激活
         HandleBuffActivation(opt);
 

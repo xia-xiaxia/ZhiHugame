@@ -89,22 +89,24 @@ public class GameStatistics : ScriptableObject
 
     public void setJudgeValue(int id)
     {
-        if (judgeValue[id] == false)
+        int key = Mathf.Abs(id);
+        bool flag = id > 0 ? true : false;
+        if(flag)
         {
-            judgeValue[id] = true;
-            judgeFirstYear[id] = TurnManager.Instance.year;
-        }
-    }
-
-    public void setJudgeValue(List<int> ids)
-    {
-        foreach (int id in ids)
-        {
-            if (judgeValue[id] == false)
+            if (judgeValue[key] != flag)
             {
-                judgeValue[id] = true;
-                judgeFirstYear[id] = TurnManager.Instance.year;
+                judgeValue[key] = flag;
+                judgeFirstYear[key] = TurnManager.Instance.year;
+            }
+        } else
+        {
+            if (judgeValue[key] == true)
+            {
+                judgeValue[key] = false;
+                judgeFirstYear[key] = -1;
             }
         }
     }
+
+
 }
