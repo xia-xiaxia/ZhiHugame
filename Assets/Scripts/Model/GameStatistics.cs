@@ -20,7 +20,12 @@ public class GameStatistics : ScriptableObject
     //事件判定值
     public bool[] judgeValue = new bool[100];
     public int[] judgeFirstYear = new int[100];
-    
+
+
+    //MissionManager使用
+    public List<int> activeMissions = new List<int>();
+    public Dictionary<int, bool> isComplete = new Dictionary<int, bool>();
+
     public int currentReignYears
     {
         get => _currentReignYears;
@@ -87,23 +92,26 @@ public class GameStatistics : ScriptableObject
         }
     }
 
-    public void setJudgeValue(int id)
+    public void setJudgeValue(int[] eventFlags)
     {
-        int key = Mathf.Abs(id);
-        bool flag = id > 0 ? true : false;
-        if(flag)
+        foreach(var id in eventFlags)
         {
-            if (judgeValue[key] != flag)
+            int key = Mathf.Abs(id);
+            bool flag = id > 0 ? true : false;
+            if(flag)
             {
-                judgeValue[key] = flag;
-                judgeFirstYear[key] = TurnManager.Instance.year;
-            }
-        } else
-        {
-            if (judgeValue[key] == true)
+                if (judgeValue[key] != flag)
+                {
+                    judgeValue[key] = flag;
+                    judgeFirstYear[key] = TurnManager.Instance.year;
+                }
+            } else
             {
-                judgeValue[key] = false;
-                judgeFirstYear[key] = -1;
+                if (judgeValue[key] == true)
+                {
+                    judgeValue[key] = false;
+                    judgeFirstYear[key] = -1;
+                }
             }
         }
     }

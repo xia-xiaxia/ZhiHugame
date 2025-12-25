@@ -440,22 +440,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   policyItem:
     id: 
-    type: 0
     name: 
-    desc: 
     result: 
-    whichChange: 
-    thresholdDeltaup: 0
-    thresholdDeltadown: 0
-    deathImmunity: 
+    desc: 
+    type: 0
+    usageCount: 0
+    cost: 0
+    targetLayers: 
+    deathEffectText: 
     kingChange: 0
     nobleChange: 0
     scholarChange: 0
     foreignChange: 0
     peopleChange: 0
-    usageCount: 0
-    cost: 0
-    deathdec: 
+    triggeredBuffId: 
+    lockDuration: 0
 --- !u!114 &-5493529452681741251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -830,7 +829,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 3732b98e70d2d3e4eb0d33d7a8baec8e, type: 3}
+    m_Font: {fileID: 12800000, guid: 33d82e8c273b7c345b7e38d8e5781723, type: 3}
     m_FontSize: 40
     m_FontStyle: 1
     m_BestFit: 1

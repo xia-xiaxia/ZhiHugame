@@ -41,17 +41,17 @@ public class StatModel : ScriptableObject
     private int _people = 30;
 
     //统计变化量，在year_end统一执行动画及数值改动
-    private int king_delta = 0;
-    private int noble_delta = 0;
-    private int scholar_delta = 0;
-    private int foreign_delta = 0;
-    private int people_delta = 0;
+    public int king_delta = 0;
+    public int noble_delta = 0;
+    public int scholar_delta = 0;
+    public int foreign_delta = 0;
+    public int people_delta = 0;
 
-    private int buff_king_delta = 0;
-    private int buff_noble_delta = 0;
-    private int buff_scholar_delta = 0;
-    private int buff_foreign_delta = 0;
-    private int buff_people_delta = 0;
+    public int buff_king_delta = 0;
+    public int buff_noble_delta = 0;
+    public int buff_scholar_delta = 0;
+    public int buff_foreign_delta = 0;
+    public int buff_people_delta = 0;
     
     // 货币属性
     public int currency

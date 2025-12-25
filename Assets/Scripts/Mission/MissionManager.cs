@@ -15,6 +15,7 @@ public class MissionData
     public string description;
     public int rewardTalent;
     public int rewardPolicyId;
+    public int[] randomEventSet;
     public List<int> preMissionIds;
     public List<MissionCondition> conditions; // 检测条件
 
@@ -66,11 +67,11 @@ public class MissionManager : MonoBehaviour
       
       现在存储已激活任务是missionList中的下标
     */
-    public List<int> activeMissions = new List<int>();
+    public List<int> activeMissions;
     public TextAsset missionJson;
 
     //任务是否完成
-    private Dictionary<int, bool> _isComplete = new Dictionary<int, bool>();
+    private Dictionary<int, bool> _isComplete;
 
     private void Awake()
     {
@@ -81,6 +82,8 @@ public class MissionManager : MonoBehaviour
     private void Start()
     {
         statistics = GameControl.Instance.gameStatistics;
+        activeMissions = statistics.activeMissions;
+        _isComplete = statistics.isComplete;
     }
 
     void LoadMissions()
@@ -99,6 +102,18 @@ public class MissionManager : MonoBehaviour
     public bool isComplete(int id)
     {
         return _isComplete.TryGetValue(id, out bool res) ? res : false;
+    }
+
+    public bool isComplete(string id)
+    {
+        int newId = int.Parse(id);
+        return isComplete(newId);
+    }
+
+    public MissionData GetTaskDataById(int id)
+    {
+        if (id <= 0) return null;
+        return missionList[id - 1];
     }
 
     void ConvertConditionsToDerived()
