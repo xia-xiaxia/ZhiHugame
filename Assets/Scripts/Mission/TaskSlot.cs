@@ -19,7 +19,7 @@ public class TaskSlot : MonoBehaviour
     [SerializeField]
     string colorStringEnd = "</color>";
     [SerializeField]
-    string intervalInReward = "    "; //四个空格
+    string intervalInReward = "  "; //两个空格
 
     public GameObject comp0;
     public GameObject comp1;
@@ -50,8 +50,9 @@ public class TaskSlot : MonoBehaviour
             rewardStr += colorString + "国策" + colorStringEnd + "奖励：";
             foreach(var id in missionData.rewardPolicyId)
             {
-
+                rewardStr += PolicyManager.Instance.GetPolicyName(id) + "  ";
             }
+            rewardStr += intervalInReward;
         }
 
         if(missionData.rewardTalent != 0)
@@ -74,7 +75,9 @@ public class TaskSlot : MonoBehaviour
 
     public void Reward()
     {
+        if (!MissionUI.Instance.canReward) return;
         MissionManager.Instance.Reward(missionId);
         MissionUI.Instance.RefreshPage();
+        Debug.Log("[TaskSlot]: 已刷新页面");
     }
 }

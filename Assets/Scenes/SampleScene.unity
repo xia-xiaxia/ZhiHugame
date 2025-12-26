@@ -3869,7 +3869,6 @@ RectTransform:
   - {fileID: 947386272}
   - {fileID: 1974033824}
   - {fileID: 1219679181}
-  - {fileID: 1714217015}
   - {fileID: 597037350}
   m_Father: {fileID: 723621875}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6542,7 +6541,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 395387781}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 508375522}
+        m_TargetAssemblyTypeName: MissionUI, Assembly-CSharp
+        m_MethodName: DisplayWithReward
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &395387781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8478,6 +8489,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   missionList: []
   activeMissions: 
+  newActiveMissions: 
   missionJson: {fileID: 4900000, guid: 99d1b44d48c102e468ad344a5763951f, type: 3}
 --- !u!4 &508375521
 Transform:
@@ -12301,6 +12313,7 @@ RectTransform:
   - {fileID: 274814636}
   - {fileID: 48526005}
   - {fileID: 1834922182}
+  - {fileID: 1714217015}
   - {fileID: 1338539659}
   - {fileID: 1723631005}
   - {fileID: 791556973}
@@ -25450,7 +25463,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1714217014}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.23484}
   m_LocalScale: {x: 0.99391145, y: 0.99391145, z: 0.99391145}
   m_ConstrainProportionsScale: 0
@@ -25460,7 +25473,7 @@ RectTransform:
   - {fileID: 1712875973}
   - {fileID: 811545898}
   - {fileID: 15206784}
-  m_Father: {fileID: 274814636}
+  m_Father: {fileID: 723621875}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -30663,6 +30676,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7329767734027311773, guid: 7db63fb1065ea2047b7e0c1dd920befa, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 535323790}
+    - target: {fileID: 7329767734027311773, guid: 7db63fb1065ea2047b7e0c1dd920befa, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Reward
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -31497,6 +31518,14 @@ PrefabInstance:
     - target: {fileID: 4350069628384578499, guid: 7db63fb1065ea2047b7e0c1dd920befa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7329767734027311773, guid: 7db63fb1065ea2047b7e0c1dd920befa, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1501370476}
+    - target: {fileID: 7329767734027311773, guid: 7db63fb1065ea2047b7e0c1dd920befa, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Reward
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

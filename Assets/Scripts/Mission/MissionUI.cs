@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class MissionUI : MonoBehaviour
 {
-
     public static MissionUI Instance;
 
     //当前在第几页
@@ -20,6 +19,11 @@ public class MissionUI : MonoBehaviour
     public TextMeshProUGUI pageNum;
 
     public bool canReward = false;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -42,7 +46,6 @@ public class MissionUI : MonoBehaviour
     private void Display()
     {
         missionMenu.SetActive(true);
-        canReward = false;
 
         //目前的逻辑是在激活Menu的时候判断任务是否完成
         MissionManager.Instance.CheckComplete();
@@ -66,7 +69,6 @@ public class MissionUI : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             int currentIndex = startIndex + i;
-            Debug.Log(currentIndex + "   " + MissionManager.Instance.activeMissions.Count);
 
             if (currentIndex < MissionManager.Instance.activeMissions.Count)
             {

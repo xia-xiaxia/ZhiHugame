@@ -84,7 +84,7 @@ public class SaveData
     public List<int> activeMissions;
     public List<IntIntEntry> policyUsageCountList;
     public List<IntIntEntry> policyFirstYearList;
-    public List<IntBoolEntry> isCompleteList;
+    public List<StringBoolEntry> isCompleteList;
 
 
     /// <summary>
@@ -147,10 +147,10 @@ public class SaveData
         }
 
         // 转换字典: isComplete
-        data.isCompleteList = new List<IntBoolEntry>();
+        data.isCompleteList = new List<StringBoolEntry>();
         foreach (var kvp in gameStatistics.isComplete)
         {
-            data.isCompleteList.Add(new IntBoolEntry { key = kvp.Key, value = kvp.Value });
+            data.isCompleteList.Add(new StringBoolEntry { key = kvp.Key, value = kvp.Value });
         }
 
         // 复制政策背包
@@ -381,7 +381,8 @@ public class SaveData
         if (this.judgeFirstYear != null && this.judgeFirstYear.Length != 0) stats.judgeFirstYear = (int[])this.judgeFirstYear.Clone();
         else stats.judgeFirstYear = new int[100];
 
-        stats.activeMissions = new List<int>(this.activeMissions);
+        stats.activeMissions = new List<int>();
+        if(this.activeMissions != null) stats.activeMissions = new List<int>(this.activeMissions);
 
         // 还原字典: policyUsageCount
         stats.policyUsageCount.Clear();
@@ -490,5 +491,12 @@ public class IntIntEntry
 public class IntBoolEntry
 {
     public int key;
+    public bool value;
+}
+
+[System.Serializable]
+public class StringBoolEntry
+{
+    public string key;
     public bool value;
 }

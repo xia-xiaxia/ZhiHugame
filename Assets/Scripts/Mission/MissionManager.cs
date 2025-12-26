@@ -14,9 +14,9 @@ public class MissionData
     public string name;
     public string description;
     public int rewardTalent;
-    public int[] rewardPolicyId;
-    public int[] randomEventSet;
-    public List<int> preMissionIds;
+    public string[] rewardPolicyId;
+    public int randomEventSet;
+    public List<string> preMissionIds;
     public List<MissionCondition> conditions; // 检测条件
 
     public bool CheckComplete(GameStatistics gs)
@@ -28,11 +28,13 @@ public class MissionData
                 return false;
             }
         }
+        Debug.Log("ID: " + id + " is Completed");
         return true;
     }
 
     public bool CheckPreMissions()
     {
+
         foreach (var premission in preMissionIds)
         {
             if (!MissionManager.Instance.isComplete(premission))
@@ -76,7 +78,7 @@ public class MissionManager : MonoBehaviour
     public TextAsset missionJson;
 
     //任务是否完成
-    private Dictionary<int, bool> _isComplete;
+    private Dictionary<string, bool> _isComplete;
 
     private void Awake()
     {
@@ -112,21 +114,15 @@ public class MissionManager : MonoBehaviour
         }
     }
 
-    public bool isComplete(int id)
-    {
-        return _isComplete.TryGetValue(id, out bool res) ? res : false;
-    }
-
     public bool isComplete(string id)
     {
-        int newId = int.Parse(id);
-        return isComplete(newId);
+        return _isComplete.TryGetValue(id, out var result) ? result : false;
     }
 
     public MissionData GetTaskDataById(int id)
     {
-        if (id <= 0) return null;
-        return missionList[id - 1];
+        if (id < 0) return null;
+        return missionList[id];
     }
 
     void ConvertConditionsToDerived()
@@ -176,8 +172,7 @@ public class MissionManager : MonoBehaviour
         {
             if (!newActiveMissions.Contains(m) && missionList[m].CheckComplete(statistics))
             {
-                missionList[m].MissionComplete();
-                _isComplete[int.Parse(missionList[m].id)] = true;
+                _isComplete[missionList[m].id] = true;
             }
         }
     }
@@ -186,7 +181,7 @@ public class MissionManager : MonoBehaviour
     {
         foreach(var m in missionList)
         {
-            if(!isComplete(int.Parse(m.id)) && m.CheckPreMissions())
+            if(!isComplete(m.id) && m.CheckPreMissions() && !activeMissions.Contains(int.Parse(m.id) - 1))
             {
                 activeMissions.Add(int.Parse(m.id) - 1);
                 newActiveMissions.Add(int.Parse(m.id) - 1);
@@ -199,7 +194,7 @@ public class MissionManager : MonoBehaviour
     {
         missionList[id - 1].MissionComplete();
 
-        Debug.Log("任务：" + id + "已完成  奖励已领取");
+        Debug.Log("[MissionManager] 任务：" + id + "已完成  奖励已领取");
 
         activeMissions.Remove(id - 1);
 

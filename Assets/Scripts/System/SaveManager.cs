@@ -35,6 +35,9 @@ public class SaveManager : MonoBehaviour
         saveFilePath = Path.Combine(Application.persistentDataPath, SAVE_FILE_NAME);
         Debug.Log($"[SaveManager] 存档路径: {saveFilePath}");
 
+        //初始化GameStatistics
+        GameControl.Instance.gameStatistics.Inititalize();
+
         // 启动时自动加载存档
         if (autoLoadOnStart)
         {
