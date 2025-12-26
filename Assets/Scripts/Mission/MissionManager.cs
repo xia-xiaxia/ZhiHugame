@@ -14,7 +14,7 @@ public class MissionData
     public string name;
     public string description;
     public int rewardTalent;
-    public int rewardPolicyId;
+    public int[] rewardPolicyId;
     public int[] randomEventSet;
     public List<int> preMissionIds;
     public List<MissionCondition> conditions; // 检测条件
@@ -48,6 +48,9 @@ public class MissionData
         /*
          * Undo: 任务做完的逻辑
          */
+
+        //发放道具
+
     }
 }
 
@@ -68,6 +71,8 @@ public class MissionManager : MonoBehaviour
       现在存储已激活任务是missionList中的下标
     */
     public List<int> activeMissions;
+    //这个List为了防止Bug：这一轮新dispatch的任务会用上一局的数据进行check
+    public List<int> newActiveMissions = new List<int>();
     public TextAsset missionJson;
 
     //任务是否完成
@@ -84,6 +89,14 @@ public class MissionManager : MonoBehaviour
         statistics = GameControl.Instance.gameStatistics;
         activeMissions = statistics.activeMissions;
         _isComplete = statistics.isComplete;
+
+        //游戏开始的时候发任务
+        Dispatch();
+    }
+
+    public void StartNewGame()
+    {
+        newActiveMissions.Clear();
     }
 
     void LoadMissions()
@@ -161,7 +174,7 @@ public class MissionManager : MonoBehaviour
     {
         foreach(var m in activeMissions)
         {
-            if (missionList[m].CheckComplete(statistics))
+            if (!newActiveMissions.Contains(m) && missionList[m].CheckComplete(statistics))
             {
                 missionList[m].MissionComplete();
                 _isComplete[int.Parse(missionList[m].id)] = true;
@@ -176,8 +189,23 @@ public class MissionManager : MonoBehaviour
             if(!isComplete(int.Parse(m.id)) && m.CheckPreMissions())
             {
                 activeMissions.Add(int.Parse(m.id) - 1);
+                newActiveMissions.Add(int.Parse(m.id) - 1);
             }
         }
+    }
+    
+    //通过id进行任务奖励的领取
+    public void Reward(int id)
+    {
+        missionList[id - 1].MissionComplete();
+
+        Debug.Log("任务：" + id + "已完成  奖励已领取");
+
+        activeMissions.Remove(id - 1);
+
+        //发新的任务
+        Dispatch();
+            
     }
 }
 

@@ -65,6 +65,7 @@ public class GameStatistics : ScriptableObject
 
     public void Restart()
     {
+       
         currentReignYears = 0;
         policyUsageCount.Clear();
         policyFirstYear.Clear();
@@ -73,6 +74,9 @@ public class GameStatistics : ScriptableObject
             judgeValue[i] = false;
             judgeFirstYear[i] = -1;
         }
+
+        //MissionManager的Restart相关内容
+        MissionManager.Instance.StartNewGame();
     }
 
     public void GameEnd()

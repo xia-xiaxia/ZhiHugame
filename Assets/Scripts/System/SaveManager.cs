@@ -34,15 +34,17 @@ public class SaveManager : MonoBehaviour
         // 设置存档文件路径
         saveFilePath = Path.Combine(Application.persistentDataPath, SAVE_FILE_NAME);
         Debug.Log($"[SaveManager] 存档路径: {saveFilePath}");
-    }
-    
-    private void Start()
-    {
+
         // 启动时自动加载存档
         if (autoLoadOnStart)
         {
             LoadGame();
         }
+    }
+    
+    private void Start()
+    {
+
     }
     
     private void OnApplicationQuit()

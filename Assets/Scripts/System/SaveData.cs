@@ -375,9 +375,11 @@ public class SaveData
         stats.currentReignYears = this.currentReignYears;
         stats.totalReginYears = this.totalReginYears;
         stats.policyUseOutCount = this.policyUseOutCount;
-
-        if (this.judgeValue != null) stats.judgeValue = (bool[])this.judgeValue.Clone();
-        if (this.judgeFirstYear != null) stats.judgeFirstYear = (int[])this.judgeFirstYear.Clone();
+        Debug.Log("Length: " + stats.judgeValue.Length);
+        if (this.judgeValue != null && this.judgeValue.Length != 0) stats.judgeValue = (bool[])this.judgeValue.Clone();
+        else stats.judgeValue = new bool[100];
+        if (this.judgeFirstYear != null && this.judgeFirstYear.Length != 0) stats.judgeFirstYear = (int[])this.judgeFirstYear.Clone();
+        else stats.judgeFirstYear = new int[100];
 
         stats.activeMissions = new List<int>(this.activeMissions);
 
