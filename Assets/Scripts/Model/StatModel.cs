@@ -39,6 +39,18 @@ public class StatModel : ScriptableObject
     private int _foreign = 30;
     [SerializeField]
     private int _people = 30;
+    [SerializeField]
+    private int _talentPoints = 0; // 当前天赋点数
+    [SerializeField]
+    private int _policyBagSize = 5; // 当前道具包大小
+    [SerializeField]
+    private int _payBackCurrency = 0; // 退还的货币数
+    [SerializeField]
+    private float _shopMult = 1.0f; // 商店折扣倍率
+    [SerializeField]
+    private float _currencyMult = 1.0f; // 货币获取倍率
+    [SerializeField]
+    private int _policyShopCount = 5; // 道具商店数量]
 
     //统计变化量，在year_end统一执行动画及数值改动
     public int king_delta = 0;
@@ -52,6 +64,94 @@ public class StatModel : ScriptableObject
     public int buff_scholar_delta = 0;
     public int buff_foreign_delta = 0;
     public int buff_people_delta = 0;
+    
+    // 天赋点属性
+    public int talentPoints
+    {
+        get => _talentPoints;
+        set
+        {
+            if (_talentPoints != value)
+            {
+                _talentPoints = value;
+                OnStatsChanged?.Invoke();
+            }
+        }
+    }
+    // 道具包大小属性
+    public int policyBagSizeChange
+    {
+        get => _policyBagSize;
+        set
+        {
+            if (_policyBagSize != value)
+            {
+                _policyBagSize = value;
+                OnStatsChanged?.Invoke();
+            }
+        }
+    }
+    // 道具商店数量属性
+    public int policyShopCount
+    {
+        get => _policyShopCount;
+        set
+        {
+            if (_policyShopCount != value)
+            {
+                _policyShopCount = value;
+                OnStatsChanged?.Invoke();
+            }
+        }
+    }
+    public int policyBagSize
+    {
+        get => _policyBagSize;
+        set
+        {
+            if (_policyBagSize != value)
+            {
+                _policyBagSize = value;
+                OnStatsChanged?.Invoke();
+            }
+        }
+    }
+    public int payBackCurrency
+    {
+        get => _payBackCurrency;
+        set
+        {
+            if (_payBackCurrency != value)
+            {
+                _payBackCurrency = value;
+                OnStatsChanged?.Invoke();
+            }
+        }
+    }
+    public float shopMult
+    {
+        get => _shopMult;
+        set
+        {
+            if (_shopMult != value)
+            {
+                _shopMult = value;
+                OnStatsChanged?.Invoke();
+            }
+        }
+    }
+    public float currencyMult
+    {
+        get => _currencyMult;
+        set
+        {
+            if (_currencyMult != value)
+            {
+                _currencyMult = value;
+                OnStatsChanged?.Invoke();
+            }
+        }
+    }
     
     // 货币属性
     public int currency
@@ -168,6 +268,11 @@ public class StatModel : ScriptableObject
     // 间隔事件队列（持久化延时事件）
     public List<DelayedEventData> delayedEventQueue = new List<DelayedEventData>();
     
+    // 已激活的天赋列表（存储天赋ID）
+    public List<string> activatedTalents = new List<string>();
+    // 刷新花费数组
+    public int[] refreshPolicyShopCost = new int[4] { 5, 10, 20, 50 };
+    
     // 新手教程标记（是否已看过教程）
     public bool hasSeenTutorial = false;
     
@@ -227,8 +332,10 @@ public class StatModel : ScriptableObject
         policyBag.Clear();
         buffBag.Clear();
         delayedEventQueue.Clear();
-        activeLayerLocks.Clear();
+        activeLayerLocks.Clear();        activatedTalents.Clear();
         
+        // 重置天赋点
+        talentPoints = 0;        
         Debug.Log($"[StatModel] 重置完成 - 国君:{king} 宗族:{noble} 卿士:{scholar} 外臣:{foreign} 庶人:{people}");
     }
     

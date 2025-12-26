@@ -66,6 +66,17 @@ public class SaveData
     // 新手教程标记
     public bool hasSeenTutorial = false;
     
+    // 天赋系统
+    public int currentTalentPoints = 0;
+    public List<string> activatedTalents = new List<string>();
+    
+    // 天赋效果相关
+    public int policyBagSize = 5;
+    public int payBackCurrency = 0;
+    public float shopMult = 1.0f;
+    public float currencyMult = 1.0f;
+    public int policyShopCount = 5;
+    
     // 存档时间戳
     public string saveTime;
     
@@ -123,12 +134,13 @@ public class SaveData
             buff_foreign_delta = stats.buff_foreign_delta,
             buff_people_delta = stats.buff_people_delta,
             hasSeenTutorial = stats.hasSeenTutorial,
-            currentReignYears = gameStatistics.currentReignYears,
-            totalReginYears = gameStatistics.totalReginYears,
-            policyUseOutCount = gameStatistics.policyUseOutCount,
-            judgeValue = (bool[])gameStatistics.judgeValue.Clone(),
-            judgeFirstYear = (int[])gameStatistics.judgeFirstYear.Clone(),
-            activeMissions = new List<int>(gameStatistics.activeMissions),
+            currentTalentPoints = stats.talentPoints,
+            activatedTalents = stats.activatedTalents != null ? new List<string>(stats.activatedTalents) : new List<string>(),
+            policyBagSize = stats.policyBagSize,
+            payBackCurrency = stats.payBackCurrency,
+            shopMult = stats.shopMult,
+            currencyMult = stats.currencyMult,
+            policyShopCount = stats.policyShopCount,
             saveTime = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
         };
 
@@ -292,6 +304,17 @@ public class SaveData
         stats.buff_people_delta = buff_people_delta;
 
         stats.hasSeenTutorial = hasSeenTutorial;
+        
+        // 恢复天赋系统数据
+        stats.talentPoints = currentTalentPoints;
+        stats.activatedTalents = activatedTalents != null ? new List<string>(activatedTalents) : new List<string>();
+        
+        // 恢复天赋效果相关数据
+        stats.policyBagSize = policyBagSize;
+        stats.payBackCurrency = payBackCurrency;
+        stats.shopMult = shopMult;
+        stats.currencyMult = currencyMult;
+        stats.policyShopCount = policyShopCount;
         
         // 恢复政策背包
         stats.policyBag.Clear();
