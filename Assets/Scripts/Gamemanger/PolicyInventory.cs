@@ -26,7 +26,7 @@ public class PolicyInventory : MonoBehaviour
             return false;
         }
         
-        if (stats.policyBag.Count >= stats.maxPolicyCount) 
+        if (stats.isBagFull()) 
         {
             Debug.LogWarning("[PolicyInventory] 背包已满，无法添加新道具");
             return false;

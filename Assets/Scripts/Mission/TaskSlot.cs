@@ -45,7 +45,7 @@ public class TaskSlot : MonoBehaviour
 
         string rewardStr = "";
 
-        if(missionData.rewardPolicyId.Length > 0)
+        if(missionData.rewardPolicyId != null)
         {
             rewardStr += colorString + "国策" + colorStringEnd + "奖励：";
             foreach(var id in missionData.rewardPolicyId)

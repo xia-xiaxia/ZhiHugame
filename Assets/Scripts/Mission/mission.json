@@ -1,31 +1,337 @@
 [
   {
     "id": "001",
-    "name": "测试任务1",
-    "description": "xxxx",
-    "rewardTalent": 1,
-    "rewardPolicyId": ["023", "024"],
+    "name": "治国之路-壹",
+    "description": "单局执政时长达到10年",
+    "rewardTalent": 2,
     "conditions": [
       {
         "type": "currentReign",
-        "paramList": [5]
+        "paramList": [10]
       }
     ]
-  }, 
-    {
+  },
+  {
     "id": "002",
-    "name": "测试任务2",
-    "description": "yyyy",
+    "name": "商业发展",
+    "description": "使用国策“鼓励通商”并坚持十年",
     "rewardTalent": 2,
-    "rewardPolicyId": 2,
+    "preMissionIds": ["012"],
+    "conditions": [
+      {
+        "type": "survivalAfterPolicy",
+        "paramList": [10, 101]
+      }
+    ]
+  },
+  {
+    "id": "003",
+    "name": "治国之路-贰",
+    "description": "单局执政时长达到20年",
+    "rewardTalent": 2,
+    "preMissionIds": ["001"],
+    "randomEventSet": 3,
+    "conditions": [
+      {
+        "type": "currentReign",
+        "paramList": [20]
+      }
+    ]
+  },
+  {
+    "id": "004",
+    "name": "运筹帷幄",
+    "description": "将一个次数有限的国策消耗殆尽",
+    "rewardTalent": 2,
+    "rewardPolicyId": ["102"],
+    "preMissionIds": ["001"],
+    "conditions": [
+      {
+        "type": "policyUseOutCount",
+        "paramList": [1]
+      }
+    ]
+  },
+  {
+    "id": "005",
+    "name": "九溪的改革-壹",
+    "description": "支持并完成九溪的货币改革",
+    "rewardTalent": 2,
+    "preMissionIds": ["002", "003"],
+    "conditions": [
+      {
+        "type": "requiredEventFlags",
+        "paramList": [1]
+      }
+    ]
+  },
+  {
+    "id": "006",
+    "name": "九溪的改革-贰",
+    "description": "支持九溪铸刑书并在铸刑书后坚持五年",
+    "rewardTalent": 2,
+    "preMissionIds": ["003"],
+    "conditions": [
+      {
+        "type": "survivalAfterOption",
+        "paramList": [5, 2]
+      }
+    ]
+  },
+  {
+    "id": "007",
+    "name": "九溪的改革-叁",
+    "description": "支持九溪维护田籍并坚持五年",
+    "rewardTalent": 2,
+    "preMissionIds": ["003"],
+    "conditions": [
+      {
+        "type": "survivalAfterOption",
+        "paramList": [5, 3]
+      }
+    ]
+  },
+  {
+    "id": "008",
+    "name": "治国之路-叁",
+    "description": "单局执政时长达到25年，成功3次",
+    "rewardTalent": 2,
+    "preMissionIds": ["003"],
+    "conditions": [
+      {
+        "type": "runsWithLongReign",
+        "paramList": [3, 25]
+      }
+    ]
+  },
+  {
+    "id": "009",
+    "name": "兼容并蓄",
+    "description": "使用国策“兼容并蓄”并坚持五年",
+    "rewardTalent": 2,
+    "preMissionIds": ["004"],
+    "randomEventSet": 4,
+    "conditions": [
+      {
+        "type": "survivalAfterPolicy",
+        "paramList": [5, 102]
+      }
+    ]
+  },
+  {
+    "id": "010",
+    "name": "百家争鸣-壹",
+    "description": "促成农家留在泗国",
+    "rewardTalent": 2,
+    "rewardPolicyId": ["104"],
+    "preMissionIds": ["009"],
+    "conditions": [
+      {
+        "type": "requiredEventFlags",
+        "paramList": [7]
+      }
+    ]
+  },
+  {
+    "id": "011",
+    "name": "百家争鸣-贰",
+    "description": "促成儒家学生在泗国讲学",
+    "rewardTalent": 2,
+    "rewardPolicyId": ["105"],
+    "preMissionIds": ["009"],
+    "conditions": [
+      {
+        "type": "requiredEventFlags",
+        "paramList": [8]
+      }
+    ]
+  },
+  {
+    "id": "012",
+    "name": "百家争鸣-叁",
+    "description": "促成管仲学说学生留在泗国",
+    "rewardTalent": 2,
+    "rewardPolicyId": ["101"],
+    "preMissionIds": ["009"],
+    "conditions": [
+      {
+        "type": "requiredEventFlags",
+        "paramList": [9]
+      }
+    ]
+  },
+  {
+    "id": "013",
+    "name": "百家争鸣-肆",
+    "description": "促成道家学说留在泗国",
+    "rewardTalent": 2,
+    "rewardPolicyId": ["106"],
+    "preMissionIds": ["009"],
+    "conditions": [
+      {
+        "type": "requiredEventFlags",
+        "paramList": [10]
+      }
+    ]
+  },
+  {
+    "id": "014",
+    "name": "百家争鸣-伍",
+    "description": "促成西河学派学生留在泗国",
+    "rewardTalent": 2,
+    "rewardPolicyId": ["013"],
+    "preMissionIds": ["009"],
+    "conditions": [
+      {
+        "type": "requiredEventFlags",
+        "paramList": [11]
+      }
+    ]
+  },
+  {
+    "id": "015",
+    "name": "百家争鸣-陆",
+    "description": "促成墨家任意学派留在泗国",
+    "rewardTalent": 2,
+    "rewardPolicyId": ["057"],
+    "preMissionIds": ["009"],
+    "conditions": [
+      {
+        "type": "requiredEventFlags",
+        "paramList": [12]
+      }
+    ]
+  },
+  {
+    "id": "016",
+    "name": "农家的实践",
+    "description": "使用国策“精耕细作”并坚持三年",
+    "rewardTalent": 2,
+    "preMissionIds": ["010"],
+    "conditions": [
+      {
+        "type": "survivalAfterPolicy",
+        "paramList": [3, 104]
+      }
+    ]
+  },
+  {
+    "id": "017",
+    "name": "儒家的理想",
+    "description": "使用国策“重修春秋”并坚持三年",
+    "rewardTalent": 2,
+    "preMissionIds": ["011"],
+    "conditions": [
+      {
+        "type": "survivalAfterPolicy",
+        "paramList": [3, 105]
+      }
+    ]
+  },
+  {
+    "id": "018",
+    "name": "道家的应用",
+    "description": "使用国策“清静无为”并坚持三年",
+    "rewardTalent": 2,
+    "preMissionIds": ["013"],
+    "conditions": [
+      {
+        "type": "survivalAfterPolicy",
+        "paramList": [3, 106]
+      }
+    ]
+  },
+  {
+    "id": "019",
+    "name": "九溪的改革-肆",
+    "description": "在九溪发问时鼓励庶人开荒",
+    "rewardTalent": 2,
+    "preMissionIds": ["008"],
+    "conditions": [
+      {
+        "type": "requiredEventFlags",
+        "paramList": [4]
+      }
+    ]
+  },
+  {
+    "id": "020",
+    "name": "九溪的改革-伍",
+    "description": "在九溪发问时推行三世收爵改革并坚持八年",
+    "rewardTalent": 2,
+    "rewardPolicyId": ["103"],
+    "preMissionIds": ["008"],
+    "conditions": [
+      {
+        "type": "survivalAfterOption",
+        "paramList": [8, 5]
+      }
+    ]
+  },
+  {
+    "id": "021",
+    "name": "九溪的改革-陆",
+    "description": "在九溪发问时推行采邑改革并坚持八年",
+    "rewardTalent": 2,
+    "rewardPolicyId": ["103"],
+    "preMissionIds": ["008"],
+    "conditions": [
+      {
+        "type": "survivalAfterOption",
+        "paramList": [8, 6]
+      }
+    ]
+  },
+  {
+    "id": "022",
+    "name": "安抚贵族",
+    "description": "使用国策“恪守礼法”并坚持八年",
+    "rewardTalent": 2,
+    "preMissionIds": ["020", "021"],
+    "conditions": [
+      {
+        "type": "survivalAfterPolicy",
+        "paramList": [8, 103]
+      }
+    ]
+  },
+  {
+    "id": "023",
+    "name": "治国之路-肆",
+    "description": "单局执政时长达到40年",
+    "rewardTalent": 2,
+    "preMissionIds": ["008"],
+    "conditions": [
+      {
+        "type": "currentReign",
+        "paramList": [40]
+      }
+    ]
+  },
+  {
+    "id": "024",
+    "name": "治国之路-伍",
+    "description": "全局累计执政时长达500年",
+    "rewardTalent": 2,
+    "rewardPolicyId": ["107"],
+    "preMissionIds": ["023"],
     "conditions": [
       {
         "type": "totalReign",
-        "paramList": [1]
-      },
+        "paramList": [500]
+      }
+    ]
+  },
+  {
+    "id": "025",
+    "name": "治国之路-陆",
+    "description": "使用国策“君权至高”并坚持十年",
+    "rewardTalent": 4,
+    "preMissionIds": ["024"],
+    "conditions": [
       {
-        "type": "requiredEventFlags",
-        "paramList": [5, 6]
+        "type": "survivalAfterPolicy",
+        "paramList": [10, 107]
       }
     ]
   }

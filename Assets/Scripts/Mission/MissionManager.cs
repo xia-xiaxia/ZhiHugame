@@ -45,14 +45,29 @@ public class MissionData
         return true;
     }
 
-    public void MissionComplete()
+    public bool MissionComplete()
     {
-        /*
-         * Undo: 任务做完的逻辑
-         */
+        if(rewardPolicyId != null)
+        {
+            int count = rewardPolicyId.Length;
 
-        //发放道具
+            if(GameControl.Instance.stats.isBagFull(count))
+            {
+                return false;
+            }
 
+            //发放道具
+            foreach(var id in rewardPolicyId)
+            {
+                PolicyItem newItem = PolicyManager.Instance.GetPolicy(id);
+                GameControl.Instance.AddPolicy(newItem);
+            }
+        }
+        
+        //获得天赋点
+        TalantManager.Instance.AddTalentPoints(rewardTalent);
+
+        return true;
     }
 }
 
@@ -192,8 +207,12 @@ public class MissionManager : MonoBehaviour
     //通过id进行任务奖励的领取
     public void Reward(int id)
     {
-        missionList[id - 1].MissionComplete();
+        bool flag = missionList[id - 1].MissionComplete();
 
+        if(!flag)
+        {
+            return;
+        }
         Debug.Log("[MissionManager] 任务：" + id + "已完成  奖励已领取");
 
         activeMissions.Remove(id - 1);
