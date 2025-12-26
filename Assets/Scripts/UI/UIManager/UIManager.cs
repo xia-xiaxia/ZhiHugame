@@ -26,6 +26,9 @@ public class UIManager : MonoBehaviour
     public int[] refreshCosts = new int[4] { 5, 10, 20, 50 };
     public Text CurrencyText;   
 
+    [Header("天赋提示框")]
+    public GameObject talentTooltipPanel;
+
     // 兼容性字段（用于Inspector引用，会转发到子系统）
     [HideInInspector] public bool isShow;
 

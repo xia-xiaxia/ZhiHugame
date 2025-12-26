@@ -23,6 +23,8 @@ public class PolicyShopUI : MonoBehaviour
     public Transform shopInventoryParent;
     public GameObject shopInventoryItemPrefab;
     public Text shopInventoryCountText;
+    // 最大显示数量
+    private int shopShowCount = 5;
 
     private List<GameObject> shopItemButtons = new List<GameObject>();
     private List<GameObject> shopInventoryButtons = new List<GameObject>();
@@ -46,6 +48,8 @@ public class PolicyShopUI : MonoBehaviour
             currencyText = UIManager.Instance.CurrencyText;
             currentCurrency = 0;
         }
+        refreshCosts = GameControl.Instance?.stats.refreshPolicyShopCost;
+        shopShowCount = GameControl.Instance?.stats.policyShopCount ?? 5;
         refreshCount = 0;
     }
 
@@ -79,7 +83,7 @@ public class PolicyShopUI : MonoBehaviour
         List<PolicyItem> shopItems = PolicyManager.Instance.GetCurrentShopItems();
         
         // 确保有足够的槽位
-        int maxDisplaySlots = 8; // 显示的最大槽位数
+        int maxDisplaySlots = shopShowCount; // 显示的最大槽位数
         if (shopPolicyItems.Count < maxDisplaySlots)
         {
             Debug.LogWarning($"[PolicyShopUI] shopPolicyItems 只有 {shopPolicyItems.Count} 个，建议至少配置 {maxDisplaySlots} 个");
@@ -166,7 +170,7 @@ public class PolicyShopUI : MonoBehaviour
         List<PolicyItem> shopItems = PolicyManager.Instance.GetCurrentShopItems();
         
         // 确保有足够的槽位
-        int maxDisplaySlots = 8; // 显示的最大槽位数
+        int maxDisplaySlots = shopShowCount; // 显示的最大槽位数
         if (shopPolicyItems.Count < maxDisplaySlots)
         {
             Debug.LogWarning($"[PolicyShopUI] shopPolicyItems 只有 {shopPolicyItems.Count} 个，建议至少配置 {maxDisplaySlots} 个");
@@ -320,7 +324,7 @@ public class PolicyShopUI : MonoBehaviour
             shopInventoryCountText.text = $"{count}/5";
         }
 
-        // 显示8个槽位
+        // 显示槽位
         List<PolicyItem> itemList = new List<PolicyItem>(policyBag);
 
         for (int i = 0; i < 8; i++)

@@ -38,9 +38,9 @@ public class CurrencyManager : MonoBehaviour
     public void AddCurrency(int amount)
     {
         if (stats == null) return;
-        
-        stats.currency += amount;
-        Debug.Log($"[CurrencyManager] 获得 {amount} 货币，总计 {stats.currency} 货币");
+        float gainCurrency = amount*stats.currencyMult;
+        stats.currency += (int)gainCurrency;
+        Debug.Log($"[CurrencyManager] 获得 {gainCurrency} 货币，总计 {stats.currency} 货币");
         
         UIManager.Instance?.UpdateCurrencyDisplay();
     }

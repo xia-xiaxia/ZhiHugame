@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -23,13 +24,16 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
 
     private Canvas canvas;
     private bool useGlobalTooltip = false;
+    private float currentShopMult = 1.0f;
 
     void Start()
     {
+        currentShopMult = GameControl.Instance != null ? GameControl.Instance.stats.shopMult : 1f;
+
         if (policyItem != null && policyValue == 0 && policyItem.cost > 0)
         {
             float multiple = Random.Range(0.8f, 1.2f);
-            policyValue = Mathf.FloorToInt(policyItem.cost * multiple);
+            policyValue = Mathf.FloorToInt(policyItem.cost * multiple * currentShopMult);
         }
         
         canvas = GetComponentInParent<Canvas>();
@@ -144,7 +148,7 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
             if (policyValue == 0)
             {
                 float multiple = Random.Range(0.8f, 1.2f);
-                policyValue = Mathf.FloorToInt(policyItem.cost * multiple);
+                policyValue = Mathf.FloorToInt(policyItem.cost * multiple * currentShopMult);
             }
             sb.AppendLine($"<color=#FFD700>价格：</color>{policyValue} 年");
         }

@@ -10,7 +10,7 @@ public class Buffanime : MonoBehaviour
 
     private Coroutine currentCoroutine = null;
 
-    //设置为和光效持续时间相同
+    //璁剧疆涓哄拰鍏夋晥鎸佺画鏃堕棿鐩稿悓
     float duration;
     void Start()
     {

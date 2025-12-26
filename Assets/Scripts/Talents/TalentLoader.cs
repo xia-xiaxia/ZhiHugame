@@ -11,6 +11,19 @@ public class TalentLoader : MonoBehaviour
     // 最终的数据仓库，方便用 ID 查天赋
     public Dictionary<string, Talent> talentDict = new Dictionary<string, Talent>();
 
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
         Load();
@@ -24,7 +37,7 @@ public class TalentLoader : MonoBehaviour
         }
     }
 
-    void Load()
+    public void Load()
     {
         if (jsonFile == null) return;
 
