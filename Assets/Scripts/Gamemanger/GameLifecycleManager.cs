@@ -167,7 +167,7 @@ public class GameLifecycleManager : MonoBehaviour
     public void RestartGame()
     {
         if (PolicyManager.Instance != null)
-            PolicyManager.Instance.GenerateShopItems(8);
+            PolicyManager.Instance.GenerateShopItems(stats.policyShopCount);
 
         //全局统计的初始化
         GameControl.Instance.gameStatistics.Restart();

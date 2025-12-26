@@ -30627,6 +30627,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 88af981aebd9a164c873c7866cec4707, type: 2}
+  talentPointsText: {fileID: 1263448822}
 --- !u!114 &2033204522
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -20,6 +20,8 @@ public class PolicyInInventoryTrigger : MonoBehaviour, IPointerEnterHandler, IPo
     public Button discardConfirmButton;
     public Button discardCancelButton;
     public Text discardInfoText;
+    // 丢弃道具获得的货币数
+    private int abandonPolicyAndGetCurrency = 0;
 
     private Canvas canvas;
     private bool useGlobalTooltip = false;
@@ -260,7 +262,9 @@ public class PolicyInInventoryTrigger : MonoBehaviour, IPointerEnterHandler, IPo
             OnDiscardCancel();
             return;
         }
-
+        abandonPolicyAndGetCurrency = GameControl.Instance?.stats?.payBackCurrency ?? 0;
+        CurrencyManager.Instance?.AddCurrency(abandonPolicyAndGetCurrency);
+        Debug.Log($"[PolicyInShopTrigger] 道具已丢弃，获得货币：{abandonPolicyAndGetCurrency}");
         GameControl.Instance.RemovePolicy(policyItem.id);
 
         if (UIManager.Instance != null)

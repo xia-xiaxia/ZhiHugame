@@ -12,6 +12,7 @@ public class SaveData
     // 游戏进度
     public int year;
     public int currency;
+    public int maxPolicyCount;
     
     // 五维属性
     public int king;
@@ -75,6 +76,7 @@ public class SaveData
     public float shopMult = 1.0f;
     public float currencyMult = 1.0f;
     public int policyShopCount = 5;
+    public int[] refreshPolicyShopCost = new int[4];
     
     // 存档时间戳
     public string saveTime;
@@ -91,6 +93,7 @@ public class SaveData
         {
             year = stats.year,
             currency = stats.currency,
+            maxPolicyCount = stats.maxPolicyCount,
             king = stats.king,
             noble = stats.noble,
             scholar = stats.scholar,
@@ -126,6 +129,13 @@ public class SaveData
             policyShopCount = stats.policyShopCount,
             saveTime = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
         };
+        
+        // 复制刷新商店花费数组
+        if (stats.refreshPolicyShopCost != null)
+        {
+            data.refreshPolicyShopCost = new int[stats.refreshPolicyShopCost.Length];
+            System.Array.Copy(stats.refreshPolicyShopCost, data.refreshPolicyShopCost, stats.refreshPolicyShopCost.Length);
+        }
         
         // 复制政策背包
         if (stats.policyBag != null)
@@ -237,6 +247,7 @@ public class SaveData
         
         stats.year = year;
         stats.currency = currency;
+        stats.maxPolicyCount = maxPolicyCount;
         stats.king = king;
         stats.noble = noble;
         stats.scholar = scholar;
@@ -276,6 +287,13 @@ public class SaveData
         stats.shopMult = shopMult;
         stats.currencyMult = currencyMult;
         stats.policyShopCount = policyShopCount;
+        
+        // 恢复刷新商店花费数组
+        if (refreshPolicyShopCost != null && refreshPolicyShopCost.Length > 0)
+        {
+            stats.refreshPolicyShopCost = new int[refreshPolicyShopCost.Length];
+            System.Array.Copy(refreshPolicyShopCost, stats.refreshPolicyShopCost, refreshPolicyShopCost.Length);
+        }
         
         // 恢复政策背包
         stats.policyBag.Clear();

@@ -15,6 +15,13 @@ public class SaveTestTools : EditorWindow
     private int testScholar = 50;
     private int testForeign = 50;
     private int testPeople = 50;
+    private int testpolicyBagSize = 3;
+    private int testTalentPoints = 0;
+    private int testPayBackCurrency = 0;
+    private float testcurrencyMult = 1f;
+    private int[] testrefreshPolicyShopCost = {0,5,10,20};
+    private int testpolicyShopCount = 5;
+    private float testshopMult = 1f;
     
     private Vector2 scrollPos;
     
@@ -137,6 +144,13 @@ public class SaveTestTools : EditorWindow
         testScholar = 30;
         testForeign = 30;
         testPeople = 30;
+        testpolicyBagSize = 3;
+        testTalentPoints = 0;
+        testPayBackCurrency = 0;
+        testcurrencyMult = 1;
+        testrefreshPolicyShopCost = new int[] {0,5,10,20};
+        testpolicyShopCount = 5;
+
         
         ApplyCustomValues();
         Debug.Log("[测试工具] 存档已重置为初始值");
