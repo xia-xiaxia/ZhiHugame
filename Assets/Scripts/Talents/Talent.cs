@@ -23,11 +23,11 @@ public class Talent
 [Serializable]
 public class TalentEffect
 {
-    public int kingLimitChange;
-    public int nobleLimitChange;
-    public int scholarLimitChange;
-    public int foreignLimitChange;
-    public int peopleLimitChange;
+    public int kingLimit;
+    public int nobleLimit;
+    public int scholarLimit;
+    public int foreignLimit;
+    public int peopleLimit;
     public int policyShopCount;
     public int[] refreshPolicyShopCost;
     public float shopMult;
