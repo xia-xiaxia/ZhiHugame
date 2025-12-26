@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -12,7 +13,7 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
 
     [Header("提示面板设置")]
     public GameObject tooltipPanel;
-    public Text tooltipText;
+    public TextMeshProUGUI tooltipText;
     public Vector2 tooltipOffset = new Vector2(10, -10);
 
     [Header("购买确认面板设置")]
@@ -90,11 +91,28 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
     {
         if (tooltipPanel == null || policyItem == null) return;
 
-        string tooltipContent = BuildTooltipText();
-        
-        if (tooltipText != null)
+        // 如果 tooltipText 为空，尝试从面板查找 TextMeshProUGUI
+        if (tooltipText == null)
         {
-            tooltipText.text = tooltipContent;
+            tooltipText = tooltipPanel.GetComponentInChildren<TextMeshProUGUI>(true);
+            if (tooltipText == null && UIManager.Instance != null)
+            {
+                tooltipText = UIManager.Instance.policyTooltipText as TextMeshProUGUI;
+            }
+            if (tooltipText == null)
+            {
+                Debug.LogError("[PolicyInShopTrigger] 无法找到 TextMeshProUGUI 组件");
+                return;
+            }
+        }
+
+        string tooltipContent = BuildTooltipText();
+        tooltipText.text = tooltipContent;
+        
+        // 确保文本对象激活
+        if (!tooltipText.gameObject.activeSelf)
+        {
+            tooltipText.gameObject.SetActive(true);
         }
 
         tooltipPanel.SetActive(true);

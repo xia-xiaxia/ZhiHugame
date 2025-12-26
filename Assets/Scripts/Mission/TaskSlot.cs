@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TaskSlot : MonoBehaviour
 {
-    //Õâ¸ö½Å±¾ÓÃÀ´¿ØÖÆTaskSlotµÄÏÔÊ¾ÄÚÈİ¡£
+    //è¿™ä¸ªè„šæœ¬ç”¨æ¥æ§åˆ¶TaskSlotçš„æ˜¾ç¤ºå†…å®¹ã€‚
 
     public TextMeshProUGUI taskName;
     public TextMeshProUGUI taskDesc;
@@ -18,7 +18,7 @@ public class TaskSlot : MonoBehaviour
     [SerializeField]
     string colorStringEnd = "</color>";
     [SerializeField]
-    string intervalInReward = "    "; //ËÄ¸ö¿Õ¸ñ
+    string intervalInReward = "    "; //å››ä¸ªç©ºæ ¼
 
     public GameObject comp0;
     public GameObject comp1;
@@ -41,12 +41,12 @@ public class TaskSlot : MonoBehaviour
 
         if(missionData.rewardPolicyId != 0)
         {
-            rewardStr += colorString + "¹ú²ß" + colorStringEnd + "½±Àø£º" + missionData.rewardPolicyId.ToString() + intervalInReward;
+            rewardStr += colorString + "å›½ç­–" + colorStringEnd + "å¥–åŠ±ï¼š" + missionData.rewardPolicyId.ToString() + intervalInReward;
         }
 
         if(missionData.rewardTalent != 0)
         {
-            rewardStr += colorString + "Ìì¸³µã" + colorStringEnd + "½±Àø£º" + missionData.rewardTalent.ToString();
+            rewardStr += colorString + "å¤©èµ‹ç‚¹" + colorStringEnd + "å¥–åŠ±ï¼š" + missionData.rewardTalent.ToString();
         }
 
         taskReward.text = rewardStr;

@@ -9,11 +9,11 @@
       "preTanlents": ["root_01", "root_02"] ,
 
       "talentEffect": {
-        "kingLimitChange": 10,
-        "nobleLimitChange": 0,
-        "scholarLimitChange": 0,
-        "foreignLimitChange": 0,
-        "peopleLimitChange": 5,
+        "kingLimit": 60,
+        "nobleLimit": 0,
+        "scholarLimit": 0,
+        "foreignLimit": 0,
+        "peopleLimit": 0,
         "policyShopCount": 1,
         "refreshPolicyShopCost": [10, 20, 50],
         "shopMult": 1.0,
