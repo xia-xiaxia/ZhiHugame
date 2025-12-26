@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 /// <summary>
 /// 存档数据结构
 /// 包含游戏的所有可持久化数据
@@ -70,12 +71,28 @@ public class SaveData
     
     // 游戏版本
     public string gameVersion = "1.0.0";
-    
+
+
+    //GameStatistics内容
+    public int currentReignYears;
+    public int totalReginYears;
+    public int policyUseOutCount;
+
+    public bool[] judgeValue;
+    public int[] judgeFirstYear;
+
+    public List<int> activeMissions;
+    public List<IntIntEntry> policyUsageCountList;
+    public List<IntIntEntry> policyFirstYearList;
+    public List<IntBoolEntry> isCompleteList;
+
+
     /// <summary>
     /// 从 StatModel 创建存档数据
     /// </summary>
     public static SaveData FromStatModel(StatModel stats)
     {
+        GameStatistics gameStatistics = GameControl.Instance.gameStatistics;
         SaveData data = new SaveData
         {
             year = stats.year,
@@ -106,9 +123,36 @@ public class SaveData
             buff_foreign_delta = stats.buff_foreign_delta,
             buff_people_delta = stats.buff_people_delta,
             hasSeenTutorial = stats.hasSeenTutorial,
+            currentReignYears = gameStatistics.currentReignYears,
+            totalReginYears = gameStatistics.totalReginYears,
+            policyUseOutCount = gameStatistics.policyUseOutCount,
+            judgeValue = (bool[])gameStatistics.judgeValue.Clone(),
+            judgeFirstYear = (int[])gameStatistics.judgeFirstYear.Clone(),
+            activeMissions = new List<int>(gameStatistics.activeMissions),
             saveTime = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
         };
-        
+
+        // 转换字典: policyUsageCount
+        data.policyUsageCountList = new List<IntIntEntry>();
+        foreach (var kvp in gameStatistics.policyUsageCount)
+        {
+            data.policyUsageCountList.Add(new IntIntEntry { key = kvp.Key, value = kvp.Value });
+        }
+
+        // 转换字典: policyFirstYear
+        data.policyFirstYearList = new List<IntIntEntry>();
+        foreach (var kvp in gameStatistics.policyFirstYear)
+        {
+            data.policyFirstYearList.Add(new IntIntEntry { key = kvp.Key, value = kvp.Value });
+        }
+
+        // 转换字典: isComplete
+        data.isCompleteList = new List<IntBoolEntry>();
+        foreach (var kvp in gameStatistics.isComplete)
+        {
+            data.isCompleteList.Add(new IntBoolEntry { key = kvp.Key, value = kvp.Value });
+        }
+
         // 复制政策背包
         if (stats.policyBag != null)
         {
@@ -208,6 +252,7 @@ public class SaveData
     
     /// <summary>
     /// 应用存档数据到 StatModel
+    /// 新加GameStatistic内容
     /// </summary>
     public void ApplyToStatModel(StatModel stats)
     {
@@ -319,6 +364,44 @@ public class SaveData
         
         Debug.Log($"[SaveData] 存档已加载: 年份={year}, 君主={king}, 贵族={noble}");
     }
+
+
+    /// <summary>
+    /// 应用存档数据到 GameStatistics
+    /// </summary>
+    public void ApplyToGameStatisics(GameStatistics stats)
+    {
+
+        stats.currentReignYears = this.currentReignYears;
+        stats.totalReginYears = this.totalReginYears;
+        stats.policyUseOutCount = this.policyUseOutCount;
+
+        if (this.judgeValue != null) stats.judgeValue = (bool[])this.judgeValue.Clone();
+        if (this.judgeFirstYear != null) stats.judgeFirstYear = (int[])this.judgeFirstYear.Clone();
+
+        stats.activeMissions = new List<int>(this.activeMissions);
+
+        // 还原字典: policyUsageCount
+        stats.policyUsageCount.Clear();
+        foreach (var entry in this.policyUsageCountList)
+        {
+            stats.policyUsageCount[entry.key] = entry.value;
+        }
+
+        // 还原字典: policyFirstYear
+        stats.policyFirstYear.Clear();
+        foreach (var entry in this.policyFirstYearList)
+        {
+            stats.policyFirstYear[entry.key] = entry.value;
+        }
+
+        // 还原字典: isComplete
+        stats.isComplete.Clear();
+        foreach (var entry in this.isCompleteList)
+        {
+            stats.isComplete[entry.key] = entry.value;
+        }
+    }
 }
 
 /// <summary>
@@ -392,4 +475,18 @@ public class UsedEventData
     {
         eventId = "";
     }
+}
+
+[System.Serializable]
+public class IntIntEntry
+{
+    public int key;
+    public int value;
+}
+
+[System.Serializable]
+public class IntBoolEntry
+{
+    public int key;
+    public bool value;
 }

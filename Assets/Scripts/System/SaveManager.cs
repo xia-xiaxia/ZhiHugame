@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
+
 /// <summary>
 /// 存档管理器
 /// 负责游戏数据的保存和加载
@@ -134,6 +135,7 @@ public class SaveManager : MonoBehaviour
             
             // 应用到StatModel
             saveData.ApplyToStatModel(stats);
+            saveData.ApplyToGameStatisics(GameControl.Instance.gameStatistics);
             
             // 恢复事件使用状态
             if (EventDatabase.Instance != null && saveData.usedEvents != null)
