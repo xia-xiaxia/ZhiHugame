@@ -15,14 +15,27 @@ public class MissionUI : MonoBehaviour
 
     public TaskSlot[] taskslots;
 
-    public TextMeshProUGUI pageNum; 
+    public TextMeshProUGUI pageNum;
+
+    public bool canReward = false;
    
     //供button调用
-    public void Display()
+    public void DisplayWithReward()
     {
 
         missionMenu.SetActive(true);
-        
+        canReward = true;
+
+        //目前的逻辑是在激活Menu的时候判断任务是否完成
+        MissionManager.Instance.CheckComplete();
+
+        RefreshPage();
+    }
+
+    public void DisplayWithoutReward()
+    {
+        missionMenu.SetActive(true);
+        canReward = false;
 
         //目前的逻辑是在激活Menu的时候判断任务是否完成
         MissionManager.Instance.CheckComplete();

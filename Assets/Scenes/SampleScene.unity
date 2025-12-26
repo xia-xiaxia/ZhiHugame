@@ -5911,6 +5911,7 @@ MonoBehaviour:
   - {fileID: 535323790}
   - {fileID: 1659642644}
   pageNum: {fileID: 15206787}
+  canReward: 0
 --- !u!1 &515151523
 GameObject:
   m_ObjectHideFlags: 0
@@ -10684,7 +10685,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 508375522}
         m_TargetAssemblyTypeName: MissionUI, Assembly-CSharp
-        m_MethodName: Display
+        m_MethodName: DisplayWithReward
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
