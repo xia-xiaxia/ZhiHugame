@@ -17,10 +17,15 @@ public class GameStatistics : ScriptableObject
     public Dictionary<int, int> policyUsageCount = new Dictionary<int, int>();
     public Dictionary<int, int> policyFirstYear = new Dictionary<int, int>();
 
-    //�¼��ж�ֵ
+    // 事件判定相关
     public bool[] judgeValue = new bool[100];
     public int[] judgeFirstYear = new int[100];
-    
+
+
+    //MissionManager 相关
+    public List<int> activeMissions = new List<int>();
+    public Dictionary<int, bool> isComplete = new Dictionary<int, bool>();
+
     public int currentReignYears
     {
         get => _currentReignYears;
@@ -72,39 +77,96 @@ public class GameStatistics : ScriptableObject
 
     public void GameEnd()
     {
-        currentReignYears = TurnManager.Instance.year;
-        totalReginYears += TurnManager.Instance.year;
+        if (TurnManager.Instance != null)
+        {
+            currentReignYears = TurnManager.Instance.year;
+            totalReginYears += TurnManager.Instance.year;
+        }
+        else
+        {
+            Debug.LogWarning("[GameStatistics] TurnManager.Instance 为 null，无法记录年份");
+        }
     }
 
     public void usePolicy(PolicyItem item)
     {
-        int key = int.Parse(item.id);
+        if (item == null)
+        {
+            Debug.LogWarning("[GameStatistics] PolicyItem 为 null，忽略 usePolicy 调用");
+            return;
+        }
+
+        if (!int.TryParse(item.id, out int key))
+        {
+            Debug.LogWarning($"[GameStatistics] PolicyItem.id 无法解析为整数: {item.id}");
+            return;
+        }
+
         policyUsageCount[key] = policyUsageCount.GetValueOrDefault(key, 0) + 1;
-        policyFirstYear.TryAdd(key, TurnManager.Instance.year);
-        if(item.usageCount == 1)
+        int year = TurnManager.Instance != null ? TurnManager.Instance.year : 0;
+        if (!policyFirstYear.ContainsKey(key))
+        {
+            policyFirstYear[key] = year;
+        }
+
+        if (item.usageCount == 1)
         {
             policyUseOutCount++;
         }
     }
 
-    public void setJudgeValue(int id)
+    public void setJudgeValue(int[] eventFlags)
     {
-        if (judgeValue[id] == false)
+        // 输入空安全
+        if (eventFlags == null || eventFlags.Length == 0)
         {
-            judgeValue[id] = true;
-            judgeFirstYear[id] = TurnManager.Instance.year;
+            return;
         }
-    }
 
-    public void setJudgeValue(List<int> ids)
-    {
-        foreach (int id in ids)
+        // 内部数组空安全
+        if (judgeValue == null || judgeValue.Length == 0)
         {
-            if (judgeValue[id] == false)
+            judgeValue = new bool[100];
+        }
+        if (judgeFirstYear == null || judgeFirstYear.Length == 0)
+        {
+            judgeFirstYear = new int[100];
+            for (int i = 0; i < judgeFirstYear.Length; i++)
             {
-                judgeValue[id] = true;
-                judgeFirstYear[id] = TurnManager.Instance.year;
+                judgeFirstYear[i] = -1;
+            }
+        }
+
+        foreach (var id in eventFlags)
+        {
+            int key = Mathf.Abs(id);
+            bool flag = id > 0;
+
+            // 边界安全：忽略超出数组长度的索引
+            if (key < 0 || key >= judgeValue.Length || key >= judgeFirstYear.Length)
+            {
+                Debug.LogWarning($"[GameStatistics] eventFlag 索引越界: {key}");
+                continue;
+            }
+
+            if (flag)
+            {
+                if (!judgeValue[key])
+                {
+                    judgeValue[key] = true;
+                    judgeFirstYear[key] = TurnManager.Instance != null ? TurnManager.Instance.year : 0;
+                }
+            }
+            else
+            {
+                if (judgeValue[key])
+                {
+                    judgeValue[key] = false;
+                    judgeFirstYear[key] = -1;
+                }
             }
         }
     }
+
+
 }

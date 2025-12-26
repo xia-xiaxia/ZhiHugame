@@ -31,7 +31,19 @@ public class SaveData
     public int foreignMax;
     public int peopleMin;
     public int peopleMax;
-    
+
+    public int king_delta = 0;
+    public int noble_delta = 0;
+    public int scholar_delta = 0;
+    public int foreign_delta = 0;
+    public int people_delta = 0;
+
+    public int buff_king_delta = 0;
+    public int buff_noble_delta = 0;
+    public int buff_scholar_delta = 0;
+    public int buff_foreign_delta = 0;
+    public int buff_people_delta = 0;
+
     // 政策背包
     public List<PolicyItemData> policyBag = new List<PolicyItemData>();
     
@@ -83,6 +95,16 @@ public class SaveData
             foreignMax = stats.foreignMax,
             peopleMin = stats.peopleMin,
             peopleMax = stats.peopleMax,
+            king_delta = stats.king_delta,
+            noble_delta = stats.noble_delta,
+            scholar_delta = stats.scholar_delta,
+            foreign_delta = stats.foreign_delta,
+            people_delta = stats.people_delta,
+            buff_king_delta = stats.buff_king_delta,
+            buff_noble_delta = stats.buff_noble_delta,
+            buff_scholar_delta = stats.buff_scholar_delta,
+            buff_foreign_delta = stats.buff_foreign_delta,
+            buff_people_delta = stats.buff_people_delta,
             hasSeenTutorial = stats.hasSeenTutorial,
             saveTime = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
         };
@@ -212,6 +234,18 @@ public class SaveData
         stats.foreignMax = foreignMax;
         stats.peopleMin = peopleMin;
         stats.peopleMax = peopleMax;
+
+        stats.king_delta = king_delta;
+        stats.noble_delta = noble_delta;
+        stats.scholar_delta = scholar_delta;
+        stats.foreign_delta = foreign_delta;
+        stats.people_delta = people_delta;
+        stats.buff_king_delta = buff_king_delta;
+        stats.buff_noble_delta = buff_noble_delta;
+        stats.buff_scholar_delta = buff_scholar_delta;
+        stats.buff_foreign_delta = buff_foreign_delta;
+        stats.buff_people_delta = buff_people_delta;
+
         stats.hasSeenTutorial = hasSeenTutorial;
         
         // 恢复政策背包

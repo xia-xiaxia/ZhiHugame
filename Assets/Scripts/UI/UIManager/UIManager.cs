@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,7 +19,7 @@ public class UIManager : MonoBehaviour
 
     [Header("道具提示框")]
     public GameObject policyTooltipPanel;
-    public Text policyTooltipText;
+    public TextMeshProUGUI policyTooltipText;
 
     [Header("道具商店")]
     public int maxRefreshCount = 4;
