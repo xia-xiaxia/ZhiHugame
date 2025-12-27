@@ -12,24 +12,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162da53cb023ce34bbddf3e852d3731d, type: 3}
   m_Name: 11
   m_EditorClassIdentifier: 
-  year: 1
-  _currency: 0
-  _king: 50
-  _noble: 50
-  _scholar: 50
-  _foreign: 50
-  _people: 50
-  kingMin: 20
-  kingMax: 80
-  nobleMin: 20
-  nobleMax: 80
-  scholarMin: 20
-  scholarMax: 80
-  foreignMin: 20
-  foreignMax: 80
-  peopleMin: 20
-  peopleMax: 80
+  year: 0
+  maxPolicyCount: 0
+  _currency: 344
+  _king: 30
+  _noble: 30
+  _scholar: 30
+  _foreign: 30
+  _people: 30
+  _talentPoints: 0
+  _policyBagSize: 5
+  _payBackCurrency: 0
+  _shopMult: 1
+  _currencyMult: 1
+  _policyShopCount: 5
+  king_delta: 0
+  noble_delta: 0
+  scholar_delta: 0
+  foreign_delta: 0
+  people_delta: 0
+  buff_king_delta: 0
+  buff_noble_delta: 0
+  buff_scholar_delta: 0
+  buff_foreign_delta: 0
+  buff_people_delta: 0
+  kingMin: 0
+  kingMax: 60
+  nobleMin: 0
+  nobleMax: 60
+  scholarMin: 0
+  scholarMax: 60
+  foreignMin: 0
+  foreignMax: 60
+  peopleMin: 0
+  peopleMax: 60
   policyBag: []
   buffBag: []
   delayedEventQueue: []
+  activatedTalents: []
+  refreshPolicyShopCost: 00000000000000000000000000000000
   hasSeenTutorial: 1
+  activeLayerLocks: []

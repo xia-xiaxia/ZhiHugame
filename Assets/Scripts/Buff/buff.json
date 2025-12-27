@@ -142,5 +142,43 @@
     "nobleChange": -5,
     "foreignChange": 5,
     "peopleChange": 5
+  },
+  {
+    "id": "101",
+    "name": "鼓励通商",
+    "description": "鼓励国内外商业的交流与发展",
+    "result": "庶人、外臣势力持续小幅上升",
+    "duration": -1,
+    "foreignChange": 2,
+    "peopleChange": 2
+  },
+  {
+    "id": "102",
+    "name": "兼容并蓄",
+    "description": "鼓励各国的各派学说传人来我国交流",
+    "result": "外臣势力持续大幅上升",
+    "duration": -1,
+    "foreignChange": 10
+  },
+  {
+    "id": "103",
+    "name": "恪守礼法",
+    "description": "作为国君严格遵守礼法行事",
+    "result": "国君势力持续小幅下降，贵族势力持续小幅上升",
+    "duration": -1,
+    "kingChange": -5,
+    "nobleChange": 5
+  },
+  {
+    "id": "104",
+    "name": "君权至高",
+    "description": "作为国君乾纲独断，坚刚不可夺其志",
+    "result": "国君势力持续中幅上升，贵族、卿士、外臣、庶人势力持续中幅下降",
+    "duration": -1,
+    "kingChange": 25,
+    "nobleChange": -15,
+    "scholarChange": -15,
+    "foreignChange": -15,
+    "peopleChange": -15
   }
 ]
