@@ -172,6 +172,9 @@ public class GameLifecycleManager : MonoBehaviour
         //全局统计的初始化
         GameControl.Instance.gameStatistics.Restart();
 
+        //Buff清除
+        BuffManager.Instance.ClearAllBuffs();
+
         GameOver = false;
         GamePaused = false;
         TurnManager.Instance.ResetTurn();
