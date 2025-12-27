@@ -283,7 +283,7 @@ public class SaveData
             Debug.LogError("[SaveData] StatModel 为 null");
             return;
         }
-        
+
         stats.year = year;
         stats.currency = currency;
         stats.maxPolicyCount = maxPolicyCount;

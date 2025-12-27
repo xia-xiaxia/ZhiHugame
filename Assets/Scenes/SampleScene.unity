@@ -13332,8 +13332,8 @@ MonoBehaviour:
   buffPanel: {fileID: 1547046791}
   buffItemsParent: {fileID: 1267891038}
   buffItemButtonPrefab: {fileID: 755546166758793465, guid: 830b2a33397c2c947bb39baf5a9d57eb, type: 3}
-  buffDetailText: {fileID: 0}
-  buffOpenButton: {fileID: 1852578784}
+  buffDetailText: {fileID: 1579548965}
+  buffOpenButton: {fileID: 1547046793}
   buffCloseButton: {fileID: 328133969}
   prevPageButton: {fileID: 1295007895}
   nextPageButton: {fileID: 803137807}

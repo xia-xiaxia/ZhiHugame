@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
@@ -284,7 +285,7 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
         if (GameControl.Instance == null) return false;
         
         int currency = GameControl.Instance.GetCurrency();
-        
+       
         if (currency < policyValue) return false;
         if (GameControl.Instance.stats.policyBag.Count >= GameControl.Instance.stats.maxPolicyCount) return false;
         if (GameControl.Instance.GetPolicy(policyItem.id) != null) return false;
