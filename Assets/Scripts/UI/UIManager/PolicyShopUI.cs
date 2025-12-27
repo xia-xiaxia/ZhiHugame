@@ -23,8 +23,11 @@ public class PolicyShopUI : MonoBehaviour
     public Transform shopInventoryParent;
     public GameObject shopInventoryItemPrefab;
     public Text shopInventoryCountText;
-    // 最大显示数量
-    private int shopShowCount = 5;
+    // 商店最大显示数量
+    private int shopShowCount = 3;
+    // 背包最大显示数量
+    private int shopInventoryMaxCount = 3;
+
 
     private List<GameObject> shopItemButtons = new List<GameObject>();
     private List<GameObject> shopInventoryButtons = new List<GameObject>();
@@ -50,6 +53,7 @@ public class PolicyShopUI : MonoBehaviour
         }
         refreshCosts = GameControl.Instance?.stats.refreshPolicyShopCost;
         shopShowCount = GameControl.Instance?.stats.policyShopCount ?? 5;
+        shopInventoryMaxCount = GameControl.Instance?.stats.policyBagSize ?? 5;
         refreshCount = 0;
     }
 
@@ -110,6 +114,7 @@ public class PolicyShopUI : MonoBehaviour
         
         // 显示商品
         int displayCount = Mathf.Min(shopItems.Count, availableSlots.Count);
+        Debug.Log($"[PolicyShopUI] 准备显示商店商品：共有 {shopItems.Count} 个商品，准备显示 {displayCount} 个");
         for (int i = 0; i < displayCount; i++)
         {
             PolicyItem policy = shopItems[i];
@@ -166,7 +171,7 @@ public class PolicyShopUI : MonoBehaviour
             Debug.LogError("[PolicyShopUI] PolicyManager 未初始化");
             return;
         }
-        PolicyManager.Instance.GenerateShopItems(8);
+        PolicyManager.Instance.GenerateShopItems(shopShowCount);
         List<PolicyItem> shopItems = PolicyManager.Instance.GetCurrentShopItems();
         
         // 确保有足够的槽位
@@ -311,7 +316,7 @@ public class PolicyShopUI : MonoBehaviour
         if (GameControl.Instance == null || GameControl.Instance.stats == null)
         {
             if (shopInventoryCountText != null)
-                shopInventoryCountText.text = "0/5";
+                shopInventoryCountText.text = "0/" + shopInventoryMaxCount.ToString();
             return;
         }
 
@@ -321,13 +326,13 @@ public class PolicyShopUI : MonoBehaviour
         // 更新数量
         if (shopInventoryCountText != null)
         {
-            shopInventoryCountText.text = $"{count}/5";
+            shopInventoryCountText.text = $"{count}/" + shopInventoryMaxCount.ToString();
         }
 
         // 显示槽位
         List<PolicyItem> itemList = new List<PolicyItem>(policyBag);
 
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < shopInventoryMaxCount; i++)
         {
             if (shopInventoryParent == null || shopInventoryItemPrefab == null) break;
 

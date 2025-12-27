@@ -7,6 +7,7 @@ public class DestroyPolicy : MonoBehaviour
     // 公共字段，由外部设置（例如在UIManager创建按钮时）
     [HideInInspector]
     public PolicyItem policyItem;
+    private int abandonPolicyAndGetCurrency = 0;
 
     void Start()
     {
@@ -26,6 +27,9 @@ public class DestroyPolicy : MonoBehaviour
     {
         if (policyItem != null)
         {
+            abandonPolicyAndGetCurrency = GameControl.Instance?.stats?.payBackCurrency ?? 0;
+            CurrencyManager.Instance?.AddCurrency(abandonPolicyAndGetCurrency);
+            Debug.Log($"[PolicyInShopTrigger] 道具已丢弃，获得货币：{abandonPolicyAndGetCurrency}");
             GameControl.Instance.RemovePolicy(policyItem.id);
         }
         Destroy(gameObject);

@@ -43,7 +43,7 @@ public class StatModel : ScriptableObject
     [SerializeField]
     private int _talentPoints = 0; // 当前天赋点数
     [SerializeField]
-    private int _policyBagSize = 5; // 当前道具包大小
+    private int _policyBagSize = 3; // 当前道具包大小
     [SerializeField]
     private int _payBackCurrency = 0; // 退还的货币数
     [SerializeField]
@@ -51,7 +51,7 @@ public class StatModel : ScriptableObject
     [SerializeField]
     private float _currencyMult = 1.0f; // 货币获取倍率
     [SerializeField]
-    private int _policyShopCount = 5; // 道具商店数量]
+    private int _policyShopCount = 3; // 道具商店数量
 
     //统计变化量，在year_end统一执行动画及数值改动
     public int king_delta = 0;

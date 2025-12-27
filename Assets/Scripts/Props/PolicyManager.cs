@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using JetBrains.Annotations;
+using Unity.VisualScripting;
 
 public class PolicyManager : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class PolicyManager : MonoBehaviour
     
     private Dictionary<string, PolicyItem> allPolicies = new Dictionary<string, PolicyItem>();
     private List<PolicyItem> currentShopItems = new List<PolicyItem>();
+
 
     void Awake()
     {
@@ -128,7 +131,7 @@ public class PolicyManager : MonoBehaviour
     }
 
     // 随机抽取n个道具作为商店商品
-    public void GenerateShopItems(int count = 8)
+    public void GenerateShopItems(int count = 3)
     {
         Debug.Log($"[PolicyManager] 开始生成商店道具，请求数量={count}，可用道具总数={allPolicies.Count}");
         
@@ -170,4 +173,5 @@ public class PolicyManager : MonoBehaviour
     {
         return new List<PolicyItem>(currentShopItems);
     }
+
 }
