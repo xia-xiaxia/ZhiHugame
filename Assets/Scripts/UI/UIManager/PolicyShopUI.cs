@@ -202,14 +202,14 @@ public class PolicyShopUI : MonoBehaviour
                 Debug.Log("[PolicyShopUI] 道具刷新次数已达上限，无法继续刷新");
                 return;
             }
-            // 计算本次刷新费用，若为非正数则回退到默认对应档
+            // 计算本次刷新费用，若为非正数则回退到默认对应值
             int fallbackCost = (UIManager.Instance != null && UIManager.Instance.refreshCosts != null && UIManager.Instance.refreshCosts.Length > refreshCount)
                 ? UIManager.Instance.refreshCosts[refreshCount]
                 : 5;
             int currentCost = refreshCosts[refreshCount] > 0 ? refreshCosts[refreshCount] : fallbackCost;
             if (currentCost <= 0)
             {
-                Debug.LogWarning($"[PolicyShopUI] 本次刷新费用为非正数({refreshCosts[refreshCount]}), 使用回退值 {currentCost}");
+                Debug.LogWarning($"[PolicyShopUI] 本次刷新费用为错误({refreshCosts[refreshCount]}), 使用回退值 {currentCost}");
             }
 
             // 使用 CurrencyManager 的余额判断，保持与消费逻辑一致
