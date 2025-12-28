@@ -81,6 +81,20 @@ public class TalantManager : MonoBehaviour
         stats.talentPoints += amount;
         UpdateTalentPointsUI();
         Debug.Log($"获得 {amount} 点天赋点，当前天赋点：{stats.talentPoints}");
+
+        // 获得天赋点后自动保存，确保进度持久化
+        if (SaveManager.Instance != null)
+        {
+            bool ok = SaveManager.Instance.SaveGame();
+            if (ok)
+            {
+                Debug.Log("[TalantManager] 获得天赋点后已自动保存");
+            }
+            else
+            {
+                Debug.LogWarning("[TalantManager] 获得天赋点后自动保存失败");
+            }
+        }
     }
 
     /// <summary>
@@ -139,6 +153,9 @@ public class TalantManager : MonoBehaviour
 
         // 应用天赋效果
         ApplyTalentEffect(talent);
+
+        // 激活天赋后，自动保存游戏进度（保留天赋与其效果）
+        saveTalentData();
 
         Debug.Log($"成功激活天赋：{talent.name}，剩余天赋点：{stats.talentPoints}");
         return true;
@@ -216,6 +233,9 @@ public class TalantManager : MonoBehaviour
             Debug.Log($"道具商店刷新花费已更新");
             Debug.Log("stats.refreshPolicyShopCost=" + string.Join(",", stats.refreshPolicyShopCost));
         }
+
+        // 应用天赋效果完成后，立即保存以持久化所有修改字段
+        saveTalentData();
     }
 
     /// <summary>
@@ -232,6 +252,22 @@ public class TalantManager : MonoBehaviour
         if (talentPointsText != null)
         {
             talentPointsText.text = currentTalentPoints.ToString();
+        }
+    }
+
+    public void saveTalentData()
+    {
+        if (SaveManager.Instance != null)
+        {
+            bool ok = SaveManager.Instance.SaveGame();
+            if (ok)
+            {
+                Debug.Log("[TalantManager] 天赋数据已保存");
+            }
+            else
+            {
+                Debug.LogWarning("[TalantManager] 天赋数据保存失败");
+            }
         }
     }
 }

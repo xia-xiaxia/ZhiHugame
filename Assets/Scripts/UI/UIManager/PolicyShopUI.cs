@@ -41,6 +41,19 @@ public class PolicyShopUI : MonoBehaviour
     private int refreshCount = 0;
     private float currentCurrency = 0;
 
+    // 验证刷新费用数组：为空或全为非正数则回退默认
+    private int[] ValidateRefreshCosts(int[] source)
+    {
+        var fallback = UIManager.Instance != null ? UIManager.Instance.refreshCosts : new int[4] { 5, 10, 20, 50 };
+        if (source == null || source.Length == 0) return fallback;
+        bool allNonPositive = true;
+        for (int i = 0; i < source.Length; i++)
+        {
+            if (source[i] > 0) { allNonPositive = false; break; }
+        }
+        return allNonPositive ? fallback : source;
+    }
+
     void Awake()
     {
         Instance = this;
@@ -51,9 +64,15 @@ public class PolicyShopUI : MonoBehaviour
             currencyText = UIManager.Instance.CurrencyText;
             currentCurrency = 0;
         }
-        refreshCosts = GameControl.Instance?.stats.refreshPolicyShopCost;
-        shopShowCount = GameControl.Instance?.stats.policyShopCount ?? 5;
-        shopInventoryMaxCount = GameControl.Instance?.stats.policyBagSize ?? 5;
+        // 从 StatModel 同步（有则覆盖，无则保留默认），并确保长度有效
+        var stats = GameControl.Instance?.stats;
+        if (stats != null)
+        {
+            refreshCosts = ValidateRefreshCosts(stats.refreshPolicyShopCost);
+            maxRefreshCount = refreshCosts.Length;
+            shopShowCount = stats.policyShopCount;
+            shopInventoryMaxCount = stats.policyBagSize;
+        }
         refreshCount = 0;
     }
 
@@ -62,6 +81,17 @@ public class PolicyShopUI : MonoBehaviour
     /// </summary>
     public void ShowShop()
     {
+        // 每次打开商店前，重新从 StatModel 同步最新配置（有则覆盖，无则保留默认）
+        var stats = GameControl.Instance?.stats;
+        if (stats != null)
+        {
+            refreshCosts = ValidateRefreshCosts(stats.refreshPolicyShopCost);
+            maxRefreshCount = refreshCosts.Length;
+            shopShowCount = stats.policyShopCount;
+            shopInventoryMaxCount = stats.policyBagSize;
+            Debug.Log($"[PolicyShopUI] 同步最新配置: 展示数量={shopShowCount}, 背包上限={shopInventoryMaxCount}, 刷新花费=[{string.Join(",", refreshCosts)}]");
+        }
+
         if (policyShopPanel != null) policyShopPanel.SetActive(true);
 
         // 隐藏结局面板
@@ -148,22 +178,52 @@ public class PolicyShopUI : MonoBehaviour
     // 刷新道具
     public void RefreshShopItems()
     {
+        // 刷新前，同步最新的商店显示数量与刷新花费，确保天赋改动生效
+        var stats = GameControl.Instance?.stats;
+        if (stats != null)
+        {
+            refreshCosts = ValidateRefreshCosts(stats.refreshPolicyShopCost);
+            maxRefreshCount = refreshCosts.Length;
+            shopShowCount = stats.policyShopCount;
+            Debug.Log($"[PolicyShopUI] 刷新前同步: 刷新花费=[{string.Join(",", refreshCosts)}], 次数上限={maxRefreshCount}");
+        }
+
         if(UIManager.Instance != null)
         {
-            if(refreshCount >= maxRefreshCount) 
+            // 边界保护：无刷新费用或已达最大次数
+            if (refreshCosts == null || refreshCosts.Length == 0)
+            {
+                Debug.LogWarning("[PolicyShopUI] 刷新费用未配置，跳过刷新");
+                return;
+            }
+
+            if(refreshCount >= maxRefreshCount || refreshCount >= refreshCosts.Length) 
             {
                 Debug.Log("[PolicyShopUI] 道具刷新次数已达上限，无法继续刷新");
                 return;
             }
-            if(UIManager.Instance.stats.currency < refreshCosts[refreshCount])
+            // 计算本次刷新费用，若为非正数则回退到默认对应档
+            int fallbackCost = (UIManager.Instance != null && UIManager.Instance.refreshCosts != null && UIManager.Instance.refreshCosts.Length > refreshCount)
+                ? UIManager.Instance.refreshCosts[refreshCount]
+                : 5;
+            int currentCost = refreshCosts[refreshCount] > 0 ? refreshCosts[refreshCount] : fallbackCost;
+            if (currentCost <= 0)
+            {
+                Debug.LogWarning($"[PolicyShopUI] 本次刷新费用为非正数({refreshCosts[refreshCount]}), 使用回退值 {currentCost}");
+            }
+
+            // 使用 CurrencyManager 的余额判断，保持与消费逻辑一致
+            if (CurrencyManager.Instance == null || !CurrencyManager.Instance.HasEnoughCurrency(currentCost))
             {
                 Debug.Log("[PolicyShopUI] 货币不足，无法刷新道具");
                 return;
             }
             refreshCount++;
-            UIManager.Instance.stats.currency -= refreshCosts[refreshCount - 1];
+            // 使用统一的消费入口，保证UI与统计更新一致
+            GameControl.Instance?.SpendCurrency(currentCost);
             UpdateCurrencyDisplay();
             Debug.Log($"[PolicyShopUI] 道具刷新次数：{refreshCount}/{maxRefreshCount}");
+            Debug.Log($"[PolicyShopUI] 刷新花费：{currentCost} 货币");
         }
         // 获取商店商品
         if (PolicyManager.Instance == null)

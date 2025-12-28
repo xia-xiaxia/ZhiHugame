@@ -42,7 +42,7 @@ public class StatModel : ScriptableObject
     [SerializeField]
     private int _talentPoints = 0; // 当前天赋点数
     [SerializeField]
-    private int _policyBagSize = 3; // 当前道具包大小
+    private int _policyBagSize = 4; // 当前道具包大小
     [SerializeField]
     private int _payBackCurrency = 0; // 退还的货币数
     [SerializeField]
@@ -50,7 +50,7 @@ public class StatModel : ScriptableObject
     [SerializeField]
     private float _currencyMult = 1.0f; // 货币获取倍率
     [SerializeField]
-    private int _policyShopCount = 3; // 道具商店数量
+    private int _policyShopCount = 4; // 道具商店数量
 
     //统计变化量，在year_end统一执行动画及数值改动
     public int king_delta = 0;
@@ -78,19 +78,6 @@ public class StatModel : ScriptableObject
             }
         }
     }
-    // 道具包大小属性
-    public int policyBagSizeChange
-    {
-        get => _policyBagSize;
-        set
-        {
-            if (_policyBagSize != value)
-            {
-                _policyBagSize = value;
-                OnStatsChanged?.Invoke();
-            }
-        }
-    }
     // 道具商店数量属性
     public int policyShopCount
     {
@@ -104,6 +91,7 @@ public class StatModel : ScriptableObject
             }
         }
     }
+    // 道具包大小属性
     public int policyBagSize
     {
         get => _policyBagSize;
@@ -306,37 +294,34 @@ public class StatModel : ScriptableObject
     // 可调用的重置方法（重开时恢复初始值）
     public void ResetToDefault()
     {
+        // 重置年份
         year = 0;
-        
-        kingMin = 0; kingMax = 60;
-        nobleMin = 0; nobleMax = 60;
-        scholarMin = 0; scholarMax = 60;
-        foreignMin = 0; foreignMax = 60;
-        peopleMin = 0; peopleMax = 60;
-        
-        // 根据上下限计算中间值
+
+        // 不再重置上下限，保留天赋带来的阈值修改
+        // 根据当前上下限计算中间值
         int kingMid = (kingMin + kingMax) / 2;
         int nobleMid = (nobleMin + nobleMax) / 2;
         int scholarMid = (scholarMin + scholarMax) / 2;
         int foreignMid = (foreignMin + foreignMax) / 2;
         int peopleMid = (peopleMin + peopleMax) / 2;
-        
-        // 通过属性触发事件
+
+        // 通过属性触发事件（仅重置当前数值到中位）
         king = kingMid;
         noble = nobleMid;
         scholar = scholarMid;
         foreign = foreignMid;
         people = peopleMid;
-        
-        // 清空背包
+
+        // 清空需要在重开时重置的运行期数据
         policyBag.Clear();
         buffBag.Clear();
         delayedEventQueue.Clear();
-        activeLayerLocks.Clear();        activatedTalents.Clear();
-        
-        // 重置天赋点
-        talentPoints = 0;        
-        Debug.Log($"[StatModel] 重置完成 - 国君:{king} 宗族:{noble} 卿士:{scholar} 外臣:{foreign} 庶人:{people}");
+        activeLayerLocks.Clear();
+
+        // 保留已激活天赋与天赋点数，确保跨局持久
+        // activatedTalents 和 talentPoints 不再在此处清空或归零
+
+        Debug.Log($"[StatModel] 重置完成（保留天赋） - 国君:{king} 宗族:{noble} 卿士:{scholar} 外臣:{foreign} 庶人:{people}");
     }
     
     /// <summary>

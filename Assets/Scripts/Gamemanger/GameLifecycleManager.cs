@@ -66,14 +66,20 @@ public class GameLifecycleManager : MonoBehaviour
         GamePaused = false;
         TurnManager.Instance.year = 1;
         
-        // 重置数值（保留货币和道具、BUFF）
-        stats.king = 50;
-        stats.noble = 50;
-        stats.scholar = 50;
-        stats.foreign = 50;
-        stats.people = 50;
+        // 重置数值到当前上下限的一半（保留货币、道具、BUFF、天赋与其阈值影响）
+        int kingMid = (stats.kingMin + stats.kingMax) / 2;
+        int nobleMid = (stats.nobleMin + stats.nobleMax) / 2;
+        int scholarMid = (stats.scholarMin + stats.scholarMax) / 2;
+        int foreignMid = (stats.foreignMin + stats.foreignMax) / 2;
+        int peopleMid = (stats.peopleMin + stats.peopleMax) / 2;
+
+        stats.king = kingMid;
+        stats.noble = nobleMid;
+        stats.scholar = scholarMid;
+        stats.foreign = foreignMid;
+        stats.people = peopleMid;
         
-        Debug.Log($"[GameLifecycle] 保留道具数量: {stats.policyBag.Count}, BUFF数量: {stats.buffBag.Count}");
+        Debug.Log($"[GameLifecycle] 保留道具数量: {stats.policyBag.Count}, BUFF数量: {stats.buffBag.Count}, 已激活天赋: {stats.activatedTalents.Count}");
         
         // 清除暂停快照
         pausedEventId = null;

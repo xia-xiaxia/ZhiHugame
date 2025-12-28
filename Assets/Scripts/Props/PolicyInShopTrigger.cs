@@ -224,7 +224,9 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
         if (policyItem != null && policyItem.cost > 0)
         {
             float multiple = Random.Range(0.8f, 1.2f);
-            policyValue = Mathf.FloorToInt(policyItem.cost * multiple);
+            // 重新获取当前商店倍率，确保天赋改动生效
+            currentShopMult = GameControl.Instance != null ? GameControl.Instance.stats.shopMult : 1f;
+            policyValue = Mathf.FloorToInt(policyItem.cost * multiple * currentShopMult);
         }
         
          // UpdateButtonDisplay();
@@ -286,7 +288,7 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
         int currency = GameControl.Instance.GetCurrency();
         
         if (currency < policyValue) return false;
-        if (GameControl.Instance.stats.policyBag.Count >= GameControl.Instance.stats.maxPolicyCount) return false;
+        if (GameControl.Instance.stats.policyBag.Count >= GameControl.Instance.stats.policyBagSize) return false;
         if (GameControl.Instance.GetPolicy(policyItem.id) != null) return false;
         
         return true;

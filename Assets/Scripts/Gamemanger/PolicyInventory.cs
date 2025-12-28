@@ -26,7 +26,8 @@ public class PolicyInventory : MonoBehaviour
             return false;
         }
         
-        if (stats.policyBag.Count >= stats.maxPolicyCount) 
+        // 使用可变背包容量（受天赋影响的 policyBagSize）
+        if (stats.policyBag.Count >= stats.policyBagSize) 
         {
             Debug.LogWarning("[PolicyInventory] 背包已满，无法添加新道具");
             return false;
@@ -96,6 +97,6 @@ public class PolicyInventory : MonoBehaviour
     // ===== 背包是否已满 =====
     public bool IsFull()
     {
-        return GetPolicyCount() >= stats?.maxPolicyCount;
+        return GetPolicyCount() >= (stats != null ? stats.policyBagSize : 0);
     }
 }
