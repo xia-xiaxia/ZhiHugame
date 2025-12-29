@@ -373,6 +373,12 @@ public class PolicyShopUI : MonoBehaviour
     /// </summary>
     public void RefreshInventoryDisplay()
     {
+        // 从 stats 同步最新的背包上限
+        if (GameControl.Instance?.stats != null)
+        {
+            shopInventoryMaxCount = GameControl.Instance.stats.policyBagSize;
+        }
+        
         // 清理旧按钮
         foreach (var btn in shopInventoryButtons)
             if (btn != null) Destroy(btn);

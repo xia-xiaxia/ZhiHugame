@@ -376,11 +376,11 @@ public class StatModel : ScriptableObject
         talentPoints = 0;
         
         // 重置天赋效果数据
-        policyBagSize = 3;
+        policyBagSize = 4;
         payBackCurrency = 0;
         shopMult = 1.0f;
         currencyMult = 1.0f;
-        policyShopCount = 3;
+        policyShopCount = 4;
         refreshPolicyShopCost = new int[] { 5, 10, 20, 50 };
         
         // 重置教程标记

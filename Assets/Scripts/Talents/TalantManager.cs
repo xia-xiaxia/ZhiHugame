@@ -190,7 +190,14 @@ public class TalantManager : MonoBehaviour
         if (effect.policyShopCount != 0)
         {
             stats.policyShopCount = effect.policyShopCount;
-            // 这里可以通知商店系统更新商品数量
+            // 如果商店已打开，刷新显示
+            if (PolicyShopUI.Instance != null && PolicyShopUI.Instance.policyShopPanel != null && 
+                PolicyShopUI.Instance.policyShopPanel.activeSelf)
+            {
+                int refreshCount = PolicyShopUI.Instance.GetRefreshCount();
+                PolicyShopUI.Instance.RefreshShopItems();
+                PolicyShopUI.Instance.reRefreshCount(refreshCount); // 保持刷新次数不变
+            }
             Debug.Log($"商店商品数量设置为：{effect.policyShopCount}");
             Debug.Log("stats.policyShopCount=" + stats.policyShopCount);
         }
@@ -221,6 +228,7 @@ public class TalantManager : MonoBehaviour
         if (effect.policyBagSizeChange != 0)
         {
                 stats.policyBagSize = effect.policyBagSizeChange;
+                PolicyShopUI.Instance?.RefreshInventoryDisplay();
                 Debug.Log($"政策背包容量设置为：{effect.policyBagSizeChange}");
                 Debug.Log("stats.policyBagSize=" + stats.policyBagSize);
         }

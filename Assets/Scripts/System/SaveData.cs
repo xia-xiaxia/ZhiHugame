@@ -83,12 +83,12 @@ public class SaveData
     public List<string> activatedTalents = new List<string>();
     
     // 天赋效果相关
-    public int policyBagSize = 5;
+    public int policyBagSize = 4;
     public int payBackCurrency = 0;
     public float shopMult = 1.0f;
     public float currencyMult = 1.0f;
-    public int policyShopCount = 5;
-    public int[] refreshPolicyShopCost = new int[4];
+    public int policyShopCount = 4;
+    public int[] refreshPolicyShopCost = new int[4] { 5, 10, 20, 50 };
     
     // 存档时间戳
     public string saveTime;
