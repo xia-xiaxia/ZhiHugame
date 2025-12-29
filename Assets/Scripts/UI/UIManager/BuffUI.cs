@@ -90,7 +90,7 @@ public class BuffUI : MonoBehaviour
         if (txt != null)
         {
             string dur = buff.duration < 0 ? "永久" : $"{buff.duration}年";
-            txt.text = $"{buff.name ?? buff.id}\n(剩余{dur})";
+            txt.text = $"{buff.name ?? buff.id}\n{buff.result}\n(剩余{dur})";
         }
 
         var button = btnGo.GetComponent<Button>();
@@ -125,9 +125,7 @@ public class BuffUI : MonoBehaviour
         StringBuilder sb = new StringBuilder();
         sb.AppendLine($"【{(buff.name ?? buff.id)}】");
         sb.AppendLine($"时限：{(buff.duration < 0 ? "∞" : buff.duration + "年")}");
-        if (!string.IsNullOrEmpty(buff.description)) sb.AppendLine($"背景：{buff.description}");
-        if (!string.IsNullOrEmpty(buff.result)) sb.AppendLine($"效果：{buff.result}");
-
+        
         // 数值变化详情
         bool hasChanges = (buff.kingChange != 0 || buff.nobleChange != 0 || buff.scholarChange != 0 || buff.foreignChange != 0 || buff.peopleChange != 0);
         if (hasChanges)
@@ -141,6 +139,7 @@ public class BuffUI : MonoBehaviour
         }
 
         buffDetailText.text = sb.ToString();
+        Debug.Log($"[BuffUI] 显示Buff详情: {buff.name}, 描述={buff.description ?? "null"}, 效果={buff.result ?? "null"}");
     }
 
     private string FormatVal(int val) => val >= 0 ? $"+{val}" : val.ToString();

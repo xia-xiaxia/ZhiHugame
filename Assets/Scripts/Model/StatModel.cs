@@ -25,7 +25,6 @@ public class StatModel : ScriptableObject
 {
     // 初始值均为 阈值的一半
     public int year = 0;      // 当前年份
-    public int maxPolicyCount = 8; // 最大道具数量
     
     // 私有字段
     [SerializeField]
@@ -333,27 +332,26 @@ public class StatModel : ScriptableObject
     {
         // 重置年份和货币
         year = 0;
-        currency = 100;
-        maxPolicyCount = 5;
+        currency = 0;
 
         // 重置五维属性到初始值
         kingMin = 0;
-        kingMax = 100;
+        kingMax = 60;
         nobleMin = 0;
-        nobleMax = 100;
+        nobleMax = 60;
         scholarMin = 0;
-        scholarMax = 100;
+        scholarMax = 60;
         foreignMin = 0;
-        foreignMax = 100;
+        foreignMax = 60;
         peopleMin = 0;
-        peopleMax = 100;
+        peopleMax = 60;
 
         // 重置到中间值
-        king = 50;
-        noble = 50;
-        scholar = 50;
-        foreign = 50;
-        people = 50;
+        king = 30;
+        noble = 30;
+        scholar = 30;
+        foreign = 30;
+        people = 30;
         
         // 重置增量
         king_delta = 0;
@@ -378,12 +376,12 @@ public class StatModel : ScriptableObject
         talentPoints = 0;
         
         // 重置天赋效果数据
-        policyBagSize = 5;
+        policyBagSize = 3;
         payBackCurrency = 0;
         shopMult = 1.0f;
         currencyMult = 1.0f;
-        policyShopCount = 5;
-        refreshPolicyShopCost = new int[] { 10, 20, 30, 40 };
+        policyShopCount = 3;
+        refreshPolicyShopCost = new int[] { 5, 10, 20, 50 };
         
         // 重置教程标记
         hasSeenTutorial = false;
@@ -393,7 +391,7 @@ public class StatModel : ScriptableObject
 
     public bool isBagFull(int count = 1)
     {
-        if (this.policyBag.Count + count > this.maxPolicyCount)
+        if (this.policyBag.Count + count > this.policyBagSize)
         {
             return true;
         }
@@ -418,6 +416,9 @@ public class StatModel : ScriptableObject
             // 新增锁定
             activeLayerLocks.Add(new LayerLock(layer, lockIncrease, duration));
             Debug.Log($"[StatModel] 添加锁定: 阶层{layer} {(lockIncrease ? "禁止上升" : "禁止下降")} 时长:{duration}年");
+            
+            // 触发锁定添加事件 (layer, lockIncrease, isAdded=true)
+            OnLayerLockChanged?.Invoke(layer, lockIncrease, true);
         }
     }
     
@@ -431,8 +432,13 @@ public class StatModel : ScriptableObject
             activeLayerLocks[i].remainingYears--;
             if (activeLayerLocks[i].remainingYears <= 0)
             {
-                Debug.Log($"[StatModel] 锁定解除: 阶层{activeLayerLocks[i].layer} {(activeLayerLocks[i].lockIncrease ? "禁止上升" : "禁止下降")}");
+                int layer = activeLayerLocks[i].layer;
+                bool lockIncrease = activeLayerLocks[i].lockIncrease;
+                Debug.Log($"[StatModel] 锁定解除: 阶层{layer} {(lockIncrease ? "禁止上升" : "禁止下降")}");
                 activeLayerLocks.RemoveAt(i);
+                
+                // 触发锁定移除事件 (layer, lockIncrease, isAdded=false)
+                OnLayerLockChanged?.Invoke(layer, lockIncrease, false);
             }
         }
     }
@@ -542,5 +548,8 @@ public class StatModel : ScriptableObject
     public event System.Action<int> BuffOnScholarChanged;
     public event System.Action<int> BuffOnForeignChanged;
     public event System.Action<int> BuffOnPeopleChanged;
+
+    // 锁定状态改变事件 (layer, lockIncrease, isAdded)
+    public event System.Action<int, bool, bool> OnLayerLockChanged;
 
 }

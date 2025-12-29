@@ -21,10 +21,44 @@ public class StatsDisplayUI : MonoBehaviour
 
     [Header("数据源")]
     public StatModel stats;
+    
+    [Header("锁定特效图片（所有阶层共用）")]
+    public GameObject sharedLockEffect; // 共用的锁定特效图片
+    
+    [Header("各阶层图标位置（用于定位特效）")]
+    public RectTransform kingIconTransform;   // 国君图标位置
+    public RectTransform nobleIconTransform;  // 贵族图标位置
+    public RectTransform scholarIconTransform; // 学者图标位置
+    public RectTransform foreignIconTransform; // 外交图标位置
+    public RectTransform peopleIconTransform;  // 民心图标位置
+    
+    // 追踪当前锁定的阶层
+    private int currentLockedLayer = -1;
 
     void Awake()
     {
         Instance = this;
+        
+        // 初始化所有锁定特效为隐藏状态
+        InitializeLockEffects();
+    }
+    
+    void Start()
+    {
+        // 订阅锁定状态改变事件
+        if (stats != null)
+        {
+            stats.OnLayerLockChanged += OnLayerLockChanged;
+        }
+    }
+    
+    void OnDestroy()
+    {
+        // 取消订阅
+        if (stats != null)
+        {
+            stats.OnLayerLockChanged -= OnLayerLockChanged;
+        }
     }
 
     /// <summary>
@@ -65,5 +99,145 @@ public class StatsDisplayUI : MonoBehaviour
         {
             currencyText.text = $"经验：{currency}";
         }
+    }
+    
+    /// <summary>
+    /// 初始化锁定特效为隐藏状态
+    /// </summary>
+    private void InitializeLockEffects()
+    {
+        if (sharedLockEffect != null)
+        {
+            sharedLockEffect.SetActive(false);
+            currentLockedLayer = -1;
+        }
+    }
+    
+    /// <summary>
+    /// 处理锁定状态改变事件
+    /// </summary>
+    private void OnLayerLockChanged(int layer, bool lockIncrease, bool isAdded)
+    {
+        if (isAdded)
+        {
+            // 添加锁定时，显示特效并移动到对应阶层位置
+            ShowLockEffectAtLayer(layer);
+            Debug.Log($"[StatsDisplayUI] 锁定特效显示 - 阶层:{layer}, 禁止{(lockIncrease ? "上升" : "下降")}");
+        }
+        else
+        {
+            // 移除锁定时，检查该阶层是否还有其他锁定
+            bool hasOtherLock = CheckIfLayerHasOtherLock(layer);
+            if (!hasOtherLock)
+            {
+                // 如果该阶层没有其他锁定了，检查是否需要移动到其他锁定阶层或隐藏
+                UpdateLockEffectDisplay();
+                Debug.Log($"[StatsDisplayUI] 阶层{layer}锁定已全部解除");
+            }
+        }
+    }
+    
+    /// <summary>
+    /// 在指定阶层位置显示锁定特效
+    /// </summary>
+    private void ShowLockEffectAtLayer(int layer)
+    {
+        if (sharedLockEffect == null)
+        {
+            Debug.LogWarning("[StatsDisplayUI] 共用锁定特效图片未配置！");
+            return;
+        }
+        
+        RectTransform targetPosition = GetLayerIconTransform(layer);
+        if (targetPosition != null)
+        {
+            // 移动特效到目标位置
+            RectTransform effectRect = sharedLockEffect.GetComponent<RectTransform>();
+            if (effectRect != null)
+            {
+                effectRect.position = targetPosition.position;
+            }
+            
+            sharedLockEffect.SetActive(true);
+            currentLockedLayer = layer;
+        }
+        else
+        {
+            Debug.LogWarning($"[StatsDisplayUI] 未找到阶层{layer}的图标位置！");
+        }
+    }
+    
+    /// <summary>
+    /// 更新锁定特效显示（检查是否有其他锁定需要显示）
+    /// </summary>
+    private void UpdateLockEffectDisplay()
+    {
+        if (stats == null || stats.activeLayerLocks == null)
+        {
+            HideLockEffect();
+            return;
+        }
+        
+        // 查找第一个有锁定的阶层
+        if (stats.activeLayerLocks.Count > 0)
+        {
+            int firstLockedLayer = stats.activeLayerLocks[0].layer;
+            ShowLockEffectAtLayer(firstLockedLayer);
+        }
+        else
+        {
+            HideLockEffect();
+        }
+    }
+    
+    /// <summary>
+    /// 隐藏锁定特效
+    /// </summary>
+    private void HideLockEffect()
+    {
+        if (sharedLockEffect != null)
+        {
+            sharedLockEffect.SetActive(false);
+            currentLockedLayer = -1;
+        }
+    }
+    
+    /// <summary>
+    /// 根据阶层获取对应的图标位置
+    /// </summary>
+    private RectTransform GetLayerIconTransform(int layer)
+    {
+        switch (layer)
+        {
+            case 1: // 国君
+                return kingIconTransform;
+            case 2: // 卿士（学者）
+                return scholarIconTransform;
+            case 3: // 宗族（贵族）
+                return nobleIconTransform;
+            case 4: // 外臣（外交）
+                return foreignIconTransform;
+            case 5: // 庶人（民心）
+                return peopleIconTransform;
+            default:
+                return null;
+        }
+    }
+    
+    /// <summary>
+    /// 检查某阶层是否还有其他锁定
+    /// </summary>
+    private bool CheckIfLayerHasOtherLock(int layer)
+    {
+        if (stats == null || stats.activeLayerLocks == null) return false;
+        
+        foreach (var lockData in stats.activeLayerLocks)
+        {
+            if (lockData.layer == layer)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

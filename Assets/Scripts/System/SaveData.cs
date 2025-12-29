@@ -111,7 +111,6 @@ public class SaveData
         {
             year = stats.year,
             currency = stats.currency,
-            maxPolicyCount = stats.maxPolicyCount,
             king = stats.king,
             noble = stats.noble,
             scholar = stats.scholar,
@@ -303,7 +302,6 @@ public class SaveData
 
         stats.year = year;
         stats.currency = currency;
-        stats.maxPolicyCount = maxPolicyCount;
         stats.king = king;
         stats.noble = noble;
         stats.scholar = scholar;

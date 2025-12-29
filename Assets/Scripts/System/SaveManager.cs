@@ -134,10 +134,13 @@ public class SaveManager : MonoBehaviour
                 GameControl.Instance.gameStatistics.Inititalize();
             }
             
-            // 重置事件数据库
+            // 初始化事件数据库，只激活001.json
             if (EventDatabase.Instance != null)
             {
+                List<int> defaultActiveSet = new List<int> { 0 }; // 只激活第一个事件集（001.json）
+                EventDatabase.Instance.RestoreActiveEventSet(defaultActiveSet);
                 EventDatabase.Instance.ResetPool();
+                Debug.Log("[SaveManager] 初始化完成：事件集已设置为只激活001.json");
             }
             
             // 清空延时事件
@@ -190,6 +193,14 @@ public class SaveManager : MonoBehaviour
                 if (saveData.activeRandomEventSetIndices != null && saveData.activeRandomEventSetIndices.Count > 0)
                 {
                     EventDatabase.Instance.RestoreActiveEventSet(saveData.activeRandomEventSetIndices);
+                    Debug.Log($"[SaveManager] 从存档恢复事件集激活状态: {saveData.activeRandomEventSetIndices.Count} 个事件集");
+                }
+                else
+                {
+                    // 如果存档中没有事件集数据，默认只激活001.json
+                    List<int> defaultActiveSet = new List<int> { 0 };
+                    EventDatabase.Instance.RestoreActiveEventSet(defaultActiveSet);
+                    Debug.Log("[SaveManager] 存档中没有事件集数据，默认只激活001.json");
                 }
                 
                 // 再恢复已使用的事件
@@ -295,10 +306,14 @@ public class SaveManager : MonoBehaviour
             GameControl.Instance.gameStatistics.Inititalize();
         }
         
-        // 重置事件数据库
+        // 重置事件数据库，只激活001.json
         if (EventDatabase.Instance != null)
         {
+            // 恢复为只有第一个事件集（001.json）
+            List<int> defaultActiveSet = new List<int> { 0 };
+            EventDatabase.Instance.RestoreActiveEventSet(defaultActiveSet);
             EventDatabase.Instance.ResetPool();
+            Debug.Log("[SaveManager] 新游戏: 事件集已设置为只激活001.json");
         }
         
         // 清空延时事件

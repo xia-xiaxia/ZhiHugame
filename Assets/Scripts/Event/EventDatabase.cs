@@ -28,9 +28,7 @@ public class EventDatabase : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
-            // 初始化时激活所有事件集
-            activeEventJsons = new List<TextAsset>(eventJsons);
-            LoadEvents();
+            Debug.Log("[EventDatabase] 已创建实例，等待从存档加载事件集状态");
         }
     }
 
@@ -77,7 +75,16 @@ public class EventDatabase : MonoBehaviour
                             // (这里加个判断防止你手动写了跨文件跳转)
                             if (!opt.nextEventId.Contains("_")) 
                             {
-                                opt.nextEventId = $"{fileName}_{opt.nextEventId}";
+                                // 智能补全ID：如果不足5位数，从当前事件ID取前3位补全
+                                string nextId = opt.nextEventId;
+                                if (nextId.Length < 5 && originalId.Length >= 3)
+                                {
+                                    // 从当前事件ID取前3位 + nextEventId，补全为5位
+                                    string prefix = originalId.Substring(0, 3);
+                                    nextId = prefix + nextId.PadLeft(2, '0');
+                                    Debug.Log($"[EventDatabase] ID自动补全: {opt.nextEventId} -> {nextId} (基于当前事件 {originalId})");
+                                }
+                                opt.nextEventId = $"{fileName}_{nextId}";
                             }
                         }
                     }
