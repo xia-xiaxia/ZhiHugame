@@ -32,6 +32,13 @@ public class StatsDisplayUI : MonoBehaviour
     public RectTransform foreignIconTransform; // 外交图标位置
     public RectTransform peopleIconTransform;  // 民心图标位置
     
+    [Header("各阶层原始图标Image组件")]
+    public Image kingIcon;   // 国君图标
+    public Image nobleIcon;  // 贵族图标
+    public Image scholarIcon; // 学者图标
+    public Image foreignIcon; // 外交图标
+    public Image peopleIcon;  // 民心图标
+    
     // 追踪当前锁定的阶层
     private int currentLockedLayer = -1;
 
@@ -148,9 +155,23 @@ public class StatsDisplayUI : MonoBehaviour
             return;
         }
         
+        // 隐藏当前锁定阶层的原图标（如果有）
+        if (currentLockedLayer != -1 && currentLockedLayer != layer)
+        {
+            SetLayerIconVisibility(currentLockedLayer, true);
+        }
+        
         RectTransform targetPosition = GetLayerIconTransform(layer);
+        Image targetIcon = GetLayerIcon(layer);
+        
         if (targetPosition != null)
         {
+            // 隐藏原图标
+            if (targetIcon != null)
+            {
+                targetIcon.enabled = false;
+            }
+            
             // 移动特效到目标位置
             RectTransform effectRect = sharedLockEffect.GetComponent<RectTransform>();
             if (effectRect != null)
@@ -195,6 +216,12 @@ public class StatsDisplayUI : MonoBehaviour
     /// </summary>
     private void HideLockEffect()
     {
+        // 恢复当前锁定阶层的原图标
+        if (currentLockedLayer != -1)
+        {
+            SetLayerIconVisibility(currentLockedLayer, true);
+        }
+        
         if (sharedLockEffect != null)
         {
             sharedLockEffect.SetActive(false);
@@ -221,6 +248,40 @@ public class StatsDisplayUI : MonoBehaviour
                 return peopleIconTransform;
             default:
                 return null;
+        }
+    }
+    
+    /// <summary>
+    /// 根据阶层获取对应的图标Image组件
+    /// </summary>
+    private Image GetLayerIcon(int layer)
+    {
+        switch (layer)
+        {
+            case 1: // 国君
+                return kingIcon;
+            case 2: // 卿士（学者）
+                return scholarIcon;
+            case 3: // 宗族（贵族）
+                return nobleIcon;
+            case 4: // 外臣（外交）
+                return foreignIcon;
+            case 5: // 庶人（民心）
+                return peopleIcon;
+            default:
+                return null;
+        }
+    }
+    
+    /// <summary>
+    /// 设置指定阶层图标的显示/隐藏状态
+    /// </summary>
+    private void SetLayerIconVisibility(int layer, bool visible)
+    {
+        Image icon = GetLayerIcon(layer);
+        if (icon != null)
+        {
+            icon.enabled = visible;
         }
     }
     
