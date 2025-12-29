@@ -9,6 +9,11 @@ public class PolicyInInventoryTrigger : MonoBehaviour, IPointerEnterHandler, IPo
 {
     [Header("物品信息")]
     public PolicyItem policyItem;
+    
+    [Header("道具图片设置")]
+    public Image policyIconImage;      // 道具图标图片
+    public Image highlightEffectImage; // 高亮特效图片
+    public bool autoLoadSprite = true; // 是否自动加载图片
 
     [Header("提示面板设置")]
     public GameObject tooltipPanel;
@@ -29,6 +34,18 @@ public class PolicyInInventoryTrigger : MonoBehaviour, IPointerEnterHandler, IPo
     void Start()
     {
         canvas = GetComponentInParent<Canvas>();
+        
+        // 自动加载道具图片
+        if (autoLoadSprite)
+        {
+            LoadPolicySprite();
+        }
+        
+        // 初始化高亮特效为隐藏状态
+        if (highlightEffectImage != null)
+        {
+            highlightEffectImage.gameObject.SetActive(false);
+        }
         
         InitializeTooltip();
 
@@ -73,6 +90,43 @@ public class PolicyInInventoryTrigger : MonoBehaviour, IPointerEnterHandler, IPo
             tooltipPanel.SetActive(false);
         }
     }
+    
+    /// <summary>
+    /// 自动加载道具图片（根据类型）
+    /// </summary>
+    private void LoadPolicySprite()
+    {
+        if (policyItem == null || PolicyManager.Instance == null)
+        {
+            return;
+        }
+        
+        // 加载道具图标
+        if (policyIconImage != null)
+        {
+            Sprite sprite = PolicyManager.Instance.GetPolicySpriteByPolicy(policyItem);
+            if (sprite != null)
+            {
+                policyIconImage.sprite = sprite;
+                Debug.Log($"[PolicyInInventoryTrigger] 加载道具图片: {policyItem.name}, 类型={policyItem.type}");
+            }
+            else
+            {
+                Debug.LogWarning($"[PolicyInInventoryTrigger] 未能加载道具图片: {policyItem.name}, 类型={policyItem.type}");
+            }
+        }
+        
+        // 加载高亮特效
+        if (highlightEffectImage != null)
+        {
+            Sprite highlight = PolicyManager.Instance.GetPolicyHighlightByPolicy(policyItem);
+            if (highlight != null)
+            {
+                highlightEffectImage.sprite = highlight;
+                Debug.Log($"[PolicyInInventoryTrigger] 加载高亮特效: {policyItem.name}, 类型={policyItem.type}");
+            }
+        }
+    }
 
     void Update()
     {
@@ -91,11 +145,13 @@ public class PolicyInInventoryTrigger : MonoBehaviour, IPointerEnterHandler, IPo
     {
         Debug.Log("[PolicyInInventoryTrigger] OnPointerEnter 触发");
         ShowTooltip();
+        ShowHighlightEffect();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         HideTooltip();
+        HideHighlightEffect();
     }
     
     private void ShowTooltip()
@@ -140,6 +196,28 @@ public class PolicyInInventoryTrigger : MonoBehaviour, IPointerEnterHandler, IPo
         if (tooltipPanel != null)
         {
             tooltipPanel.SetActive(false);
+        }
+    }
+    
+    /// <summary>
+    /// 显示高亮特效
+    /// </summary>
+    private void ShowHighlightEffect()
+    {
+        if (highlightEffectImage != null)
+        {
+            highlightEffectImage.gameObject.SetActive(true);
+        }
+    }
+    
+    /// <summary>
+    /// 隐藏高亮特效
+    /// </summary>
+    private void HideHighlightEffect()
+    {
+        if (highlightEffectImage != null)
+        {
+            highlightEffectImage.gameObject.SetActive(false);
         }
     }
     private string BuildTooltipText()

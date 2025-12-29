@@ -12,6 +12,11 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
     [Header("物品信息")]
     public PolicyItem policyItem;
     public int policyValue;
+    
+    [Header("道具图片设置")]
+    public Image policyIconImage;      // 道具图标图片
+    public Image highlightEffectImage; // 高亮特效图片
+    public bool autoLoadSprite = true; // 是否自动加载图片
 
     [Header("提示面板设置")]
     public GameObject tooltipPanel;
@@ -35,6 +40,18 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
         {
             float multiple = Random.Range(0.8f, 1.2f);
             policyValue = Mathf.FloorToInt(policyItem.cost * multiple * currentShopMult);
+        }
+        
+        // 自动加载道具图片
+        if (autoLoadSprite)
+        {
+            LoadPolicySprite();
+        }
+        
+        // 初始化高亮特效为隐藏状态
+        if (highlightEffectImage != null)
+        {
+            highlightEffectImage.gameObject.SetActive(false);
         }
         
         canvas = GetComponentInParent<Canvas>();
@@ -85,11 +102,13 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
     public void OnPointerEnter(PointerEventData eventData)
     {
         ShowTooltip();
+        ShowHighlightEffect();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         HideTooltip();
+        HideHighlightEffect();
     }
     
     private void ShowTooltip()
@@ -128,6 +147,97 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
         if (tooltipPanel != null)
         {
             tooltipPanel.SetActive(false);
+        }
+    }
+    
+    /// <summary>
+    /// 自动加载道具图片（根据类型）
+    /// </summary>
+    private void LoadPolicySprite()
+    {
+        if (PolicyManager.Instance == null)
+        {
+            return;
+        }
+        
+        // 加载道具图标
+        if (policyIconImage != null)
+        {
+            Sprite sprite = null;
+            
+            if (policyItem == null)
+            {
+                // 空槽位，加载空槽位图片
+                sprite = PolicyManager.Instance.emptySlotSprite;
+                if (sprite != null)
+                {
+                    policyIconImage.sprite = sprite;
+                    Debug.Log("[PolicyInShopTrigger] 加载空槽位图片");
+                }
+            }
+            else
+            {
+                // 有道具，加载道具图片
+                sprite = PolicyManager.Instance.GetPolicySpriteByPolicy(policyItem);
+                if (sprite != null)
+                {
+                    policyIconImage.sprite = sprite;
+                    Debug.Log($"[PolicyInShopTrigger] 加载道具图片: {policyItem.name}, 类型={policyItem.type}");
+                }
+                else
+                {
+                    Debug.LogWarning($"[PolicyInShopTrigger] 未能加载道具图片: {policyItem.name}, 类型={policyItem.type}");
+                }
+            }
+        }
+        
+        // 加载高亮特效
+        if (highlightEffectImage != null)
+        {
+            Sprite highlight = null;
+            
+            if (policyItem == null)
+            {
+                // 空槽位，加载空槽位高亮
+                highlight = PolicyManager.Instance.emptySlotHighlight;
+                if (highlight != null)
+                {
+                    highlightEffectImage.sprite = highlight;
+                    Debug.Log("[PolicyInShopTrigger] 加载空槽位高亮特效");
+                }
+            }
+            else
+            {
+                // 有道具，加载道具高亮
+                highlight = PolicyManager.Instance.GetPolicyHighlightByPolicy(policyItem);
+                if (highlight != null)
+                {
+                    highlightEffectImage.sprite = highlight;
+                    Debug.Log($"[PolicyInShopTrigger] 加载高亮特效: {policyItem.name}, 类型={policyItem.type}");
+                }
+            }
+        }
+    }
+    
+    /// <summary>
+    /// 显示高亮特效（空槽位和有道具时都能显示）
+    /// </summary>
+    private void ShowHighlightEffect()
+    {
+        if (highlightEffectImage != null && highlightEffectImage.sprite != null)
+        {
+            highlightEffectImage.gameObject.SetActive(true);
+        }
+    }
+    
+    /// <summary>
+    /// 隐藏高亮特效
+    /// </summary>
+    private void HideHighlightEffect()
+    {
+        if (highlightEffectImage != null)
+        {
+            highlightEffectImage.gameObject.SetActive(false);
         }
     }
 
@@ -228,6 +338,12 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
             // 重新获取当前商店倍率，确保天赋改动生效
             currentShopMult = GameControl.Instance != null ? GameControl.Instance.stats.shopMult : 1f;
             policyValue = Mathf.FloorToInt(policyItem.cost * multiple * currentShopMult);
+        }
+        
+        // 自动加载道具图片和高亮特效（包括空槽位）
+        if (autoLoadSprite)
+        {
+            LoadPolicySprite();
         }
         
          // UpdateButtonDisplay();

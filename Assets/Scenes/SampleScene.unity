@@ -16491,6 +16491,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   policyJson: {fileID: 4900000, guid: cc9006157cc0eb94887cf31d19c08b51, type: 3}
+  lockedSprite: {fileID: 21300000, guid: a54bbba9056ea7742b40e6ec7cc48779, type: 3}
+  deathImmunitySprite: {fileID: 21300000, guid: fb41cb266ba7dba4abc1ba9c2e230c57, type: 3}
+  skipSprite: {fileID: 21300000, guid: def4477efa2a56c4b8b7bc3c46f1f0b3, type: 3}
+  adjustSprite: {fileID: 21300000, guid: 8653fdc9b3a78c944889d3ccb028cf39, type: 3}
+  situationSprite: {fileID: 21300000, guid: 94d883d46262fcc4896b808e59d965ac, type: 3}
+  lockedHighlight: {fileID: 21300000, guid: 176f86d71a96a0d4bae5230bba5846c4, type: 3}
+  deathImmunityHighlight: {fileID: 21300000, guid: 7dc5998774526a441b14c1123d8273af, type: 3}
+  skipHighlight: {fileID: 21300000, guid: 83c210f70004feb4190cdda6502a3527, type: 3}
+  adjustHighlight: {fileID: 21300000, guid: af24e10cf6c8de146ba6582f92487a81, type: 3}
+  situationHighlight: {fileID: 21300000, guid: 0811fa6f199bbe24c81589065d475f6f, type: 3}
+  emptySlotSprite: {fileID: 21300000, guid: 4f52b84d717d1574b8319427cab17243, type: 3}
+  emptySlotHighlight: {fileID: 21300000, guid: f1c407afad23f814183530ce9a62e30a, type: 3}
 --- !u!4 &981328575
 Transform:
   m_ObjectHideFlags: 0
@@ -24362,17 +24374,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventJsons:
-  - {fileID: 4900000, guid: 323ca6b338fc59c488055fc8c704f49a, type: 3}
+  - {fileID: 4900000, guid: 0c375baa94c57d840b28d08a1aec0fac, type: 3}
   - {fileID: 4900000, guid: 89b9b78b287ced34599e241d02eb7cbc, type: 3}
-  - {fileID: 4900000, guid: 023a57daa97e38d478aba13a346b7ee5, type: 3}
-  - {fileID: 4900000, guid: c445d205e8e34c546bf7f2c68dd5fa62, type: 3}
-  - {fileID: 4900000, guid: 52435f309071c1b44a966c505f856aea, type: 3}
-  - {fileID: 4900000, guid: 93c70e141e235df4fb4d9e727f5c1153, type: 3}
-  - {fileID: 4900000, guid: e8acdb306ea092349b96bea480fea839, type: 3}
-  - {fileID: 4900000, guid: 78874ee817c8d44448ada61651dc37aa, type: 3}
-  - {fileID: 4900000, guid: b093d24bfcbd8b541b7092438414fd27, type: 3}
-  - {fileID: 4900000, guid: 1ae5d6a8edfbcb94cbd0dd49edb4db72, type: 3}
-  - {fileID: 4900000, guid: d014c54902fad664fb1d0af5f4bfce11, type: 3}
 --- !u!1 &1575687375
 GameObject:
   m_ObjectHideFlags: 0

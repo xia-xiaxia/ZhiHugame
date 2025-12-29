@@ -9,6 +9,24 @@ public class PolicyManager : MonoBehaviour
     
     public TextAsset policyJson; // 道具配置 JSON
     
+    [Header("道具类型图片配置")]
+    public Sprite lockedSprite;        // 锁定道具图片 (type=1)
+    public Sprite deathImmunitySprite; // 免死道具图片 (type=2)
+    public Sprite skipSprite;          // 跳过道具图片 (type=3)
+    public Sprite adjustSprite;        // 调控道具图片 (type=4)
+    public Sprite situationSprite;     // 时局道具图片 (type=5)
+    
+    [Header("道具类型高亮特效配置")]
+    public Sprite lockedHighlight;        // 锁定道具高亮 (type=1)
+    public Sprite deathImmunityHighlight; // 免死道具高亮 (type=2)
+    public Sprite skipHighlight;          // 跳过道具高亮 (type=3)
+    public Sprite adjustHighlight;        // 调控道具高亮 (type=4)
+    public Sprite situationHighlight;     // 时局道具高亮 (type=5)
+    
+    [Header("空道具槽位配置")]
+    public Sprite emptySlotSprite;        // 空槽位图片
+    public Sprite emptySlotHighlight;     // 空槽位高亮特效
+    
     private Dictionary<string, PolicyItem> allPolicies = new Dictionary<string, PolicyItem>();
     private List<PolicyItem> currentShopItems = new List<PolicyItem>();
 
@@ -68,6 +86,60 @@ public class PolicyManager : MonoBehaviour
         }
         Debug.LogWarning($"[PolicyManager] 未找到道具 ID: {id}");
         return null;
+    }
+    
+    /// <summary>
+    /// 根据道具类型获取对应的图片
+    /// </summary>
+    public Sprite GetPolicySpriteByType(int type)
+    {
+        switch (type)
+        {
+            case 1: return lockedSprite;        // 锁定道具
+            case 2: return deathImmunitySprite; // 免死道具
+            case 3: return skipSprite;          // 跳过道具
+            case 4: return adjustSprite;        // 调控道具
+            case 5: return situationSprite;     // 时局道具
+            default:
+                Debug.LogWarning($"[PolicyManager] 未知的道具类型: {type}");
+                return null;
+        }
+    }
+    
+    /// <summary>
+    /// 根据道具获取对应的图片
+    /// </summary>
+    public Sprite GetPolicySpriteByPolicy(PolicyItem policy)
+    {
+        if (policy == null) return null;
+        return GetPolicySpriteByType(policy.type);
+    }
+    
+    /// <summary>
+    /// 根据道具类型获取对应的高亮特效
+    /// </summary>
+    public Sprite GetPolicyHighlightByType(int type)
+    {
+        switch (type)
+        {
+            case 1: return lockedHighlight;        // 锁定道具
+            case 2: return deathImmunityHighlight; // 免死道具
+            case 3: return skipHighlight;          // 跳过道具
+            case 4: return adjustHighlight;        // 调控道具
+            case 5: return situationHighlight;     // 时局道具
+            default:
+                Debug.LogWarning($"[PolicyManager] 未知的道具类型: {type}");
+                return null;
+        }
+    }
+    
+    /// <summary>
+    /// 根据道具获取对应的高亮特效
+    /// </summary>
+    public Sprite GetPolicyHighlightByPolicy(PolicyItem policy)
+    {
+        if (policy == null) return null;
+        return GetPolicyHighlightByType(policy.type);
     }
 
     // 创建道具副本
