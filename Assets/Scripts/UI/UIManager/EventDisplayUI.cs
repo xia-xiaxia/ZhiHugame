@@ -319,15 +319,9 @@ public class EventDisplayUI : MonoBehaviour
                     currentEventId = "";
                     currentSentenceIndex = 0;
 
-                    // 应用选项效果
+                    // 应用选项效果（包括后继事件的处理）
                     GameControl.Instance?.SaveStatsSnapshot();
                     EventManager.Instance?.ApplyOption(opt, GameControl.Instance.year,evt.yearDelta);
-
-                    // 设置后继事件
-                    if (!string.IsNullOrEmpty(opt.nextEventId))
-                    {
-                        EventManager.Instance?.SetNextEventId(opt.nextEventId);
-                    }
 
                     // 更新UI并处理下一回合
                     StatsDisplayUI.Instance?.UpdateStatText();
