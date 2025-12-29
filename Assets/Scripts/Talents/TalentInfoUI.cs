@@ -77,7 +77,7 @@ public class TalentInfoUI : MonoBehaviour
         }
         
         // 天赋名称
-        info += $"<size=120%>{talent.name}</size>/\n\n";
+        info += $"<size=120%>{talent.name}</size>\n\n";
         
         // 天赋描述
         info += $"{talent.description}\n\n";
