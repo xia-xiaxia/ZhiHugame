@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 /// <summary>
@@ -322,6 +323,15 @@ public class StatModel : ScriptableObject
         // activatedTalents 和 talentPoints 不再在此处清空或归零
 
         Debug.Log($"[StatModel] 重置完成（保留天赋） - 国君:{king} 宗族:{noble} 卿士:{scholar} 外臣:{foreign} 庶人:{people}");
+    }
+
+    public bool isBagFull(int count = 1)
+    {
+        if (this.policyBag.Count + count > this.maxPolicyCount)
+        {
+            return true;
+        }
+        return false;
     }
     
     /// <summary>

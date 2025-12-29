@@ -14,9 +14,9 @@ public class MissionData
     public string name;
     public string description;
     public int rewardTalent;
-    public int rewardPolicyId;
-    public int[] randomEventSet;
-    public List<int> preMissionIds;
+    public string[] rewardPolicyId;
+    public int randomEventSet;
+    public List<string> preMissionIds;
     public List<MissionCondition> conditions; // 检测条件
 
     public bool CheckComplete(GameStatistics gs)
@@ -28,11 +28,13 @@ public class MissionData
                 return false;
             }
         }
+        Debug.Log("ID: " + id + " is Completed");
         return true;
     }
 
     public bool CheckPreMissions()
     {
+
         foreach (var premission in preMissionIds)
         {
             if (!MissionManager.Instance.isComplete(premission))
@@ -43,11 +45,29 @@ public class MissionData
         return true;
     }
 
-    public void MissionComplete()
+    public bool MissionComplete()
     {
-        /*
-         * Undo: 任务做完的逻辑
-         */
+        if(rewardPolicyId != null)
+        {
+            int count = rewardPolicyId.Length;
+
+            if(GameControl.Instance.stats.isBagFull(count))
+            {
+                return false;
+            }
+
+            //发放道具
+            foreach(var id in rewardPolicyId)
+            {
+                PolicyItem newItem = PolicyManager.Instance.GetPolicy(id);
+                GameControl.Instance.AddPolicy(newItem);
+            }
+        }
+        
+        //获得天赋点
+        TalantManager.Instance.AddTalentPoints(rewardTalent);
+
+        return true;
     }
 }
 
@@ -68,10 +88,12 @@ public class MissionManager : MonoBehaviour
       现在存储已激活任务是missionList中的下标
     */
     public List<int> activeMissions;
+    //这个List为了防止Bug：这一轮新dispatch的任务会用上一局的数据进行check
+    public List<int> newActiveMissions = new List<int>();
     public TextAsset missionJson;
 
     //任务是否完成
-    private Dictionary<int, bool> _isComplete;
+    private Dictionary<string, bool> _isComplete;
 
     private void Awake()
     {
@@ -84,6 +106,14 @@ public class MissionManager : MonoBehaviour
         statistics = GameControl.Instance.gameStatistics;
         activeMissions = statistics.activeMissions;
         _isComplete = statistics.isComplete;
+
+        //游戏开始的时候发任务
+        Dispatch();
+    }
+
+    public void StartNewGame()
+    {
+        newActiveMissions.Clear();
     }
 
     void LoadMissions()
@@ -99,21 +129,15 @@ public class MissionManager : MonoBehaviour
         }
     }
 
-    public bool isComplete(int id)
-    {
-        return _isComplete.TryGetValue(id, out bool res) ? res : false;
-    }
-
     public bool isComplete(string id)
     {
-        int newId = int.Parse(id);
-        return isComplete(newId);
+        return _isComplete.TryGetValue(id, out var result) ? result : false;
     }
 
     public MissionData GetTaskDataById(int id)
     {
-        if (id <= 0) return null;
-        return missionList[id - 1];
+        if (id < 0) return null;
+        return missionList[id];
     }
 
     void ConvertConditionsToDerived()
@@ -161,10 +185,9 @@ public class MissionManager : MonoBehaviour
     {
         foreach(var m in activeMissions)
         {
-            if (missionList[m].CheckComplete(statistics))
+            if (!newActiveMissions.Contains(m) && missionList[m].CheckComplete(statistics))
             {
-                missionList[m].MissionComplete();
-                _isComplete[int.Parse(missionList[m].id)] = true;
+                _isComplete[missionList[m].id] = true;
             }
         }
     }
@@ -173,11 +196,30 @@ public class MissionManager : MonoBehaviour
     {
         foreach(var m in missionList)
         {
-            if(!isComplete(int.Parse(m.id)) && m.CheckPreMissions())
+            if(!isComplete(m.id) && m.CheckPreMissions() && !activeMissions.Contains(int.Parse(m.id) - 1))
             {
                 activeMissions.Add(int.Parse(m.id) - 1);
+                newActiveMissions.Add(int.Parse(m.id) - 1);
             }
         }
+    }
+    
+    //通过id进行任务奖励的领取
+    public void Reward(int id)
+    {
+        bool flag = missionList[id - 1].MissionComplete();
+
+        if(!flag)
+        {
+            return;
+        }
+        Debug.Log("[MissionManager] 任务：" + id + "已完成  奖励已领取");
+
+        activeMissions.Remove(id - 1);
+
+        //发新的任务
+        Dispatch();
+            
     }
 }
 

@@ -59,6 +59,17 @@ public class PolicyManager : MonoBehaviour
         return null;
     }
 
+    //TaskSlot使用
+    public string GetPolicyName(string id) 
+    {
+        if (allPolicies.TryGetValue(id, out var policy))
+        {
+            return policy.name;
+        }
+        Debug.LogWarning($"[PolicyManager] 未找到道具 ID: {id}");
+        return null;
+    }
+
     // 创建道具副本
     private PolicyItem CopyPolicy(PolicyItem original)
     {

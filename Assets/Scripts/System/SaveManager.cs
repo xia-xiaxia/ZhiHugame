@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
+
 /// <summary>
 /// 存档管理器
 /// 负责游戏数据的保存和加载
@@ -33,15 +34,20 @@ public class SaveManager : MonoBehaviour
         // 设置存档文件路径
         saveFilePath = Path.Combine(Application.persistentDataPath, SAVE_FILE_NAME);
         Debug.Log($"[SaveManager] 存档路径: {saveFilePath}");
-    }
-    
-    private void Start()
-    {
+
+        //初始化GameStatistics
+        GameControl.Instance.gameStatistics.Inititalize();
+
         // 启动时自动加载存档
         if (autoLoadOnStart)
         {
             LoadGame();
         }
+    }
+    
+    private void Start()
+    {
+
     }
     
     private void OnApplicationQuit()
@@ -134,6 +140,7 @@ public class SaveManager : MonoBehaviour
             
             // 应用到StatModel
             saveData.ApplyToStatModel(stats);
+            saveData.ApplyToGameStatisics(GameControl.Instance.gameStatistics);
             
             // 恢复事件使用状态
             if (EventDatabase.Instance != null && saveData.usedEvents != null)

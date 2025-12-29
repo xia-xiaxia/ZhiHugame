@@ -12,24 +12,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162da53cb023ce34bbddf3e852d3731d, type: 3}
   m_Name: 11
   m_EditorClassIdentifier: 
-  year: 1
-  _currency: 0
-  _king: 50
+  year: 7
+  maxPolicyCount: 5
+  _currency: 90
+  _king: 36
   _noble: 50
-  _scholar: 50
-  _foreign: 50
-  _people: 50
-  kingMin: 20
-  kingMax: 80
-  nobleMin: 20
-  nobleMax: 80
-  scholarMin: 20
-  scholarMax: 80
-  foreignMin: 20
-  foreignMax: 80
-  peopleMin: 20
-  peopleMax: 80
-  policyBag: []
+  _scholar: 40
+  _foreign: 15
+  _people: 30
+  _talentPoints: 0
+  _policyBagSize: 5
+  _payBackCurrency: 0
+  _shopMult: 1
+  _currencyMult: 1
+  _policyShopCount: 5
+  king_delta: 0
+  noble_delta: 0
+  scholar_delta: 0
+  foreign_delta: 0
+  people_delta: 0
+  buff_king_delta: 0
+  buff_noble_delta: 0
+  buff_scholar_delta: 0
+  buff_foreign_delta: 0
+  buff_people_delta: 0
+  kingMin: 0
+  kingMax: 60
+  nobleMin: 0
+  nobleMax: 60
+  scholarMin: 0
+  scholarMax: 60
+  foreignMin: 0
+  foreignMax: 60
+  peopleMin: 0
+  peopleMax: 60
+  policyBag:
+  - id: 010
+    name: "\u91DC\u5E95\u62BD\u85AA"
+    result: "\u514D\u9664\u56E0\u4E3A\u537F\u58EB\u8FC7\u9AD8\u5BFC\u81F4\u7684\u6E38\u620F\u7ED3\u675F"
+    desc: "\u58EB\u65CF\u5982\u679C\u60F3\u8981\u8C0B\u6743\u7BE1\u4F4D\uFF0C\u4F1A\u88AB\u6211\u4EEC\u4E00\u4E3E\u51FB\u8D25"
+    type: 2
+    usageCount: 1
+    cost: 27
+    targetLayers: 02000000
+    deathEffectText: "\u4E00\u5BB6\u58EB\u65CF\u4F01\u56FE\u8C0B\u6743\u7BE1\u4F4D\uFF0C\u4F60\u5C06\u4ED6\u4EEC\u6EE1\u95E8\u6284\u65A9"
+    kingChange: 0
+    nobleChange: 0
+    scholarChange: 0
+    foreignChange: 0
+    peopleChange: 0
+    triggeredBuffId: 
+    lockDuration: 0
   buffBag: []
   delayedEventQueue: []
+  activatedTalents: []
+  refreshPolicyShopCost: 00000000000000000000000000000000
   hasSeenTutorial: 1
+  activeLayerLocks: []

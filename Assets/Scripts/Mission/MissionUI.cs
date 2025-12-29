@@ -6,8 +6,9 @@ using UnityEngine;
 
 public class MissionUI : MonoBehaviour
 {
+    public static MissionUI Instance;
 
-    //å½“å‰åœ¨ç¬¬å‡ é¡µ
+    //µ±Ç°ÔÚµÚ¼¸Ò³
     public int nowPage = 1;
     private int maxPage = 1;
 
@@ -15,16 +16,38 @@ public class MissionUI : MonoBehaviour
 
     public TaskSlot[] taskslots;
 
-    public TextMeshProUGUI pageNum; 
-   
-    //ä¾›buttonè°ƒç”¨
-    public void Display()
+    public TextMeshProUGUI pageNum;
+
+    public bool canReward = false;
+
+    private void Awake()
     {
+        Instance = this;
+    }
 
+    private void Start()
+    {
+        nowPage = 1;
+    }
+
+    //¹©buttonµ÷ÓÃ
+    public void DisplayWithReward()
+    {
+        canReward = true;
+        Display();
+    }
+
+    public void DisplayWithoutReward()
+    {
+        canReward = false;
+        Display();
+    }
+
+    private void Display()
+    {
         missionMenu.SetActive(true);
-        
 
-        //ç›®å‰çš„é€»è¾‘æ˜¯åœ¨æ¿€æ´»Menuçš„æ—¶å€™åˆ¤æ–­ä»»åŠ¡æ˜¯å¦å®Œæˆ
+        //Ä¿Ç°µÄÂß¼­ÊÇÔÚ¼¤»îMenuµÄÊ±ºòÅÐ¶ÏÈÎÎñÊÇ·ñÍê³É
         MissionManager.Instance.CheckComplete();
 
         RefreshPage();
@@ -35,9 +58,11 @@ public class MissionUI : MonoBehaviour
         missionMenu.SetActive(false);
     }
 
-    private void RefreshPage()
+    public void RefreshPage()
     {
         maxPage = Mathf.CeilToInt(MissionManager.Instance.activeMissions.Count / 3.0f);
+
+        if(nowPage > maxPage && nowPage != 1) { nowPage = maxPage; }
 
         int startIndex = (nowPage - 1) * 3;
 
@@ -60,6 +85,8 @@ public class MissionUI : MonoBehaviour
         DisplayPageNum();
     }
 
+
+
     public void PrevPage()
     {
         if (nowPage == 1) return;
@@ -75,6 +102,7 @@ public class MissionUI : MonoBehaviour
 
     private void DisplayPageNum()
     {
-        pageNum.text = nowPage.ToString() + "/" + maxPage.ToString() + "é¡µ";
+        pageNum.text = nowPage.ToString() + "/" + maxPage.ToString() + "Ò³";
     }
+
 }

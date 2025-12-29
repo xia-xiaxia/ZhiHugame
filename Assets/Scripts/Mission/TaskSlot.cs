@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -18,10 +19,12 @@ public class TaskSlot : MonoBehaviour
     [SerializeField]
     string colorStringEnd = "</color>";
     [SerializeField]
-    string intervalInReward = "    "; //四个空格
+    string intervalInReward = "  "; //两个空格
 
     public GameObject comp0;
     public GameObject comp1;
+
+    int missionId;
 
 
     public void Display(MissionData missionData)
@@ -34,14 +37,22 @@ public class TaskSlot : MonoBehaviour
         {
             this .gameObject.SetActive(true);
         }
+
+        missionId = int.Parse(missionData.id);
+
         taskName.text = missionData.name;
         taskDesc.text = prefixInDesc + missionData.description;
 
         string rewardStr = "";
 
-        if(missionData.rewardPolicyId != 0)
+        if(missionData.rewardPolicyId != null)
         {
-            rewardStr += colorString + "国策" + colorStringEnd + "奖励：" + missionData.rewardPolicyId.ToString() + intervalInReward;
+            rewardStr += colorString + "国策" + colorStringEnd + "奖励：";
+            foreach(var id in missionData.rewardPolicyId)
+            {
+                rewardStr += PolicyManager.Instance.GetPolicyName(id) + "  ";
+            }
+            rewardStr += intervalInReward;
         }
 
         if(missionData.rewardTalent != 0)
@@ -62,4 +73,11 @@ public class TaskSlot : MonoBehaviour
         }
     }
 
+    public void Reward()
+    {
+        if (!MissionUI.Instance.canReward) return;
+        MissionManager.Instance.Reward(missionId);
+        MissionUI.Instance.RefreshPage();
+        Debug.Log("[TaskSlot]: 已刷新页面");
+    }
 }

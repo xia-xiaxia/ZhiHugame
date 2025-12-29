@@ -24,7 +24,7 @@ public class GameStatistics : ScriptableObject
 
     //MissionManager 相关
     public List<int> activeMissions = new List<int>();
-    public Dictionary<int, bool> isComplete = new Dictionary<int, bool>();
+    public Dictionary<string, bool> isComplete = new Dictionary<string, bool>();
 
     public int currentReignYears
     {
@@ -63,8 +63,15 @@ public class GameStatistics : ScriptableObject
         return policyFirstYear.TryGetValue(id, out int year) ? year : -1;
     }
 
+    public void Inititalize()
+    {
+        activeMissions.Clear();
+        isComplete.Clear();
+    }
+
     public void Restart()
     {
+       
         currentReignYears = 0;
         policyUsageCount.Clear();
         policyFirstYear.Clear();
@@ -73,6 +80,9 @@ public class GameStatistics : ScriptableObject
             judgeValue[i] = false;
             judgeFirstYear[i] = -1;
         }
+
+        //MissionManager的Restart相关内容
+        MissionManager.Instance.StartNewGame();
     }
 
     public void GameEnd()
