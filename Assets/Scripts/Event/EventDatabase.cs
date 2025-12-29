@@ -14,6 +14,9 @@ public class EventDatabase : MonoBehaviour
     private List<string> availableEventIds = new List<string>();
 
     public List<TextAsset> eventJsons;
+    
+    // 当前激活的事件集（用于持久化保存）
+    private List<TextAsset> activeEventJsons = new List<TextAsset>();
 
     void Awake()
     {
@@ -25,6 +28,8 @@ public class EventDatabase : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
+            // 初始化时激活所有事件集
+            activeEventJsons = new List<TextAsset>(eventJsons);
             LoadEvents();
         }
     }
@@ -33,7 +38,7 @@ public class EventDatabase : MonoBehaviour
     {
         if (availableJsons == null)
         {
-            availableJsons = eventJsons;
+            availableJsons = activeEventJsons.Count > 0 ? activeEventJsons : eventJsons;
         }
 
         globalEventDict.Clear();
@@ -190,7 +195,6 @@ public class EventDatabase : MonoBehaviour
     /// </summary>
     public void ActivateEventSetById(int[] randomEventSet)
     {
-        List<TextAsset> activeEventJsons = eventJsons;
         foreach (var fileid in randomEventSet)
         {
             if(fileid < 0)
@@ -200,8 +204,11 @@ public class EventDatabase : MonoBehaviour
                 {
                     activeEventJsons.Remove(eventJsons[index]);
                     Debug.Log($"[EventDatabase] 关闭事件集: {eventJsons[index].name}");
-                } 
-                Debug.LogWarning($"[EventDatabase] 关闭事件集失败: 索引 {index} 越界");
+                }
+                else
+                {
+                    Debug.LogWarning($"[EventDatabase] 关闭事件集失败: 索引 {index} 越界");
+                }
                 continue;
             }
             else if(fileid > 0)
@@ -222,5 +229,54 @@ public class EventDatabase : MonoBehaviour
             }
         }
         LoadEvents(activeEventJsons);
+        Debug.Log($"[EventDatabase] 事件集激活状态已更新并持久化");
+    }
+    
+    /// <summary>
+    /// 获取当前激活的事件集索引（用于存档）
+    /// </summary>
+    public List<int> GetActiveEventSetIndices()
+    {
+        List<int> activeIndices = new List<int>();
+        foreach (var activeJson in activeEventJsons)
+        {
+            int index = eventJsons.IndexOf(activeJson);
+            if (index >= 0)
+            {
+                activeIndices.Add(index);
+            }
+        }
+        Debug.Log($"[EventDatabase] 获取激活事件集索引: 共 {activeIndices.Count} 个");
+        return activeIndices;
+    }
+    
+    /// <summary>
+    /// 从存档恢复激活的事件集状态
+    /// </summary>
+    public void RestoreActiveEventSet(List<int> activeIndices)
+    {
+        if (activeIndices == null || activeIndices.Count == 0)
+        {
+            Debug.LogWarning("[EventDatabase] 恢复事件集失败: 索引列表为空，将激活所有事件集");
+            activeEventJsons = new List<TextAsset>(eventJsons);
+            LoadEvents(activeEventJsons);
+            return;
+        }
+        
+        activeEventJsons.Clear();
+        foreach (var index in activeIndices)
+        {
+            if (index >= 0 && index < eventJsons.Count)
+            {
+                activeEventJsons.Add(eventJsons[index]);
+            }
+            else
+            {
+                Debug.LogWarning($"[EventDatabase] 恢复事件集时索引 {index} 越界，跳过");
+            }
+        }
+        
+        LoadEvents(activeEventJsons);
+        Debug.Log($"[EventDatabase] 从存档恢复事件集激活状态: {activeEventJsons.Count} 个事件集已激活");
     }
 }

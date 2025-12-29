@@ -324,6 +324,72 @@ public class StatModel : ScriptableObject
 
         Debug.Log($"[StatModel] 重置完成（保留天赋） - 国君:{king} 宗族:{noble} 卿士:{scholar} 外臣:{foreign} 庶人:{people}");
     }
+    
+    /// <summary>
+    /// 完全重置（包括天赋、背包等所有数据）
+    /// 用于新游戏或删除存档时
+    /// </summary>
+    public void ResetToDefaultCompletely()
+    {
+        // 重置年份和货币
+        year = 0;
+        currency = 100;
+        maxPolicyCount = 5;
+
+        // 重置五维属性到初始值
+        kingMin = 0;
+        kingMax = 100;
+        nobleMin = 0;
+        nobleMax = 100;
+        scholarMin = 0;
+        scholarMax = 100;
+        foreignMin = 0;
+        foreignMax = 100;
+        peopleMin = 0;
+        peopleMax = 100;
+
+        // 重置到中间值
+        king = 50;
+        noble = 50;
+        scholar = 50;
+        foreign = 50;
+        people = 50;
+        
+        // 重置增量
+        king_delta = 0;
+        noble_delta = 0;
+        scholar_delta = 0;
+        foreign_delta = 0;
+        people_delta = 0;
+        buff_king_delta = 0;
+        buff_noble_delta = 0;
+        buff_scholar_delta = 0;
+        buff_foreign_delta = 0;
+        buff_people_delta = 0;
+
+        // 清空所有列表
+        policyBag.Clear();
+        buffBag.Clear();
+        delayedEventQueue.Clear();
+        activeLayerLocks.Clear();
+        
+        // 重置天赋系统
+        activatedTalents.Clear();
+        talentPoints = 0;
+        
+        // 重置天赋效果数据
+        policyBagSize = 5;
+        payBackCurrency = 0;
+        shopMult = 1.0f;
+        currencyMult = 1.0f;
+        policyShopCount = 5;
+        refreshPolicyShopCost = new int[] { 10, 20, 30, 40 };
+        
+        // 重置教程标记
+        hasSeenTutorial = false;
+
+        Debug.Log("[StatModel] 完全重置完成 - 所有数据已恢复到初始状态");
+    }
 
     public bool isBagFull(int count = 1)
     {

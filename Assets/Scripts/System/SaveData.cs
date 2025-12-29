@@ -261,6 +261,9 @@ public class SaveData
             {
                 data.usedEvents.Add(new UsedEventData(id));
             }
+            
+            // 保存激活的事件集索引
+            data.activeRandomEventSetIndices = EventDatabase.Instance.GetActiveEventSetIndices();
         }
         
         // 保存延时事件（从 EventSelector 获取）

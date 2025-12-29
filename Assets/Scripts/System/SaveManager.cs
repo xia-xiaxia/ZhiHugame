@@ -120,7 +120,39 @@ public class SaveManager : MonoBehaviour
         // 检查存档文件是否存在
         if (!File.Exists(saveFilePath))
         {
-            Debug.LogWarning($"[SaveManager] 存档文件不存在: {saveFilePath}");
+            Debug.LogWarning($"[SaveManager] 存档文件不存在: {saveFilePath}，将进行完全初始化");
+            
+            // 完全重置游戏状态（包括天赋、背包等）
+            if (stats != null)
+            {
+                stats.ResetToDefaultCompletely();
+            }
+            
+            // 重置GameStatistics
+            if (GameControl.Instance != null && GameControl.Instance.gameStatistics != null)
+            {
+                GameControl.Instance.gameStatistics.Inititalize();
+            }
+            
+            // 重置事件数据库
+            if (EventDatabase.Instance != null)
+            {
+                EventDatabase.Instance.ResetPool();
+            }
+            
+            // 清空延时事件
+            if (EventSelector.Instance != null)
+            {
+                EventSelector.Instance.Reset();
+            }
+            
+            // 通知UI更新
+            if (UIManager.Instance != null)
+            {
+                UIManager.Instance.UpdateStatText();
+            }
+            
+            Debug.Log("[SaveManager] 完全初始化完成");
             return false;
         }
         
@@ -153,6 +185,14 @@ public class SaveManager : MonoBehaviour
                         usedIds.Add(usedEvent.eventId);
                     }
                 }
+                
+                // 先恢复事件集激活状态（必须在恢复已使用事件之前）
+                if (saveData.activeRandomEventSetIndices != null && saveData.activeRandomEventSetIndices.Count > 0)
+                {
+                    EventDatabase.Instance.RestoreActiveEventSet(saveData.activeRandomEventSetIndices);
+                }
+                
+                // 再恢复已使用的事件
                 EventDatabase.Instance.RestoreUsedEvents(usedIds);
             }
             
@@ -240,14 +280,38 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     public void NewGame()
     {
+        // 删除旧存档
+        DeleteSave();
+        
         if (stats != null)
         {
-            stats.ResetToDefault();
-            Debug.Log("[SaveManager] 开始新游戏，数据已重置");
+            stats.ResetToDefaultCompletely();
+            Debug.Log("[SaveManager] 开始新游戏，数据已完全重置");
         }
         
-        // 可选：删除旧存档
-        // DeleteSave();
+        // 重置GameStatistics
+        if (GameControl.Instance != null && GameControl.Instance.gameStatistics != null)
+        {
+            GameControl.Instance.gameStatistics.Inititalize();
+        }
+        
+        // 重置事件数据库
+        if (EventDatabase.Instance != null)
+        {
+            EventDatabase.Instance.ResetPool();
+        }
+        
+        // 清空延时事件
+        if (EventSelector.Instance != null)
+        {
+            EventSelector.Instance.Reset();
+        }
+        
+        // 通知UI更新
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.UpdateStatText();
+        }
     }
     
     /// <summary>
