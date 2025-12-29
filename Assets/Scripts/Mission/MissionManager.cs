@@ -252,7 +252,6 @@ public class CurrentReignCondition : MissionCondition
 {
     public override bool CheckComplete(GameStatistics gameStatistics, string id = null)
     {
-        Debug.Log(gameStatistics.currentReignYears + "    " + paramList[0]);
         return gameStatistics.currentReignYears >= paramList[0];
     }
 }

@@ -129,11 +129,6 @@ public class SaveManager : MonoBehaviour
                 stats.ResetToDefaultCompletely();
             }
             
-            // 重置GameStatistics
-            if (GameControl.Instance != null && GameControl.Instance.gameStatistics != null)
-            {
-                GameControl.Instance.gameStatistics.Inititalize();
-            }
             
             // 初始化事件数据库，只激活001.json
             if (EventDatabase.Instance != null)
