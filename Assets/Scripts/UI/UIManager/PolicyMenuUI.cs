@@ -128,7 +128,6 @@ public class PolicyMenuUI : MonoBehaviour
     {
         //全局统计
         GameControl.Instance.gameStatistics.usePolicy(item);
-
         if (item.usageCount > 0) item.usageCount--;
         if (item.usageCount == 0) GameControl.Instance?.RemovePolicy(item.id);
         HideMenu();

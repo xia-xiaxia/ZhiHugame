@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162da53cb023ce34bbddf3e852d3731d, type: 3}
   m_Name: 11
   m_EditorClassIdentifier: 
-  year: 7
+  year: 1
   maxPolicyCount: 5
-  _currency: 90
-  _king: 36
-  _noble: 50
-  _scholar: 40
-  _foreign: 15
+  _currency: 208
+  _king: 30
+  _noble: 30
+  _scholar: 30
+  _foreign: 30
   _people: 30
-  _talentPoints: 0
+  _talentPoints: 18
   _policyBagSize: 5
   _payBackCurrency: 0
   _shopMult: 1
@@ -62,6 +62,54 @@ MonoBehaviour:
     foreignChange: 0
     peopleChange: 0
     triggeredBuffId: 
+    lockDuration: 0
+  - id: 102
+    name: "\u517C\u5BB9\u5E76\u84C4"
+    result: "\u5916\u81E3\u52BF\u529B\u6301\u7EED\u5927\u5E45\u4E0A\u5347"
+    desc: "\u9F13\u52B1\u5404\u56FD\u7684\u5404\u6D3E\u5B66\u8BF4\u4F20\u4EBA\u6765\u6211\u56FD\u4EA4\u6D41"
+    type: 5
+    usageCount: -1
+    cost: 50
+    targetLayers: 04000000
+    deathEffectText: 
+    kingChange: 0
+    nobleChange: 0
+    scholarChange: 0
+    foreignChange: 0
+    peopleChange: 0
+    triggeredBuffId: 102
+    lockDuration: 0
+  - id: 106
+    name: "\u6E05\u9759\u65E0\u4E3A"
+    result: "\u56FD\u541B\u52BF\u529B\u6781\u5927\u5E45\u4E0B\u964D\uFF0C\u537F\u58EB\u52BF\u529B\u5927\u5E45\u4E0B\u964D"
+    desc: "\u56FD\u541B\u4E0D\u5E72\u6D89\u671D\u653F\uFF0C\u65E0\u4E3A\u800C\u6CBB\uFF0C\u5C3D\u7BA1\u537F\u58EB\u56E0\u6B64\u4E0D\u6EE1"
+    type: 4
+    usageCount: 1
+    cost: 50
+    targetLayers: 0100000002000000
+    deathEffectText: 
+    kingChange: -50
+    nobleChange: 0
+    scholarChange: -30
+    foreignChange: 0
+    peopleChange: 0
+    triggeredBuffId: 
+    lockDuration: 0
+  - id: 102
+    name: "\u517C\u5BB9\u5E76\u84C4"
+    result: "\u5916\u81E3\u52BF\u529B\u6301\u7EED\u5927\u5E45\u4E0A\u5347"
+    desc: "\u9F13\u52B1\u5404\u56FD\u7684\u5404\u6D3E\u5B66\u8BF4\u4F20\u4EBA\u6765\u6211\u56FD\u4EA4\u6D41"
+    type: 5
+    usageCount: -1
+    cost: 50
+    targetLayers: 04000000
+    deathEffectText: 
+    kingChange: 0
+    nobleChange: 0
+    scholarChange: 0
+    foreignChange: 0
+    peopleChange: 0
+    triggeredBuffId: 102
     lockDuration: 0
   buffBag: []
   delayedEventQueue: []
