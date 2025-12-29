@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -155,7 +156,13 @@ public class SaveData
             shopMult = stats.shopMult,
             currencyMult = stats.currencyMult,
             policyShopCount = stats.policyShopCount,
-            saveTime = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+            saveTime = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+            currentReignYears = gameStatistics.currentReignYears,
+            totalReginYears = gameStatistics.totalReginYears,
+            policyUseOutCount = gameStatistics.policyUseOutCount,
+            judgeValue = (bool[])gameStatistics.judgeValue.Clone(),
+            judgeFirstYear = (int[])gameStatistics.judgeFirstYear.Clone(),
+            activeMissions = new List<int>(gameStatistics.activeMissions),
         };
 
         // 转换字典: policyUsageCount
@@ -456,6 +463,7 @@ public class SaveData
         if (this.judgeFirstYear != null && this.judgeFirstYear.Length != 0) stats.judgeFirstYear = (int[])this.judgeFirstYear.Clone();
         else stats.judgeFirstYear = new int[100];
 
+        
         if(this.activeMissions != null) stats.activeMissions = new List<int>(this.activeMissions);
 
         // 还原字典: policyUsageCount
