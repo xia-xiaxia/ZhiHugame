@@ -2,6 +2,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Text;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+
 
 public class  DialoguePanel : MonoBehaviour
 {
@@ -67,17 +71,64 @@ public class  DialoguePanel : MonoBehaviour
     private IEnumerator TypeRoutine()
     {
         bodyText.text = "";
-        int len = currentFullText != null ? currentFullText.Length : 0;
-        for (int i = 0; i <= len; i++)
+        List<string> frames = GenerateFrames(currentFullText);
+
+        foreach (string frame in frames)
         {
-            int safeLen = Mathf.Clamp(i, 0, len);
-            bodyText.text = currentFullText.Substring(0, safeLen);
+            bodyText.text = frame;
             yield return new WaitForSeconds(typeInterval);
         }
+
         yield return new WaitForSeconds(0.1f);
         typeRoutine = null;
     }
-    
+
+
+    private List<string> GenerateFrames(string text)
+    {
+        List<string> frames = new List<string>();
+        Stack<string> tagStack = new Stack<string>(); 
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < text.Length; i++)
+        {
+            if (text[i] == '<')
+            {
+                int end = text.IndexOf('>', i);
+                if (end != -1)
+                {
+                    string tag = text.Substring(i, end - i + 1);
+
+                    if (tag.StartsWith("</")) 
+                    {
+                        if (tagStack.Count > 0) tagStack.Pop();
+                    }
+                    else if (!tag.EndsWith("/>")) 
+                    {
+                        string tagName = Regex.Match(tag, @"<(\w+)=?").Groups[1].Value;
+                        tagStack.Push($"</{tagName}>");
+                    }
+
+                    sb.Append(tag);
+                    i = end;
+                    continue;
+                }
+            }
+
+            sb.Append(text[i]);
+
+            StringBuilder frameBuilder = new StringBuilder(sb.ToString());
+            foreach (string closeTag in tagStack)
+            {
+                frameBuilder.Append(closeTag);
+            }
+
+            frames.Add(frameBuilder.ToString());
+        }
+
+        return frames;
+    }
+
     // 外部调用，当 dadian 消失时立即检查是否需要开始打字
     public void OnDadianHidden()
     {

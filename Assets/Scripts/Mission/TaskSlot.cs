@@ -61,16 +61,24 @@ public class TaskSlot : MonoBehaviour
         }
 
         taskReward.text = rewardStr;
-
-        if(MissionManager.Instance.isComplete(missionData.id))
+        if(MissionUI.Instance.canReward)
         {
-            comp0.SetActive(false);
-            comp1.SetActive(true);
+            if(MissionManager.Instance.isComplete(missionData.id))
+            {
+                comp0.SetActive(false);
+                comp1.SetActive(true);
+            } else
+            {
+                comp0.SetActive(true);
+                comp1.SetActive(false);
+            }
         } else
         {
-            comp0.SetActive(true);
+            comp0.SetActive(false);
             comp1.SetActive(false);
         }
+
+        
     }
 
     public void Reward()
