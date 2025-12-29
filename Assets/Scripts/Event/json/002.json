@@ -1,442 +1,868 @@
 [
   {
     "id": "00101",
-    "title": "名人之事00101",
-    "speaker": "共伯",
-    "body": "君上，臣翻阅史书，与您分享一人\n昔者楚庄王问鼎中原，靠的便是此人\n此人名曰孙叔敖\n孙叔敖最早是期思一带的工匠\n地位低微，庶人而已\n但是楚庄王看到他的才华，提拔他为楚国令尹\n于是乎楚庄王得以击败晋国，称霸中原",
+    "speaker": "常万",
+    "body": "君上，臣有一事相求\n臣在列国之间做生意，往来关税多有耗费\n希望君上赐我使节，臣愿意每年向您进献珍宝\n这样一来，我就<b>不用交关税</b>了",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "可见君主用人的重要性啊",
+        "text": "准了，给寡人弄点好东西来",
         "kingChange": 15,
-        "peopleChange": 5,
-        "yearDelta": 1
+        "scholarChange": 15,
+        "foreignChange": -20
       },
       {
-        "text": "可见庶人之中亦有贤才啊",
-        "peopleChange": 20,
-        "kingChange": 5,
-        "yearDelta": 1
+        "text": "算了吧，我可不想得罪外国人",
+        "foreignChange": 10
       }
     ]
   },
   {
     "id": "00201",
-    "title": "名人之事00201",
-    "speaker": "共伯",
-    "body": "君上，臣翻阅史书，与您分享一人\n是孔丘，孔子\n他游学列国，传播儒家学派\n将儒家学说推为显学\n您怎么看待他？",
+    "speaker": "敬开",
+    "body": "君上，臣本是鲁国人\n臣希望您能派臣为使节，去鲁国<color=#5C9291>外交和好</color>\n并招纳<color=#5C9291>鲁国贤才</color>，为泗国所用",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "他说的尽是些歪理学说",
-        "nextEventId": "00202",
-        "interval": 0,
-        "foreignChange": -15,
-        "yearDelta": 1
+        "text": "你想让我国变成鲁国的傀儡吗？",
+        "scholarChange": 10,
+        "foreignChange": -20
       },
       {
-        "text": "他的思想很有深度，多加记载",
+        "text": "人才多多益善",
         "foreignChange": 10,
-        "yearDelta": 1
+        "nextEventId": "00202",
+        "interval": 0
       }
     ]
   },
   {
     "id": "00202",
-    "title": "名人之事00202",
-    "speaker": "敬开",
-    "body": "君上，您的观点令我不敢苟同\n孔子之儒学强调仁义\n夫子主张有教无类，让庶人也得到知识\n天不生仲尼，万古如长夜\n您不该如此低看他",
+    "speaker": "白产",
+    "body": "君上，您广招<color=#5C9291>鲁国人才</color>，我国<color=#003A6F>卿士</color>和<color=#C53B23>贵族</color>恐怕会不满",
+    "yearDelta": 0,
     "options": [
       {
-        "text": "寡人知道了",
-        "kingChange": -15,
-        "foreignChange": 5,
-        "yearDelta": 0
+        "text": "就招就招，不服受着",
+        "foreignChange": 10,
+        "nobleChange": -10,
+        "scholarChange": -20
       },
       {
-        "text": "寡人偏说他是歪理学说",
-        "kingChange": 5,
-        "foreignChange": -10,
-        "yearDelta": 0
+        "text": "你说的有道理，遣散一部分鲁国臣子",
+        "foreignChange": -15,
+        "scholarChange": 10,
+        "nobleChange": 5
       }
     ]
   },
   {
     "id": "00301",
-    "title": "名人之事00301",
-    "speaker": "共伯",
-    "body": "君上，臣翻阅史书，与您分享一人\n昔者齐桓公九合诸侯，一匡天下，靠的就是他\n是齐国国相——管仲\n他选贤举能，发展商业\n组织会盟，尊王攘夷\n实在是一代名相\n您怎么看待他？",
+    "speaker": "敬开",
+    "body": "君上，臣认识几个<color=#5C9291>宋国人</color>\n他们表示可以从宋国低价弄来一批漆木家具\n这批家具价格远低于我国行情\n他们愿意把利润上交三成给您\n不过这样一来，本国从事漆器制作的<color=#725E54>庶人</color>将难以开张\n您怎么看？",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "管仲实乃卿士的表率啊",
-        "scholarChange": 20,
-        "kingChange": 5,
-        "yearDelta": 1
+        "text": "让外臣来，钱最重要",
+        "foreignChange": 15,
+        "peopleChange": -15
       },
       {
-        "text": "还得是齐桓公眼光独到啊",
-        "kingChange": 15,
-        "scholarChange": 5,
-        "yearDelta": 1
+        "text": "寡人可不会吃里扒外",
+        "peopleChange": 15,
+        "foreignChange": -5
       }
     ]
   },
   {
     "id": "00401",
-    "title": "名人之事00401",
     "speaker": "共伯",
-    "body": "君上，臣翻阅史书，与您分享一人\n此人是齐国的大夫鲍叔牙\n他刚正不阿，驱逐齐桓公身旁的宠臣\n他与管仲相知相交，共同治理齐国\n他二人治下齐国迅速发展，成为霸主",
+    "body": "君上，您今天穿礼鞋时恐怕有所失礼\n《小仪》规定应当先穿左脚鞋\n可您今早是右脚先穿的\n这样是不合乎礼制的，<color=#6A1F1F>臣将记录在册</color>",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "可见卿士对治国意义重大啊",
-        "scholarChange": 15,
-        "kingChange": -5,
-        "yearDelta": 1
+        "text": "这种小事就不要记了吧",
+        "nextEventId": "00402",
+        "interval": 0
       },
       {
-        "text": "卿士怎能随意驱逐君主的宠臣呢？",
-        "kingChange": 5,
-        "scholarChange": -20,
-        "yearDelta": 1
+        "text": "你跟我说礼制我都觉得好笑",
+        "nextEventId": "00403",
+        "interval": 0
+      },
+      {
+        "text": "寡人知错了",
+        "kingChange": -10
+      }
+    ]
+  },
+  {
+    "id": "00402",
+    "speaker": "共伯",
+    "body": "史家秉笔直书，一字不改",
+    "yearDelta": 0,
+    "options": [
+      {
+        "text": "好吧",
+        "kingChange": -15
+      },
+      {
+        "text": "叉出去",
+        "kingChange": 5
+      }
+    ]
+  },
+  {
+    "id": "00403",
+    "speaker": "共伯",
+    "body": "这句臣也记下来了",
+    "yearDelta": 0,
+    "options": [
+      {
+        "text": "叉出去",
+        "kingChange": 5
+      },
+      {
+        "text": "记就记",
+        "kingChange": -20
       }
     ]
   },
   {
     "id": "00501",
-    "title": "名人之事00501",
     "speaker": "共伯",
-    "body": "君上，臣翻阅史书，与您分享一人\n此人是齐国的大夫崔杼\n崔杼是齐丁公后裔，属于贵族\n曾经齐庄公与他的妻子通奸\n还出言羞辱他\n崔杼恼羞成怒，设伏弑君\n此举震撼齐国，史册有载",
+    "body": "君上，今年新写国史遭了些变故\n国库用墨质量不佳\n写好的竹简才三日就纷纷掉色\n现在记录损失惨重……",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "贵族可不能学崔杼弑君啊",
-        "nobleChange": -10,
-        "kingChange": 5,
+        "text": "重写，好好美化一下寡人",
         "nextEventId": "00502",
-        "interval": 0,
-        "yearDelta": 1
+        "interval": 0
       },
       {
-        "text": "君主可不能学齐庄公无理啊",
-        "kingChange": 5,
-        "nobleChange": 10,
-        "nextEventId": "00502",
-        "interval": 0,
-        "yearDelta": 1
+        "text": "拨钱，用好墨重写",
+        "kingChange": 5
+      },
+      {
+        "text": "天意如此，随它去吧",
+        "kingChange": -5
       }
     ]
   },
   {
     "id": "00502",
-    "title": "名人之事00502",
     "speaker": "共伯",
-    "body": "崔杼弑君之后，齐国太史记录下来\n崔杼为此愤怒，要求太史修改记录\n将“弑君”改为“齐公死于疾病”\n太史不肯，他便砍杀太史\n新任太史依旧不肯修改记录\n于是他再度砍杀太史\n如此三次，三位太史都不肯篡改记录\n崔杼只好放弃",
+    "body": "史家秉笔直书，一字不改",
+    "yearDelta": 0,
     "options": [
       {
-        "text": "有太史这样的臣子，君主无憾了",
-        "scholarChange": 15,
-        "yearDelta": 0
+        "text": "好吧",
+        "kingChange": -15
       },
       {
-        "text": "崔杼这样的乱臣贼子，真该遗臭万年",
-        "nobleChange": -10,
-        "yearDelta": 0
+        "text": "叉出去",
+        "kingChange": 5
       }
     ]
   },
   {
     "id": "00601",
-    "title": "名人之事00601",
     "speaker": "共伯",
-    "body": "君上，臣翻阅史书，与您分享一事\n曾经越王勾践为了铸造宝剑\n他招揽了越国最好的铸剑师\n于是铸造了越王勾践剑\n铸成之后，他不希望铸剑师再造这么好的剑\n他希望自己的剑举世无双\n于是杀死了这位铸剑师",
+    "body": "君上，去年记录大事如下\n三月，<color=#6A1F1F>君</color>打喷嚏三；五月，碎玉璧一双\n七月，失冠缨一根；九月，遗履于庙阶\n十月，与宋国使者竞歌而破音",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "越王勾践真是大丈夫，果断有谋",
-        "kingChange": 10,
-        "peopleChange": -15,
-        "yearDelta": 1
+        "text": "你是在消遣寡人吗！",
+        "nextEventId": "00603",
+        "interval": 0,
+        "kingChange": -10
       },
       {
-        "text": "越王勾践真是暴戾无度，可怜铸剑师",
-        "peopleChange": 10,
-        "kingChange": -10,
-        "yearDelta": 1
+        "text": "记得挺好，以后别记了",
+        "nextEventId": "00602",
+        "interval": 0
+      },
+      {
+        "text": "叉出去！",
+        "kingChange": 5
+      }
+    ]
+  },
+  {
+    "id": "00602",
+    "speaker": "共伯",
+    "body": "史家秉笔直书，一字不改",
+    "yearDelta": 0,
+    "options": [
+      {
+        "text": "好吧",
+        "kingChange": -15
+      },
+      {
+        "text": "叉出去",
+        "kingChange": 5
+      }
+    ]
+  },
+  {
+    "id": "00603",
+    "speaker": "共伯",
+    "body": "（记下“君览实录而破防”）",
+    "yearDelta": 0,
+    "options": [
+      {
+        "text": "叉出去"
+      },
+      {
+        "text": "（没招了）",
+        "kingChange": -10
       }
     ]
   },
   {
     "id": "00701",
-    "title": "名人之事00701",
     "speaker": "共伯",
-    "body": "君上，臣翻阅史书，与您分享一人\n此人名曰百里奚\n昔者秦穆公希望强大秦国，称霸中原\n但苦于没有人才\n百里奚是虞国的亡国之臣\n秦穆公不忌惮他是外臣，不鄙视他贫困潦倒\n虽然年老，但依旧招揽百里奚，委以重任\n在百里奚的辅助下，秦国果然独霸西戎",
+    "body": "君上，臣清点了库存的史书\n记录您祖父事迹的那部分竹简需要修缮\n竹简规模庞大，需要人手来帮忙",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "外臣之中不乏百里奚这样的能人啊",
-        "foreignChange": 20,
-        "yearDelta": 1
+        "text": "给你安排几个贵族子弟",
+        "nextEventId": "00702",
+        "interval": 0
       },
       {
-        "text": "秦穆公果然是慧眼识珠啊",
-        "kingChange": 20,
-        "yearDelta": 1
+        "text": "给你安排几个闲着的卿士",
+        "nextEventId": "00703",
+        "interval": 0
       },
       {
-        "text": "穷困潦倒的庶人也不能轻视啊",
-        "peopleChange": 25,
-        "yearDelta": 1
+        "text": "给你安排几个讲学的游士",
+        "nextEventId": "00704",
+        "interval": 0
+      }
+    ]
+  },
+  {
+    "id": "00702",
+    "speaker": "共伯",
+    "body": "君上，您派来的<color=#C53B23>贵族</color>子弟工作不甚认真\n他们嫌这工作费神，整日偷闲\n修缮进度不乐观",
+    "yearDelta": 0,
+    "options": [
+      {
+        "text": "寡人将训斥他们",
+        "nobleChange": -10,
+        "kingChange": 5
+      },
+      {
+        "text": "不要过多苛责他们",
+        "nobleChange": 10,
+        "kingChange": -5
+      }
+    ]
+  },
+  {
+    "id": "00703",
+    "speaker": "共伯",
+    "body": "君上，你安排来的<color=#003A6F>卿士</color>果然工作认真\n不过工作辛苦，他们请求多发一点禄米",
+    "yearDelta": 0,
+    "options": [
+      {
+        "text": "简直是漫天要价，驳回",
+        "kingChange": 10,
+        "scholarChange": -15
+      },
+      {
+        "text": "那就发，好好犒劳",
+        "scholarChange": 20,
+        "kingChange": -5
+      }
+    ]
+  },
+  {
+    "id": "00704",
+    "speaker": "共伯",
+    "body": "君上，您安排的<color=#5C9291>游士</color>已经在工作了\n但他们本身来自不同的国家\n总也指指点点，来回修改\n修缮进度迟滞不前",
+    "yearDelta": 0,
+    "options": [
+      {
+        "text": "反了他们了，以我国记载为准",
+        "kingChange": 10,
+        "foreignChange": -20
+      },
+      {
+        "text": "结合他们意见，就当勘误了",
+        "foreignChange": 15,
+        "kingChange": -10
       }
     ]
   },
   {
     "id": "00801",
-    "title": "名人之事00801",
     "speaker": "共伯",
-    "body": "君上，臣翻阅史书，与您分享一人\n申包胥是楚国的一位贵族\n曾经吴王阖闾兴兵动众，大举讨伐楚国\n结果楚军战败，吴师入郢\n楚国几乎有亡国的危机\n为了挽回颓势，申包胥只身前往秦国\n在秦公的大殿之前哭了七天七夜，最终昏厥\n秦公被他感动，出兵救楚\n楚国于是解除危机",
+    "body": "君上，臣翻阅史册，发现我国史书一则错漏\n此处记载同时存在两个版本，彼此矛盾\n一个版本记载的是，某年我国陷入饥荒\n一位<color=#C53B23>贵族</color>主动献出家产，救济灾民\n另一个版本记载的是，这位贵族并不在乎灾民\n一位<color=#003A6F>士族青年</color>屡次劝说，为民请命\n贵族不堪其扰，才给灾民施舍小恩小惠\n事情太过久远了，真相已经不可考\n但是史书到底怎么记载，请君上定夺",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "申包胥这样的臣子真是贵族的榜样",
-        "nobleChange": 10,
-        "nextEventId": "00802",
-        "interval": 0,
-        "yearDelta": 1
+        "text": "保留贵族主动救济的说法吧",
+        "nobleChange": 15,
+        "scholarChange": -5
       },
       {
-        "text": "沽名钓誉罢了",
-        "nobleChange": -15,
-        "nextEventId": "00802",
-        "interval": 0,
-        "yearDelta": 1
-      }
-    ]
-  },
-  {
-    "id": "00802",
-    "title": "名人之事00802",
-    "speaker": "共伯",
-    "body": "申包胥救国后，楚王坚持要赏赐他\n结果他坚持不受，逃赏隐居",
-    "options": [
-      {
-        "text": "我看这也是沽名钓誉",
-        "nobleChange": -15,
-        "yearDelta": 0
+        "text": "保留青年为民请命的说法吧",
+        "scholarChange": 15,
+        "nobleChange": -15
       },
       {
-        "text": "申包胥真乃忠贞之人",
-        "nobleChange": 10,
-        "yearDelta": 0
+        "text": "同时保留两种说法，留给后人评说",
+        "scholarChange": 5,
+        "nobleChange": -5
       }
     ]
   },
   {
     "id": "00901",
-    "title": "名人之事00901",
     "speaker": "共伯",
-    "body": "君上，臣翻阅史书，与您分享一人\n伍子胥是楚国大夫\n他的父亲被昏君楚平王害死\n为了逃避追杀，伍子胥逃亡到吴国\n路上，伍子胥得到一位渔夫搭救\n伍子胥十分感激，并恳求渔夫不要把事情说出去\n渔夫却认为这是伍子胥不信任他，于是自杀",
+    "body": "君上，有几位<color=#5C9291>游士</color>造访\n他们从鲁国而来，带有鲁国史书\n臣翻阅一二，认为可以补充我国的记载\n不过他们不愿意给出鲁国史书\n除非我们给他们提供官位和俸禄",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "渔夫真是道德高尚的君子啊",
-        "peopleChange": 15,
-        "nextEventId": "00902",
-        "interval": 0,
-        "yearDelta": 1
+        "text": "那就招揽他们，修史为大",
+        "foreignChange": 15
       },
       {
-        "text": "这渔夫做事太偏激了些",
-        "peopleChange": -10,
+        "text": "历史是任人打扮的小妮子，修它作甚",
         "nextEventId": "00902",
-        "interval": 0,
-        "yearDelta": 1
+        "interval": 0
+      },
+      {
+        "text": "把史书扣下，把人赶走",
+        "foreignChange": -25
       }
     ]
   },
   {
     "id": "00902",
-    "title": "名人之事00902",
     "speaker": "共伯",
-    "body": "吴国是楚国的敌国\n在伍子胥帮助下吴国快速发展\n最终，在伍子胥率领下，吴军进攻楚国\n一路凯歌，攻破楚国都城郢都\n伍子胥掘出楚平王的尸体，鞭尸三百泄恨",
+    "body": "君上这句话似乎很有哲理\n臣将记在史书里",
+    "yearDelta": 0,
     "options": [
       {
-        "text": "伍子胥真乃烈丈夫，昏君该打",
-        "kingChange": -15,
-        "scholarChange": 20,
-        "nextEventId": "00903",
-        "interval": 0,
-        "yearDelta": 0
+        "text": "寡人就是这么英明",
+        "kingChange": 10
       },
       {
-        "text": "楚平王罪不至此，伍子胥还是太偏激了",
-        "scholarChange": -5,
-        "kingChange": 5,
-        "nextEventId": "00903",
-        "interval": 0,
-        "yearDelta": 0
-      },
-      {
-        "text": "吴王阖闾有伍子胥，寡人何时能有他那样的人呢？",
-        "kingChange": 5,
-        "foreignChange": 15,
-        "scholarChange": 10,
-        "nextEventId": "00903",
-        "interval": 0,
-        "yearDelta": 0
-      }
-    ]
-  },
-  {
-    "id": "00903",
-    "title": "名人之事00903",
-    "speaker": "共伯",
-    "body": "吴军从楚国撤走后，伍子胥继续辅佐吴王\n吴王阖闾死后，吴王夫差继位\n有奸臣向夫差说伍子胥的谗言\n吴王于是疑心伍子胥有不臣之心\n最后吴王处死了伍子胥\n伍子胥死前，向吴王说\n要把我的眼珠挖出来，放在城门之上\n吴王问他为何\n他说\n我要亲眼看见越王勾践杀入阖闾城",
-    "options": [
-      {
-        "text": "非烈丈夫孰能如此！",
-        "scholarChange": 15,
-        "kingChange": -10,
-        "yearDelta": 0
-      },
-      {
-        "text": "吴王夫差实在是昏聩啊",
-        "kingChange": -15,
-        "yearDelta": 0
-      },
-      {
-        "text": "奸臣构陷实在是可恨啊",
-        "scholarChange": -5,
-        "kingChange": -5,
-        "yearDelta": 0
+        "text": "倒也不必连这个都记录"
       }
     ]
   },
   {
     "id": "01001",
-    "title": "名人之事01001",
     "speaker": "共伯",
-    "body": "君上，臣翻阅史书，与您分享一人\n此人是齐国大夫晏婴\n昔日齐景公有三位卿士\n是公孙接，田开疆，古冶子\n公孙接曾手擒猛虎\n田开疆曾从万军之中解救齐公\n古冶子曾斩杀袭击国君渡船的大鳖\n此三人勇武骄横，让齐公头疼",
+    "body": "君上，臣在修订国史\n有人提出<color=#003A6F>士族</color>是我国的中流砥柱\n应当在国史中为<color=#003A6F>卿士</color>单开一部",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "这样的卿士贤臣，我可不头疼",
-        "scholarChange": 10,
-        "kingChange": -15,
-        "nextEventId": "01002",
-        "interval": 0,
-        "yearDelta": 1
-      },
-      {
-        "text": "他们一定居功自傲，掣肘君主啊",
-        "kingChange": 20,
+        "text": "寡人也就一册，他们不配",
         "scholarChange": -10,
-        "nextEventId": "01002",
-        "interval": 0,
-        "yearDelta": 1
-      }
-    ]
-  },
-  {
-    "id": "01002",
-    "title": "名人之事01002",
-    "speaker": "共伯",
-    "body": "此三人目无君主，做事无礼\n齐景公于是拜托晏婴设计除掉他们\n于是晏婴使用“二桃杀三士”之法\n他让国君赏赐两颗桃子给这三人\n让他们论功吃桃\n公孙接，田开疆自述功劳，随后吃桃\n但古冶子也有大功，却无桃可吃\n公孙接和田开疆认为他们自己不知谦让\n害的古冶子无桃可吃\n于是两人刎颈自杀\n古冶子则不忍三人一人独活\n也挥剑自尽\n于是这三人都被除去了",
-    "options": [
-      {
-        "text": "这算什么，这简直是残害忠良",
-        "scholarChange": 15,
-        "kingChange": 5,
-        "yearDelta": 0
+        "kingChange": 5
       },
       {
-        "text": "掣肘君主的臣子该杀啊",
-        "kingChange": 10,
-        "scholarChange": -20,
-        "yearDelta": 0
+        "text": "贵族们会红眼的，不准",
+        "scholarChange": -10,
+        "nobleChange": 5
+      },
+      {
+        "text": "倒也有理，就这么办",
+        "scholarChange": 15
       }
     ]
   },
   {
     "id": "01101",
-    "title": "名人之事01101",
     "speaker": "共伯",
-    "body": "君上，臣翻阅史书，与您分享一人\n此人名曰程婴\n昔者晋景公宠信奸臣屠岸贾\n屠岸贾构陷赵氏，晋公听信谗言灭赵氏满门\n一时晋阳血流，赵氏三百余口俱殁\n只有赵朔之妻的婴儿幸免\n程婴乃赵氏门客，感念赵氏的恩德\n于是把自己的儿子伪装成赵氏的儿子\n屠岸贾搜到了程婴之子，将其杀死\n赵氏孤儿则被屠岸贾收养，成为他的义子",
+    "body": "君上，臣有一事不知当讲不当讲\n坊间有传言，声称君上您实非先君血脉……\n当然，这只是传言",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "程婴这样的门客真是值得敬佩",
-        "scholarChange": 10,
-        "nextEventId": "01102",
-        "interval": 0,
-        "yearDelta": 1
+        "text": "你发癫了？叉出去！",
+        "kingChange": -5
       },
       {
-        "text": "君主要警惕屠岸贾这样的佞臣啊",
-        "scholarChange": -10,
-        "kingChange": 10,
-        "nextEventId": "01102",
-        "interval": 0,
-        "yearDelta": 1
-      }
-    ]
-  },
-  {
-    "id": "01102",
-    "title": "名人之事01102",
-    "speaker": "共伯",
-    "body": "十五年后，晋景公患疾\n屠岸贾手握大军，更加肆无忌惮\n而程婴当庭数其罪，指出赵氏孤儿还活着\n这位赵氏孤儿便是屠岸贾的养子，名曰赵武\n赵武为家报仇，杀死屠岸贾\n赵氏封邑尽复，程婴拜为成卿\n鸣冤昭雪后，程婴辞官归隐",
-    "options": [
-      {
-        "text": "程婴这样的臣子值得肯定",
-        "scholarChange": 10,
-        "nextEventId": "01103",
-        "interval": 0,
-        "yearDelta": 0
-      },
-      {
-        "text": "赵武不应杀屠岸贾，毕竟是养父啊",
-        "scholarChange": -5,
-        "peopleChange": 10,
-        "nextEventId": "01103",
-        "interval": 0,
-        "yearDelta": 0
-      }
-    ]
-  },
-  {
-    "id": "01103",
-    "title": "名人之事01103",
-    "speaker": "共伯",
-    "body": "赵武长大成人，也成为晋国重臣\n他主持盟会，维护晋国霸业\n打击卿族的倾轧，维护晋公权威\n他温和、忠信，晋国在他治理下保持强大\n最终，他积劳成疾，死在冬天\n赵武之后，晋无公室之臣",
-    "options": [
-      {
-        "text": "寡人也希望得到赵武这样忠心的臣子啊",
-        "kingChange": -5,
-        "scholarChange": 20,
-        "yearDelta": 0
-      },
-      {
-        "text": "君主不能只倚仗于一两位臣子啊",
-        "kingChange": 20,
-        "scholarChange": 10,
-        "nobleChange": 5,
-        "foreignChange": 5,
-        "yearDelta": 0
+        "text": "我不是我爹亲生的！",
+        "kingChange": -10,
+        "nobleChange": -15
       }
     ]
   },
   {
     "id": "01201",
-    "title": "名人之事01201",
     "speaker": "共伯",
-    "body": "君上，臣在整理周武王灭商的相关事迹\n关于周武王灭商的最大功臣有多种说法\n有人认为这是多亏了他本人武德充沛\n也有人认为这是靠周公旦的辅佐\n亦有人认为，是太师姜子牙指挥有方\n您怎么看？",
+    "body": "君上，<color=#5C9291>宋国使臣</color>请求借阅我国国史\n但是他们要求把我国史册搬到宋国去看\n臣以为这怕是要有去无回啊",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "宋人不可信，不准",
+        "foreignChange": -15
+      },
+      {
+        "text": "对外臣要有礼节，借",
+        "nextEventId": "01202",
+        "interval": 3
+      }
+    ]
+  },
+  {
+    "id": "01202",
+    "speaker": "共伯",
+    "body": "君上，给<color=#5C9291>宋国</color>借史册已经三年了，仍未归还\n臣派人去要，先是遭到搪塞，之后竟然把我国使臣轰回来了",
+    "yearDelta": 0,
+    "options": [
+      {
+        "text": "欺人太甚，驱逐所有宋国人！",
+        "foreignChange": -25
+      },
+      {
+        "text": "我们惹不起宋国，你重写吧",
+        "scholarChange": -5,
+        "foreignChange": 15,
+        "kingChange": -5
+      }
+    ]
+  },
+  {
+    "id": "01301",
+    "speaker": "共伯",
+    "body": "君上，去年有<color=#C53B23>贵族子弟</color>借国史去看\n说是借三个月，结果到时间不还\n臣找人打听，才知他失手把国史当柴烧了",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "烧就烧了，你再写一套",
+        "nobleChange": 10,
+        "scholarChange": -15
+      },
+      {
+        "text": "罚那贵族子弟给你打杂",
+        "nobleChange": -10,
+        "scholarChange": 5
+      }
+    ]
+  },
+  {
+    "id": "01401",
+    "speaker": "共伯",
+    "body": "君上，臣听闻楚国曾有一位霸主，叫做<color=#6A1F1F>楚庄王</color>\n他曾问鼎中原，称霸天下\n但他即位之初，<color=#C53B23>国内贵族</color>并不服他\n在<color=#C53B23>贵族</color>的掣肘下，楚庄王几乎不能治国",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "要警惕贵族掣肘君王啊",
+        "nobleChange": -10,
+        "kingChange": 5,
+        "nextEventId": "01402",
+        "interval": 0
+      },
+      {
+        "text": "不能忽略贵族的意见啊",
+        "kingChange": -10,
+        "nobleChange": 10,
+        "nextEventId": "01402",
+        "interval": 0
+      }
+    ]
+  },
+  {
+    "id": "01402",
+    "speaker": "共伯",
+    "body": "楚庄王索性把朝政全委任给贵族\n自己整日玩乐，还禁止劝谏\n如此荒废三年，楚国日益衰败\n<color=#003A6F>大臣伍举</color>看不下去，说了一个谜语\n“有只鸟落在王宫之上，三年不飞不鸣，不知道是什么鸟”\n楚庄王笑，说：“此鸟不飞则已，一飞冲天，不鸣则已，一鸣惊人”\n随后一改作风，提拔之前劝谏他的忠臣，处死奸臣\n从此走向霸业",
+    "yearDelta": 0,
+    "options": [
+      {
+        "text": "楚庄王这真是机智的策略啊",
+        "kingChange": 15
+      },
+      {
+        "text": "伍举真是不畏死的直臣啊",
+        "scholarChange": 15
+      }
+    ]
+  },
+  {
+    "id": "01501",
+    "speaker": "共伯",
+    "body": "君上，您可知<color=#5C9291>孔子</color>？\n他是儒家学派的创始人\n曾游学列国，主张<color=#725E54>有教无类</color>，他说的话得到很多人推崇",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "他说的尽是些歪理学说",
+        "foreignChange": -15,
+        "nextEventId": "01502",
+        "interval": 0
+      },
+      {
+        "text": "他的思想很有深度",
+        "foreignChange": 10,
+        "peopleChange": 5
+      }
+    ]
+  },
+  {
+    "id": "01502",
+    "speaker": "敬开",
+    "body": "君上，您的观点我不敢苟同\n夫子主张让<color=#725E54>庶人</color>也得到知识，这是超前的\n天不生仲尼，万古如长夜\n您不该如此低看他",
+    "yearDelta": 0,
+    "options": [
+      {
+        "text": "寡人知道了",
+        "kingChange": -15,
+        "foreignChange": 5,
+        "peopleChange": 5
+      },
+      {
+        "text": "寡人偏说他是歪理学说",
+        "kingChange": 10,
+        "foreignChange": -10
+      }
+    ]
+  },
+  {
+    "id": "01601",
+    "speaker": "共伯",
+    "body": "君上，您肯定知道一代霸主<color=#6A1F1F>齐桓公</color>\n而他的成功离不开齐国<color=#003A6F>国相管仲</color>\n管仲选贤举能，发展商业，组织会盟，尊王攘夷\n实在是一代名相",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "管仲实乃卿士的表率啊",
+        "scholarChange": 15,
+        "kingChange": 5
+      },
+      {
+        "text": "还得是齐桓公眼光独到啊",
+        "kingChange": 15,
+        "scholarChange": 5
+      }
+    ]
+  },
+  {
+    "id": "01701",
+    "speaker": "共伯",
+    "body": "君上，您可知道齐国的<color=#003A6F>大夫鲍叔牙</color>？\n他刚正不阿，驱逐朝中的小人\n为此他不惜驱逐国君的宠臣，让国君不满",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "可见卿士对治国意义重大啊",
+        "scholarChange": 15,
+        "kingChange": -5
+      },
+      {
+        "text": "卿士没资格驱逐国君的宠臣",
+        "kingChange": 5,
+        "scholarChange": -20
+      }
+    ]
+  },
+  {
+    "id": "01801",
+    "speaker": "共伯",
+    "body": "君上，您可知道齐国<color=#C53B23>贵族崔杼</color>？\n曾经<color=#6A1F1F>齐庄公</color>与他的妻子通奸，还出言羞辱他\n崔杼恼羞成怒，暗地埋伏乱箭射死了齐庄公",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "贵族可不能学崔杼弑君啊",
+        "nobleChange": -10,
+        "kingChange": 5,
+        "nextEventId": "01802",
+        "interval": 0
+      },
+      {
+        "text": "君主可不能学齐庄公荒淫啊",
+        "kingChange": -5,
+        "nobleChange": 10,
+        "nextEventId": "01802",
+        "interval": 0
+      }
+    ]
+  },
+  {
+    "id": "01802",
+    "speaker": "共伯",
+    "body": "齐国<color=#003A6F>太史</color>把<color=#C53B23>崔杼</color>弑君记录下来\n<color=#C53B23>崔杼</color>不满，勒令<color=#003A6F>太史</color>篡改记录\n<color=#003A6F>太史</color>不肯，<color=#C53B23>他</color>便砍杀<color=#003A6F>太史</color>\n新任<color=#003A6F>太史</color>依旧不肯，<color=#C53B23>他</color>再度砍杀\n如此三次，三位<color=#003A6F>太史</color>都不肯篡改记录\n<color=#C53B23>崔杼</color>只好放弃篡改历史",
+    "yearDelta": 0,
+    "options": [
+      {
+        "text": "有太史这样的臣子，君主无憾了",
+        "scholarChange": 15
+      },
+      {
+        "text": "崔杼这样的乱臣贼子，真该遗臭万年",
+        "nobleChange": -10
+      }
+    ]
+  },
+  {
+    "id": "01901",
+    "speaker": "共伯",
+    "body": "君上，臣听闻曾经<color=#6A1F1F>越王勾践</color>为了铸造宝剑\n招揽越国最好的<color=#725E54>铸剑师</color>\n铸成宝剑之后，<color=#6A1F1F>他</color>非但没有赏赐，还杀死了<color=#725E54>铸剑师</color>\n因为<color=#6A1F1F>他</color>不希望<color=#725E54>铸剑师</color>造出比越王勾践剑还强的剑",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "勾践真是果断有谋",
+        "kingChange": 10,
+        "peopleChange": -15
+      },
+      {
+        "text": "勾践真是暴戾残忍",
+        "peopleChange": 10,
+        "kingChange": -10
+      }
+    ]
+  },
+  {
+    "id": "02001",
+    "speaker": "共伯",
+    "body": "君上，臣听说曾经<color=#6A1F1F>秦穆公</color>希望强大秦国，求贤若渴\n而<color=#725E54>百里奚</color>是<color=#5C9291>虞国</color>人，贫困潦倒\n秦穆公不忌惮他是<color=#5C9291>外臣</color>，不鄙视他<color=#725E54>贫穷</color>\n依旧招揽他，委以重任\n在百里奚的辅佐下，秦国果然独霸西戎",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "外臣之中不乏能人啊",
+        "foreignChange": 20
+      },
+      {
+        "text": "秦穆公果然慧眼识珠",
+        "kingChange": 20
+      },
+      {
+        "text": "穷困潦倒的庶人也不能轻视啊",
+        "peopleChange": 25
+      }
+    ]
+  },
+  {
+    "id": "02101",
+    "speaker": "共伯",
+    "body": "君上，您可知<color=#C53B23>申包胥</color>？\n申包胥是楚国<color=#C53B23>贵族</color>\n曾经吴王阖闾讨伐楚国，楚军作战失利\n楚国几乎有亡国的危机\n而申包胥为此只身前往秦国求援\n在秦公的大殿之前哭了七天七夜，直到昏厥\n秦公被他感动，出兵救楚\n楚国的危机得以化解",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "这样的臣子真是贵族榜样",
+        "nobleChange": 10,
+        "nextEventId": "02102",
+        "interval": 0
+      },
+      {
+        "text": "沽名钓誉罢了",
+        "nobleChange": -15,
+        "nextEventId": "02102",
+        "interval": 0
+      }
+    ]
+  },
+  {
+    "id": "02102",
+    "speaker": "共伯",
+    "body": "<color=#C53B23>申包胥</color>救国后，楚王坚持要赏赐他\n结果他坚持不受，隐居起来逃避赏赐",
+    "yearDelta": 0,
+    "options": [
+      {
+        "text": "我看这也是沽名钓誉",
+        "nobleChange": -15
+      },
+      {
+        "text": "真乃忠贞之人啊",
+        "nobleChange": 10
+      }
+    ]
+  },
+  {
+    "id": "02201",
+    "speaker": "共伯",
+    "body": "君上，您可知楚国大夫<color=#003A6F>伍子胥</color>？\n曾经<color=#6A1F1F>楚平王</color>听信谗言，下令灭忠臣伍子胥满门\n伍子胥只好向吴国逃亡\n路上，他得到一位<color=#725E54>渔夫</color>搭救\n伍子胥恳求渔夫不要泄露他的行踪\n<color=#725E54>渔夫</color>却认为这是伍子胥不信任他，当场自杀",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "渔夫真是高尚的君子啊",
+        "peopleChange": 15,
+        "nextEventId": "02202",
+        "interval": 0
+      },
+      {
+        "text": "这渔夫做事太偏激了些",
+        "peopleChange": -10,
+        "nextEventId": "02202",
+        "interval": 0
+      }
+    ]
+  },
+  {
+    "id": "02202",
+    "speaker": "共伯",
+    "body": "吴国是楚国的敌国\n在伍子胥帮助下<color=#5C9291>吴国</color>快速发展\n最终，伍子胥率领吴军攻破楚国都城\n<color=#003A6F>伍子胥</color>命人掘出<color=#6A1F1F>楚平王</color>的尸体\n他用金鞭将楚平王的枯骨打烂，挫骨扬灰",
+    "yearDelta": 0,
+    "options": [
+      {
+        "text": "伍子胥真乃烈丈夫，昏君该打",
+        "kingChange": -15,
+        "scholarChange": 20,
+        "nextEventId": "02203",
+        "interval": 0
+      },
+      {
+        "text": "楚平王罪不至此，伍子胥太偏激了",
+        "scholarChange": -5,
+        "kingChange": 5,
+        "nextEventId": "02203",
+        "interval": 0
+      },
+      {
+        "text": "吴王阖闾有伍子胥，寡人上哪找呢？",
+        "kingChange": 5,
+        "foreignChange": 15,
+        "scholarChange": 10,
+        "nextEventId": "02203",
+        "interval": 0
+      }
+    ]
+  },
+  {
+    "id": "02203",
+    "speaker": "共伯",
+    "body": "在那之后，<color=#003A6F>伍子胥</color>继续辅佐<color=#6A1F1F>吴王</color>\n吴王阖闾死后，<color=#6A1F1F>吴王夫差</color>继位\n夫差听信谗言，下令处死伍子胥\n<color=#003A6F>伍子胥</color>无奈领死，向吴王夫差说\n“我死之后，把我的眼珠挖出来，放在国都城门之上”\n夫差问他为什么\n他说：“我要亲眼看见越国杀入阖闾城”",
+    "yearDelta": 0,
+    "options": [
+      {
+        "text": "非烈丈夫孰能如此！",
+        "scholarChange": 15,
+        "kingChange": -10
+      },
+      {
+        "text": "吴王夫差实在是昏聩啊",
+        "kingChange": -15
+      },
+      {
+        "text": "奸臣构陷实在是可恨啊",
+        "scholarChange": -5,
+        "kingChange": -5
+      }
+    ]
+  },
+  {
+    "id": "02301",
+    "speaker": "共伯",
+    "body": "君上，您可知<color=#6A1F1F>齐景公</color>的<color=#003A6F>国相晏婴</color>？\n昔日齐景公有三位<color=#003A6F>卿士</color>\n他们曾手擒猛虎、斩杀蛟龙、于乱军之中解救国君\n此三人居功自傲，让<color=#6A1F1F>齐景公</color>头疼",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "这样的卿士贤臣，我可不头疼",
+        "scholarChange": 15,
+        "kingChange": -15,
+        "nextEventId": "02302",
+        "interval": 0
+      },
+      {
+        "text": "居功自傲，是我我也头疼",
+        "kingChange": 15,
+        "scholarChange": -10,
+        "nextEventId": "02302",
+        "interval": 0
+      }
+    ]
+  },
+  {
+    "id": "02302",
+    "speaker": "共伯",
+    "body": "此三人目无君主，<color=#6A1F1F>齐景公</color>不堪其扰\n<color=#003A6F>晏婴</color>提出计策，叫“二桃杀三士”\n他让国君准备两颗桃子，让他们论功吃桃\n其中二人自述功劳，随后吃桃\n但第三人也有大功，却无桃可吃\n吃桃的两人显得不知谦让，下不来台，于是刎颈自杀\n而第三人也不愿兄弟三人自己独活，挥剑自尽\n<color=#003A6F>晏婴</color>就这样除去了<color=#6A1F1F>齐景公</color>的心腹大患",
+    "yearDelta": 0,
+    "options": [
+      {
+        "text": "这简直是残害忠良",
+        "scholarChange": 15,
+        "kingChange": 5
+      },
+      {
+        "text": "好死，开新酒咯",
+        "kingChange": 10,
+        "scholarChange": -20
+      }
+    ]
+  },
+  {
+    "id": "02401",
+    "speaker": "共伯",
+    "body": "君上，您可知<color=#003A6F>赵氏孤儿</color>的故事？\n曾经奸臣<color=#003A6F>屠岸贾</color>进献谗言，让晋公灭赵氏满门\n整个赵氏只有一个婴儿幸免\n程婴是赵氏的<color=#003A6F>门客</color>，感念赵氏的恩德\n于是让自己的儿子代替赵氏孤儿被杀\n而真正的赵氏孤儿则被屠岸贾收养，成为他的义子",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "程婴这样的门客真是值得敬佩",
+        "scholarChange": 10,
+        "nextEventId": "02402",
+        "interval": 0
+      },
+      {
+        "text": "君主要警惕屠岸贾这样的佞臣啊",
+        "scholarChange": -10,
+        "kingChange": 10,
+        "nextEventId": "02402",
+        "interval": 0
+      }
+    ]
+  },
+  {
+    "id": "02402",
+    "speaker": "共伯",
+    "body": "十五年后，晋公患疾逝世，<color=#6A1F1F>新晋公</color>继位\n<color=#003A6F>程婴</color>眼见时机已到，向晋公说明赵氏孤儿的前因后果\n晋公也不满屠岸贾，于是下令恢复赵氏待遇\n赵氏孤儿得知事情原委，改名赵武，杀死了有灭门之仇的屠岸贾",
+    "yearDelta": 0,
+    "options": [
+      {
+        "text": "赵武大仇得报，大快人心啊",
+        "scholarChange": 10,
+        "nextEventId": "02403",
+        "interval": 0
+      },
+      {
+        "text": "赵武不应杀屠岸贾，毕竟是养父啊",
+        "scholarChange": -5,
+        "peopleChange": 10,
+        "nextEventId": "02403",
+        "interval": 0
+      }
+    ]
+  },
+  {
+    "id": "02403",
+    "speaker": "共伯",
+    "body": "<color=#003A6F>赵武</color>后来也成为<color=#003A6F>晋国重臣</color>\n他打击膨胀的卿族，维护<color=#6A1F1F>晋公</color>权威\n在他的治理下晋国保持强大\n可他自己却积劳成疾，英年早逝\n<color=#003A6F>赵武</color>之后，晋无<color=#6A1F1F>公室</color>之臣，群臣争权夺利，走向衰落",
+    "yearDelta": 0,
+    "options": [
+      {
+        "text": "寡人也希望得到赵武这样的臣子啊",
+        "kingChange": -5,
+        "scholarChange": 15
+      },
+      {
+        "text": "君主不能只倚仗于一两位臣子啊",
+        "kingChange": 15,
+        "scholarChange": 5,
+        "nobleChange": 5,
+        "foreignChange": 5
+      }
+    ]
+  },
+  {
+    "id": "02501",
+    "speaker": "共伯",
+    "body": "君上，您认为周武王灭商的的最大功臣是谁？\n有人认为这是多亏了<color=#6A1F1F>周武王</color>本人武德充沛\n也有人认为这是靠<color=#C53B23>周公旦</color>的辅佐\n亦有人认为，是<color=#003A6F>太师</color><color=#5C9291>姜子牙</color>指挥有方\n您怎么看？",
+    "yearDelta": 1,
     "options": [
       {
         "text": "当然是多亏了他本人",
-        "kingChange": 15,
-        "yearDelta": 1
+        "kingChange": 15
       },
       {
         "text": "当然是周公旦的辅佐",
-        "nobleChange": 15,
-        "yearDelta": 1
+        "nobleChange": 15
       },
       {
         "text": "当然是姜子牙居功至伟",
         "scholarChange": 10,
-        "foreignChange": 10,
-        "yearDelta": 1
+        "foreignChange": 10
       },
       {
         "text": "明明是西土子民骁勇善战",
@@ -444,131 +870,1297 @@
         "kingChange": -5,
         "nobleChange": -5,
         "foreignChange": -5,
-        "scholarChange": -5,
-        "yearDelta": 1
+        "scholarChange": -5
       }
     ]
   },
   {
-    "id": "01301",
-    "title": "名人之事01301",
+    "id": "02601",
     "speaker": "共伯",
-    "body": "君上，臣翻阅史书，与您共览\n臣讲一人事迹\n此人乃是晋文公重耳\n重耳还是公子的时候，君夫人骊姬就陷害与他\n于是年纪轻轻，公子重耳就被迫逃离晋国\n重耳和他的随从在翟国落脚\n翟国是重耳母亲的母国，因而款待他们\n可他们在这里一待就是十二年",
+    "body": "君上，您一定知道一代霸主<color=#6A1F1F>晋文公重耳</color>\n重耳还是公子时，君夫人就陷害他，害他被迫逃离晋国\n<color=#5C9291>翟国</color>是重耳母亲的母国，于是接纳款待他\n重耳在这里一待就是十二年",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "外人去别人家白吃这么久可不好",
+        "text": "去别人家白吃这么久可不好",
         "foreignChange": -15,
         "scholarChange": 5,
-        "nextEventId": "01302",
-        "interval": 0,
-        "yearDelta": 1
+        "nextEventId": "02602",
+        "interval": 0
       },
       {
         "text": "果然雄主就是要经历历练啊",
         "kingChange": 20,
-        "nextEventId": "01302",
-        "interval": 0,
-        "yearDelta": 1
+        "nextEventId": "02602",
+        "interval": 0
       }
     ]
   },
   {
-    "id": "01302",
-    "title": "名人之事01302",
+    "id": "02602",
     "speaker": "共伯",
-    "body": "重耳为了寻求更好的发展，离开翟国\n结果在卫国、齐国、曹国都遭到冷落\n曹公还对他无礼，在他洗澡时要摸他畸形的肋骨\n重耳于是离开曹国，又在宋国、郑国被轻视\n穷困潦倒之时，他不得不向路边老农乞食\n那老农问他为何要给他食物\n重耳说，他保证日后得势，一定会善待人民\n老农笑了笑，从地上拿起土块给他\n他说“你的诺言和我手中的土块哪个重？”\n重耳无言以对",
+    "body": "重耳为了寻求更好的发展，离开翟国\n结果在各国都遭到冷落\n穷困潦倒之时，他不得不向路边<color=#725E54>老农</color>乞食\n那<color=#725E54>老农</color>问他，为何要给他食物\n重耳说，他保证日后当上国君，一定会善待人民\n老农从地上拿起土块给他，说：\n“你的诺言和我手中的土块哪个重？”\n重耳无言以对",
+    "yearDelta": 0,
     "options": [
       {
         "text": "老农的话颇有一番哲理啊",
         "peopleChange": 15,
-        "nextEventId": "01303",
-        "interval": 0,
-        "yearDelta": 0
+        "nextEventId": "02603",
+        "interval": 0
       },
       {
         "text": "谁能想到一代霸主早年竟如此困窘？",
         "kingChange": 5,
-        "nextEventId": "01303",
-        "interval": 0,
-        "yearDelta": 0
+        "nextEventId": "02603",
+        "interval": 0
       }
     ]
   },
   {
-    "id": "01303",
-    "title": "名人之事01303",
+    "id": "02603",
     "speaker": "共伯",
-    "body": "重耳在那之后前往楚国，秦国\n终于得到礼遇\n在秦穆公帮助下，重耳回国继位\n重耳的随从们也纷纷被委以重任\n这些人也没有辜负他的期许，各有建树\n仅仅数年，便带领晋国成为霸主\n最终称霸中原，流传万世",
+    "body": "在那之后前往，重耳在<color=#5C9291>秦国</color>得到礼遇\n在秦穆公帮助下，他回国<color=#6A1F1F>继位</color>\n重耳的<color=#C53B23>随从</color>们也纷纷被委以重任\n仅仅数年，晋国就成为霸主",
+    "yearDelta": 0,
     "options": [
       {
-        "text": "外国势力对重耳的帮助不可忽略啊",
+        "text": "秦国对重耳的帮助不可忽略啊",
         "foreignChange": 15,
-        "kingChange": -5,
-        "yearDelta": 0
+        "kingChange": -5
       },
       {
-        "text": "重耳的成功离不开他的忠臣啊",
+        "text": "重耳的成功离不开他的随从啊",
         "scholarChange": 15,
-        "kingChange": -5,
-        "yearDelta": 0
+        "kingChange": -5
       },
       {
         "text": "君主就该像重耳一样成就一番霸业",
-        "kingChange": 15,
-        "yearDelta": 0
+        "kingChange": 15
       }
     ]
   },
   {
-    "id": "01401",
-    "title": "名人之事01401",
+    "id": "02701",
     "speaker": "共伯",
-    "body": "君上，臣翻阅史书，与您共览\n臣讲一人事迹\n此人乃是秦孝公\n昔日秦孝公骑马出巡\n结果部下看管不严，马匹被城外的野人抓去\n秦孝公的好马就这样让野人宰杀分食\n众人皆以为秦孝公要惩治这些刁民\n结果秦孝公名人端来好酒，让野人享用\n他说“寡人可不愿意为了几匹马伤害自己的子民”\n后来秦孝公率兵出征，战事不利，身陷重围\n这群野人冲入阵中，将他救出\n秦孝公才免于身死",
+    "body": "君上，您可知“盗马无罪”的典故？\n昔日<color=#6A1F1F>秦穆公</color>骑马出巡\n部下看管不严，马匹被城外的<color=#725E54>野人</color>宰杀分食\n众人皆以为秦穆公要惩治这些刁民\n结果他让人端来好酒，让野人享用\n说“寡人可不愿意为了几匹马伤害自己的子民”\n后来秦穆公率兵出征，战事不利，身陷重围\n这群<color=#725E54>野人</color>冲入阵中，将他救出，秦穆公才免于身死",
+    "yearDelta": 1,
     "options": [
       {
         "text": "野人无礼，秦孝公颇有王霸之气",
         "kingChange": 15,
-        "peopleChange": -5,
-        "yearDelta": 1
+        "peopleChange": -5
       },
       {
         "text": "野人忠义，秦孝公有仁爱之心啊",
         "peopleChange": 15,
-        "kingChange": 10,
-        "yearDelta": 1
+        "kingChange": 10
       },
       {
         "text": "秦孝公假仁假义，做戏罢了",
         "kingChange": -20,
-        "peopleChange": -10,
-        "yearDelta": 1
+        "peopleChange": -10
       }
     ]
   },
   {
-    "id": "01501",
-    "title": "名人之事01501",
+    "id": "02801",
     "speaker": "共伯",
-    "body": "君上，臣翻阅史书，与您共览\n臣讲一人事迹\n此人是越国谋臣文种\n昔日吴越争霸，吴国陷入灾荒\n吴王夫差以为吴国强大，要求越国献上粮食\n越国国小式微，只能答应\n文种于是提出一个主意\n将送给吴国的粮种统统蒸熟\n如此一来，吴国的庄稼连发芽都不能\n越王勾践当即同意，吴王夫差也没有发觉阴谋\n次年，吴国颗粒无收，吴人大饥",
+    "body": "君上，您可知越国谋臣<color=#003A6F>文种</color>？\n昔日<color=#6A1F1F>吴王</color>凭着军队强大，要求越国献上粮食\n越国只能答应，而<color=#003A6F>文种</color>不愿意让吴国凭空得利\n于是文种将送给吴国的粮食统统蒸熟\n次年，<color=#5C9291>吴人</color>用这批粮食种地，颗粒无收，吴国因此陷入饥荒",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "吴王夫差真是昏君误国，庶人苦矣",
+        "text": "吴王真是昏君误国，庶人苦矣",
         "peopleChange": 15,
-        "kingChange": -10,
-        "yearDelta": 1
+        "kingChange": -10
       },
       {
         "text": "文种怎能想出如此恶毒的计策？可怜庶人",
         "scholarChange": -15,
-        "peopleChange": 10,
-        "yearDelta": 1
+        "peopleChange": 10
       },
       {
         "text": "文种真是机智过人，能想出如此妙计",
-        "peopleChange": -15,
-        "scholarChange": 10,
-        "yearDelta": 1
+        "peopleChange": -10,
+        "scholarChange": 15
       }
+    ]
+  },
+  {
+    "id": "02901",
+    "speaker": "共伯",
+    "body": "君上，您可知<color=#725E54>孙叔敖</color>？\n<color=#6A1F1F>楚庄王</color>初掌朝政之时，苦苦寻求人才\n而孙叔敖最早是一名地位低下的工匠\n但是楚庄王求贤若渴，提拔他为楚国令尹\n<color=#725E54>孙叔敖</color>果然是大才，把楚国内政打理的井井有条\n于是乎<color=#6A1F1F>楚庄王</color>得以称霸中原",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "可见君主用人的重要性啊",
+        "kingChange": 15,
+        "peopleChange": 5
+      },
+      {
+        "text": "可见庶人之中亦有贤才啊",
+        "peopleChange": 20,
+        "kingChange": 5
+      }
+    ]
+  },
+  {
+    "id": "03001",
+    "speaker": "谷雨",
+    "body": "君上，今晚的烤芋很好吃对吧\n但是有一点小意外\n当时柴火用完了，我索性用祭祀的火烤\n结果那群人非说坏了<color=#C53B23>礼法</color>，不依不饶的",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "寡人替你担着",
+        "peopleChange": 5,
+        "kingChange": -10,
+        "nobleChange": -5
+      },
+      {
+        "text": "大胆，罚你去赔罪",
+        "peopleChange": -10,
+        "kingChange": 5,
+        "nobleChange": 5
+      }
+    ]
+  }
+  ,
+  {
+    "id": "03101",
+    "speaker": "谷雨",
+    "body": "君上，牧人那边新下了一头乳猪\n而刚好有一道名菜叫做“烤乳猪”\n当然我也知道烤乳猪是天子的专享，按<color=#C53B23>礼法</color>你不能吃\n不过话又说回来，只要不让别人知道就好了对吧",
+    "yearDelta": 1,
+    "options": [
+      { "text": "寡人偷偷吃就好啦", "peopleChange": 10, "kingChange": -5 },
+      { "text": "寡人偏要明目张胆的吃", "peopleChange": 10, "kingChange": 10, "nobleChange": -15 },
+      { "text": "那寡人不吃便是了", "kingChange": -5 }
+    ]
+  },
+  {
+    "id": "03201",
+    "speaker": "谷雨",
+    "body": "君上，方才祭祀后，胙肉没来得及回收\n结果被您心爱的猎犬叼走一块\n狗吃胙肉显然是<color=#C53B23>不合周礼</color>的\n就当为了周礼，不如把它杀了吃肉吧？",
+    "yearDelta": 1,
+    "options": [
+      { "text": "明明是你看管不力，罚钱，下次长长记性", "peopleChange": -15, "kingChange": 10 },
+      { "text": "那就处死这只狗吧，礼法更重要", "nobleChange": 10, "kingChange": -5 },
+      { "text": "你还想吃寡人的爱犬？叉出去！", "peopleChange": -10, "kingChange": 5 }
+    ]
+  },
+  {
+    "id": "03301",
+    "speaker": "谷雨",
+    "body": "君上，今年的羊肉品质极佳\n不过按照<color=#C53B23>礼法</color>，您要分相当一部分给臣子们\n您会不会想多留一点呢",
+    "yearDelta": 1,
+    "options": [
+      { "text": "快给寡人开小灶！", "kingChange": 10, "scholarChange": -5, "nobleChange": -5, "foreignChange": -5 },
+      { "text": "严格按照礼法，有羊同享", "kingChange": 5, "foreignChange": 5, "nobleChange": 5, "scholarChange": 5 }
+    ]
+  },
+  {
+    "id": "03401",
+    "speaker": "谷雨",
+    "body": "君上，今日小灶我本打算做烧鸡\n但那个<color=#003A6F>白产</color>说最近膳房开销太高了，不给批钱\n我只好换成城外猎户打的苍鹭，肉柴味腥\n我看这玩意是没法吃，您怎么看？",
+    "yearDelta": 1,
+    "options": [
+      { "text": "这点钱还用省？让他批钱", "scholarChange": -5, "peopleChange": 5, "kingChange": 5 },
+      { "text": "留着，寡人正想尝尝野味", "kingChange": 5, "scholarChange": 5 },
+      { "text": "我看是厨子水平太低了吧", "peopleChange": -10, "kingChange": 5 }
+    ]
+  },
+  {
+    "id": "03501",
+    "speaker": "谷雨",
+    "body": "君上，您想不想试试天子的佳肴？\n此乃“蚳醢”，采取精品蚂蚁卵发酵制成\n别有一番风味，您要不要尝尝？",
+    "yearDelta": 1,
+    "options": [
+      { "text": "有点意思，来点试试", "peopleChange": 10 },
+      { "text": "什么玩意儿？叉出去！", "peopleChange": -10 },
+      { "text": "感觉不靠谱，卖给宋国人吧", "peopleChange": 5, "foreignChange": -5 }
+    ]
+  },
+  {
+    "id": "03601",
+    "speaker": "谷雨",
+    "body": "君上，您还记得宫中那只老鼋吗？\n那是养来<color=#C53B23>祭河神</color>的，已经有七年了\n前两天我发现它背甲裂口，怕是要完\n不如先宰了熬汤如何？",
+    "yearDelta": 1,
+    "options": [
+      { "text": "神没口福，寡人代享", "nobleChange": -10, "kingChange": 15 },
+      { "text": "养伤，继续供，裂甲也算天意啊", "nobleChange": 5 }
+    ]
+  },
+  {
+    "id": "03701",
+    "speaker": "谷雨",
+    "body": "君上，宫中养的那只鹿发情了\n昼夜哀嚎，声如哭丧，非常扰民\n也许我们可以放掉它，或者阉掉它\n再或者干脆烤鹿肉",
+    "yearDelta": 1,
+    "options": [
+      { "text": "放，让它去宋国哭", "foreignChange": -10, "peopleChange": 10 },
+      { "text": "阉，寡人图个清静", "peopleChange": 10, "nobleChange": 5 },
+      { "text": "吃肉，正好开开荤", "peopleChange": 10, "kingChange": 10 }
+    ]
+  },
+  {
+    "id": "03801",
+    "speaker": "谷雨",
+    "body": "君上，这是我独家秘制的梅子酱\n臣取青梅捣汁，和饴熬成\n色赤如枣，佐肉吃更美味哦",
+    "yearDelta": 1,
+    "options": [
+      { "text": "有点意思，尝尝", "kingChange": 5, "peopleChange": 5 },
+      { "text": "好吃，赏给贵族", "nobleChange": 10 },
+      { "text": "好吃，赏给士族", "scholarChange": 10 },
+      { "text": "好吃，赏给国人", "peopleChange": 15 }
+    ]
+  },
+  {
+    "id": "03901",
+    "speaker": "谷雨",
+    "body": "君上，东圃的韭菜窜的相当快\n按照礼法规定，春韭是<color=#725E54>“庶人菜”</color>\n您贵为国君，不该和庶人抢这个吃\n可若半夜偷烤，撒点盐，谁晓得？",
+    "yearDelta": 1,
+    "options": [
+      { "text": "半夜点火，寡人做贼也无妨", "nextEventId": "03902", "interval": 0, "peopleChange": -5, "kingChange": 10 },
+      { "text": "寡人不吃", "peopleChange": 10 }
+    ]
+  },
+  {
+    "id": "03902",
+    "speaker": "白产",
+    "body": "君上，您不该吃这个\n<color=#725E54>庶人</color>生活已经很贫苦\n不该为一口鲜去与民争利啊",
+    "yearDelta": 0,
+    "options": [
+      { "text": "那寡人不吃便是", "peopleChange": 10, "kingChange": -5 },
+      { "text": "寡人偏要光明正大的吃", "kingChange": 10, "peopleChange": -5 }
+    ]
+  },
+  {
+    "id": "04001",
+    "speaker": "谷雨",
+    "body": "君上，您有没有发现今天的稻饭不太一样\n香甜可口，甚至隐隐有一股竹子香气对吧\n而且冥冥之中似有书卷墨香对吧\n没错！柴火当时烧完了，火又不能断\n于是我顺手拿了<color=#003A6F>太史</color>半卷竹简续火\n他急眼了，现在要我赔",
+    "yearDelta": 1,
+    "options": [
+      { "text": "你自己赔，给他抄书", "peopleChange": -10, "scholarChange": 10 },
+      { "text": "寡人去跟太史赔不是", "peopleChange": 10, "kingChange": -10, "scholarChange": -5 }
+    ]
+  },
+  {
+    "id": "04101",
+    "speaker": "谷雨",
+    "body": "君上，今天的宴席要款待<color=#5C9291>楚国使臣</color>\n雁是宾席之馔，不能缺\n不过摆盘的时候，您那猎犬突然叼走了雁腿\n我实在撵不上，它把骨头都嚼完了\n今天的宴是全不了了，难免失礼",
+    "yearDelta": 1,
+    "options": [
+      { "text": "今晚饿它一顿", "peopleChange": 5 },
+      { "text": "为什么你没看好，该罚", "peopleChange": -15 },
+      { "text": "楚国人本来也是蛮夷，缺就缺", "foreignChange": -20 }
+    ]
+  },
+  {
+    "id": "04201",
+    "speaker": "谷雨",
+    "body": "君上，今秋的菰米到了\n我看了看，品质堪忧\n掺两把栗粉，才能勉强入口\n不过<color=#C53B23>祭祀</color>那边告诉我得用纯菰，不然失礼",
+    "yearDelta": 1,
+    "options": [
+      { "text": "天远，寡人近，按好吃的来", "nobleChange": -5, "kingChange": 10 },
+      { "text": "你另蒸一升纯的，按礼仪办事", "nobleChange": 10 }
+    ]
+  },
+  {
+    "id": "04301",
+    "speaker": "谷雨",
+    "body": "君上，去年腌制的咸鱼实在是太咸了\n我都心疼盐……\n我是没办法做，您也别吃了\n不如干脆赏赐给群臣",
+    "yearDelta": 1,
+    "options": [
+      { "text": "赏给功勋卓著的贵族", "nobleChange": -5 },
+      { "text": "赏给劳累的卿士们", "scholarChange": -5 },
+      { "text": "寡人非要自己吃", "kingChange": -5 }
+    ]
+  },
+  {
+    "id": "04401",
+    "speaker": "谷雨",
+    "body": "君上，今天城南新打上的鲂鱼太小了\n我觉得没法吃，河边的<color=#725E54>渔夫</color>提了一个菜谱\n取肉，剁成茸，加蛋清搅匀\n挤成鱼丸，滚冷水定形，再配笋片清汤\n一碗鱼丸，入口弹牙，隐隐还有竹子香气\n甚是美味啊！",
+    "yearDelta": 1,
+    "options": [
+      { "text": "好吃，重赏渔夫", "peopleChange": 15 },
+      { "text": "藏好这个菜单，寡人独享", "peopleChange": 5, "kingChange": 10 },
+      { "text": "如此好物，当赏给勋贵百官", "nobleChange": 5, "scholarChange": 5, "foreignChange": 5 }
+    ]
+  },
+  {
+    "id": "04501",
+    "speaker": "谷雨",
+    "body": "君上，桃子新熟，我买来一些\n去核，加蜜小火熬，直到肉化汁稠，得桃子酱\n清甜可口，甚是美味",
+    "yearDelta": 1,
+    "options": [
+      { "text": "把方法传授给庶人，让他们同享", "peopleChange": 15 },
+      { "text": "寡人吃吃吃吃吃吃", "kingChange": 10, "peopleChange": 5 }
+    ]
+  },
+  {
+    "id": "04601",
+    "speaker": "谷雨",
+    "body": "君上，今早农人摘到新鲜紫苋菜\n我稍加烹饪，得一碗紫色菜汤\n不过<color=#C53B23>君夫人</color>因此怕菜汁染唇，不大雅观\n于是不肯吃，要不您说说？",
+    "yearDelta": 1,
+    "options": [
+      { "text": "紫色好看，染唇正好", "nobleChange": 5 },
+      { "text": "那我自己吃，豪赤！", "kingChange": 10 }
+    ]
+  },
+  {
+    "id": "04701",
+    "speaker": "谷雨",
+    "body": "君上，今早城南渔夫采得沼虾\n剥壳蘸酱，简直鲜甜可人\n只不过，今晚是<color=#C53B23>贵族宴会</color>\n剥虾起来，满手虾脑，未免失礼\n那上不上这个菜？",
+    "yearDelta": 1,
+    "options": [
+      { "text": "先厨房剥好再上桌，保全面子", "peopleChange": -10, "nobleChange": 5 },
+      { "text": "让贵族自己剥，看热闹", "nobleChange": -15 },
+      { "text": "不吃了，磨成粉当肥料", "peopleChange": 5 }
+    ]
+  },
+  {
+    "id": "04801",
+    "speaker": "谷雨",
+    "body": "君上，常万从西南弄来一种食材\n当地人多采嫩芽煮食\n我使炭火小炉煮，芽叶苦涩，难以入口\n但这汤清亮回甘，很有风味",
+    "yearDelta": 1,
+    "options": [
+      { "text": "有意思，让我试试", "peopleChange": 5, "kingChange": 5 },
+      { "text": "当成俸禄的一部分发给群臣", "scholarChange": 5, "foreignChange": 5 },
+      { "text": "作为礼品发给群臣尝鲜", "scholarChange": 15, "foreignChange": 15 }
+    ]
+  },
+  {
+    "id": "04901",
+    "speaker": "谷雨",
+    "body": "君上，我听说南方吴人喜食“舒凫”，也就是鸭子\n但我国养的很少\n为什么不试试在我国大规模养殖呢",
+    "yearDelta": 1,
+    "options": [
+      { "text": "寡人不爱吃那玩意", "peopleChange": -5 },
+      { "text": "寡人会考虑的", "nextEventId": "04902", "interval": 0, "peopleChange": 10 }
+    ]
+  },
+  {
+    "id": "04902",
+    "speaker": "白产",
+    "body": "君上，我们可以在城南河边蓄水筑一座小城\n然后在城内养鸭子\n这样既有的吃，又有军事效益，可谓一举两得！",
+    "yearDelta": 0,
+    "options": [
+      { "text": "这是个好主意，就这么办", "peopleChange": 10, "scholarChange": 5 },
+      { "text": "别这么兴师动众", "peopleChange": 5 }
+    ]
+  },
+  {
+    "id": "05001",
+    "speaker": "谷雨",
+    "body": "君上，我听说一个奇闻\n北方的燕国人即使不种田也能活\n他们大量种植枣树、栗树\n在丰收时储存起来，就可以吃一整年\n不如我们也种？",
+    "yearDelta": 1,
+    "options": [
+      { "text": "有点意思，派人寻种", "nextEventId": "05002", "interval": 3, "peopleChange": 10 },
+      { "text": "光吃这点东西哪够", "peopleChange": -5 }
+    ]
+  },
+  {
+    "id": "05002",
+    "speaker": "常万",
+    "body": "君上，我已经寻得了枣树和栗树的树苗\n试种得用地，您得<b>征用</b>一片",
+    "yearDelta": 0,
+    "options": [
+      { "text": "划贵族的地来试种", "nobleChange": -5 },
+      { "text": "划庶人的地来试种", "peopleChange": -5 },
+      { "text": "在宫中后院试种", "kingChange": -5 }
+    ]
+  },
+  {
+    "id": "05101",
+    "speaker": "常万",
+    "body": "君上，此乃<color=#003A6F>臣</color>从南方楚国购得的香草\n香味浓烈，还能消除灯油燃烧的腥臭味\n您要不要从我这采购一些",
+    "yearDelta": 1,
+    "options": [
+      { "text": "有点意思，买买买", "scholarChange": 5, "kingChange": 5 },
+      { "text": "呛得慌，算了吧", "scholarChange": -5 },
+      { "text": "我还要花钱买？拿来吧你", "scholarChange": -15, "kingChange": 10 }
+    ]
+  },
+  {
+    "id": "05201",
+    "speaker": "常万",
+    "body": "君上，今年有瘟疫肆虐\n臣从鲁国寻来草药，说是能治瘟疫\n不过<color=#725E54>国人</color>信巫不信医，宁可跳大神也不吃药\n这可如何是好？",
+    "yearDelta": 1,
+    "options": [
+      { "text": "巫蛊、跳大神又有何不可呢", "nextEventId": "05202", "interval": 0 },
+      { "text": "寡人将下令强行让国人服药", "kingChange": 10, "peopleChange": 5 }
+    ]
+  },
+  {
+    "id": "05202",
+    "speaker": "南生",
+    "body": "君上，寡人对巫蛊之术颇有一番研究\n只要让寡人做法三日，瘴气自解",
+    "yearDelta": 0,
+    "options": [
+      { "text": "好，要让人们都看到", "peopleChange": 10, "scholarChange": -5 },
+      { "text": "不信，寡人另有计划", "scholarChange": -5 }
+    ]
+  },
+  {
+    "id": "05301",
+    "speaker": "常万",
+    "body": "君上，最近宋国蜂蜜价格飞涨\n而我国东山有很多野蜜蜂\n如果我们动员国人采蜜，卖给宋国\n那一定能<b>大赚一笔</b>啊",
+    "yearDelta": 1,
+    "options": [
+      { "text": "立刻发动国人，别管农事了，先采蜜", "peopleChange": -10, "nextEventId": "05302", "interval": 0 },
+      { "text": "说到底就是甜水，没啥意思", "scholarChange": -5 },
+      { "text": "任命你为蜂蜜使，找些士人把这事办了", "scholarChange": 15 }
+    ]
+  },
+  {
+    "id": "05302",
+    "speaker": "白产",
+    "body": "君上，如果发动农人采蜜，那将谁来耕作？\n如此一来，今年收成不好，还得花钱去宋国买粮\n到时候我们赚的都要赔进去\n正所谓无夺农时啊",
+    "yearDelta": 0,
+    "options": [
+      { "text": "有道理，不采蜜了", "peopleChange": 10 },
+      { "text": "听不懂，采就完了", "scholarChange": -15, "peopleChange": -10, "kingChange": -10 }
+    ]
+  },
+  {
+    "id": "05401",
+    "speaker": "常万",
+    "body": "君上，我从北地贩来一匹良马\n这种马肩高近丈，日行三百，性子烈的很\n我<b>驾驭不住</b>，就献给您，让您安排",
+    "yearDelta": 1,
+    "options": [
+      { "text": "正好改善我国礼仪马种", "nobleChange": 15 },
+      { "text": "寡人现在就要亲自试骑，摔也认", "kingChange": 999 }
+    ]
+  },
+  {
+    "id": "05501",
+    "speaker": "常万",
+    "body": "君上，城西路外有一伙<b>盗匪</b>\n匪首叫什么林登万，拦路收钱\n这威胁商道，臣认为需要立即处理",
+    "yearDelta": 1,
+    "options": [
+      { "text": "寡人将安排人立刻剿灭之", "kingChange": 10 },
+      { "text": "寡人亲自下场戡乱", "kingChange": 666 }
+    ]
+  },
+  {
+    "id": "05601",
+    "speaker": "常万",
+    "body": "君上，这是鲁国新产的丝绸\n柔软亲肤，轻盈透气，品质上乘\n您觉得应该做成什么衣服呢？",
+    "yearDelta": 1,
+    "options": [
+      { "text": "做成国人的素衣常服", "peopleChange": 10 },
+      { "text": "做成朝官的官服", "scholarChange": 10, "foreignChange": 10 },
+      { "text": "这么好的料子只有寡人可以享有", "kingChange": 15 }
+    ]
+  },
+  {
+    "id": "05701",
+    "speaker": "常万",
+    "body": "君上，臣购入了两批漆器\n一批是北方形制的，镶金嵌贝，雕龙画凤\n另一批是楚国形制，红黑彩绘，奔放狂野\n您更喜欢哪种呢？",
+    "yearDelta": 1,
+    "options": [
+      { "text": "北方形制可是传统", "nobleChange": 15 },
+      { "text": "楚国形制颇有异域风情", "foreignChange": 15 }
+    ]
+  },
+  {
+    "id": "05801",
+    "speaker": "常万",
+    "body": "君上，这是宋国新产的漆器\n工艺复杂，形制优美\n臣以为自己不可享用，愿意献给君上",
+    "yearDelta": 1,
+    "options": [
+      { "text": "漆器嘛，庶人卿士也能用", "peopleChange": 10, "scholarChange": 10 },
+      { "text": "这才配得上寡人的地位", "kingChange": 15 }
+    ]
+  },
+  {
+    "id": "05901",
+    "speaker": "常万",
+    "body": "君上，这是臣费劲心思购得的白狐裘\n毛料产自秦国，通体雪白，柔软保暖\n此等珍宝，非<color=#6A1F1F>一国之君</color>不能享有，特此进献给您",
+    "yearDelta": 1,
+    "options": [
+      { "text": "你做的好啊 重重有赏", "scholarChange": 10, "kingChange": 5 },
+      { "text": "好东西，转赠给楚王", "scholarChange": -5, "foreignChange": 10 },
+      { "text": "拿人手短，你自己留着吧", "scholarChange": -5 }
+    ]
+  },
+  {
+    "id": "06001",
+    "speaker": "常万",
+    "body": "君上，我国<color=#C53B23>贵族</color>最近痴迷楚国的木雕屏风\n楚人本就好木雕，这些屏风更是精美\n雕有各种动物，蟒、凤、雀、鹿、蛙云云\n简直叹为观止",
+    "yearDelta": 1,
+    "options": [
+      { "text": "寡人都不敢如此奢靡，他们也别", "kingChange": 15, "nobleChange": -20 },
+      { "text": "贵族有品，给寡人也弄一份", "kingChange": 10, "nobleChange": 10 }
+    ]
+  }
+  ,
+  {
+    "id": "06101",
+    "speaker": "常万",
+    "body": "君上，臣发现越国陶壶质量出奇的好\n质地坚硬，印文彩绘，而且几乎不渗水\n实乃如今天下最佳的陶器了\n我已经请来几个<color=#5C9291>越国陶人</color>，传授技术",
+    "yearDelta": 1,
+    "options": [
+      {"text": "越国人不可信，赶走", "scholarChange": -5, "foreignChange": -15},
+      {"text": "巧夺天工，要好生待他们", "foreignChange": 15, "peopleChange": 5},
+      {"text": "让他们把技术传给我们自己的陶人", "peopleChange": 15, "foreignChange": 5}
+    ]
+  },
+  {
+    "id": "06201",
+    "speaker": "常万",
+    "body": "君上，此乃臣购得的珠串\n此串用料极尽奢靡\n云梦的犀角，南阳的龟珠，南楚的象牙\n巴国的朱砂，邹国的玛瑙，庸地的绿松石\n蓝田的美玉，燕蓟的黄金，东海的砗磲\n简直是天下之至美",
+    "yearDelta": 1,
+    "options": [
+      {"text": "我看是假的", "scholarChange": -10, "kingChange": 5},
+      {"text": "拿来吧你！", "kingChange": 15, "scholarChange": -20},
+      {"text": "有品位，给我也弄一条", "kingChange": 10, "scholarChange": 5}
+    ]
+  },
+  {
+    "id": "06301",
+    "speaker": "常万",
+    "body": "君上，臣新从邹国购得一批玛瑙\n红白交错，色泽圆润，您觉得卖给谁合适？",
+    "yearDelta": 1,
+    "options": [
+      {"text": "卖给贵族，他们钱多", "nobleChange": 5},
+      {"text": "卖给士人，他们喜欢小玩意", "scholarChange": 5},
+      {"text": "卖给庶人，没人不喜欢美物", "peopleChange": 10, "scholarChange": -5, "nobleChange": -5}
+    ]
+  },
+  {
+    "id": "06401",
+    "speaker": "常万",
+    "body": "君上，臣低价购得一块宝玉\n那<color=#725E54>农人</color>不认识玉石，只以为是块普通石头\n报价不及市价十分之一，就卖了给我",
+    "yearDelta": 1,
+    "options": [
+      {"text": "你也是撞了好运", "scholarChange": 10, "peopleChange": -10},
+      {"text": "给那农家再补些钱，莫要欺负人家", "nextEventId": "06402", "interval": 0, "peopleChange": 15, "scholarChange": -5}
+    ]
+  },
+  {
+    "id": "06402",
+    "speaker": "常万",
+    "body": "君上，此言差矣\n商人赚钱，靠的就是低买高出\n从中获利多少，看的就是商人的认知\n我认知比他广，就该从中获利",
+    "yearDelta": 0,
+    "options": [
+      {"text": "叽里呱啦说什么呢，给农家赔钱", "peopleChange": 15, "scholarChange": -10},
+      {"text": "到也有道理", "scholarChange": 5, "peopleChange": 5}
+    ]
+  },
+  {
+    "id": "06501",
+    "speaker": "常万",
+    "body": "君上，臣从楚商手里购得一手杖\n乃是象牙制成，通体雪白，价格不菲\n其上雕有鸠鸟，乃是“咽食不噎”的长寿寓意\n如此宝物，臣愿意献给君上，聊表祝寿之意",
+    "yearDelta": 1,
+    "options": [
+      {"text": "有心了，寡人就好这个", "kingChange": 15, "scholarChange": 5},
+      {"text": "寡人年轻，把这个送给贵族长老", "nobleChange": 15, "scholarChange": 5}
+    ]
+  },
+  {
+    "id": "06601",
+    "speaker": "常万",
+    "body": "君上，臣从<color=#5C9291>宋商</color>手里购得一金杯\n结果昨日被一工匠认出问题\n这杯子原来是拿杂铜伪造成的黄金质地\n那<color=#5C9291>宋商</color>不实诚，请求君上还<color=#003A6F>臣</color>一个公道",
+    "yearDelta": 1,
+    "options": [
+      {"text": "宋人果然不可信，把那宋商抓起来", "foreignChange": -10, "scholarChange": 10},
+      {"text": "这也只能怪你眼拙，怨不得别人", "scholarChange": -10, "foreignChange": 15}
+    ]
+  },
+  {
+    "id": "06701",
+    "speaker": "常万",
+    "body": "君上，齐国丝绸为天下所喜\n臣也从临淄购得一批上等丝绸\n奈何我国之人爱麻布胜过丝绸\n以至于我这销路难开啊",
+    "yearDelta": 1,
+    "options": [
+      {"text": "庶人劳作，用不上你这绸缎", "peopleChange": -10},
+      {"text": "寡人和贵族才配得上这么好的料子", "kingChange": 15, "nobleChange": 15}
+    ]
+  },
+  {
+    "id": "06801",
+    "speaker": "常万",
+    "body": "君上，臣从越国购得宝剑一柄\n此剑乃是青铜制成，修长锋利，挥动有破风之音\n此等宝剑该配何人？",
+    "yearDelta": 1,
+    "options": [
+      {"text": "配乾纲独断的君王", "kingChange": 15},
+      {"text": "配意气风发的贵族", "nobleChange": 15},
+      {"text": "配游走列国的游士", "foreignChange": 15},
+      {"text": "配锐意进取的诤臣", "scholarChange": 15, "foreignChange": 5}
+    ]
+  },
+  {
+    "id": "06901",
+    "speaker": "常万",
+    "body": "君上，臣从越国购得水晶杯一个\n这杯由透明水晶制成，通体洁净，浑然天成\n如此仙人之物，何人能享？",
+    "yearDelta": 1,
+    "options": [
+      {"text": "寡人这样的勋贵", "nobleChange": 10, "kingChange": 10},
+      {"text": "天下之人，有德者取之", "foreignChange": 5, "scholarChange": 5, "peopleChange": 5}
+    ]
+  },
+  {
+    "id": "07001",
+    "speaker": "常万",
+    "body": "君上，臣有一匹骏马，陪臣周游列国\n前些日子病死了，我很是伤心，想为他专门修墓安葬\n但您那个厨娘谷雨，竟然说“还不如烤了吃了”\n她还说我这是奢靡浪费，就应该把马安葬在肚子里",
+    "yearDelta": 1,
+    "options": [
+      {"text": "她说的有道理，牲畜就该用来吃", "peopleChange": 15, "scholarChange": -10},
+      {"text": "人非草木，孰能无情？该安葬", "nobleChange": 10, "scholarChange": 10}
+    ]
+  },
+  {
+    "id": "07101",
+    "speaker": "南生",
+    "body": "君上，大事不好\n皇宫外的天空划过一颗星星\n国人传言那是凶兆",
+    "yearDelta": 1,
+    "options": [
+      {"text": "经济！傻瓜们", "kingChange": 5, "nobleChange": -5, "scholarChange": -5, "peopleChange": -5, "foreignChange": -5},
+      {"text": "寡人希望活在更开明的时代", "kingChange": 5, "nobleChange": -5, "scholarChange": -5, "peopleChange": -5, "foreignChange": -5},
+      {"text": "这是一个预兆", "kingChange": -5, "nobleChange": -5, "scholarChange": -5, "peopleChange": -5, "foreignChange": -5},
+      {"text": "这是神明赐福", "kingChange": 5, "nobleChange": 5, "scholarChange": 5, "peopleChange": 5, "foreignChange": 5}
+    ]
+  },
+  {
+    "id": "07201",
+    "speaker": "南生",
+    "body": "君上，昨夜星象不妙\n星出于婺女，这预示君主将会殒命\n您的性命有危啊！",
+    "yearDelta": 1,
+    "options": [
+      {"text": "胡扯，叉出去！", "kingChange": -5},
+      {"text": "那寡人真该准备后事了", "kingChange": -15}
+    ]
+  },
+  {
+    "id": "07301",
+    "speaker": "南生",
+    "body": "君上，昨夜彗星东指，长竟天\n民间讹言“泗君将主天下”",
+    "yearDelta": 1,
+    "options": [
+      {"text": "那可太好了", "kingChange": 5, "foreignChange": -10},
+      {"text": "什么玩意，我可不敢僭越", "kingChange": -5},
+      {"text": "小声点，别说这些", "kingChange": -5}
+    ]
+  },
+  {
+    "id": "07401",
+    "speaker": "南生",
+    "body": "君上，昨夜彗星滑落，长竟天\n民间讹言“君将失位”",
+    "yearDelta": 1,
+    "options": [
+      {"text": "开仓放粮，稳定人心", "kingChange": -5, "peopleChange": 10},
+      {"text": "不信，边去", "kingChange": -10}
+    ]
+  },
+  {
+    "id": "07501",
+    "speaker": "南生",
+    "body": "君上，臣观星象，有大事将要发生\n荧惑守心，主<color=#6A1F1F>国君</color>之亡；也就是说您有性命之忧\n不过正所谓“天人感应”\n臣有一法，可把灾祸转给<color=#C53B23>宰相</color>、<color=#725E54>百姓</color>或<b>年成</b>\n您觉得？",
+    "yearDelta": 1,
+    "options": [
+      {"text": "我不觉得这可信", "peopleChange": 5, "kingChange": 5},
+      {"text": "让宰相受灾吧", "nobleChange": -30},
+      {"text": "让百姓受灾吧", "peopleChange": -30},
+      {"text": "让今年的收成受灾吧", "peopleChange": -10, "nobleChange": -10, "foreignChange": -10, "scholarChange": -10}
+    ]
+  },
+  {
+    "id": "07601",
+    "speaker": "南生",
+    "body": "君上，大事不好了\n君夫人重病，卧床不起，急需医治啊",
+    "yearDelta": 1,
+    "options": [
+      {"text": "快去请一位训练有素的医生", "kingChange": -5, "foreignChange": 5},
+      {"text": "快去请一位远近闻名的巫师", "kingChange": -5, "nobleChange": 5},
+      {"text": "为她的性命祈福吧", "kingChange": -5, "peopleChange": 5}
+    ]
+  },
+  {
+    "id": "07701",
+    "speaker": "南生",
+    "body": "君上，臣观昨夜星象，有大事将要发生\n金星昼见，恐怕国将有乱！",
+    "yearDelta": 1,
+    "options": [
+      {"text": "非得是我们国吗？", "peopleChange": -5, "kingChange": -5},
+      {"text": "那可太坏了", "peopleChange": -15, "scholarChange": -10}
+    ]
+  },
+  {
+    "id": "07801",
+    "speaker": "南生",
+    "body": "君上，臣观昨夜星象，有大事将要发生\n木星失次，恐怕会有兵祸啊",
+    "yearDelta": 1,
+    "options": [
+      {"text": "非得是我们国吗？", "peopleChange": -5, "foreignChange": -5},
+      {"text": "那可太坏了", "peopleChange": -15, "kingChange": -10}
+    ]
+  },
+  {
+    "id": "07901",
+    "speaker": "南生",
+    "body": "君上，臣观星象，有大事将要发生\n昨日恒星不见，夜中星陨如雨\n臣以为这是将有大雨，连绵不断",
+    "yearDelta": 1,
+    "options": [
+      {"text": "大雨好啊，正好浇地", "peopleChange": 5},
+      {"text": "可别浇了我的礼服", "kingChange": 5, "peopleChange": -5}
+    ]
+  },
+  {
+    "id": "08001",
+    "speaker": "南生",
+    "body": "君上，您看，今天有日食的景观\n这象征着“天子失德”\n周天子恐怕又要遭难了",
+    "yearDelta": 1,
+    "options": [
+      {"text": "周天子总也遭难，不关我们事", "foreignChange": -5},
+      {"text": "寡人可不是周天子", "kingChange": 5}
+    ]
+  },
+  {
+    "id": "08101",
+    "speaker": "南生",
+    "body": "君上，臣观星象，有所预示\n大火星西沉，我们该准备秋收了",
+    "yearDelta": 1,
+    "options": [
+      {"text": "让贵族子弟去帮庶人收地", "nobleChange": -10, "peopleChange": 20},
+      {"text": "让贵族们准备好吃秋收宴", "peopleChange": -5, "nobleChange": 15}
+    ]
+  },
+  {
+    "id": "08201",
+    "speaker": "南生",
+    "body": "君上，臣观星象，恐有大事将生\n月掩昴宿，边疆将要动荡啊",
+    "yearDelta": 1,
+    "options": [
+      {"text": "动荡去吧，胡人打不到我们这", "foreignChange": -5, "peopleChange": 10},
+      {"text": "只希望华夏国家都能平安啊", "foreignChange": 5, "peopleChange": 5}
+    ]
+  },
+  {
+    "id": "08301",
+    "speaker": "南生",
+    "body": "君上，臣观星象，恐有大事将生\n木星淫行，怕是要有饥荒",
+    "yearDelta": 1,
+    "options": [
+      {"text": "下令今年减税三分，保全庶人", "peopleChange": 10, "nobleChange": -5},
+      {"text": "让贵族们主动献出点粮食，救济斯人", "nobleChange": -15, "peopleChange": 5},
+      {"text": "庶人哪年不喊饿，别大惊小怪的", "peopleChange": -15}
+    ]
+  },
+  {
+    "id": "08401",
+    "speaker": "南生",
+    "body": "君上，臣观星象，大事不妙\n太白昼见，怕是要有<b>权臣干政</b>啊",
+    "yearDelta": 1,
+    "options": [
+      {"text": "让贵族权臣休休假", "nobleChange": -10},
+      {"text": "让卿士重臣歇几天", "scholarChange": -10},
+      {"text": "让外臣重臣回家探亲", "foreignChange": -10}
+    ]
+  },
+  {
+    "id": "08501",
+    "speaker": "南生",
+    "body": "君上，臣观星象，有所预示\n辰星不出，必有淫雨\n连绵不断，将有水灾",
+    "yearDelta": 1,
+    "options": [
+      {"text": "召集庶人修护堤坝", "peopleChange": 10},
+      {"text": "去外国请水利专家前来修缮", "foreignChange": 5, "peopleChange": 15}
+    ]
+  },
+  {
+    "id": "08601",
+    "speaker": "南生",
+    "body": "君上，臣观星象，大事不妙\n镇星守斗，天下大疫\n瘟疫马上就要发生啊",
+    "yearDelta": 1,
+    "options": [
+      {"text": "快让去各国采买药物", "foreignChange": 5, "peopleChange": 10},
+      {"text": "快让贵族祭司准备驱邪", "nobleChange": 5, "peopleChange": 5}
+    ]
+  },
+  {
+    "id": "08701",
+    "speaker": "南生",
+    "body": "君上，昨日天象极其奇怪\n有虹贯日，兵气冲天\n人们都说怕是将有大战啊",
+    "yearDelta": 1,
+    "options": [
+      {"text": "千万别是我们国家啊", "peopleChange": -10},
+      {"text": "真希望列国少些纷争", "foreignChange": 5, "peopleChange": -10}
+    ]
+  },
+  {
+    "id": "08801",
+    "speaker": "南生",
+    "body": "君上，臣观星象，上天似有预示\n太白当出不出，辰星乍见乍隐\n是谓“刑德失”’，是赏罚失度的征兆啊",
+    "yearDelta": 1,
+    "options": [
+      {"text": "速速命令官员重审最近的案件", "scholarChange": 5, "peopleChange": 10, "kingChange": 10},
+      {"text": "速速命令祭司准备做法免灾", "nobleChange": 5, "peopleChange": 5, "kingChange": -5}
+    ]
+  },
+  {
+    "id": "08901",
+    "speaker": "南生",
+    "body": "君上，臣观星象，上天似有预示\n有三彗同出于斗\n这意味着“卿族祸乱朝纲”\n恐怕您得处理一下<color=#003A6F>卿士</color>了",
+    "yearDelta": 1,
+    "options": [
+      {"text": "将一批卿族官员罢免掉", "scholarChange": -20},
+      {"text": "把卿族权臣拘禁起来", "scholarChange": -15},
+      {"text": "没由头的事，休要再提", "scholarChange": 5}
+    ]
+  },
+  {
+    "id": "09001",
+    "speaker": "南生",
+    "body": "君上，臣观星象，上天似有预示\n岁星淫于玄枵，北狄怕是要南下劫掠",
+    "yearDelta": 1,
+    "options": [
+      {"text": "反正劫掠不到我们头上", "foreignChange": -5, "peopleChange": 5},
+      {"text": "希望北方的诸侯能熬过灾祸啊", "foreignChange": 5}
+    ]
+  }
+  ,
+  {
+    "id": "09101",
+    "speaker": "南生",
+    "body": "君上，一整个月无雨，庄稼都要旱死了\n臣恰巧懂一点巫蛊之术\n只要烧死一对童男童女，天上自会下雨\n君上舍得用谁家的?",
+    "yearDelta": 1,
+    "options": [
+      {"text": "你家的", "nextEventId": "09102", "interval": 0},
+      {"text": "什么乱七八糟的，不干", "peopleChange": 5},
+      {"text": "从国人家里抓", "nextEventId": "09103", "interval": 0}
+    ]
+  },
+  {
+    "id": "09102",
+    "speaker": "南生",
+    "body": "额，微臣膝下无子，恐难从命",
+    "yearDelta": 0,
+    "options": [
+      {"text": "那你还不滚蛋", "peopleChange": 5}
+    ]
+  },
+  {
+    "id": "09103",
+    "speaker": "白产",
+    "body": "君上怎可信如此荒谬失当之言？\n万万不可如此",
+    "yearDelta": 0,
+    "options": [
+      {"text": "好吧", "peopleChange": -20}
+    ]
+  },
+  {
+    "id": "09201",
+    "speaker": "南生",
+    "body": "君上，臣听说您近来肩颈僵硬\n臣有一巫蛊法术，可将您的病痛转移给他人\n只要取街上一<color=#725E54>庶人</color>的头发一束，便可让他替您受病\n不知道您愿不愿意一试呢？",
+    "yearDelta": 1,
+    "options": [
+      {"text": "我可不干", "kingChange": 5, "peopleChange": 10},
+      {"text": "那你试一试吧", "nextEventId": "09202", "interval": 0, "peopleChange": -20}
+    ]
+  },
+  {
+    "id": "09202",
+    "speaker": "南生",
+    "body": "呜呼，君上怎可如此\n如此不在乎庶人之性命，以庶人为刍草\n不过臣还是会为君上做此法",
+    "yearDelta": 0,
+    "options": [
+      {"text": "这时候你装什么爱民？", "peopleChange": -10},
+      {"text": "明明是你蛊惑寡人", "peopleChange": 5, "kingChange": -15}
+    ]
+  },
+  {
+    "id": "09301",
+    "speaker": "南生",
+    "body": "君上，臣听闻君夫人前些日子受惊，噩梦缠绕\n臣会祝由之术，只要画符噀水，缚草为形，咒而埋之\n可把疾病转移给土木，永无后患",
+    "yearDelta": 1,
+    "options": [
+      {"text": "可行，但不要惊动太多人", "nobleChange": 5},
+      {"text": "寡人夫人又不是纸糊的，少来这套", "scholarChange": 5},
+      {"text": "顺手把寡人的落枕也祝了吧", "nobleChange": 10}
+    ]
+  },
+  {
+    "id": "09401",
+    "speaker": "白产",
+    "body": "君上，我国的“牧人”前些日子病故\n您的养牛场现在无人打理，得找个人接班\n我们可以找一个<color=#725E54>猎户</color>来办，他们深谙动物习性\n也可以找一个<color=#C53B23>贵族</color>来办，他们办事可靠\n或者找一个<color=#003A6F>士人</color>来办，他们人闲事少\n也可以找个<color=#5C9291>外国的专业牧人</color>来办",
+    "yearDelta": 1,
+    "options": [
+      {"text": "那就找个猎户吧", "peopleChange": 10},
+      {"text": "那就找个贵族吧", "nobleChange": 10},
+      {"text": "那就找个士人吧", "scholarChange": 10},
+      {"text": "那就找个外臣吧", "foreignChange": 10}
+    ]
+  },
+  {
+    "id": "09501",
+    "speaker": "白产",
+    "body": "君上，暴雨冲了城南的麦场\n新收的春麦泡了大半！",
+    "yearDelta": 1,
+    "options": [
+      {"text": "别管是谁，抓紧抢救", "peopleChange": -5},
+      {"text": "没有麦子，为什么不吃稻子呢", "peopleChange": -25, "kingChange": -20}
+    ]
+  },
+  {
+    "id": "09601",
+    "speaker": "白产",
+    "body": "君上，马务官前往北方寻求种马了\n这段时间马务职位缺人，不知道您有没有兴趣？",
+    "yearDelta": 1,
+    "options": [
+      {"text": "寡人正好闲着", "nextEventId": "09602", "interval": 0},
+      {"text": "这种事还轮得到我管？", "kingChange": -5}
+    ]
+  },
+  {
+    "id": "09602",
+    "speaker": "白产",
+    "body": "君上，我们国家的马分六种\n种马育种，戎马打仗、齐马参与典礼\n道马运输要务、田马打猎骑乘、驽马则是杂役\n至于马务的繁杂事项，您得斟酌着来",
+    "yearDelta": 0,
+    "options": [
+      {"text": "寡人知道了", "nextEventId": "09603", "interval": 0}
+    ]
+  },
+  {
+    "id": "09603",
+    "speaker": "白产",
+    "body": "君上！国厩最好的种马昨夜破栏而走\n宋人说他们抓到了这匹马\n若无此马，下次配种将相当头疼啊",
+    "yearDelta": 0,
+    "options": [
+      {"text": "备金五镒，速速遣使赎马", "foreignChange": 5, "nextEventId": "09604", "interval": 0},
+      {"text": "随它去吧，寡人马上就有更好的马种了", "kingChange": -5, "nextEventId": "09604", "interval": 0},
+      {"text": "把弄丢马的人拖出去砍了", "kingChange": 5, "scholarChange": -10, "nextEventId": "09604", "interval": 0}
+    ]
+  },
+  {
+    "id": "09604",
+    "speaker": "白产",
+    "body": "君上！我们从西土引进的戎马野性未驯\n刚才它踢伤了三名骑士，皮甲都踢穿了\n现现如今军中惶恐，不敢上前",
+    "yearDelta": 0,
+    "options": [
+      {"text": "杀之祭旗，以儆后来", "kingChange": 5, "nextEventId": "09605", "interval": 0},
+      {"text": "如此好马，多点耐心！", "kingChange": -5, "nextEventId": "09605", "interval": 0},
+      {"text": "怎么这就恐慌了？你是不是治军不力？", "scholarChange": -10, "kingChange": -5, "nextEventId": "09605", "interval": 0},
+      {"text": "一群饭桶，寡人自己来！", "kingChange": 999}
+    ]
+  },
+  {
+    "id": "09605",
+    "speaker": "南生",
+    "body": "君上！不久后的祭祀需齐马数匹\n今早发现其中一匹颈生白斑，恐失礼数",
+    "yearDelta": 0,
+    "options": [
+      {"text": "连夜染毛，以漆涂之", "kingChange": -10, "nextEventId": "09606", "interval": 0},
+      {"text": "换驽马凑数，反正远观差不多", "kingChange": -5, "nextEventId": "09606", "interval": 0}
+    ]
+  },
+  {
+    "id": "09606",
+    "speaker": "白产",
+    "body": "君上，马务官已经带着新的种马回来了",
+    "yearDelta": 0,
+    "options": [
+      {"text": "寡人终于可以歇息了", "kingChange": -5},
+      {"text": "感觉马务也就这点事", "kingChange": 5}
+    ]
+  },
+  {
+    "id": "09701",
+    "speaker": "白产",
+    "body": "君上，祭稷神的黍米被老鼠啃去两斗\n<color=#003A6F>我</color>一时调不来库存，补不上\n本次祭祀的<color=#C53B23>礼数</color>恐怕不足",
+    "yearDelta": 1,
+    "options": [
+      {"text": "这点亏空就补不上了？", "scholarChange": -5, "kingChange": 5},
+      {"text": "以粱代黍，重编祝辞就是了", "nobleChange": -10, "kingChange": -5}
+    ]
+  },
+  {
+    "id": "09801",
+    "speaker": "白产",
+    "body": "君上，粮仓失修，去年存麦被仓蚁啃成粉了\n剩下的碎麦，蒸饼都发苦，可以说全废了\n不过也可以废物利用，要不要改喂军马？",
+    "yearDelta": 1,
+    "options": [
+      {"text": "喂马，马比人金贵", "peopleChange": -10},
+      {"text": "掺新麦卖给宋国，苦又吃不死", "foreignChange": -10},
+      {"text": "寡人带头吃三天，看谁再敢嫌弃", "kingChange": 5, "nobleChange": -10}
+    ]
+  },
+  {
+    "id": "09901",
+    "speaker": "白产",
+    "body": "君上，今年大旱，城南溪水断流，井底生尘\n百姓争抢泥水，城南已渴死三头牛",
+    "yearDelta": 1,
+    "options": [
+      {"text": "我大泗自有国情在此，泥水喝不死人", "kingChange": -15, "peopleChange": -20},
+      {"text": "把泥水圈起来，交钱才能取水", "peopleChange": -25, "kingChange": 5},
+      {"text": "速速从泗水引水！", "peopleChange": -5, "kingChange": 5}
+    ]
+  },
+  {
+    "id": "10001",
+    "speaker": "白产",
+    "body": "君上，今年多灾，估计收成不太行\n到时候<color=#725E54>百姓</color>恐无余粮\n要不要开仓放粮，以存民间种粮？",
+    "yearDelta": 1,
+    "options": [
+      {"text": "就按你说的办", "kingChange": 10, "peopleChange": 10},
+      {"text": "寡人心里装的是九州万方，别问我要", "peopleChange": -10, "kingChange": -15}
+    ]
+  },
+  {
+    "id": "10101",
+    "speaker": "白产",
+    "body": "君上，城南今年收成成极佳\n车拉船载，壅道数里，市上麦价极低\n官仓要不要收？",
+    "yearDelta": 1,
+    "options": [
+      {"text": "低价收，等价高了狠狠赚一笔", "peopleChange": -15, "kingChange": 10},
+      {"text": "和往年平价收，可不敢谷贱伤农", "peopleChange": 10}
+    ]
+  },
+  {
+    "id": "10201",
+    "speaker": "白产",
+    "body": "君上，今年风调雨顺，秋收一定会是大丰收\n民众甚是期待，一片欢喜啊！",
+    "yearDelta": 1,
+    "options": [
+      {"text": "这都是寡人的功劳！", "kingChange": 15},
+      {"text": "这都是百官的功劳！", "nobleChange": 5, "scholarChange": 5, "foreignChange": 5},
+      {"text": "这都是上天的功劳！", "nobleChange": 5, "kingChange": 5, "peopleChange": -15},
+      {"text": "这都是农人的功劳！", "peopleChange": 20}
+    ]
+  },
+  {
+    "id": "10301",
+    "speaker": "白产",
+    "body": "君上，齐商运来一批盐兜售\n盐粒匀如稷，色洁如玉\n盐价比旧盐贵三倍，<color=#725E54>国人</color>依旧争购\n<color=#6A1F1F>官府</color>若从中额外征税，可获益不少啊",
+    "yearDelta": 1,
+    "options": [
+      {"text": "征，齐人赚钱也得让寡人分点", "kingChange": 5, "foreignChange": -15},
+      {"text": "全禁，私盐收缴入官仓", "kingChange": 10, "foreignChange": -20},
+      {"text": "买点来得了，寡人也想吃", "kingChange": -5, "foreignChange": 5}
+    ]
+  },
+  {
+    "id": "10401",
+    "speaker": "白产",
+    "body": "君上！前些日子<color=#5C9291>楚王</color>派人送来了一盆兰花作为国礼\n但是兰花娇贵，没两天就枯死了\n<color=#5C9291>楚国使臣</color>刚才来问他们送的兰花怎么样了\n这可如何是好啊？",
+    "yearDelta": 1,
+    "options": [
+      {"text": "养死了就养死了，实话实说", "foreignChange": -5, "kingChange": -10},
+      {"text": "搪塞过去吧", "kingChange": -5}
+    ]
+  },
+  {
+    "id": "10501",
+    "speaker": "白产",
+    "body": "君上，今天晨起，君夫人发现丢失了玉簪\n那是大婚时君上所赐，意义重大\n君夫人都急哭了",
+    "yearDelta": 1,
+    "options": [
+      {"text": "封闭宫门，搜三日，必须找到下落", "kingChange": -10, "nobleChange": -5},
+      {"text": "悬赏十金，只要得到玉簪，不问来路", "kingChange": 10, "nobleChange": 5, "peopleChange": 5}
+    ]
+  },
+  {
+    "id": "10601",
+    "speaker": "白产",
+    "body": "君上，今年国库有点超支\n现在不得不想想如何开源节流\n您可以考虑让<color=#725E54>国人</color>今年额外贡上一部分收成\n再或者给<color=#C53B23>贵族</color>的禄米削减一二\n又或者缩减<color=#6A1F1F>宫中吃穿用度</color>\n亦或者干脆遣散一部分<color=#5C9291>外臣谋士</color>\n您怎么看？",
+    "yearDelta": 1,
+    "options": [
+      {"text": "寡人节省一点便是了", "kingChange": -15},
+      {"text": "再苦一苦百姓，骂名你来担", "peopleChange": -15, "scholarChange": -10, "kingChange": 10},
+      {"text": "削减贵族福利，雷霆雨露俱是君恩", "nobleChange": -20, "kingChange": 5},
+      {"text": "遣散一部分外臣，下逐客书", "foreignChange": -15, "kingChange": -5}
+    ]
+  },
+  {
+    "id": "10701",
+    "speaker": "白产",
+    "body": "君上，贾人<color=#003A6F>常万</color>有不妥行为\n他在丰年压价买粮，又在荒年高价出售\n如此囤货居奇，获利颇丰，<color=#725E54>伤及民本</color>\n而且庶人多有不满",
+    "yearDelta": 1,
+    "options": [
+      {"text": "为了庶人，制止他的行为", "peopleChange": 5, "scholarChange": -15, "nextEventId": "10702", "interval": 0},
+      {"text": "让他多交点钱给我们就是了", "scholarChange": -5, "peopleChange": -10}
+    ]
+  },
+  {
+    "id": "10702",
+    "speaker": "常万",
+    "body": "君上，臣绝非囤货居奇\n丰年，粮食供大于求，价格下跌也卖不出去\n臣自己开销路，才能帮农人多卖一点\n荒年，我们一介小国，得去外国购粮\n跨国生意成本高，粮价不得不上升\n臣之购粮卖粮，实在是合情合理之举",
+    "yearDelta": 0,
+    "options": [
+      {"text": "听不懂，总之以后不许了", "peopleChange": 5, "scholarChange": -10},
+      {"text": "事已至此，那不为难你了", "scholarChange": 10}
+    ]
+  },
+  {
+    "id": "10801",
+    "speaker": "白产",
+    "body": "君上，我国市场上缺盐，得专门去外国采买\n我们也许可以让<color=#003A6F>常万</color>去齐国买海盐\n不过齐国海盐最近价格偏贵\n一个在朝中供职的<color=#5C9291>魏人</color>表示可以去买魏国的池盐\n价格可便宜不少，要不要让他去采购？",
+    "yearDelta": 1,
+    "options": [
+      {"text": "肥水不流外人田，让常万去买", "scholarChange": 10},
+      {"text": "省钱最重要，让他去试试", "foreignChange": 10, "scholarChange": -5}
+    ]
+  },
+  {
+    "id": "10901",
+    "speaker": "白产",
+    "body": "君上，<color=#725E54>有人</color>反映城西的市场缺乏监管\n臣建议在城西市场设置<color=#003A6F>官吏</color>，监督交易",
+    "yearDelta": 1,
+    "options": [
+      {"text": "准了，百利而无一弊", "scholarChange": 5, "peopleChange": 5},
+      {"text": "多事，商人总会钻漏子", "peopleChange": -10}
+    ]
+  },
+  {
+    "id": "11001",
+    "speaker": "白产",
+    "body": "君上，城南有一片地，那里的<color=#725E54>农人</color>多种稻子\n但是近年来，上游的<color=#5C9291>邹国人</color>拦河取水，开垦土地\n以至于到我们这，水已经不够种稻子了，只能种麦子",
+    "yearDelta": 1,
+    "options": [
+      {"text": "找几个邹国来的外臣去交涉一下", "foreignChange": 10, "peopleChange": 5, "nextEventId": "11002", "interval": 0},
+      {"text": "吃麦子又没啥不好的", "peopleChange": -15, "kingChange": -10}
+    ]
+  },
+  {
+    "id": "11002",
+    "speaker": "白产",
+    "body": "君上，已经派在我国供职的<color=#5C9291>邹人</color>去交涉\n结果是，邹国可以放水\n但代价是我们得让出点好处，比如珠宝",
+    "yearDelta": 0,
+    "options": [
+      {"text": "给就完了，稻子比珠宝能吃", "peopleChange": 10, "kingChange": -10},
+      {"text": "想得美，这就是趁火打劫", "peopleChange": -5}
+    ]
+  },
+  {
+    "id": "11101",
+    "speaker": "白产",
+    "body": "君上，近年城南的麦子总也闹灾\n一束麦穗有多半是空的，<color=#725E54>农人</color>也为此犯愁啊",
+    "yearDelta": 1,
+    "options": [
+      {"text": "这是灾，去外国找懂的人来治", "foreignChange": 5, "kingChange": 5},
+      {"text": "减税，先熬过这几年", "peopleChange": 5, "kingChange": -5},
+      {"text": "天谴！组织贵族准备祭祀", "nobleChange": 10, "kingChange": -15},
+      {"text": "寡人不在乎", "kingChange": -15, "peopleChange": -15}
+    ]
+  },
+  {
+    "id": "11201",
+    "speaker": "白产",
+    "body": "君上，有一个棘手的问题\n我国人口日益增多，过冬需要的柴火也越来越多\n东山山脚的树都快被砍秃了\n<color=#725E54>庶人</color>砍柴也是越来越困难了",
+    "yearDelta": 1,
+    "options": [
+      {"text": "东山大得很，去山腰砍", "peopleChange": -5, "kingChange": -10},
+      {"text": "庶人苦啊，给他们发点过冬的粮吧", "kingChange": -5, "peopleChange": 10}
+    ]
+  },
+  {
+    "id": "11301",
+    "speaker": "白产",
+    "body": "君上，我们面临着一个问题\n我国的渔夫在城南的河里打鱼为生\n但是上游的邹国，下游的薛国都要打鱼\n近年来，鱼获越发稀薄\n长此以往，岂不是要无鱼了？",
+    "yearDelta": 1,
+    "options": [
+      {"text": "给他们安排些地，改种地吧", "peopleChange": 5},
+      {"text": "你又不是鱼，你怎么知道鱼变少了呢？", "kingChange": -10, "peopleChange": -10}
+    ]
+  },
+  {
+    "id": "11401",
+    "speaker": "白产",
+    "body": "君上，都邑水渠年久失修，该拨款修修了",
+    "yearDelta": 1,
+    "options": [
+      {"text": "寡人亲自监工修缮", "kingChange": 10},
+      {"text": "那有劳你了", "scholarChange": 10}
+    ]
+  },
+  {
+    "id": "11501",
+    "speaker": "白产",
+    "body": "君上，都城南桥被洪流斜冲，石栏错位\n今早百姓挑菜过河，有童子差点落水\n该修桥了",
+    "yearDelta": 1,
+    "options": [
+      {"text": "封桥，抓紧维修", "peopleChange": 5},
+      {"text": "等桥塌了再议", "kingChange": -10, "peopleChange": -10}
+    ]
+  },
+  {
+    "id": "11601",
+    "speaker": "白产",
+    "body": "君上，连日暴雨，河水漫堤，城南已成泽国\n百姓纷纷爬上屋脊避难\n是先护堤，还是先救人？",
+    "yearDelta": 1,
+    "options": [
+      {"text": "护堤，人自己会游", "kingChange": 5, "peopleChange": -15},
+      {"text": "救人，堤塌了再筑", "peopleChange": 15},
+      {"text": "我心里装的是九州万方，别来烦我", "kingChange": -20, "peopleChange": -10}
+    ]
+  },
+  {
+    "id": "11701",
+    "speaker": "白产",
+    "body": "君上，我国监狱年久失修\n昨夜下雨，积水泡塌了墙角\n囚徒跑了三人，如何是好？",
+    "yearDelta": 1,
+    "options": [
+      {"text": "墙都修不好，还关什么人？散了罢", "peopleChange": 5, "kingChange": -15},
+      {"text": "派人去追，追不到你就来受罚", "scholarChange": -5, "kingChange": 5}
+    ]
+  },
+  {
+    "id": "11801",
+    "speaker": "白产",
+    "body": "君上，国都城墙东南角有些许裂隙\n我考察二三，觉得需要维修\n与其小修，臣觉得不如干脆大修\n请您批准臣征发国人数百",
+    "yearDelta": 1,
+    "options": [
+      {"text": "准了，一劳永逸", "peopleChange": -5},
+      {"text": "小修得了，不要动众", "peopleChange": 5}
+    ]
+  },
+  {
+    "id": "11901",
+    "speaker": "白产",
+    "body": "君上，朝堂西南角有些老化\n国内一时是找不出来合适的木料修缮，得去外国采买\n是拜托外臣去他们母国采买\n还是找卿士代表我国去采买呢？",
+    "yearDelta": 1,
+    "options": [
+      {"text": "让外臣去他们母国要个好价钱", "foreignChange": 10, "kingChange": -5},
+      {"text": "让卿士去精打细算", "scholarChange": 10},
+      {"text": "国内怎么可能没有，再找", "peopleChange": -10, "kingChange": -10}
+    ]
+  },
+  {
+    "id": "12001",
+    "speaker": "白产",
+    "body": "君上，我们从东山取来一些石料\n现如今，<color=#725E54>城南的水堤</color>需要维修\n<color=#6A1F1F>朝堂维修</color>也缺石料\n一些<color=#C53B23>贵族修缮府邸</color>也希望用这些石料\n怎么办呢？",
+    "yearDelta": 1,
+    "options": [
+      {"text": "先用于水坝维修", "peopleChange": 15},
+      {"text": "先用于朝堂修缮", "scholarChange": 10, "foreignChange": 10, "kingChange": 5},
+      {"text": "先供给贵族生活", "nobleChange": 15, "kingChange": 15}
+    ]
+  },
+  {
+    "id": "12101",
+    "speaker": "白产",
+    "body": "君上，<color=#C53B23>贵族</color>们想要修筑一座高台\n仿照楚国<color=#C53B23>章华台</color>的形制\n这耗费颇丰，而且肯定会动员大量<color=#725E54>庶人</color>服徭役",
+    "yearDelta": 1,
+    "options": [
+      {"text": "这简直是胡闹，不准建", "peopleChange": 10, "nobleChange": -10},
+      {"text": "降低形制，建座小台便是了", "nobleChange": 5, "peopleChange": -15}
+    ]
+  },
+  {
+    "id": "12201",
+    "speaker": "白产",
+    "body": "君上，<color=#5C9291>外臣</color>们想要修筑一座学宫\n臣以为学宫建设，要大量<color=#725E54>人力物力</color>\n而且学宫之人，耗费颇丰\n不过这的确会提供大量可用的<color=#5C9291>外臣</color>人才",
+    "yearDelta": 1,
+    "options": [
+      {"text": "本国卿士还没用上呢，他们急什么", "scholarChange": 10, "foreignChange": -15},
+      {"text": "我们可离不开外臣的辅佐", "foreignChange": 15, "kingChange": -5, "peopleChange": -10, "scholarChange": -5}
+    ]
+  },
+  {
+    "id": "12301",
+    "speaker": "白产",
+    "body": "君上，庶人们希望在城南新建一批水利设施\n水利可增加田产，<color=#725E54>庶人</color>的日子也好过些\n只是国库空虚，钱不太够",
+    "yearDelta": 1,
+    "options": [
+      {"text": "让贵族出钱，给他们修", "nobleChange": -15, "peopleChange": 10},
+      {"text": "让卿士捐钱，给他们修", "scholarChange": -15, "peopleChange": 10},
+      {"text": "狠狠宰境内外商一笔，给他们修", "foreignChange": -15, "peopleChange": 10},
+      {"text": "没钱，不修", "kingChange": -25, "peopleChange": -5}
     ]
   }
 ]

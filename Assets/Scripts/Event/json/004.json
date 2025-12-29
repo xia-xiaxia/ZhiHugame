@@ -1,479 +1,618 @@
 [
   {
     "id": "00101",
-    "title": "奇珍异宝00101",
-    "speaker": "常万",
-    "body": "君上，臣前些日子去楚国跑了一趟\n此乃臣从南方楚国带来的香草“泽兰”\n其香味浓烈，沁人心脾\n还能消除灯油燃烧的腥臭味\n您要不要买一些呢？",
+    "speaker": "敬开",
+    "body": "君上，有一伙<color=#003A6F>儒生</color>希望在城东的树下讲学\n他们说“有教无类”，还让<color=#725E54>庶人</color>也来听课",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "买买买",
+        "text": "如此甚好",
         "scholarChange": 5,
-        "kingChange": 5,
-        "yearDelta": 1
+        "peopleChange": 10,
+        "eventFlags": [8]
       },
       {
-        "text": "呛得慌，算了吧",
-        "yearDelta": 1
-      },
-      {
-        "text": "我还要花钱买？拿来吧你",
-        "scholarChange": -15,
-        "kingChange": 10,
-        "yearDelta": 1
+        "text": "别叨扰庶人种田",
+        "scholarChange": -5
       }
     ]
   },
   {
     "id": "00201",
-    "title": "奇珍异宝00201",
-    "speaker": "常万",
-    "body": "君上，今年有瘴气肆虐\n臣从东山采来草药\n当地人称此药可解瘴气之毒\n不过苦的要死\n更要命的是，国人信巫不信药\n宁可跳大神也不吃草药\n这可如何是好？",
+    "speaker": "敬开",
+    "body": "君上，臣认识几个<color=#5C9291>鲁国人</color>\n他们是<color=#5C9291>农家学士</color>，对精耕细作颇有一番见解\n您可以聘请他们，传授<color=#725E54>耕作之术</color>",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "你掺点蜜糖不就好了",
-        "scholarChange": 5,
-        "peopleChange": 10,
-        "yearDelta": 1
-      },
-      {
-        "text": "巫蛊、跳大神又有何不可呢",
-        "nextEventId": "00202",
-        "interval": 0,
-        "yearDelta": 1
-      },
-      {
-        "text": "寡人将下令强行让国人服药",
-        "kingChange": 10,
+        "text": "国人自己就会种地，还用他们教？",
         "peopleChange": 5,
-        "yearDelta": 1
-      }
-    ]
-  },
-  {
-    "id": "00202",
-    "title": "奇珍异宝00202",
-    "speaker": "南生",
-    "body": "君上，寡人对巫蛊之术颇有一番研究\n只要让寡人做法三日，瘴气自解",
-    "options": [
-      {
-        "text": "好，要让人们都看到",
-        "peopleChange": 10,
-        "scholarChange": -5,
-        "yearDelta": 0
+        "foreignChange": -10
       },
       {
-        "text": "你偷偷的跳，别让人知道",
-        "scholarChange": -5,
-        "yearDelta": 0
+        "text": "农为国本，速速请来",
+        "foreignChange": 10,
+        "peopleChange": 10,
+        "eventFlags": [7]
       }
     ]
   },
   {
     "id": "00301",
-    "title": "奇珍异宝00301",
-    "speaker": "常万",
-    "body": "君上，最近宋国吃蜂蜜成风\n于是蜂蜜价格飞涨\n这让我想到，我们国家东边的山林中有很多野蜜蜂\n如果我们动员国人采蜜，卖给宋国\n那一定能大赚一笔啊",
+    "speaker": "敬开",
+    "body": "君上，臣认识几个<color=#5C9291>齐国学子</color>\n他们精通“计然管仲之学”，对经商颇有见解\n如果请他们来管理我们的<color=#003A6F>城西市场</color>\n一定会大大促进我国商业发展",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "立刻发动国人，别管农事了，先采蜜",
-        "peopleChange": 10,
-        "yearDelta": 1
+        "text": "让外人管我国商业？信不过",
+        "foreignChange": -5,
+        "scholarChange": 10
       },
       {
-        "text": "说到底就是甜水，没啥意思",
+        "text": "如此甚好，用人不疑",
+        "foreignChange": 10,
         "scholarChange": -5,
-        "yearDelta": 1
-      },
-      {
-        "text": "任命你为蜂蜜使，找些士人把这事办了",
-        "scholarChange": 15,
-        "yearDelta": 1
+        "kingChange": 10,
+        "eventFlags": [9]
       }
     ]
   },
   {
     "id": "00401",
-    "title": "奇珍异宝00401",
-    "speaker": "常万",
-    "body": "君上，我从北地贩来三十匹“风驹”\n这种马肩高一丈，日行三百\n不过性子烈的很，已经踢伤我三个随从了\n您可要挑两匹自己骑着玩？",
+    "speaker": "敬开",
+    "body": "君上，有几个<color=#5C9291>鲁国学子</color>请见\n他们是墨家学派，相里氏之人\n他们精通工程建设之术，尤其是木工\n不如接纳他们，为我国所用？",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "正好改善我国礼仪马种",
-        "nobleChange": 15,
-        "yearDelta": 1
+        "text": "真有这么神？不信",
+        "foreignChange": -5
       },
       {
-        "text": "寡人现在就要亲自试骑，摔也认",
-        "kingChange": 999,
-        "yearDelta": 1
+        "text": "速速请来",
+        "foreignChange": 10,
+        "peopleChange": 5,
+        "eventFlags": [12]
       }
     ]
   },
   {
     "id": "00501",
-    "title": "奇珍异宝00501",
-    "speaker": "常万",
-    "body": "君上，都邑外有一伙盗匪\n他们拦路收钱，威胁商道\n匪首叫什么林登万\n臣认为这需要立即处理！",
+    "speaker": "敬开",
+    "body": "君上，有几个<color=#5C9291>墨家学士</color>希望来到我国\n他们是相夫氏的学子，擅长辩论\n有他们在，我国的学宫会更加昌盛\n不过他们言辞直率，不喜欢贵族的作风\n招揽他们可能让<color=#C53B23>贵族</color>们不快",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "寡人将安排人立刻剿灭之",
-        "kingChange": 10,
-        "yearDelta": 1
+        "text": "贤人啊！速速请来",
+        "nobleChange": -20,
+        "foreignChange": 15,
+        "eventFlags": [12]
       },
       {
-        "text": "寡人亲自下场戡乱",
-        "kingChange": 666,
-        "yearDelta": 1
+        "text": "他们也就会嘴上功夫",
+        "foreignChange": -10,
+        "nobleChange": 15
       }
     ]
   },
   {
     "id": "00601",
-    "title": "奇珍异宝00601",
-    "speaker": "常万",
-    "body": "君上，这是民间新研究的织品\n采用蚕丝，反复钩织\n柔软亲肤，轻盈透气\n品质上乘，您觉得应该做成什么衣服呢？",
+    "speaker": "敬开",
+    "body": "君上，有几个<color=#5C9291>墨家邓陵氏之学子</color>造访我国\n邓陵氏之墨，以侠客自居，惩奸除恶，反对战争\n面对他们眼中的<color=#6A1F1F>“暴君”</color>，他们甚至会直接刺杀\n不知道您想不想见一见？",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "做成国人的素衣常服",
-        "peopleChange": 10,
-        "yearDelta": 1
-      },
-      {
-        "text": "做成朝官的官服",
-        "scholarChange": 15,
+        "text": "寡人不是暴君，坦坦荡荡",
+        "kingChange": 15,
         "foreignChange": 15,
-        "yearDelta": 1
+        "eventFlags": [12]
       },
       {
-        "text": "这么好的料子只有寡人可以享有",
-        "kingChange": 20,
-        "yearDelta": 1
+        "text": "一群疯子",
+        "kingChange": 5
       }
     ]
   },
   {
     "id": "00701",
-    "title": "奇珍异宝00701",
-    "speaker": "常万",
-    "body": "君上，臣购入了两批漆器\n一批是北方形制的，镶金嵌贝\n雕龙画凤，兼以云纹\n另一批是楚国形制，红黑彩绘\n奔放狂野，颇有地方风格\n您更喜欢哪种呢？",
+    "speaker": "敬开",
+    "body": "君上，臣请来了几位<color=#5C9291>西河学派的名士</color>\n他们是大儒子夏在魏国西河的学生\n这一学派务实，经世致用\n魏文侯之所以成为霸主，靠的就是他们",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "北方形制可是传统",
-        "nobleChange": 15,
-        "yearDelta": 1
+        "text": "快让贵族子弟和他们好好学习",
+        "nobleChange": 10,
+        "eventFlags": [11]
       },
       {
-        "text": "楚国形制颇有异域风情",
-        "foreignChange": 15,
-        "yearDelta": 1
+        "text": "快让卿士新人向他们探讨一番",
+        "scholarChange": 10,
+        "eventFlags": [11]
+      },
+      {
+        "text": "真务实，还至于流落到我们这小国？",
+        "foreignChange": -15
       }
     ]
   },
   {
     "id": "00801",
-    "title": "奇珍异宝00801",
-    "speaker": "常万",
-    "body": "君上，这是宋国新产的漆器\n臣购入了一批\n有盒、奁、杯、盘，形制优美\n非王亲贵胄不可享有，臣愿意献给君上",
+    "speaker": "敬开",
+    "body": "君上，有几位<color=#5C9291>宋尹的后学</color>来到我国造访\n所谓宋尹，是指宋钘、尹文二人\n他们二人主张宽容、和谐\n反对战争，鼓励和平清贫的生活\n他们的后学来我国，正是为了传播这一思想",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "漆器嘛，庶人卿士也能用",
-        "peopleChange": 10,
-        "scholarChange": 10,
-        "yearDelta": 1
+        "text": "真那么宽容，就别想改变别人思想",
+        "foreignChange": -10
       },
       {
-        "text": "这才配得上寡人的地位",
-        "kingChange": 15,
-        "yearDelta": 1
+        "text": "有点意思，让他们在我国住几天",
+        "foreignChange": 10,
+        "peopleChange": 5
       }
     ]
   },
   {
     "id": "00901",
-    "title": "奇珍异宝00901",
-    "speaker": "常万",
-    "body": "君上，臣有一事相请\n臣在列国之间奔走商贸\n奈何各国之间皆有关税，往来多有耗费\n臣请君上赐我“使臣”之节\n这样一来，臣就可以享受使臣待遇\n货物也不用交关税了\n为此，臣愿意每年向您进献珍宝",
+    "speaker": "敬开",
+    "body": "君上，有几位<color=#5C9291>儒家学生</color>来我国造访\n他们立志效仿孔子，希望在我国<color=#725E54>讲学</color>",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "准了，给寡人弄点好东西来",
-        "kingChange": 15,
-        "scholarChange": 15,
-        "foreignChange": -20,
-        "yearDelta": 1
+        "text": "免费的课堂，爱开就开吧",
+        "foreignChange": 10,
+        "peopleChange": 10,
+        "eventFlags": [8]
       },
       {
-        "text": "算了吧，我可不想得罪外国人",
-        "foreignChange": 10,
-        "yearDelta": 1
+        "text": "看着像丧家之犬，快赶走",
+        "foreignChange": -10
       }
     ]
   },
   {
     "id": "01001",
-    "title": "奇珍异宝01001",
-    "speaker": "常万",
-    "body": "君上，这是臣费劲心思购得的白狐裘\n通体雪白，柔软保暖\n此等珍宝，非一国之君不能享有\n特此进献给您",
+    "speaker": "敬开",
+    "body": "君上，有几位<color=#5C9291>道家游士</color>来到我国\n他们率性随意，不为世物拘束\n鼓励清静无为，小国寡民的治国方案",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "你做的好啊 重重有赏",
-        "scholarChange": 5,
-        "kingChange": 5,
-        "yearDelta": 1
-      },
-      {
-        "text": "好东西，转赠给楚王",
-        "scholarChange": -5,
+        "text": "君主确实应该少干涉，让他们留下吧",
         "foreignChange": 10,
-        "yearDelta": 1
+        "peopleChange": 10,
+        "eventFlags": [10]
       },
       {
-        "text": "拿人手短，你自己留着吧",
-        "scholarChange": -5,
-        "yearDelta": 1
+        "text": "不为世物拘束，那吃饭吗？",
+        "foreignChange": -10
       }
     ]
   },
   {
     "id": "01101",
-    "title": "奇珍异宝01101",
-    "speaker": "常万",
-    "body": "君上，近日贵族之中流行一样商品\n是楚国的木雕屏风\n上面雕有各种动物，蟒、凤、雀、鹿、蛙云云\n简直叹为观止",
+    "speaker": "敬开",
+    "body": "君上，<color=#5C9291>孔子</color>曾有一言\n“举直错诸枉，则民服；举枉错诸直，则民不服”\n这意味着选举人才应当唯才是举，否则人民不信服\n您怎么看？",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "寡人都用不上这么好的东西，他们也别用",
-        "kingChange": 15,
-        "nobleChange": -20,
-        "yearDelta": 1
+        "text": "贵族们血统纯正，德才兼备，堪当大任",
+        "nobleChange": 15
       },
       {
-        "text": "贵族有品，给寡人也弄一份",
-        "kingChange": 10,
-        "nobleChange": 10,
-        "yearDelta": 1
+        "text": "卿士们广有才学，可以为国所用",
+        "scholarChange": 15
+      },
+      {
+        "text": "外臣们怀才不遇，应当认真对待",
+        "foreignChange": 15
       }
     ]
   },
   {
     "id": "01201",
-    "title": "奇珍异宝01201",
-    "speaker": "常万",
-    "body": "君上，此乃越国新制陶壶\n质地坚硬，印文彩绘\n几乎不渗水\n实乃当下最佳的陶器了\n我已经请来几个越国陶人，传播技术",
+    "speaker": "敬开",
+    "body": "君上，<color=#5C9291>孔子</color>曾有一言\n“节用而爱人，使民以时”\n这意味着君主应当统治者应<color=#725E54>节俭爱民</color>而非横征暴敛\n这是有道理的\n所以我们今年不妨不收税了吧？",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "越国人不可信，赶走",
-        "scholarChange": -5,
-        "foreignChange": -15,
-        "yearDelta": 1
+        "text": "你说的有道理，但只能减税",
+        "peopleChange": 10,
+        "foreignChange": 5
       },
       {
-        "text": "寡人将好生待他们",
+        "text": "那就免税一年",
+        "peopleChange": 20,
         "foreignChange": 10,
-        "peopleChange": 5,
-        "yearDelta": 1
+        "nextEventId": "01202",
+        "interval": 0
       },
       {
-        "text": "让他们把技术传给我们自己的陶人",
-        "peopleChange": 15,
-        "foreignChange": 5,
-        "yearDelta": 1
+        "text": "简直胡闹，节俭和不征税又不是一回事",
+        "peopleChange": -5,
+        "foreignChange": -5
+      }
+    ]
+  },
+  {
+    "id": "01202",
+    "speaker": "白产",
+    "body": "君上，如果今年不征税，我们将发不起官员的禄米\n届时无论是<color=#C53B23>贵族</color>、<color=#003A6F>士族</color>还是<color=#5C9291>外臣</color>，都会不满\n请您收回成命",
+    "yearDelta": 0,
+    "options": [
+      {
+        "text": "不发就不发，受着",
+        "peopleChange": 20,
+        "nobleChange": -15,
+        "foreignChange": -15,
+        "scholarChange": -15
+      },
+      {
+        "text": "你说的有道理，那不这么办了",
+        "peopleChange": -30,
+        "kingChange": -20
       }
     ]
   },
   {
     "id": "01301",
-    "title": "奇珍异宝01301",
-    "speaker": "常万",
-    "body": "君上，此乃臣寻来的珠串\n此串绝非普通的小手串\n这里的珠子，乃是东海的砗磲\n云梦的犀角，南阳的龟珠，南楚的象牙\n巴国的朱砂，邹国的玛瑙，庸地的绿松石\n蓝田的美玉，燕蓟的黄金\n简直是天下之至美",
+    "speaker": "敬开",
+    "body": "君上，<color=#5C9291>孔子</color>曾说一段话\n“为政以德，譬如北辰，居其所而众星共之”\n臣以为您需要为此自省",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "我看是假的",
-        "scholarChange": -10,
-        "kingChange": 5,
-        "yearDelta": 1
+        "text": "你说得对，我要注意德行",
+        "kingChange": 10
       },
       {
-        "text": "拿来吧你！",
-        "kingChange": 15,
-        "scholarChange": -20,
-        "yearDelta": 1
+        "text": "你说得对，群臣要注意德行",
+        "scholarChange": 5,
+        "foreignChange": 5,
+        "nobleChange": 5
       }
     ]
   },
   {
     "id": "01401",
-    "title": "奇珍异宝01401",
-    "speaker": "常万",
-    "body": "君上，臣从邹国购得一批玛瑙\n红白交错，色泽圆润\n实在是品质上乘\n您觉得卖给谁合适？",
+    "speaker": "敬开",
+    "body": "君上，<color=#5C9291>孔子</color>曾说：上好礼，则民莫敢不敬\n上好义，则民莫敢不服\n上好信，则民莫敢不用情\n您应当注意礼义信啊",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "卖给贵族，他们钱多",
-        "nobleChange": 5,
-        "yearDelta": 1
+        "text": "你说得对，我谨遵孔夫子教诲",
+        "foreignChange": 10,
+        "kingChange": -15
       },
       {
-        "text": "卖给士人，他们喜欢小玩意",
-        "scholarChange": 5,
-        "yearDelta": 1
-      },
-      {
-        "text": "降价卖给庶人，没人不喜欢美的事物",
-        "peopleChange": 10,
-        "scholarChange": -5,
-        "nobleChange": -5,
-        "yearDelta": 1
+        "text": "那我可要拿法家学说和你争辩一下了",
+        "kingChange": 15
       }
     ]
   },
   {
     "id": "01501",
-    "title": "奇珍异宝01501",
-    "speaker": "常万",
-    "body": "君上，臣低价购得一批宝玉\n那农家不认识玉石，只以为是块普通石头\n臣花了不及市价十分之一，便取得此物",
+    "speaker": "敬开",
+    "body": "君上，臣给您讲一个故事\n<color=#5C9291>孔子</color>曾在山中见到一哭泣不止的<color=#725E54>老妇</color>\n孔子问她缘故，她说她的公公、丈夫、儿子均葬身虎口\n孔子又问，山中如此危险，为何不回城里生活\n老妇说，待在山中，便没有<color=#6A1F1F>苛政</color>了\n孔子于是说“苛政猛于虎”\n您也要避免这种情况啊",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "商人就该如此赚钱",
-        "scholarChange": 10,
+        "text": "说的好，我知道了",
+        "kingChange": -10,
+        "foreignChange": 10
+      },
+      {
+        "text": "也许这苛政是贵族干的呢",
+        "kingChange": 5,
         "peopleChange": -10,
-        "nextEventId": "01502",
-        "interval": 0,
-        "yearDelta": 1
-      },
-      {
-        "text": "给那农家再补些钱，莫要欺负人家",
-        "peopleChange": 15,
-        "scholarChange": -5,
-        "nextEventId": "01502",
-        "interval": 0,
-        "yearDelta": 1
-      }
-    ]
-  },
-  {
-    "id": "01502",
-    "title": "奇珍异宝01502",
-    "speaker": "常万",
-    "body": "君上，此言差矣\n商人赚钱，靠的就是低买高出\n从中获利多少，看的就是商人的口才\n此外，就要看交易人和我的信息差\n我认知比他广，就该从中获利",
-    "options": [
-      {
-        "text": "叽里呱啦说什么呢，给农家赔钱",
-        "peopleChange": 15,
-        "scholarChange": -10,
-        "yearDelta": 0
-      },
-      {
-        "text": "到也有道理",
-        "scholarChange": 5,
-        "peopleChange": 5,
-        "yearDelta": 0
+        "nobleChange": -15
       }
     ]
   },
   {
     "id": "01601",
-    "title": "奇珍异宝01601",
-    "speaker": "常万",
-    "body": "君上，臣从楚商手里购得一杖\n通体雪白，乃是象牙制成，价格不菲\n雕有鸠鸟，乃是“咽食不噎”的长寿祝福\n如此宝物，臣愿意献给君上，聊表祝寿之意",
+    "speaker": "敬开",
+    "body": "君上，邹国的<color=#5C9291>孟轲</color>有一番言论\n<color=#725E54>民为贵</color>，社稷次之，<color=#6A1F1F>君为轻</color>\n我认为颇有一番深意啊\n您怎么看？",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "有心了",
-        "kingChange": 15,
-        "scholarChange": 5,
-        "yearDelta": 1
+        "text": "民有什么好贵的？",
+        "peopleChange": -15,
+        "foreignChange": -10,
+        "kingChange": 5
       },
       {
-        "text": "寡人年轻，把这个送给贵族长老",
-        "nobleChange": 15,
-        "scholarChange": 5,
-        "yearDelta": 1
+        "text": "庶人确实是国家的根基啊",
+        "peopleChange": 15,
+        "foreignChange": 5,
+        "kingChange": -5
       }
     ]
   },
   {
     "id": "01701",
-    "title": "奇珍异宝01701",
-    "speaker": "常万",
-    "body": "君上，臣从宋商手里购得一金杯\n纹路精密，熠熠生辉\n结果昨日被一工匠认出材质不对\n是拿铜和其他矿物伪造的\n原来是那宋国商人制假贩假，害我钱财\n请求君上还臣一个公道",
+    "speaker": "敬开",
+    "body": "君上，邹国的<color=#5C9291>孟轲</color>有一番言论\n谨<color=#725E54>庠序之教</color>，申之以孝悌之义\n这意味着我们需要展开对庶人的教育\n但这需要大量的外臣学者来我国授业\n您愿意为他们提供俸禄和支持吗？",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "宋人果然不可信，把那宋商抓起来",
-        "foreignChange": -10,
-        "scholarChange": 10,
-        "yearDelta": 1
+        "text": "准了，让庶人更加明白事理啊",
+        "peopleChange": 10,
+        "foreignChange": 15
       },
       {
-        "text": "这也只能怪你眼拙，怨不得别人",
-        "scholarChange": -10,
-        "foreignChange": 15,
-        "yearDelta": 1
+        "text": "不准，庶人哪需要懂这么多",
+        "foreignChange": -10,
+        "peopleChange": -5
       }
     ]
   },
   {
     "id": "01801",
-    "title": "奇珍异宝01801",
-    "speaker": "常万",
-    "body": "君上，臣从齐国购得上等丝绸\n奈何我国之人爱丝麻胜过丝绸\n以至于我这销路难开啊",
+    "speaker": "敬开",
+    "body": "君上，邹国的<color=#5C9291>孟轲</color>有一番言论\n<color=#6A1F1F>君</color>之视<b>臣</b>如土芥，则<b>臣</b>视<color=#6A1F1F>君</color>如寇雠\n这意味着如果您不重视臣子，那么<b>臣子</b>也会不重视您\n您一定要认识到<b>臣子</b>的重要性啊",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "庶人劳作，用不上你这绸缎",
-        "peopleChange": -10,
-        "yearDelta": 1
+        "text": "寡人知道了，臣子是寡人的臂膀啊",
+        "scholarChange": 15,
+        "foreignChange": 15,
+        "nobleChange": 10
       },
       {
-        "text": "寡人和贵族才配得上这么好的料子",
-        "kingChange": 15,
-        "nobleChange": 15,
-        "yearDelta": 1
+        "text": "犯上之臣非常臣，当出重拳",
+        "scholarChange": -15,
+        "foreignChange": -15,
+        "nobleChange": -5,
+        "kingChange": 15
       }
     ]
   },
   {
     "id": "01901",
-    "title": "奇珍异宝01901",
-    "speaker": "常万",
-    "body": "君上，臣从越国购得宝剑一柄\n青铜制成，剑身修长\n剑刃锋利，挥动有破风之音\n此等宝剑该配何人？",
+    "speaker": "敬开",
+    "body": "君上，邹国的<color=#5C9291>孟轲</color>有一番言论\n数罟不入洿池，鱼鳖不可胜食也\n斧斤以时入山林，材木不可胜用也\n我们应该合理的开发自然资源",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "配乾纲独断的君王",
-        "kingChange": 15,
-        "yearDelta": 1
+        "text": "寡人应该约束贵族的奢靡浪费",
+        "nobleChange": -10
       },
       {
-        "text": "配意气风发的贵族",
-        "nobleChange": 15,
-        "yearDelta": 1
-      },
-      {
-        "text": "配游走列国的游士",
-        "foreignChange": 15,
-        "yearDelta": 1
-      },
-      {
-        "text": "配锐意进取的诤臣",
-        "scholarChange": 15,
-        "foreignChange": 5,
-        "yearDelta": 1
+        "text": "寡人应该约束庶人的乱砍滥伐",
+        "peopleChange": -10
       }
     ]
   },
   {
     "id": "02001",
-    "title": "奇珍异宝02001",
-    "speaker": "常万",
-    "body": "君上，臣从越国购得水晶杯一个\n这杯由透明水晶制成，浑然天成\n通体洁净，无雕琢之痕迹\n似仙人饮酒之杯啊\n如此宝物，何人能享？",
+    "speaker": "敬开",
+    "body": "君上，邹国的<color=#5C9291>孟轲</color>有一番言论\n民之为道也，有恒产者有恒心，无恒产者无恒心\n苟无恒心，放辟邪侈，无不为已\n这意味着要让<color=#725E54>庶人</color>获得充足的财富\n如此一来他们就可以安分守己，不生事端",
+    "yearDelta": 1,
     "options": [
       {
-        "text": "寡人这样的勋贵",
-        "nobleChange": 10,
-        "kingChange": 10,
-        "yearDelta": 1
+        "text": "有道理，降税几分",
+        "peopleChange": 15
       },
       {
-        "text": "天下之人，有德者取之",
-        "foreignChange": 5,
-        "scholarChange": 5,
+        "text": "有财富，他们也只会浪费掉",
+        "peopleChange": -10
+      }
+    ]
+  },
+  {
+    "id": "02101",
+    "speaker": "敬开",
+    "body": "君上，宋国的<color=#5C9291>墨翟</color>有一番言论\n官无常贵，而民无终贱；有能则举之，无能则下之\n也就是说，要依照个人能力用人\n无能的<color=#C53B23>贵族</color>应该被贬斥\n有才的<color=#725E54>庶人</color>应该被提拔\n您怎么看？",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "有道理，招揽庶人，打压贵族",
+        "nobleChange": -15,
+        "peopleChange": 15
+      },
+      {
+        "text": "胡闹，庶人有才就不会是庶人了",
+        "peopleChange": -5,
+        "nobleChange": 10
+      }
+    ]
+  },
+  {
+    "id": "02201",
+    "speaker": "敬开",
+    "body": "君上，宋国的<color=#5C9291>墨翟</color>有一番言论\n圣人为政，去其无用之费，足以倍之\n也就是说，身为君主，应该节俭开支\n省下来的开支可以有利于庶人",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "有道理，寡人将节俭支出",
+        "kingChange": -10,
+        "peopleChange": 10
+      },
+      {
+        "text": "接着奏乐，接着舞",
+        "kingChange": 15,
+        "peopleChange": -10
+      }
+    ]
+  },
+  {
+    "id": "02301",
+    "speaker": "敬开",
+    "body": "君上，宋国的<color=#5C9291>墨翟</color>有一番言论\n虽在农与工肆之人，有能则举之\n高予之爵，重予之禄，任之以事，断予之令\n也就是说，对于有能力的庶人\n虽然<color=#725E54>出身寒微</color>，也应当重用",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "有道理，寡人将任用出色的庶人",
+        "peopleChange": 15,
+        "scholarChange": -10
+      },
+      {
+        "text": "卿士不比他们有才能？",
+        "scholarChange": 15,
+        "peopleChange": -10
+      }
+    ]
+  },
+  {
+    "id": "02401",
+    "speaker": "敬开",
+    "body": "君上，魏国的<color=#5C9291>李悝</color>有一番言论\n夺<color=#C53B23>淫民</color>之禄，以来<color=#5C9291>四方之士</color>\n也就是说，剥夺一些<color=#C53B23>旧贵族</color>的利益\n将之用来招揽四方的<color=#5C9291>外臣能人</color>\n如此一来便可以获取人才治国啊",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "这简直是胡闹",
+        "nobleChange": 20
+      },
+      {
+        "text": "确实是有道理的啊",
+        "nobleChange": -25,
+        "foreignChange": 20
+      }
+    ]
+  },
+  {
+    "id": "02501",
+    "speaker": "敬开",
+    "body": "君上，魏国的<color=#5C9291>李悝</color>有一番言论\n食有劳而禄有功，使有能而赏必行\n也就是说，对于有能有功的<color=#003A6F>卿士</color>\n应该合理的进行奖赏",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "这是很中肯的",
+        "scholarChange": 10
+      },
+      {
+        "text": "有那钱不如让寡人享乐",
+        "scholarChange": -15,
+        "kingChange": 20
+      }
+    ]
+  },
+  {
+    "id": "02601",
+    "speaker": "敬开",
+    "body": "君上，齐国的<color=#003A6F>管仲</color>曾有一番言论\n圣王之身能立德，然后能立政\n身能立政，然后能立法\n身能立法，然后能使民\n也就是说，<color=#6A1F1F>君主</color>应当注重自我修养\n这样才能治理好国家",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "寡人将修养自己的品德",
+        "kingChange": 5
+      },
+      {
+        "text": "如果寡人也有管仲那样的臣子就好了",
+        "kingChange": -20,
+        "scholarChange": 15
+      }
+    ]
+  },
+  {
+    "id": "02701",
+    "speaker": "敬开",
+    "body": "君上，齐国的<color=#003A6F>管仲</color>曾有一番言论\n令重于宝，社稷先于亲戚\n法重于民，威权贵于爵禄\n也就是说，即便是<color=#C53B23>贵族</color>，也不能徇私枉法\n如此一来，<color=#725E54>人民</color>才会信服<color=#6A1F1F>君主</color>",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "寡人将把贵族一视同仁",
+        "kingChange": -5,
+        "nobleChange": -15,
+        "peopleChange": 15
+      },
+      {
+        "text": "那不是徇私枉法，那叫人情世故",
+        "nobleChange": 25,
+        "peopleChange": -25,
+        "kingChange": -10
+      }
+    ]
+  },
+  {
+    "id": "02801",
+    "speaker": "敬开",
+    "body": "君上，齐国的<color=#003A6F>管仲</color>曾有一番言论\n凡治国之道，必先富民\n民富则易治也，民贫则难治也\n也就是说，<color=#6A1F1F>君主</color>治国应当让<color=#725E54>人民</color>富足\n如此一来人民才会易于治理",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "很有道理，寡人将善待人民",
+        "peopleChange": 10,
+        "kingChange": 10
+      },
+      {
+        "text": "有管仲那样的出色臣子，人民便会富足",
+        "scholarChange": 15,
         "peopleChange": 5,
-        "yearDelta": 1
+        "kingChange": -20
+      }
+    ]
+  },
+  {
+    "id": "02901",
+    "speaker": "敬开",
+    "body": "君上，齐国的<color=#003A6F>管仲</color>曾有一番言论\n闻贤而不举，殆\n闻善而不索，殆\n见能而不使，殆\n这意味着，君主应当唯才是举\n要提拔各路杰出之人，不问出处",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "外臣之中能人甚多啊",
+        "foreignChange": 10
+      },
+      {
+        "text": "贵族子弟也不乏贤人",
+        "nobleChange": 10
+      },
+      {
+        "text": "卿士之中一定有管仲之才",
+        "scholarChange": 10
+      },
+      {
+        "text": "庶人之中也会有可用之人啊",
+        "peopleChange": 10
+      }
+    ]
+  },
+  {
+    "id": "03001",
+    "speaker": "敬开",
+    "body": "君上，齐国的<color=#003A6F>晏婴</color>曾有一番言论\n古之贤君，饱而知人之饥\n温而知人之寒，逸而知人之劳。今君不知也\n意思是劝谏<color=#6A1F1F>齐景公</color>要<color=#725E54>体恤民情</color>\n不能高高在上啊",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "庶人的日子果然难过啊",
+        "peopleChange": 15,
+        "kingChange": -10
+      },
+      {
+        "text": "君主应当多听臣子劝谏啊",
+        "scholarChange": 10,
+        "kingChange": -5
+      }
+    ]
+  },
+  {
+    "id": "03101",
+    "speaker": "敬开",
+    "body": "君上，齐国的<color=#003A6F>晏婴</color>曾有一番言论\n繁登降之礼，趋详之节，累世不能殚其学\n当年不能究其礼，非所以先细民也\n意思是劝谏齐景公不能任用<color=#5C9291>孔子</color>这样的儒者\n他们强调繁文缛节，不利于国家\n而应该务实治国",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "外臣都是帮摇唇鼓舌的水货",
+        "foreignChange": -20
+      },
+      {
+        "text": "孔子这样的大儒还是很有益于国家的",
+        "foreignChange": 10
+      }
+    ]
+  },
+  {
+    "id": "03201",
+    "speaker": "敬开",
+    "body": "君上，齐国的<color=#5C9291>尹文</color>曾有一番言论\n不累于俗，不饰于物，不苛于人，不忮于众\n愿天下之安宁以活民命，人我之养毕足而止\n也就是说希望所有人都甘于清贫\n不要被世间万物拖累",
+    "yearDelta": 1,
+    "options": [
+      {
+        "text": "没见他不吃不喝",
+        "foreignChange": -10,
+        "kingChange": 5
+      },
+      {
+        "text": "也有道理，还得节俭些",
+        "kingChange": -20,
+        "foreignChange": 10
       }
     ]
   }
