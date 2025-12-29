@@ -16276,7 +16276,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 508375522}
         m_TargetAssemblyTypeName: MissionUI, Assembly-CSharp
-        m_MethodName: DisplayWithReward
+        m_MethodName: DisplayWithoutReward
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
