@@ -223,4 +223,37 @@ public class EventDatabase : MonoBehaviour
         }
         LoadEvents(activeEventJsons);
     }
+
+    public void ActivateEventSetById(int randomEventSet)
+    {
+        List<TextAsset> activeEventJsons = eventJsons;
+
+        if (randomEventSet < 0)
+        {
+            int index = -randomEventSet - 1;
+            if (index >= 0 && index < eventJsons.Count)
+            {
+                activeEventJsons.Remove(eventJsons[index]);
+                Debug.Log($"[EventDatabase] 关闭事件集: {eventJsons[index].name}");
+            }
+            Debug.LogWarning($"[EventDatabase] 关闭事件集失败: 索引 {index} 越界");
+        }
+        else if (randomEventSet > 0)
+        {
+            int index = randomEventSet - 1;
+            if (index >= 0 && index < eventJsons.Count)
+            {
+                if (!activeEventJsons.Contains(eventJsons[index]))
+                {
+                    activeEventJsons.Add(eventJsons[index]);
+                    Debug.Log($"[EventDatabase] 激活事件集: {eventJsons[index].name}");
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"[EventDatabase] 激活事件集失败: 索引 {index} 越界");
+            }
+        }
+        LoadEvents(activeEventJsons);
+    }
 }

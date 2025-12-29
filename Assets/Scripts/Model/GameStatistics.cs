@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -16,6 +17,8 @@ public class GameStatistics : ScriptableObject
 
     public Dictionary<int, int> policyUsageCount = new Dictionary<int, int>();
     public Dictionary<int, int> policyFirstYear = new Dictionary<int, int>();
+    //统计存活x年累计y次
+    public Dictionary<string, (int x, int y)> runsWithLongReign = new Dictionary<string, (int x, int y)>();
 
     // 事件判定相关
     public bool[] judgeValue = new bool[100];
@@ -67,11 +70,13 @@ public class GameStatistics : ScriptableObject
     {
         activeMissions.Clear();
         isComplete.Clear();
+        runsWithLongReign.Clear();
+        totalReginYears = 0;
     }
 
     public void Restart()
     {
-       
+        policyUseOutCount = 0;
         currentReignYears = 0;
         policyUsageCount.Clear();
         policyFirstYear.Clear();
@@ -91,6 +96,15 @@ public class GameStatistics : ScriptableObject
         {
             currentReignYears = TurnManager.Instance.year;
             totalReginYears += TurnManager.Instance.year;
+            foreach (var key in runsWithLongReign.Keys.ToList())
+            {
+                var (limit, count) = runsWithLongReign[key]; 
+
+                if (currentReignYears >= limit)
+                {
+                    runsWithLongReign[key] = (limit, count + 1);
+                }
+            }
         }
         else
         {
@@ -178,5 +192,25 @@ public class GameStatistics : ScriptableObject
         }
     }
 
+    //统计runsWithLongReign
+    public void Register(MissionData m)
+    {
+        int limit = 0;
+        foreach (var c in m.conditions)
+        {
+            if (c.type == "runsWithLongReign")
+            {
+                limit = c.paramList[1];
+                break;
+            }
+        }
+        if (limit == 0) return; 
+        runsWithLongReign[m.id] = (limit, 0);
+    }
+
+    public void UnRegister(string id)
+    {
+        runsWithLongReign.Remove(id);
+    }
 
 }

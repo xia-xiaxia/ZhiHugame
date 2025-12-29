@@ -23,7 +23,7 @@ public class MissionData
     {
         foreach(var con in conditions)
         {
-            if(con.CheckComplete(gs) == false)
+            if(con.CheckComplete(gs, id) == false)
             {
                 return false;
             }
@@ -66,6 +66,15 @@ public class MissionData
         
         //获得天赋点
         TalantManager.Instance.AddTalentPoints(rewardTalent);
+
+        //事件集
+        if (randomEventSet != 0)
+        {
+            EventDatabase.Instance?.ActivateEventSetById(randomEventSet);
+            Debug.Log($"[OptionEffectHandler] 更新激活事件集: {randomEventSet}");
+        }
+
+        GameControl.Instance.gameStatistics.UnRegister(id);
 
         return true;
     }
@@ -200,6 +209,7 @@ public class MissionManager : MonoBehaviour
             {
                 activeMissions.Add(int.Parse(m.id) - 1);
                 newActiveMissions.Add(int.Parse(m.id) - 1);
+                statistics.Register(m);
             }
         }
     }
@@ -229,7 +239,7 @@ public class MissionCondition
     public string type;
     public int[] paramList;   // 参数列表
 
-    public virtual bool CheckComplete(GameStatistics gameStatistics)
+    public virtual bool CheckComplete(GameStatistics gameStatistics, string id=null)
     {
         return false;
     }
@@ -238,7 +248,7 @@ public class MissionCondition
 
 public class CurrentReignCondition : MissionCondition
 {
-    public override bool CheckComplete(GameStatistics gameStatistics)
+    public override bool CheckComplete(GameStatistics gameStatistics, string id = null)
     {
         return gameStatistics.currentReignYears >= paramList[0];
     }
@@ -247,7 +257,7 @@ public class CurrentReignCondition : MissionCondition
 
 public class TotalReignCondition : MissionCondition
 {
-    public override bool CheckComplete(GameStatistics gameStatistics)
+    public override bool CheckComplete(GameStatistics gameStatistics, string id = null)
     {
         return gameStatistics.totalReginYears >= paramList[0];
     }
@@ -256,16 +266,16 @@ public class TotalReignCondition : MissionCondition
 
 public class LongReignRunsCondition : MissionCondition
 {
-    public override bool CheckComplete(GameStatistics gameStatistics)
+    public override bool CheckComplete(GameStatistics gameStatistics, string id = null)
     {
-        return paramList[0] <= 0;
+        return gameStatistics.runsWithLongReign[id].y >= paramList[0];
     }
 }
 
 
 public class PolicyUsageCondition : MissionCondition
 {
-    public override bool CheckComplete(GameStatistics gameStatistics)
+    public override bool CheckComplete(GameStatistics gameStatistics, string id = null)
     {
         return gameStatistics.GetPolicyUsage(paramList[1]) >= paramList[0];
     }
@@ -274,7 +284,7 @@ public class PolicyUsageCondition : MissionCondition
 
 public class SurvivalPolicyCondition : MissionCondition
 {
-    public override bool CheckComplete(GameStatistics gameStatistics)
+    public override bool CheckComplete(GameStatistics gameStatistics, string id = null)
     {
         int firstYear = gameStatistics.GetPolicyFirstYear(paramList[1]);
         return firstYear != -1 && (gameStatistics.currentReignYears - firstYear) >= paramList[0];
@@ -284,7 +294,7 @@ public class SurvivalPolicyCondition : MissionCondition
 
 public class SurvivalOptionCondition : MissionCondition
 {
-    public override bool CheckComplete(GameStatistics gameStatistics)
+    public override bool CheckComplete(GameStatistics gameStatistics, string id = null)
     {
         int firstYear = gameStatistics.judgeFirstYear[paramList[1]];
         return firstYear != -1 && (gameStatistics.currentReignYears - firstYear) >= paramList[0];
@@ -294,11 +304,11 @@ public class SurvivalOptionCondition : MissionCondition
 
 public class EventFlagsCondition : MissionCondition
 {
-    public override bool CheckComplete(GameStatistics gameStatistics)
+    public override bool CheckComplete(GameStatistics gameStatistics, string id = null)
     {
-        foreach(var id in paramList)
+        foreach(var pid in paramList)
         {
-            if (gameStatistics.judgeValue[id] == false) return false;
+            if (gameStatistics.judgeValue[pid] == false) return false;
         }
         return true;
     }
@@ -306,8 +316,8 @@ public class EventFlagsCondition : MissionCondition
 
 public class PolicyUseOutCondition : MissionCondition
 {
-    public override bool CheckComplete(GameStatistics gameStatistics)
+    public override bool CheckComplete(GameStatistics gameStatistics, string id = null)
     {
-        return gameStatistics.policyUseOutCount > paramList[0];
+        return gameStatistics.policyUseOutCount >= paramList[0];
     }
 }

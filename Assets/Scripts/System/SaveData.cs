@@ -98,6 +98,7 @@ public class SaveData
     public List<IntIntEntry> policyUsageCountList;
     public List<IntIntEntry> policyFirstYearList;
     public List<StringBoolEntry> isCompleteList;
+    public List<StringPairEntry> runsWithLongReign;
 
 
     /// <summary>
@@ -167,7 +168,20 @@ public class SaveData
         {
             data.isCompleteList.Add(new StringBoolEntry { key = kvp.Key, value = kvp.Value });
         }
-        
+
+
+        //转换字典：runsWithLongReign
+        data.runsWithLongReign = new List<StringPairEntry>();
+        foreach (var kvp in gameStatistics.runsWithLongReign)
+        {
+            data.runsWithLongReign.Add(new StringPairEntry
+            {
+                key = kvp.Key,
+                val1 = kvp.Value.x, 
+                val2 = kvp.Value.y
+            });
+        }
+
         // 复制刷新商店花费数组
         if (stats.refreshPolicyShopCost != null)
         {
@@ -445,6 +459,13 @@ public class SaveData
         {
             stats.isComplete[entry.key] = entry.value;
         }
+
+        // 还原字典: runsWithLongReign
+        stats.runsWithLongReign.Clear();
+        foreach (var entry in this.runsWithLongReign)
+        {
+            stats.runsWithLongReign[entry.key] = (entry.val1, entry.val2);
+        }
     }
 }
 
@@ -540,4 +561,12 @@ public class StringBoolEntry
 {
     public string key;
     public bool value;
+}
+
+[System.Serializable] 
+public class StringPairEntry
+{
+    public string key;
+    public int val1;
+    public int val2;
 }
