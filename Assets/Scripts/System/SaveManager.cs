@@ -238,9 +238,12 @@ public class SaveManager : MonoBehaviour
             {
                 if (GameLifecycleManager.Instance != null)
                 {
-                    GameLifecycleManager.Instance.SetPausedState(saveData.pausedEventId, saveData.pausedSentenceIndex);
+                    if(saveData.pausedSentenceIndex <= 0)
+                        GameLifecycleManager.Instance.SetPausedState(saveData.pausedEventId, saveData.pausedSentenceIndex);
+                    else
+                        GameLifecycleManager.Instance.SetPausedState(saveData.pausedEventId, saveData.pausedSentenceIndex - 1);
                     GameLifecycleManager.Instance.GamePaused = true;
-                    Debug.Log($"[SaveManager] 恢复暂停状态: 事件={saveData.pausedEventId}, 句子={saveData.pausedSentenceIndex}");
+                    Debug.Log($"[SaveManager] 恢复暂停状态: 事件={saveData.pausedEventId}, 句子={saveData.pausedSentenceIndex-1}");
                 }
             }
             

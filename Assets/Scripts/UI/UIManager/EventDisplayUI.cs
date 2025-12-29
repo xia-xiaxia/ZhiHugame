@@ -314,6 +314,10 @@ public class EventDisplayUI : MonoBehaviour
                 {
                     // 播放音效
                     MusicManager.Instance?.PlayButtonSound2();
+                    
+                    // 清除当前事件ID，表示事件已结束（防止保存暂停状态）
+                    currentEventId = "";
+                    currentSentenceIndex = 0;
 
                     // 应用选项效果
                     GameControl.Instance?.SaveStatsSnapshot();
@@ -436,6 +440,10 @@ public class EventDisplayUI : MonoBehaviour
     /// </summary>
     public void ClearText()
     {
+        // 清除当前事件状态
+        currentEventId = "";
+        currentSentenceIndex = 0;
+        
         if (titleText) titleText.text = string.Empty;
         
         if (dialoguePanel && dialoguePanel.gameObject.activeInHierarchy)
