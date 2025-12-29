@@ -203,7 +203,7 @@ public class PolicyManager : MonoBehaviour
     }
 
     // 随机抽取n个道具作为商店商品
-    public void GenerateShopItems(int count = 3)
+    public void GenerateShopItems(int count = 4)
     {
         Debug.Log($"[PolicyManager] 开始生成商店道具，请求数量={count}，可用道具总数={allPolicies.Count}");
         

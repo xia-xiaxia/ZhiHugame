@@ -24,9 +24,9 @@ public class PolicyShopUI : MonoBehaviour
     public GameObject shopInventoryItemPrefab;
     public Text shopInventoryCountText;
     // 商店最大显示数量
-    private int shopShowCount = 3;
+    private int shopShowCount = 4;
     // 背包最大显示数量
-    private int shopInventoryMaxCount = 3;
+    private int shopInventoryMaxCount = 4;
 
 
     private List<GameObject> shopItemButtons = new List<GameObject>();

@@ -17,6 +17,9 @@ public class SaveManager : MonoBehaviour
     public bool autoSaveOnExit = true;  // 退出时自动保存
     public bool autoLoadOnStart = true;  // 启动时自动加载
     
+    [Header("安全梠记")]
+    public bool isEventDisplaying = false;  // 标记事件是否正在显示
+    
     private string saveFilePath;
     private const string SAVE_FILE_NAME = "savegame.json";
     
@@ -37,22 +40,20 @@ public class SaveManager : MonoBehaviour
 
         //初始化GameStatistics
         GameControl.Instance.gameStatistics.Inititalize();
-
-        // 启动时自动加载存档
+    }
+    
+    private void Start()
+    {
+        // 延迟到Start阶段加载存档，确保EventDatabase等组件已完全初始化
         if (autoLoadOnStart)
         {
             LoadGame();
         }
     }
     
-    private void Start()
-    {
-
-    }
-    
     private void OnApplicationQuit()
     {
-        // 退出时自动保存
+        // 退出时自动保存（包括暂停状态）
         if (autoSaveOnExit)
         {
             Debug.Log("[SaveManager] 应用程序退出，自动保存游戏");
@@ -170,6 +171,15 @@ public class SaveManager : MonoBehaviour
             if (saveData == null)
             {
                 Debug.LogError("[SaveManager] 反序列化失败，saveData 为 null");
+                DeleteCorruptedSave();
+                return false;
+            }
+            
+            // 检查版本兼容性
+            if (saveData.version < SaveData.CURRENT_VERSION)
+            {
+                Debug.LogWarning($"[SaveManager] 存档版本过旧 (v{saveData.version})，当前版本 (v{SaveData.CURRENT_VERSION})，将删除旧存档");
+                DeleteCorruptedSave();
                 return false;
             }
             
@@ -207,10 +217,31 @@ public class SaveManager : MonoBehaviour
                 EventDatabase.Instance.RestoreUsedEvents(usedIds);
             }
             
-            // 恢复延时事件
-            if (EventSelector.Instance != null && saveData.delayedEventQueue != null)
+            // 恢复延时事件和强制后继事件
+            if (EventSelector.Instance != null)
             {
-                EventSelector.Instance.LoadFromSave(saveData.delayedEventQueue);
+                if (saveData.delayedEventQueue != null)
+                {
+                    EventSelector.Instance.LoadFromSave(saveData.delayedEventQueue);
+                }
+                
+                // 恢复强制后继事件ID
+                if (!string.IsNullOrEmpty(saveData.nextEventId) && saveData.nextEventId != "0")
+                {
+                    EventSelector.Instance.SetNextEventId(saveData.nextEventId);
+                    Debug.Log($"[SaveManager] 从存档恢复强制后继事件: {saveData.nextEventId}");
+                }
+            }
+            
+            // 恢复暂停状态（正在显示的事件）
+            if (!string.IsNullOrEmpty(saveData.pausedEventId))
+            {
+                if (GameLifecycleManager.Instance != null)
+                {
+                    GameLifecycleManager.Instance.SetPausedState(saveData.pausedEventId, saveData.pausedSentenceIndex);
+                    GameLifecycleManager.Instance.GamePaused = true;
+                    Debug.Log($"[SaveManager] 恢复暂停状态: 事件={saveData.pausedEventId}, 句子={saveData.pausedSentenceIndex}");
+                }
             }
             
             Debug.Log($"[SaveManager] 游戏已加载: 年份={saveData.year}, 存档时间={saveData.saveTime}");
@@ -225,8 +256,63 @@ public class SaveManager : MonoBehaviour
         }
         catch (System.Exception e)
         {
-            Debug.LogError($"[SaveManager] 加载失败: {e.Message}\n{e.StackTrace}");
+            Debug.LogError($"[SaveManager] 加载游戏失败: {e.Message}\n{e.StackTrace}");
+            Debug.LogWarning("[SaveManager] 存档文件可能损坏或版本不兼容，将删除并重新初始化");
+            DeleteCorruptedSave();
             return false;
+        }
+    }
+    
+    /// <summary>
+    /// 删除损坏或不兼容的存档文件
+    /// </summary>
+    private void DeleteCorruptedSave()
+    {
+        try
+        {
+            if (File.Exists(saveFilePath))
+            {
+                File.Delete(saveFilePath);
+                Debug.Log($"[SaveManager] 已删除不兼容的存档文件: {saveFilePath}");
+            }
+            
+            // 重新执行完全初始化
+            if (stats != null)
+            {
+                stats.ResetToDefaultCompletely();
+            }
+            
+            // 重置GameStatistics
+            if (GameControl.Instance != null && GameControl.Instance.gameStatistics != null)
+            {
+                GameControl.Instance.gameStatistics.Inititalize();
+            }
+            
+            // 初始化事件数据库
+            if (EventDatabase.Instance != null)
+            {
+                List<int> defaultActiveSet = new List<int> { 0 };
+                EventDatabase.Instance.RestoreActiveEventSet(defaultActiveSet);
+                EventDatabase.Instance.ResetPool();
+            }
+            
+            // 清空延时事件
+            if (EventSelector.Instance != null)
+            {
+                EventSelector.Instance.Reset();
+            }
+            
+            // 通知UI更新
+            if (UIManager.Instance != null)
+            {
+                UIManager.Instance.UpdateStatText();
+            }
+            
+            Debug.Log("[SaveManager] 已完成游戏状态重新初始化");
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError($"[SaveManager] 删除存档文件失败: {ex.Message}");
         }
     }
     

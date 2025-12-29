@@ -248,7 +248,7 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
 
         System.Text.StringBuilder sb = new System.Text.StringBuilder();
         
-        sb.AppendLine($"<b>{policyItem.name}</b>");
+        sb.AppendLine($"{policyItem.name}");
         sb.AppendLine($"<color=#FFD700></color>");
         
         string typeText = GetPolicyTypeName(policyItem.type);
@@ -261,7 +261,7 @@ public class PolicyInShopTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
                 float multiple = Random.Range(0.8f, 1.2f);
                 policyValue = Mathf.FloorToInt(policyItem.cost * multiple * currentShopMult);
             }
-            sb.AppendLine($"<color=#FFD700>价格：</color>{policyValue} 年");
+            sb.AppendLine($"<color=#FFD700>价格：</color>{policyValue} ");
         }
         
         string usageText = policyItem.usageCount == -1 ? "无限" : policyItem.usageCount.ToString();

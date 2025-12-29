@@ -318,4 +318,12 @@ public class GameLifecycleManager : MonoBehaviour
         Debug.Log("[GameLifecycle] 退出游戏");
         Application.Quit();
     }
+    
+    // ===== 设置暂停状态（从存档恢复）=====
+    public void SetPausedState(string eventId, int sentenceIndex)
+    {
+        pausedEventId = eventId;
+        pausedSentenceIndex = sentenceIndex;
+        Debug.Log($"[GameLifecycle] 设置暂停状态: 事件={eventId}, 句子={sentenceIndex}");
+    }
 }

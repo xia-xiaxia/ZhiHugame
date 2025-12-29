@@ -488,15 +488,29 @@ public class EventDisplayUI : MonoBehaviour
             return;
         }
 
+        // 显示角色立绘
+        if (!string.IsNullOrEmpty(evt.speaker) && evt.speaker != "旁白")
+        {
+            CharacterManager.Instance?.ShowCharacter(evt.speaker);
+            if (speakerName != null) speakerName.text = evt.speaker;
+        }
+        else
+        {
+            if (speakerName != null) speakerName.text = string.Empty;
+        }
+
+        // 显示标题
+        if (titleText != null) titleText.text = evt.title ?? string.Empty;
+
         // 重新设置句子列表
         currentEventSentences.Clear();
-        currentEventSentences.Add(evt.title);
         if (!string.IsNullOrEmpty(evt.body))
         {
             currentEventSentences.AddRange(evt.body.Split('\n'));
         }
 
         // 从指定句子开始显示
+        waitingForSentence = true;
         if (sentenceIndex >= currentEventSentences.Count)
         {
             ShowEventOptions(eventId);
