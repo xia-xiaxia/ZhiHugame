@@ -163,4 +163,12 @@ public class EventSelector : MonoBehaviour
         }
         return new List<DelayedEventData>();
     }
+    
+    /// <summary>
+    /// 获取强制后继事件ID（用于存档）
+    /// </summary>
+    public string GetNextEventId()
+    {
+        return nextEventId ?? "0";
+    }
 }

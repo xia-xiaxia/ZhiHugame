@@ -85,6 +85,12 @@ public class EventDisplayUI : MonoBehaviour
     {
         Debug.Log($"[EventDisplayUI] 显示事件: {id}");
         currentEventId = id;
+        
+        // 设置事件显示标志，防止自动保存
+        if (SaveManager.Instance != null)
+        {
+            SaveManager.Instance.isEventDisplaying = true;
+        }
 
         if (EventManager.Instance == null)
         {
@@ -314,6 +320,12 @@ public class EventDisplayUI : MonoBehaviour
                 {
                     // 播放音效
                     MusicManager.Instance?.PlayButtonSound2();
+                    
+                    // 清除事件显示标志，允许保存
+                    if (SaveManager.Instance != null)
+                    {
+                        SaveManager.Instance.isEventDisplaying = false;
+                    }
 
                     // 应用选项效果
                     GameControl.Instance?.SaveStatsSnapshot();

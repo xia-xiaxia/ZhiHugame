@@ -484,8 +484,8 @@ public class StatModel : ScriptableObject
     private void ApplyAllStat(int _king_delta, int _noble_delta, int _scholar_delta, int _foreign_delta, int _people_delta)
     {
         ApplyStatChangeWithLock(1, "国君", _king_delta, ref _king, () => OnKingChanged?.Invoke(_king), () => BuffOnKingChanged(buff_king_delta));
-        ApplyStatChangeWithLock(2, "卿士", _noble_delta, ref _scholar, () => OnScholarChanged?.Invoke(_scholar), () => BuffOnNobleChanged(buff_noble_delta));
-        ApplyStatChangeWithLock(3, "宗族", _scholar_delta, ref _noble, () => OnNobleChanged?.Invoke(_noble), () => BuffOnScholarChanged(buff_scholar_delta));
+        ApplyStatChangeWithLock(3, "宗族", _noble_delta, ref _noble, () => OnNobleChanged?.Invoke(_noble), () => BuffOnNobleChanged(buff_noble_delta));
+        ApplyStatChangeWithLock(2, "卿士", _scholar_delta, ref _scholar, () => OnScholarChanged?.Invoke(_scholar), () => BuffOnScholarChanged(buff_scholar_delta));
         ApplyStatChangeWithLock(4, "外臣", _foreign_delta, ref _foreign, () => OnForeignChanged?.Invoke(_foreign), () => BuffOnForeignChanged(buff_foreign_delta));
         ApplyStatChangeWithLock(5, "庶人", _people_delta, ref _people, () => OnPeopleChanged?.Invoke(_people), () => BuffOnPeopleChanged(buff_people_delta));
         OnStatsChanged?.Invoke();
