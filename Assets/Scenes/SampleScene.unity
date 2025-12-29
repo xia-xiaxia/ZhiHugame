@@ -24375,7 +24375,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventJsons:
   - {fileID: 4900000, guid: 0c375baa94c57d840b28d08a1aec0fac, type: 3}
-  - {fileID: 4900000, guid: 89b9b78b287ced34599e241d02eb7cbc, type: 3}
+  - {fileID: 4900000, guid: 25c77cecb44ce964a913a8a7a3631530, type: 3}
+  - {fileID: 4900000, guid: e3e8c5af1f63ba04c85db6eb72c494b8, type: 3}
+  - {fileID: 4900000, guid: 280ff24e1af95ec47894f9f3b7f30fc8, type: 3}
 --- !u!1 &1575687375
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 
 public class MissionUI : MonoBehaviour
 {
     public static MissionUI Instance;
 
-    //µ±Ç°ÔÚµÚ¼¸Ò³
+    //å½“å‰åœ¨ç¬¬å‡ é¡µ
     public int nowPage = 1;
     private int maxPage = 1;
 
@@ -30,7 +29,7 @@ public class MissionUI : MonoBehaviour
         nowPage = 1;
     }
 
-    //¹©buttonµ÷ÓÃ
+    //ä¾›buttonè°ƒç”¨
     public void DisplayWithReward()
     {
         canReward = true;
@@ -47,7 +46,7 @@ public class MissionUI : MonoBehaviour
     {
         missionMenu.SetActive(true);
 
-        //Ä¿Ç°µÄÂß¼­ÊÇÔÚ¼¤»îMenuµÄÊ±ºòÅĞ¶ÏÈÎÎñÊÇ·ñÍê³É
+        //ç›®å‰çš„é€»è¾‘æ˜¯åœ¨æ¿€æ´»Menuçš„æ—¶å€™åˆ¤æ–­ä»»åŠ¡æ˜¯å¦å®Œæˆ
         MissionManager.Instance.CheckComplete();
 
         RefreshPage();
@@ -102,7 +101,7 @@ public class MissionUI : MonoBehaviour
 
     private void DisplayPageNum()
     {
-        pageNum.text = nowPage.ToString() + "/" + maxPage.ToString() + "Ò³";
+        pageNum.text = nowPage.ToString() + "/" + maxPage.ToString() + "é¡µ";
     }
 
 }
