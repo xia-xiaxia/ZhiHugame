@@ -235,6 +235,12 @@ public class GameLifecycleManager : MonoBehaviour
 
     private IEnumerator RestartGameAnimationCoroutine()
     {
+        // 确保jinYan显示
+        if (UIManager.Instance?.jinYan != null)
+        {
+            UIManager.Instance.jinYan.SetActive(true);
+        }
+        
         if (objectsAboutEvent != null)
         {
             objectsAboutEvent.SetActive(false);
@@ -248,6 +254,10 @@ public class GameLifecycleManager : MonoBehaviour
         }
         
         RefreshAllStatFilledImages();
+        
+        // 确保isGameStarting为false，允许ProcessNextTurn执行
+        isGameStarting = false;
+        
         TurnManager.Instance?.ProcessNextTurn();
         
         Debug.Log("[GameLifecycle] 重开游戏动画完成");

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -36,10 +37,12 @@ public class PolicyShopUI : MonoBehaviour
     public Queue<GameObject> activePurchaseConfirms = new Queue<GameObject>();
 
     // 刷新相关
+    public TextMeshProUGUI currentRefreshCostText;
     private int maxRefreshCount = 4;
     private int[] refreshCosts = new int[4] { 5, 10, 20, 50 };
     private int refreshCount = 0;
     private float currentCurrency = 0;
+    
 
     // 验证刷新费用数组：为空或全为非正数则回退默认
     private int[] ValidateRefreshCosts(int[] source)
@@ -170,6 +173,7 @@ public class PolicyShopUI : MonoBehaviour
         }
         
         Debug.Log($"[PolicyShopUI] 商店显示完成：生成了 {shopItems.Count} 个商品，显示了 {displayCount} 个");
+        currentRefreshCostText.text = refreshCount < maxRefreshCount ? $"花费：{refreshCosts[refreshCount]}" : "—";
 
         // 绑定按钮
         BindButtons();
@@ -314,6 +318,7 @@ public class PolicyShopUI : MonoBehaviour
         }
         
         Debug.Log($"[PolicyShopUI] 刷新商店完成：生成了 {shopItems.Count} 个商品，显示了 {displayCount} 个");
+        currentRefreshCostText.text = refreshCount < maxRefreshCount ? $"花费：{refreshCosts[refreshCount]}" : "—";
 
     }
 
