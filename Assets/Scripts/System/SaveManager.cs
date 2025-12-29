@@ -250,6 +250,12 @@ public class SaveManager : MonoBehaviour
                 UIManager.Instance.UpdateStatText();
             }
             
+            // 刷新锁定特效显示
+            if (StatsDisplayUI.Instance != null)
+            {
+                StatsDisplayUI.Instance.RefreshLockEffectsFromModel();
+            }
+            
             return true;
         }
         catch (System.Exception e)

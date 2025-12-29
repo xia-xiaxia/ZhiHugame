@@ -121,6 +121,29 @@ public class StatsDisplayUI : MonoBehaviour
     }
     
     /// <summary>
+    /// 重置锁定特效状态（游戏重启时调用）
+    /// </summary>
+    public void ResetLockEffects()
+    {
+        // 恢复所有可能被隐藏的图标
+        if (kingIcon != null) kingIcon.enabled = true;
+        if (nobleIcon != null) nobleIcon.enabled = true;
+        if (scholarIcon != null) scholarIcon.enabled = true;
+        if (foreignIcon != null) foreignIcon.enabled = true;
+        if (peopleIcon != null) peopleIcon.enabled = true;
+        
+        // 隐藏锁定特效
+        if (sharedLockEffect != null)
+        {
+            sharedLockEffect.SetActive(false);
+        }
+        
+        currentLockedLayer = -1;
+        
+        Debug.Log("[StatsDisplayUI] 锁定特效已重置");
+    }
+    
+    /// <summary>
     /// 处理锁定状态改变事件
     /// </summary>
     private void OnLayerLockChanged(int layer, bool lockIncrease, bool isAdded)
@@ -210,6 +233,29 @@ public class StatsDisplayUI : MonoBehaviour
             HideLockEffect();
         }
     }
+
+/// <summary>
+/// 从数据刷新锁定特效显示（加载游戏时调用）
+/// </summary>
+public void RefreshLockEffectsFromModel()
+{
+    if (stats == null)
+    {
+        Debug.LogWarning("[StatsDisplayUI] stats为空，无法刷新锁定特效");
+        return;
+    }
+    
+    // 先重置所有状态
+    ResetLockEffects();
+    
+    // 如果有锁定数据，显示第一个锁定的特效
+    if (stats.activeLayerLocks != null && stats.activeLayerLocks.Count > 0)
+    {
+        int firstLockedLayer = stats.activeLayerLocks[0].layer;
+        ShowLockEffectAtLayer(firstLockedLayer);
+        Debug.Log($"[StatsDisplayUI] 从存档恢复锁定特效显示 - 阶层:{firstLockedLayer}");
+    }
+}
     
     /// <summary>
     /// 隐藏锁定特效

@@ -193,6 +193,9 @@ public class GameLifecycleManager : MonoBehaviour
         UIManager.Instance?.HideEndingPanel();
         UIManager.Instance?.UpdateStatText();
         
+        // 重置锁定特效状态
+        StatsDisplayUI.Instance?.ResetLockEffects();
+        
         RefreshAllStatFilledImages();
 
         EventManager.Instance?.ReloadAllEventsForRestart();
