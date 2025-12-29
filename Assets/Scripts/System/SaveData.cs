@@ -456,7 +456,6 @@ public class SaveData
         if (this.judgeFirstYear != null && this.judgeFirstYear.Length != 0) stats.judgeFirstYear = (int[])this.judgeFirstYear.Clone();
         else stats.judgeFirstYear = new int[100];
 
-        stats.activeMissions = new List<int>();
         if(this.activeMissions != null) stats.activeMissions = new List<int>(this.activeMissions);
 
         // 还原字典: policyUsageCount

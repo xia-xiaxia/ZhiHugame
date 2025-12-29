@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162da53cb023ce34bbddf3e852d3731d, type: 3}
   m_Name: 11
   m_EditorClassIdentifier: 
-  year: 0
-  _currency: 34
-  _king: 30
+  year: 3
+  _currency: 0
+  _king: 50
   _noble: 30
   _scholar: 30
-  _foreign: 30
+  _foreign: 10
   _people: 30
   _talentPoints: 0
   _policyBagSize: 3

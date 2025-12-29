@@ -123,6 +123,7 @@ public class MissionManager : MonoBehaviour
     public void StartNewGame()
     {
         newActiveMissions.Clear();
+
     }
 
     void LoadMissions()
@@ -207,6 +208,7 @@ public class MissionManager : MonoBehaviour
         {
             if(!isComplete(m.id) && m.CheckPreMissions() && !activeMissions.Contains(int.Parse(m.id) - 1))
             {
+                Debug.Log("[MissionManager] 任务" + m.id + " 已发放");
                 activeMissions.Add(int.Parse(m.id) - 1);
                 newActiveMissions.Add(int.Parse(m.id) - 1);
                 statistics.Register(m);
@@ -250,6 +252,7 @@ public class CurrentReignCondition : MissionCondition
 {
     public override bool CheckComplete(GameStatistics gameStatistics, string id = null)
     {
+        Debug.Log(gameStatistics.currentReignYears + "    " + paramList[0]);
         return gameStatistics.currentReignYears >= paramList[0];
     }
 }
