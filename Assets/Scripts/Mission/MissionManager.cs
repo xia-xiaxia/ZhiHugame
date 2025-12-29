@@ -62,6 +62,8 @@ public class MissionData
                 PolicyItem newItem = PolicyManager.Instance.GetPolicy(id);
                 GameControl.Instance.AddPolicy(newItem);
             }
+
+            PolicyShopUI.Instance.RefreshInventoryDisplay();
         }
         
         //获得天赋点
