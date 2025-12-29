@@ -77,7 +77,7 @@ public class TalentInfoUI : MonoBehaviour
         }
         
         // 天赋名称
-        info += $"<b><size=120%>{talent.name}</size></b>\n\n";
+        info += $"<size=120%>{talent.name}</size>/\n\n";
         
         // 天赋描述
         info += $"{talent.description}\n\n";
@@ -86,7 +86,7 @@ public class TalentInfoUI : MonoBehaviour
         // // 前置天赋
         // if (talent.preTalentObjects != null && talent.preTalentObjects.Count > 0)
         // {
-        //     info += "<b>前置天赋：</b>\n";
+        //     info += "<前置天赋：\n";
         //     foreach (var preTalent in talent.preTalentObjects)
         //     {
         //         bool preActivated = TalantManager.Instance.IsTalentActivated(preTalent.id);
@@ -97,15 +97,15 @@ public class TalentInfoUI : MonoBehaviour
         // }
         // else
         // {
-        //     info += "<b>前置天赋：</b>无\n\n";
+        //     info += "<无>前置天赋：无\n\n";
         // }
 
         // 天赋消耗
         int currentPoints = TalantManager.Instance.currentTalentPoints;
         bool hasEnoughPoints = currentPoints >= talent.cost;
         string costColor = hasEnoughPoints ? "<color=green>" : "<color=red>";
-        info += $"<b>消耗：</b>{costColor}{talent.cost}</color> 天赋点\n";
-        // info += $"<b>当前天赋点：</b>{currentPoints}\n\n";
+        info += $"消耗：{costColor}{talent.cost}</color> 天赋点\n";
+        // info += $"当前天赋点：{currentPoints}\n\n";
         
         // // 天赋效果
         // info += GetTalentEffectDescription(talent.talentEffect);

@@ -226,7 +226,7 @@ public class PolicyInInventoryTrigger : MonoBehaviour, IPointerEnterHandler, IPo
 
         System.Text.StringBuilder sb = new System.Text.StringBuilder();
         
-        sb.AppendLine($"{policyItem.name}");
+        sb.AppendLine($"<size=120%>{policyItem.name}</size>");
         sb.AppendLine($"<color=#FFD700></color>");
         
         string typeText = GetPolicyTypeName(policyItem.type);
