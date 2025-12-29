@@ -53,14 +53,9 @@ public class SaveManager : MonoBehaviour
     
     private void OnApplicationQuit()
     {
-        // 退出时自动保存
+        // 退出时自动保存（包括暂停状态）
         if (autoSaveOnExit)
         {
-            if (isEventDisplaying)
-            {
-                Debug.LogWarning("[SaveManager] 事件正在显示中，跳过自动保存以防止状态不一致");
-                return;
-            }
             Debug.Log("[SaveManager] 应用程序退出，自动保存游戏");
             SaveGame();
         }
@@ -72,11 +67,6 @@ public class SaveManager : MonoBehaviour
         #if UNITY_ANDROID || UNITY_IOS
         if (pauseStatus && autoSaveOnExit)
         {
-            if (isEventDisplaying)
-            {
-                Debug.LogWarning("[SaveManager] 事件正在显示中，跳过自动保存以防止状态不一致");
-                return;
-            }
             Debug.Log("[SaveManager] 应用程序暂停，自动保存游戏");
             SaveGame();
         }
@@ -240,6 +230,17 @@ public class SaveManager : MonoBehaviour
                 {
                     EventSelector.Instance.SetNextEventId(saveData.nextEventId);
                     Debug.Log($"[SaveManager] 从存档恢复强制后继事件: {saveData.nextEventId}");
+                }
+            }
+            
+            // 恢复暂停状态（正在显示的事件）
+            if (!string.IsNullOrEmpty(saveData.pausedEventId))
+            {
+                if (GameLifecycleManager.Instance != null)
+                {
+                    GameLifecycleManager.Instance.SetPausedState(saveData.pausedEventId, saveData.pausedSentenceIndex);
+                    GameLifecycleManager.Instance.GamePaused = true;
+                    Debug.Log($"[SaveManager] 恢复暂停状态: 事件={saveData.pausedEventId}, 句子={saveData.pausedSentenceIndex}");
                 }
             }
             

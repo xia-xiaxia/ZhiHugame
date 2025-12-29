@@ -62,6 +62,10 @@ public class SaveData
     // 强制后继事件ID（EventSelector的nextEventId）
     public string nextEventId = "0";
     
+    // 暂停状态（正在显示的事件）
+    public string pausedEventId = "";
+    public int pausedSentenceIndex = 0;
+    
     // 已使用的事件ID（防止重复）
     public List<UsedEventData> usedEvents = new List<UsedEventData>();
     
@@ -291,6 +295,13 @@ public class SaveData
         {
             data.delayedEventQueue = EventSelector.Instance.GetSaveData();
             data.nextEventId = EventSelector.Instance.GetNextEventId();
+        }
+        
+        // 保存暂停状态（正在显示的事件）
+        if (EventDisplayUI.Instance != null)
+        {
+            data.pausedEventId = EventDisplayUI.Instance.GetCurrentEventId() ?? "";
+            data.pausedSentenceIndex = EventDisplayUI.Instance.GetCurrentSentenceIndex();
         }
         
         return data;
