@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162da53cb023ce34bbddf3e852d3731d, type: 3}
   m_Name: 11
   m_EditorClassIdentifier: 
-  year: 0
-  _currency: 69
+  year: 1
+  _currency: 3
   _king: 30
   _noble: 30
   _scholar: 30
   _foreign: 30
   _people: 30
-  _talentPoints: 7
-  _policyBagSize: 3
+  _talentPoints: 0
+  _policyBagSize: 4
   _payBackCurrency: 0
   _shopMult: 1
   _currencyMult: 1
-  _policyShopCount: 5
+  _policyShopCount: 4
   king_delta: 0
   noble_delta: 0
   scholar_delta: 0
@@ -45,27 +45,10 @@ MonoBehaviour:
   foreignMax: 60
   peopleMin: 0
   peopleMax: 60
-  policyBag:
-  - id: 102
-    name: "\u517C\u5BB9\u5E76\u84C4"
-    result: "\u5916\u81E3\u52BF\u529B\u6301\u7EED\u5927\u5E45\u4E0A\u5347"
-    desc: "\u9F13\u52B1\u5404\u56FD\u7684\u5404\u6D3E\u5B66\u8BF4\u4F20\u4EBA\u6765\u6211\u56FD\u4EA4\u6D41"
-    type: 5
-    usageCount: -1
-    cost: 50
-    targetLayers: 04000000
-    deathEffectText: 
-    kingChange: 0
-    nobleChange: 0
-    scholarChange: 0
-    foreignChange: 0
-    peopleChange: 0
-    triggeredBuffId: 102
-    lockDuration: 0
+  policyBag: []
   buffBag: []
   delayedEventQueue: []
-  activatedTalents:
-  - 3
+  activatedTalents: []
   refreshPolicyShopCost: 050000000a0000001400000032000000
   hasSeenTutorial: 1
   activeLayerLocks: []
