@@ -523,7 +523,7 @@ MonoBehaviour:
   m_text: "\u82B1\u8D39\uFF1A"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4516934cfa70c51488d5f8c18d5a1262, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 6003010242034458596, guid: 4516934cfa70c51488d5f8c18d5a1262, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -542,7 +542,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -4917,7 +4917,7 @@ MonoBehaviour:
   m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4516934cfa70c51488d5f8c18d5a1262, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 6003010242034458596, guid: 4516934cfa70c51488d5f8c18d5a1262, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9143,7 +9143,7 @@ MonoBehaviour:
   m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4516934cfa70c51488d5f8c18d5a1262, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 6003010242034458596, guid: 4516934cfa70c51488d5f8c18d5a1262, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -12862,7 +12862,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 2560, y: 1440}
-  m_ScreenMatchMode: 2
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -13421,13 +13421,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprites:
-  - {fileID: 21300000, guid: b4ceff0dc5edf2743bb5451513a6e729, type: 3}
-  - {fileID: 21300000, guid: 8aca30e926d069c43aaabb1aa23e77ba, type: 3}
-  - {fileID: 21300000, guid: f2ebe2779d2b4744e93840314e22c09c, type: 3}
-  - {fileID: 21300000, guid: ec88afd7900e75c44ae858127bc35310, type: 3}
-  - {fileID: 21300000, guid: edeb4bb25109f01419682f6ca2cf5861, type: 3}
-  - {fileID: 21300000, guid: f2672bdf03be73748a08673e482ec2f4, type: 3}
-  - {fileID: 21300000, guid: 4a99cbeff1ba3a845a32a0c681e4122e, type: 3}
+  - {fileID: 21300000, guid: 3b23c0de3209f61449d1866bf969304b, type: 3}
+  - {fileID: 21300000, guid: 69415fdf77ff2dd46af8839b36853625, type: 3}
+  - {fileID: 21300000, guid: 64191b56f10de2a418cba564633146ba, type: 3}
+  - {fileID: 21300000, guid: b923157d52d65894685f1273095397cb, type: 3}
+  - {fileID: 21300000, guid: 26e25879ae24e6e42943b35a862b0319, type: 3}
+  - {fileID: 21300000, guid: ee596949f637e0d4988ea512e4dfe560, type: 3}
+  - {fileID: 21300000, guid: 1d9e63542824c224c9e6354eecd0a107, type: 3}
   character: {fileID: 1009594979}
   entryTime: 1.2
   minBrightness: 0.2

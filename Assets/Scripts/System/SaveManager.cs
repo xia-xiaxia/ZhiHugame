@@ -86,6 +86,12 @@ public class SaveManager : MonoBehaviour
         
         try
         {
+            // 同步最新年份，避免 TurnManager 与 StatModel 不一致
+            if (TurnManager.Instance != null)
+            {
+                stats.year = TurnManager.Instance.year;
+            }
+
             // 从StatModel创建存档数据（包含事件使用状态和延时事件）
             SaveData saveData = SaveData.FromStatModel(stats);
             

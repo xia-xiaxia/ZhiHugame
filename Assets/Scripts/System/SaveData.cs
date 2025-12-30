@@ -119,9 +119,10 @@ public class SaveData
     public static SaveData FromStatModel(StatModel stats)
     {
         GameStatistics gameStatistics = GameControl.Instance.gameStatistics;
+        int currentYear = TurnManager.Instance != null ? TurnManager.Instance.year : stats.year;
         SaveData data = new SaveData
         {
-            year = stats.year,
+            year = currentYear,
             currency = stats.currency,
             king = stats.king,
             noble = stats.noble,
@@ -356,6 +357,11 @@ public class SaveData
         stats.buff_people_delta = buff_people_delta;
 
         stats.hasSeenTutorial = hasSeenTutorial;
+
+        if (TurnManager.Instance != null)
+        {
+            TurnManager.Instance.year = year;
+        }
         
         // 恢复天赋系统数据
         stats.talentPoints = currentTalentPoints;
