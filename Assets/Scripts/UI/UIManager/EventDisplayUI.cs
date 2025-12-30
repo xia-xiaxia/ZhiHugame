@@ -21,6 +21,8 @@ public class EventDisplayUI : MonoBehaviour
     public Button[] optionButtons = new Button[4];
     public Button nextSentenceButton;
     public Button autoPlayButton;
+    public GameObject autoPlayOn;
+    public GameObject autoPlayOff;
 
     // 内部状态
     public List<string> currentEventSentences = new List<string>();
@@ -53,7 +55,7 @@ public class EventDisplayUI : MonoBehaviour
         {
             autoPlayButton.onClick.RemoveAllListeners();
             autoPlayButton.onClick.AddListener(OnAutoPlayClicked);
-            UpdateAutoPlayButtonLabel();
+            UpdateAutoPlayButton();
         }
     }
 
@@ -388,7 +390,7 @@ public class EventDisplayUI : MonoBehaviour
     private void OnAutoPlayClicked()
     {
         autoPlayEnabled = !autoPlayEnabled;
-        UpdateAutoPlayButtonLabel();
+        UpdateAutoPlayButton();
 
         if (!autoPlayEnabled)
         {
@@ -418,15 +420,19 @@ public class EventDisplayUI : MonoBehaviour
     }
 
     /// <summary>
-    /// 更新自动播放按钮文字
+    /// 更新自动播放按钮图片
     /// </summary>
-    private void UpdateAutoPlayButtonLabel()
+    private void UpdateAutoPlayButton()
     {
-        if (autoPlayButton == null) return;
-        
-        var txt = autoPlayButton.GetComponentInChildren<Text>();
-        if (txt != null)
-            txt.text = autoPlayEnabled ? "自动播放：开" : "自动播放：关";
+        if(!autoPlayEnabled)
+        {
+            autoPlayOn.SetActive(true);
+            autoPlayOff.SetActive(false);
+        } else
+        {
+            autoPlayOn.SetActive(false);
+            autoPlayOff.SetActive(true);
+        }
     }
 
     /// <summary>
