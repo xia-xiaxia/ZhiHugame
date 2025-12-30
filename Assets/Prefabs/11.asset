@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 11
   m_EditorClassIdentifier: 
   year: 0
-  _currency: 64
+  _currency: 69
   _king: 30
   _noble: 30
   _scholar: 30
