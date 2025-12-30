@@ -264,8 +264,9 @@ public class EndingManager : MonoBehaviour
         MusicManager.Instance?.PlayDeathSound();
 
         // 累计货币
-        stats.currency += TurnManager.Instance.year;
-        Debug.Log($"[EndingManager] 本局存活 {TurnManager.Instance.year} 年，累计货币: {stats.currency}");
+        int survivedYears = TurnManager.Instance.year;
+        stats.currency += survivedYears;
+        Debug.Log($"[EndingManager] 本局存活 {survivedYears} 年，累计货币: {stats.currency}");
 
         // 重置数值（保留货币和道具，清除BUFF）
         int savedCurrency = stats.currency;
@@ -273,6 +274,13 @@ public class EndingManager : MonoBehaviour
         stats.ResetToDefault();
         stats.currency = savedCurrency;
         stats.policyBag = savedPolicies;
+        
+        // 立即重置TurnManager的年份，防止退出时保存错误状态
+        if (TurnManager.Instance != null)
+        {
+            TurnManager.Instance.year = 1;
+            Debug.Log("[EndingManager] 已重置TurnManager年份为1");
+        }
         PolicyShopUI.Instance?.reRefreshCount(0);
         
         Debug.Log($"[EndingManager] 死亡时重置数值，保留货币 {savedCurrency} 和道具 {savedPolicies.Count} 个，清除所有BUFF");
@@ -280,7 +288,7 @@ public class EndingManager : MonoBehaviour
         // 生成新商店道具
         PolicyManager.Instance?.GenerateShopItems(stats.policyShopCount);
 
-        StartCoroutine(ShowEndingAfterDelay(endingId, endingDescription, TurnManager.Instance.year));
+        StartCoroutine(ShowEndingAfterDelay(endingId, endingDescription, survivedYears));
     }
 
     // ===== 延迟显示结局面板 =====

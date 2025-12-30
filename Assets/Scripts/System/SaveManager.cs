@@ -56,6 +56,13 @@ public class SaveManager : MonoBehaviour
         // 退出时自动保存（包括暂停状态）
         if (autoSaveOnExit)
         {
+            // 如果游戏已结束，不保存以避免保存错误状态
+            if (GameLifecycleManager.Instance != null && GameLifecycleManager.Instance.GameOver)
+            {
+                Debug.Log("[SaveManager] 游戏已结束，跳过自动保存");
+                return;
+            }
+            
             Debug.Log("[SaveManager] 应用程序退出，自动保存游戏");
             SaveGame();
         }
