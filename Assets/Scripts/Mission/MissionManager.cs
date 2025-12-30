@@ -73,7 +73,7 @@ public class MissionData
         if (randomEventSet != 0)
         {
             EventDatabase.Instance?.ActivateEventSetById(randomEventSet);
-            Debug.Log($"[OptionEffectHandler] 更新激活事件集: {randomEventSet}");
+            Debug.Log($"[MissionManager] 更新激活事件集: {randomEventSet}");
         }
 
         GameControl.Instance.gameStatistics.UnRegister(id);
