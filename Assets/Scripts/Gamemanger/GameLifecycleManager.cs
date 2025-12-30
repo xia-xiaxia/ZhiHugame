@@ -157,6 +157,9 @@ public class GameLifecycleManager : MonoBehaviour
 
         //全局统计的初始化
         GameControl.Instance.gameStatistics.Restart();
+
+        //Buff显示
+        BuffManager.Instance.ShowBuff();
         
         UIManager.Instance?.UpdateStatText();
         UIManager.Instance?.UpdateCurrencyDisplay();

@@ -203,24 +203,24 @@ public class StatEffectController : MonoBehaviour
         switch (statType)
         {
             case StatType.King:
-                stats.BuffOnKingChanged += PlayBuffAnime;
+                //stats.BuffOnKingChanged += PlayBuffAnime;
                 stats.OnKingChanged += OnValueChanged;
                 break;
                 
             case StatType.Noble:
-                stats.BuffOnNobleChanged += PlayBuffAnime;
+                //stats.BuffOnNobleChanged += PlayBuffAnime;
                 stats.OnNobleChanged += OnValueChanged;
                 break;
             case StatType.Scholar:
-                stats.BuffOnScholarChanged += PlayBuffAnime;
+                //stats.BuffOnScholarChanged += PlayBuffAnime;
                 stats.OnScholarChanged += OnValueChanged;
                 break;
             case StatType.Foreign:
-                stats.BuffOnForeignChanged += PlayBuffAnime;
+                //stats.BuffOnForeignChanged += PlayBuffAnime;
                 stats.OnForeignChanged += OnValueChanged;
                 break;
             case StatType.People:
-                stats.BuffOnPeopleChanged += PlayBuffAnime;
+                //stats.BuffOnPeopleChanged += PlayBuffAnime;
                 stats.OnPeopleChanged += OnValueChanged;
                 break;
         }
@@ -236,23 +236,23 @@ public class StatEffectController : MonoBehaviour
         switch (statType)
         {
             case StatType.King:
-                stats.BuffOnKingChanged -= PlayBuffAnime;
+                //stats.BuffOnKingChanged -= PlayBuffAnime;
                 stats.OnKingChanged -= OnValueChanged;
                 break;
             case StatType.Noble:
-                stats.BuffOnNobleChanged -= PlayBuffAnime;
+                //stats.BuffOnNobleChanged -= PlayBuffAnime;
                 stats.OnNobleChanged -= OnValueChanged;
                 break;
             case StatType.Scholar:
-                stats.BuffOnScholarChanged -= PlayBuffAnime;
+                //stats.BuffOnScholarChanged -= PlayBuffAnime;
                 stats.OnScholarChanged -= OnValueChanged;
                 break;
             case StatType.Foreign:
-                stats.BuffOnForeignChanged -= PlayBuffAnime;
+                //stats.BuffOnForeignChanged -= PlayBuffAnime;
                 stats.OnForeignChanged -= OnValueChanged;
                 break;
             case StatType.People:
-                stats.BuffOnPeopleChanged -= PlayBuffAnime;
+                //stats.BuffOnPeopleChanged -= PlayBuffAnime;
                 stats.OnPeopleChanged -= OnValueChanged;
                 break;
         }

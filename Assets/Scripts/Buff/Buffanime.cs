@@ -20,6 +20,23 @@ public class Buffanime : MonoBehaviour
         duration = GetComponent<StatEffectController>().effectDuration;
     }
 
+    public void ShowBuff(int delta)
+    {
+        if(delta > 0)
+        {
+            buffImage1.SetActive(true);
+            buffImage2.SetActive(false);
+        } else if(delta < 0)
+        {
+            buffImage1.SetActive(false);
+            buffImage2.SetActive(true);
+        } else
+        {
+            buffImage1.SetActive(false);
+            buffImage2.SetActive(false);
+        }
+    }
+
     public void PlayBuffAnime(int delta)
     {
 
