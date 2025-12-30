@@ -54,7 +54,7 @@
   },
   {
     "id": "005",
-    "name": "九溪的改革-壹",
+    "name": "九溪的改革-陆",
     "description": "支持并完成九溪的货币改革",
     "rewardTalent": 2,
     "preMissionIds": ["002", "003"],
@@ -67,7 +67,7 @@
   },
   {
     "id": "006",
-    "name": "九溪的改革-贰",
+    "name": "九溪的改革-壹",
     "description": "支持九溪铸刑书并在铸刑书后坚持五年",
     "rewardTalent": 2,
     "preMissionIds": ["003"],
@@ -80,7 +80,7 @@
   },
   {
     "id": "007",
-    "name": "九溪的改革-叁",
+    "name": "九溪的改革-贰",
     "description": "支持九溪维护田籍并坚持五年",
     "rewardTalent": 2,
     "preMissionIds": ["003"],
@@ -243,7 +243,7 @@
   },
   {
     "id": "019",
-    "name": "九溪的改革-肆",
+    "name": "九溪的改革-叁",
     "description": "在九溪发问时鼓励庶人开荒",
     "rewardTalent": 2,
     "preMissionIds": ["008"],
@@ -256,7 +256,7 @@
   },
   {
     "id": "020",
-    "name": "九溪的改革-伍",
+    "name": "九溪的改革-肆",
     "description": "在九溪发问时推行三世收爵改革并坚持八年",
     "rewardTalent": 2,
     "rewardPolicyId": ["103"],
@@ -270,7 +270,7 @@
   },
   {
     "id": "021",
-    "name": "九溪的改革-陆",
+    "name": "九溪的改革-伍",
     "description": "在九溪发问时推行采邑改革并坚持八年",
     "rewardTalent": 2,
     "rewardPolicyId": ["103"],
