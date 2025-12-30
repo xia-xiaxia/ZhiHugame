@@ -1,5 +1,6 @@
 using System.Collections;
 using JetBrains.Annotations;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,6 +22,7 @@ public class EndingUI : MonoBehaviour
     public GameObject endImageContainer;
     public Image endAnimationImage; // the white image for splash
     public float animationDuration = 0.8f;
+    public TextMeshProUGUI getCurrencyText;
 
     void Awake()
     {
@@ -33,6 +35,7 @@ public class EndingUI : MonoBehaviour
         if (endingPanel != null)
         {
             endingPanel.SetActive(false);
+            getCurrencyText.text = "";
         }
     }
 
@@ -171,6 +174,7 @@ public class EndingUI : MonoBehaviour
         {
             endingYearText.text = $"执政:  {targetYear}  年";
         }
+        getCurrencyText.text = $"获得经验：{(int)(targetYear * GameControl.Instance.stats.currencyMult)+1} ";
     }
 
     /// <summary>

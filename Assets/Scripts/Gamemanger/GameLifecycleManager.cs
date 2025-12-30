@@ -193,6 +193,21 @@ public class GameLifecycleManager : MonoBehaviour
         pausedSentenceIndex = 0;
         isGameStarting = false;
 
+        // 重置数值到当前阈值的中间值（保留天赋效果）
+        int kingMid = (stats.kingMin + stats.kingMax) / 2;
+        int nobleMid = (stats.nobleMin + stats.nobleMax) / 2;
+        int scholarMid = (stats.scholarMin + stats.scholarMax) / 2;
+        int foreignMid = (stats.foreignMin + stats.foreignMax) / 2;
+        int peopleMid = (stats.peopleMin + stats.peopleMax) / 2;
+
+        stats.king = kingMid;
+        stats.noble = nobleMid;
+        stats.scholar = scholarMid;
+        stats.foreign = foreignMid;
+        stats.people = peopleMid;
+        
+        Debug.Log($"[GameLifecycle] 重开游戏数值重置 - 国君:{kingMid} 宗族:{nobleMid} 卿士:{scholarMid} 外臣:{foreignMid} 庶人:{peopleMid}");
+
         UIManager.Instance?.HideEndingPanel();
         UIManager.Instance?.UpdateStatText();
         
