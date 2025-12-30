@@ -36,6 +36,10 @@ public class BuffManager : MonoBehaviour
     
     public List<BuffDefinition> buffs = new List<BuffDefinition>();
 
+    public List<Buffanime> animes = new List<Buffanime>();
+
+    private int[] deltas = new int[5];
+
     // activeBuffs 现在引用 stats.buffBag
     // 不再使用私有列表，改为通过属性访问 StatModel 中的 buffBag
     private List<BuffDefinition> ActiveBuffs
@@ -116,6 +120,7 @@ public class BuffManager : MonoBehaviour
         }
         
         ActiveBuffs.Add(buffInstance);
+        ShowBuff();
         Debug.Log($"[BuffManager] 添加Buff: {buffInstance.name} (ID: {buffInstance.id}, 时限: {buffInstance.duration})");
     }
 
@@ -124,6 +129,26 @@ public class BuffManager : MonoBehaviour
     {
         ActiveBuffs.Remove(buff);
         Debug.Log($"[BuffManager] 移除Buff: {buff.name} (ID: {buff.id})");
+        ShowBuff();
+    }
+
+    public void ShowBuff()
+    {
+        for (int i = 0; i < 5; i++) deltas[i] = 0;
+
+        foreach(var abuff in ActiveBuffs)
+        {
+            deltas[0] += abuff.kingChange;
+            deltas[1] += abuff.nobleChange;
+            deltas[2] += abuff.scholarChange;
+            deltas[3] += abuff.foreignChange;
+            deltas[4] += abuff.peopleChange;
+        }
+
+        for(int i =0; i < 5; i++)
+        {
+            animes[i].ShowBuff(deltas[i]);
+        }
     }
 
     // 每年结束时调用

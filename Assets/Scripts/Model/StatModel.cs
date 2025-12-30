@@ -530,7 +530,8 @@ public class StatModel : ScriptableObject
 
         statValue += delta;
         onChanged?.Invoke();
-        BuffonChanged?.Invoke();
+        //去除第一版的Buffd动画实现
+        //BuffonChanged?.Invoke();
     }
 
     // 事件，当属性变化时触发

@@ -105,6 +105,9 @@ public class GameStatistics : ScriptableObject
                     runsWithLongReign[key] = (limit, count + 1);
                 }
             }
+
+            //游戏结束的时候检测一次任务
+            MissionManager.Instance.CheckComplete();
         }
         else
         {
