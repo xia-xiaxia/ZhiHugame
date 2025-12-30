@@ -106,6 +106,14 @@ public class EventDatabase : MonoBehaviour
         Debug.Log($"加载完毕。事件库大小: {globalEventDict.Count}，随机池剩余: {availableEventIds.Count}");
     }
 
+    /// <summary>
+    /// 获取当前激活的事件总数
+    /// </summary>
+    public int GetTotalEventCount()
+    {
+        return globalEventDict.Count;
+    }
+
     // 根据 ID 获取事件 (这里的 ID 必须是带前缀的唯一 ID)
     public GameEvent GetEvent(string globalId)
     {
@@ -202,6 +210,12 @@ public class EventDatabase : MonoBehaviour
     /// </summary>
     public void ActivateEventSetById(int[] randomEventSet)
     {
+        if (randomEventSet == null || randomEventSet.Length == 0)
+        {
+            Debug.LogWarning("[EventDatabase] 传入的事件集数组为空，不执行任何操作");
+            return;
+        }
+
         foreach (var fileid in randomEventSet)
         {
             if(fileid < 0)
@@ -216,7 +230,6 @@ public class EventDatabase : MonoBehaviour
                 {
                     Debug.LogWarning($"[EventDatabase] 关闭事件集失败: 索引 {index} 越界");
                 }
-                continue;
             }
             else if(fileid > 0)
             {
@@ -233,6 +246,10 @@ public class EventDatabase : MonoBehaviour
                 {
                     Debug.LogWarning($"[EventDatabase] 激活事件集失败: 索引 {index} 越界");
                 }
+            }
+            else
+            {
+                Debug.LogWarning($"[EventDatabase] 跳过无效的事件集ID: {fileid} (0表示无操作)");
             }
         }
         LoadEvents(activeEventJsons);
@@ -289,8 +306,6 @@ public class EventDatabase : MonoBehaviour
 
     public void ActivateEventSetById(int randomEventSet)
     {
-        List<TextAsset> activeEventJsons = eventJsons;
-
         if (randomEventSet < 0)
         {
             int index = -randomEventSet - 1;
@@ -299,7 +314,10 @@ public class EventDatabase : MonoBehaviour
                 activeEventJsons.Remove(eventJsons[index]);
                 Debug.Log($"[EventDatabase] 关闭事件集: {eventJsons[index].name}");
             }
-            Debug.LogWarning($"[EventDatabase] 关闭事件集失败: 索引 {index} 越界");
+            else
+            {
+                Debug.LogWarning($"[EventDatabase] 关闭事件集失败: 索引 {index} 越界");
+            }
         }
         else if (randomEventSet > 0)
         {
@@ -318,5 +336,6 @@ public class EventDatabase : MonoBehaviour
             }
         }
         LoadEvents(activeEventJsons);
+        Debug.Log($"[EventDatabase] 单个事件集激活状态已更新");
     }
 }

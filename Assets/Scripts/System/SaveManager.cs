@@ -255,6 +255,13 @@ public class SaveManager : MonoBehaviour
             {
                 UIManager.Instance.UpdateStatText();
             }
+
+            // 确保年份文本显示与存档一致（加载后不会自动触发回合刷新）
+            if (StatsDisplayUI.Instance != null)
+            {
+                int uiYear = TurnManager.Instance != null ? TurnManager.Instance.year : stats.year;
+                StatsDisplayUI.Instance.UpdateYearText(uiYear);
+            }
             
             // 刷新锁定特效显示
             if (StatsDisplayUI.Instance != null)
