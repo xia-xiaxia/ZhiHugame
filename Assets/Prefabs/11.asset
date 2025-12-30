@@ -13,18 +13,18 @@ MonoBehaviour:
   m_Name: 11
   m_EditorClassIdentifier: 
   year: 0
-  _currency: 49
+  _currency: 64
   _king: 30
   _noble: 30
   _scholar: 30
   _foreign: 30
   _people: 30
-  _talentPoints: 4
+  _talentPoints: 7
   _policyBagSize: 3
   _payBackCurrency: 0
   _shopMult: 1
   _currencyMult: 1
-  _policyShopCount: 3
+  _policyShopCount: 5
   king_delta: 0
   noble_delta: 0
   scholar_delta: 0
@@ -64,7 +64,8 @@ MonoBehaviour:
     lockDuration: 0
   buffBag: []
   delayedEventQueue: []
-  activatedTalents: []
+  activatedTalents:
+  - 3
   refreshPolicyShopCost: 050000000a0000001400000032000000
   hasSeenTutorial: 1
   activeLayerLocks: []
