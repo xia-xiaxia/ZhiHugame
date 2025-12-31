@@ -23,9 +23,11 @@ public class ButtonSoundHelper : MonoBehaviour
     private void Start()
     {
         button = GetComponent<Button>();
+
         
         if (button != null)
         {
+ 
             // 在 Start() 中添加监听器，确保在其他脚本的 Start() RemoveAllListeners() 之后执行
             // Unity 的 Start() 执行顺序不确定，所以延迟一帧确保
             StartCoroutine(AddListenerNextFrame());
@@ -34,9 +36,9 @@ public class ButtonSoundHelper : MonoBehaviour
 
     private System.Collections.IEnumerator AddListenerNextFrame()
     {
+
         // 等待一帧，确保所有 Start() 中的 RemoveAllListeners() 都已执行
         yield return null;
-        
         if (button != null)
         {
             // 移除可能存在的旧监听器（避免重复添加）

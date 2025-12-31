@@ -48,6 +48,10 @@ public class EventListSetDebug : MonoBehaviour
     private void ShowEventList()
     {
         List<int> activeEventSets = EventDatabase.Instance.GetActiveEventSetIndices();
+        for (int i = 0; i < activeEventSets.Count; i++)
+        {
+            activeEventSets[i]++;
+        }
         string activeSetsStr = string.Join(", ", activeEventSets);
         int totalEvents = EventDatabase.Instance.GetTotalEventCount();
         Debug.Log($"[EventListSetDebug] 当前激活事件集列表: {activeSetsStr}, 事件总数: {totalEvents}");
