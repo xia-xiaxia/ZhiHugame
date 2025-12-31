@@ -364,7 +364,8 @@ public class PolicyShopUI : MonoBehaviour
     {
         if (currencyText != null && GameControl.Instance != null)
         {
-            StartCoroutine(AnimateYearCounter(GameControl.Instance.GetCurrency()));
+            // StartCoroutine(AnimateYearCounter(GameControl.Instance.GetCurrency()));
+            currencyText.text = GameControl.Instance.GetCurrency().ToString();
         }
     }
 

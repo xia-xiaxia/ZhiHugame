@@ -315,4 +315,5 @@ public class EndingManager : MonoBehaviour
             endingDesc = desc;
         }
     }
+
 }

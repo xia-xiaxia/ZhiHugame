@@ -167,7 +167,7 @@ public class TalantManager : MonoBehaviour
     private void ApplyTalentEffect(Talent talent)
     {
         if (stats == null || talent == null || talent.talentEffect == null) return;
-
+        MusicManager.Instance.PlayButtonSound1();
         TalentEffect effect = talent.talentEffect;
 
         // 应用人口限制变化

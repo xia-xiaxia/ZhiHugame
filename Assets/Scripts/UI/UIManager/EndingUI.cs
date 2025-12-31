@@ -23,6 +23,7 @@ public class EndingUI : MonoBehaviour
     public Image endAnimationImage; // the white image for splash
     public float animationDuration = 0.8f;
     public TextMeshProUGUI getCurrencyText;
+    private int getCurrencyCount = 0;
 
     void Awake()
     {
@@ -49,8 +50,12 @@ public class EndingUI : MonoBehaviour
 
         if (endingText != null) endingText.text = description;
 
+        if(getCurrencyText != null)
+            getCurrencyText.text = "";
+
         // 加载结局图片
         LoadEndingImage(endingId);
+        getCurrencyCount = (int)(survivedYears * GameControl.Instance.stats.currencyMult) + 1;
 
         // 启动年数计数动画
         if (endingYearText != null)
@@ -64,8 +69,9 @@ public class EndingUI : MonoBehaviour
             restartButton.onClick.RemoveAllListeners();
             restartButton.onClick.AddListener(() =>
             {
-                // 显示商店
-                PolicyShopUI.Instance?.ShowShop();
+                StartCoroutine(AnimateCurrencyGain(survivedYears));
+                // // 显示商店
+                // PolicyShopUI.Instance?.ShowShop();
             });
         }
     }
@@ -174,7 +180,50 @@ public class EndingUI : MonoBehaviour
         {
             endingYearText.text = $"执政:  {targetYear}  年";
         }
-        getCurrencyText.text = $"获得经验：{(int)(targetYear * GameControl.Instance.stats.currencyMult)+1} ";
+        // getCurrencyText.text = $"经验：{GameControl.Instance.GetCurrency() - getCurrencyCount} ";
+    }
+
+    // 结算动画
+    public IEnumerator AnimateCurrencyGain(int targetYear)
+    {
+        int displayedCurrency = GameControl.Instance.GetCurrency() - getCurrencyCount;
+        float duration = 2.0f;
+        float elapsedTime = 0f;
+        int currentYear = targetYear;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float progress = elapsedTime / duration;
+            float easedProgress = EaseInOutCubic(progress);
+
+            displayedCurrency = Mathf.FloorToInt(Mathf.Lerp(GameControl.Instance.GetCurrency() - getCurrencyCount, GameControl.Instance.GetCurrency(), easedProgress));
+            currentYear = Mathf.FloorToInt(Mathf.Lerp(targetYear, 0, easedProgress));
+
+            if (getCurrencyText != null)
+            {
+                getCurrencyText.text = $"经验：{displayedCurrency} ";
+            }
+            if( endingYearText != null)
+            {
+                endingYearText.text = $"执政:  {currentYear}  年";
+            }
+
+            yield return null;
+        }
+
+        // 确保最终显示精确值
+        if (getCurrencyText != null)
+        {
+            getCurrencyText.text = $"经验：{GameControl.Instance.GetCurrency()} ";
+        }
+        if (endingYearText != null)
+        {
+            endingYearText.text = $"执政:  0  年";
+        }
+
+        yield return new WaitForSeconds(1.0f);
+        PolicyShopUI.Instance?.ShowShop();
     }
 
     /// <summary>

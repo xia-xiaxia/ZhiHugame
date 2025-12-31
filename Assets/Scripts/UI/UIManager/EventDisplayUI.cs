@@ -189,7 +189,7 @@ public class EventDisplayUI : MonoBehaviour
     /// <summary>
     /// 显示当前句子
     /// </summary>
-    private void ShowCurrentSentence()
+    private void                ShowCurrentSentence()
     {
         // 隐藏选项
         HideOptions();
@@ -360,7 +360,7 @@ public class EventDisplayUI : MonoBehaviour
             StopCoroutine(autoNextCoroutine);
             autoNextCoroutine = null;
         }
-
+        MusicManager.Instance?.PlayButtonSound3();
         ShowCurrentSentence();
     }
 
