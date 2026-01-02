@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MusicManager : MonoBehaviour
 {
@@ -17,14 +18,17 @@ public class MusicManager : MonoBehaviour
 
     [Header("音量设置")]
     [Range(0f, 1f)]
-    public float bgmVolume = 0.7f;
+    public float bgmVolume = 0.5f;
     [Range(0f, 1f)]
     public float deathSoundVolume = 1f;
     [Range(0f, 1f)]
-    public float buttonSoundVolume = 0.8f;
+    public float buttonSoundVolume = 0.5f;
 
     private AudioSource bgmSource;      // 背景音乐源
     private AudioSource sfxSource;      // 音效源（用于死亡音效和按钮音效）
+
+    public Slider BGMSlider;
+    public Slider SoundSlider;
 
     private void Awake()
     {
@@ -47,6 +51,12 @@ public class MusicManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        BGMSlider.onValueChanged.AddListener(ChangeBGMVolume);
+        SoundSlider.onValueChanged.AddListener(ChangeSoundVolume);
     }
 
     // 播放开始界面音乐
@@ -133,4 +143,15 @@ public class MusicManager : MonoBehaviour
             sfxSource.PlayOneShot(clip, buttonSoundVolume);
         }
     }
+
+
+    public void ChangeBGMVolume(float value)
+    {
+        bgmSource.volume = value;
+    } 
+
+    public void ChangeSoundVolume(float value)
+    {
+        buttonSoundVolume = value;
+    } 
 }
