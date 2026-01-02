@@ -178,6 +178,7 @@ public class EndingUI : MonoBehaviour
             restartButton.onClick.AddListener(() =>
             {
                 StartCoroutine(AnimateCurrencyGain(targetYear));
+                MusicManager.Instance?.PlayButtonSound2();
                 // // 显示商店
                 // PolicyShopUI.Instance?.ShowShop();
             });

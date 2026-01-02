@@ -380,6 +380,7 @@ public class TutorialManager : MonoBehaviour
     /// </summary>
     private IEnumerator ShowStartMenu()
     {
+        OptionMenuPanel?.SetActive(true);
         if (startMenuPanel != null)
         {
             startMenuPanel.SetActive(true);
@@ -401,7 +402,6 @@ public class TutorialManager : MonoBehaviour
                 menuCanvasGroup.alpha = 1f;
             }
         }
-        OptionMenuPanel?.SetActive(true);
     }
     
     /// <summary>
