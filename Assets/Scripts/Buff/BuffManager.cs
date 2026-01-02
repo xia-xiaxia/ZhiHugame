@@ -268,6 +268,7 @@ public class BuffManager : MonoBehaviour
         foreach (var b in new List<BuffDefinition>(ActiveBuffs))
             RemoveBuff(b);
         ActiveBuffs.Clear();
+        ShowBuff();
     }
 
     // ====== 新增：对外查询和移除接口，供UI调用 ======
