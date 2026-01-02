@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162da53cb023ce34bbddf3e852d3731d, type: 3}
   m_Name: 11
   m_EditorClassIdentifier: 
-  year: 5
-  _currency: 9950
-  _king: 50
-  _noble: 35
+  year: 0
+  _currency: 644
+  _king: 30
+  _noble: 30
   _scholar: 30
   _foreign: 30
-  _people: 25
+  _people: 30
   _talentPoints: 0
   _policyBagSize: 4
   _payBackCurrency: 0
@@ -45,23 +45,7 @@ MonoBehaviour:
   foreignMax: 60
   peopleMin: 0
   peopleMax: 60
-  policyBag:
-  - id: 105
-    name: "\u91CD\u4FEE\u6625\u79CB"
-    result: "\u5916\u81E3\u52BF\u529B\u6781\u5927\u5E45\u4E0A\u5347\uFF0C\u8D35\u65CF\u52BF\u529B\u5927\u5E45\u4E0B\u964D"
-    desc: "\u5168\u529B\u652F\u6301\u5916\u81E3\u5112\u751F\u91CD\u4FEE\u300A\u6625\u79CB\u300B\uFF0C\u5C3D\u7BA1\u8D35\u65CF\u56E0\u6B64\u4E0D\u6EE1"
-    type: 4
-    usageCount: 3
-    cost: 50
-    targetLayers: 0300000004000000
-    deathEffectText: 
-    kingChange: 0
-    nobleChange: -30
-    scholarChange: 0
-    foreignChange: 50
-    peopleChange: 0
-    triggeredBuffId: 
-    lockDuration: 0
+  policyBag: []
   buffBag: []
   delayedEventQueue: []
   activatedTalents: []

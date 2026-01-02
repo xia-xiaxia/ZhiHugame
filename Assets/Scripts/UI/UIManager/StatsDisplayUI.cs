@@ -23,8 +23,11 @@ public class StatsDisplayUI : MonoBehaviour
     public StatModel stats;
     
     [Header("锁定特效图片（所有阶层共用）")]
-    public GameObject sharedLockEffect; // 共用的锁定特效图片
-    
+    public GameObject[] sharedLockEffects; // 共用的锁定特效图片
+
+    [Header("半锁定特效图片")]
+    public GameObject[] halfLockImage;
+
     [Header("各阶层图标位置（用于定位特效）")]
     public RectTransform kingIconTransform;   // 国君图标位置
     public RectTransform nobleIconTransform;  // 贵族图标位置
@@ -38,7 +41,10 @@ public class StatsDisplayUI : MonoBehaviour
     public Image scholarIcon; // 学者图标
     public Image foreignIcon; // 外交图标
     public Image peopleIcon;  // 民心图标
-    
+
+    [Header("各阶层图标Image底图")]
+    public GameObject[] icon0;
+
     // 追踪当前锁定的阶层
     private int currentLockedLayer = -1;
 
@@ -113,11 +119,12 @@ public class StatsDisplayUI : MonoBehaviour
     /// </summary>
     private void InitializeLockEffects()
     {
-        if (sharedLockEffect != null)
+        for(int i=0;i<=4;i++)
         {
-            sharedLockEffect.SetActive(false);
-            currentLockedLayer = -1;
+            sharedLockEffects[i].SetActive(false);
+            halfLockImage[i].SetActive(false);
         }
+        currentLockedLayer = -1;
     }
     
     /// <summary>
@@ -131,13 +138,10 @@ public class StatsDisplayUI : MonoBehaviour
         if (scholarIcon != null) scholarIcon.enabled = true;
         if (foreignIcon != null) foreignIcon.enabled = true;
         if (peopleIcon != null) peopleIcon.enabled = true;
-        
+
         // 隐藏锁定特效
-        if (sharedLockEffect != null)
-        {
-            sharedLockEffect.SetActive(false);
-        }
-        
+        InitializeLockEffects();
+
         currentLockedLayer = -1;
         
         Debug.Log("[StatsDisplayUI] 锁定特效已重置");
@@ -148,42 +152,71 @@ public class StatsDisplayUI : MonoBehaviour
     /// </summary>
     private void OnLayerLockChanged(int layer, bool lockIncrease, bool isAdded)
     {
-        if (isAdded)
+        //轮询更新锁定状态
+        for(int i=1;i<=5;i++)
         {
-            // 添加锁定时，显示特效并移动到对应阶层位置
-            ShowLockEffectAtLayer(layer);
-            Debug.Log($"[StatsDisplayUI] 锁定特效显示 - 阶层:{layer}, 禁止{(lockIncrease ? "上升" : "下降")}");
-        }
-        else
-        {
-            // 移除锁定时，检查该阶层是否还有其他锁定
-            bool hasOtherLock = CheckIfLayerHasOtherLock(layer);
-            if (!hasOtherLock)
+            int stat = GameControl.Instance.stats.GetLayerLockStat(i);
+
+            if (stat == 0)
             {
-                // 如果该阶层没有其他锁定了，检查是否需要移动到其他锁定阶层或隐藏
-                UpdateLockEffectDisplay();
-                Debug.Log($"[StatsDisplayUI] 阶层{layer}锁定已全部解除");
+                RemoveLockEffect(i);
+            } else if(stat == 3)
+            {
+                ShowLockEffectAtLayer(i);
+            } else
+            {
+                ShowHalfLockEffectAtLayer(i);
             }
+            Debug.Log("[StatsDisplayUI] Layer " + i + " 的锁定状态为 " + stat);
         }
     }
-    
+
+    /// <summary>
+    /// 在指定阶层位置去除所有锁定特效
+    /// </summary>
+    private void RemoveLockEffect(int layer)
+    {
+        sharedLockEffects[layer].SetActive(false);
+        halfLockImage[layer].SetActive(false);
+        GetLayerIcon(layer).enabled = true;
+        icon0[layer].SetActive(true);
+    }
+
+    /// <summary>
+    /// 在指定阶层位置显示半锁定特效
+    /// </summary>
+    private void ShowHalfLockEffectAtLayer(int layer)
+    {
+        halfLockImage[layer].SetActive(true);
+        sharedLockEffects[layer].SetActive(false);
+        GetLayerIcon(layer).enabled = true;
+        icon0[layer].SetActive(true);
+    }
+
     /// <summary>
     /// 在指定阶层位置显示锁定特效
     /// </summary>
     private void ShowLockEffectAtLayer(int layer)
     {
+        var sharedLockEffect = sharedLockEffects[layer];
         if (sharedLockEffect == null)
         {
             Debug.LogWarning("[StatsDisplayUI] 共用锁定特效图片未配置！");
             return;
         }
-        
-        // 隐藏当前锁定阶层的原图标（如果有）
-        if (currentLockedLayer != -1 && currentLockedLayer != layer)
+
+        //不重复
+        if(sharedLockEffect.activeSelf == true)
         {
-            SetLayerIconVisibility(currentLockedLayer, true);
+            return;
         }
-        
+
+        //关闭可能的半锁定特效
+        halfLockImage[layer].SetActive(false);
+        //关闭底图
+        icon0[layer].SetActive(false);
+
+     
         RectTransform targetPosition = GetLayerIconTransform(layer);
         Image targetIcon = GetLayerIcon(layer);
         
@@ -247,14 +280,8 @@ public void RefreshLockEffectsFromModel()
     
     // 先重置所有状态
     ResetLockEffects();
-    
-    // 如果有锁定数据，显示第一个锁定的特效
-    if (stats.activeLayerLocks != null && stats.activeLayerLocks.Count > 0)
-    {
-        int firstLockedLayer = stats.activeLayerLocks[0].layer;
-        ShowLockEffectAtLayer(firstLockedLayer);
-        Debug.Log($"[StatsDisplayUI] 从存档恢复锁定特效显示 - 阶层:{firstLockedLayer}");
-    }
+
+    OnLayerLockChanged(0, false, false);
 }
     
     /// <summary>
@@ -268,11 +295,12 @@ public void RefreshLockEffectsFromModel()
             SetLayerIconVisibility(currentLockedLayer, true);
         }
         
-        if (sharedLockEffect != null)
+        foreach (var sharedLockEffect in sharedLockEffects)
         {
             sharedLockEffect.SetActive(false);
-            currentLockedLayer = -1;
+            
         }
+        currentLockedLayer = -1;
     }
     
     /// <summary>
