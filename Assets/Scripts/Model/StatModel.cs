@@ -442,7 +442,32 @@ public class StatModel : ScriptableObject
             }
         }
     }
-    
+
+    /// <summary>
+    /// 根据layer获得锁定状态
+    /// 0 =》 无锁定
+    /// 1 =》 半锁定
+    /// 2 =》 半锁定
+    /// 3 =》 全锁定
+    /// </summary>
+    public int GetLayerLockStat(int layer)
+    {
+        int inc = 0;
+        int dec = 0;
+
+        for (int i = activeLayerLocks.Count - 1; i >= 0; i--)
+        {
+
+            if (activeLayerLocks[i].layer == layer)
+            {
+                if (activeLayerLocks[i].lockIncrease) inc = 1;
+                else dec = 2;
+            }
+        }
+
+        return inc + dec;
+    }
+
     /// <summary>
     /// 检查某阶层某方向是否被锁定
     /// </summary>
