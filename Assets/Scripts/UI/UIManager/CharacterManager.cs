@@ -22,6 +22,7 @@ public class CharacterManager : MonoBehaviour
     private Image image;
 
     private bool isFirst = true;
+    private bool skipNextAnimation = false;
     private Coroutine currentAnimationCoroutine = null;
 
     public RectTransform leftRectTransform;
@@ -150,6 +151,20 @@ public class CharacterManager : MonoBehaviour
             }
             
             character.SetActive(true);
+            if (skipNextAnimation)
+            {
+                skipNextAnimation = false;
+                // 直接显示立绘，不播放动画
+                image.sprite = characterImages[cleanName];
+                image.color = new Color(maxBrightness, maxBrightness, maxBrightness, 1f);
+                if (leftRectTransform != null)
+                {
+                    rectTransform.position = leftRectTransform.position;
+                }
+                isFirst = false;
+                return;
+            }
+
             if(isFirst)
             {
                 currentAnimationCoroutine = StartCoroutine(CharacterEntry(cleanName));
@@ -164,6 +179,14 @@ public class CharacterManager : MonoBehaviour
             Debug.LogWarning($"[CharacterManager] 未找到角色图片: '{cleanName}' (原始: '{name}')");
             Debug.Log($"[CharacterManager] 可用角色列表: {string.Join(", ", characterImages.Keys)}");
         }
+    }
+
+    /// <summary>
+    /// 标记下一次显示角色时直接静态展示，不播放入场/出场动画。
+    /// </summary>
+    public void SkipNextAnimation()
+    {
+        skipNextAnimation = true;
     }
 
     public void CharacterAnime()

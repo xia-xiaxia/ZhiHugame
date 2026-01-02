@@ -181,11 +181,11 @@
     {
       "id": 18,
       "name": "积累手段-肆",
-      "description": "积累更多国策手段，国策栏上限设为7",
+      "description": "积累更多国策手段，国策栏上限设为8",
       "cost": 4,
       "preTanlents": [13, 14],
       "talentEffect": {
-        "policyBagSizeChange": 7
+        "policyBagSizeChange": 8
       }
     },
     {

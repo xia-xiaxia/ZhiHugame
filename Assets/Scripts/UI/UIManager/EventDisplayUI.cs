@@ -170,7 +170,7 @@ public class EventDisplayUI : MonoBehaviour
                     dialoguePanel.SetBody(body);
             }
             waitingForSentence = true;
-            StartCoroutine(ShowOptionsAfterDelay(0.8f));
+            StartCoroutine(ShowOptionsAfterDelay(1.4f));
         }
         else
         {

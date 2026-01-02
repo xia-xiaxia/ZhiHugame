@@ -63,17 +63,7 @@ public class EndingUI : MonoBehaviour
             StartCoroutine(AnimateYearCounter(survivedYears));
         }
 
-        // 绑定重开按钮
-        if (restartButton != null)
-        {
-            restartButton.onClick.RemoveAllListeners();
-            restartButton.onClick.AddListener(() =>
-            {
-                StartCoroutine(AnimateCurrencyGain(survivedYears));
-                // // 显示商店
-                // PolicyShopUI.Instance?.ShowShop();
-            });
-        }
+        
     }
 
     // 加上了演出动画的结局显示
@@ -181,11 +171,25 @@ public class EndingUI : MonoBehaviour
             endingYearText.text = $"执政:  {targetYear}  年";
         }
         // getCurrencyText.text = $"经验：{GameControl.Instance.GetCurrency() - getCurrencyCount} ";
+        // 绑定重开按钮
+        if (restartButton != null)
+        {
+            restartButton.onClick.RemoveAllListeners();
+            restartButton.onClick.AddListener(() =>
+            {
+                StartCoroutine(AnimateCurrencyGain(targetYear));
+                // // 显示商店
+                // PolicyShopUI.Instance?.ShowShop();
+            });
+        }
     }
 
     // 结算动画
     public IEnumerator AnimateCurrencyGain(int targetYear)
     {
+
+        if (restartButton != null)
+            restartButton.onClick.RemoveAllListeners();
         int displayedCurrency = GameControl.Instance.GetCurrency() - getCurrencyCount;
         float duration = 2.0f;
         float elapsedTime = 0f;

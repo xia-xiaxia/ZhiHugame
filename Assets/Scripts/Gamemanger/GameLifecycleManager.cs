@@ -16,6 +16,7 @@ public class GameLifecycleManager : MonoBehaviour
     public bool GameOver = false;
     public bool GamePaused = false;
     private bool isGameStarting = false;
+    public bool isGameing = false;
 
     [Header("暂停快照")]
     private string pausedEventId = null;
@@ -32,6 +33,7 @@ public class GameLifecycleManager : MonoBehaviour
         Debug.Log("[GameLifecycle] 开始游戏按钮被点击");
         
         isGameStarting = false;
+        isGameing = true;
         
         // 从暂停恢复
         if (GamePaused)
@@ -102,6 +104,7 @@ public class GameLifecycleManager : MonoBehaviour
             Debug.Log("[GameLifecycle] 教程正在播放中，延迟启动游戏");
             return;
         }
+        isGameing = true;
         isGameStarting = true;
         Debug.Log("[GameLifecycle] 开始游戏（由CanvasMove调用）");
         
@@ -138,6 +141,9 @@ public class GameLifecycleManager : MonoBehaviour
             objectsAboutEvent.SetActive(true);
         }
         
+        // 从暂停恢复时跳过下一次角色入场动画，直接展示立绘
+        CharacterManager.Instance?.SkipNextAnimation();
+
         UIManager.Instance?.RestoreEventState(pausedEventId, pausedSentenceIndex);
         
         pausedEventId = null;
@@ -290,6 +296,7 @@ public class GameLifecycleManager : MonoBehaviour
         RestartGame();
         UIManager.Instance?.HidePolicyShop();
         CanvasMove.Instance?.BackToStart();
+        isGameing = false;
         Debug.Log("[GameLifecycle] 回到主菜单");
     }
 
@@ -316,6 +323,7 @@ public class GameLifecycleManager : MonoBehaviour
     {
         GamePaused = true;
         CanvasMove.Instance?.BackToStart();
+        isGameing = false;
         Debug.Log("[GameLifecycle] 从暂停状态返回主菜单完成");
     }
 
@@ -339,6 +347,7 @@ public class GameLifecycleManager : MonoBehaviour
     public void BackToStartMenu()
     {
         isGameStarting = false;
+        isGameing = false;
         CanvasMove.Instance?.BackToStart();
         Debug.Log("[GameLifecycle] 返回主菜单完成");
     }
@@ -347,6 +356,7 @@ public class GameLifecycleManager : MonoBehaviour
     public void QuitGame()
     {
         Debug.Log("[GameLifecycle] 退出游戏");
+        isGameing = false;
         Application.Quit();
     }
     

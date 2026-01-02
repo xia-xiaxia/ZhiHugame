@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,7 @@ public class TutorialManager : MonoBehaviour
     
     [Header("教程图片")]
     public List<Sprite> tutorialImages = new List<Sprite>();  // 教程图片列表（4张）
+    private Image defaltImage;                             // 默认图片（空）
     
     [Header("UI组件")]
     public GameObject tutorialPanel;        // 教程面板（整个教程UI的根对象）
@@ -29,6 +31,7 @@ public class TutorialManager : MonoBehaviour
     [Header("其他设置")]
     public StatModel stats;                 // 关联的StatModel
     public GameObject startMenuPanel;       // 开始界面面板（教程结束后返回）
+    public GameObject OptionMenuPanel;      // 选项菜单面板
     public bool isPlayingTutorial = false;   // 现在是否在播放教程
     
     private int currentImageIndex = 0;      // 当前显示的图片索引
@@ -53,6 +56,7 @@ public class TutorialManager : MonoBehaviour
         // 初始化：隐藏教程面板
         if (tutorialPanel != null)
         {
+            tutorialImageDisplay.sprite = tutorialImages.Count > 0 ? tutorialImages[0] : null;
             tutorialPanel.SetActive(false);
         }
         
@@ -112,7 +116,7 @@ public class TutorialManager : MonoBehaviour
     }
     
     /// <summary>
-    /// 播放新手教程（公开方法，可由"游戏说明"按钮直接调用）
+    /// 播放新手教程（公开方法，可由"查看教程"按钮直接调用）
     /// </summary>
     public void PlayTutorial()
     {
@@ -124,16 +128,21 @@ public class TutorialManager : MonoBehaviour
         
         Debug.Log("[TutorialManager] 开始播放新手教程");
         
-        // 隐藏开始界面
+        // 隐藏开始界面和选项菜单
         if (startMenuPanel != null)
         {
             startMenuPanel.SetActive(false);
+        }
+        if (OptionMenuPanel != null)
+        {
+            OptionMenuPanel.SetActive(false);
         }
         
         // 重置状态
         currentImageIndex = 0;
         isPlayingTutorial = true;
         isPlaying = true;
+        tutorialImageDisplay.sprite = tutorialImages.Count > 0 ? tutorialImages[0] : null;
         
         // 显示教程面板
         if (tutorialPanel != null)
@@ -352,6 +361,12 @@ public class TutorialManager : MonoBehaviour
             onTutorialComplete = null; // 清空回调
             callback.Invoke();
         }
+        else if(GameLifecycleManager.Instance != null && GameLifecycleManager.Instance.isGameing)
+        {
+            // 正在游戏中播放教程，结束后保持在游戏界面
+            GameControl.Instance.continueGame();
+            yield return null;
+        }
         else
         {
             // 没有回调（从"游戏说明"进入），返回开始界面
@@ -369,7 +384,7 @@ public class TutorialManager : MonoBehaviour
         {
             startMenuPanel.SetActive(true);
             
-            // 如果开始界面也有 CanvasGroup，添加淡入效果
+            // 添加淡入效果
             CanvasGroup menuCanvasGroup = startMenuPanel.GetComponent<CanvasGroup>();
             if (menuCanvasGroup != null)
             {
@@ -386,6 +401,7 @@ public class TutorialManager : MonoBehaviour
                 menuCanvasGroup.alpha = 1f;
             }
         }
+        OptionMenuPanel?.SetActive(true);
     }
     
     /// <summary>
