@@ -25,24 +25,24 @@ public class EventListSetDebug : MonoBehaviour
 
     void Update()
     {
-        // 按 E 键显示当前事件列表
-        if (Input.GetKeyDown(KeyCode.E) && nowEventListText.gameObject.activeSelf == false)
-        {
-            nowEventListText.gameObject.SetActive(true);
-            ShowEventList();
-        }
+        // // 按 E 键显示当前事件列表
+        // if (Input.GetKeyDown(KeyCode.E) && nowEventListText.gameObject.activeSelf == false)
+        // {
+        //     nowEventListText.gameObject.SetActive(true);
+        //     ShowEventList();
+        // }
         
-        // 按 Shift+E 添加测试事件
-        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.E))
-        {
-            nowEventListText.gameObject.SetActive(true);
-            AddTestEvent(3);
-        }
+        // // 按 Shift+E 添加测试事件
+        // if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.E))
+        // {
+        //     nowEventListText.gameObject.SetActive(true);
+        //     AddTestEvent(3);
+        // }
 
-        if(Input.GetKeyUp(KeyCode.E) && nowEventListText.gameObject.activeSelf)
-        {
-            nowEventListText.gameObject.SetActive(false);
-        }
+        // if(Input.GetKeyUp(KeyCode.E) && nowEventListText.gameObject.activeSelf)
+        // {
+        //     nowEventListText.gameObject.SetActive(false);
+        // }
     }
     
     private void ShowEventList()

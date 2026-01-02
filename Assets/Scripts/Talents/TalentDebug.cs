@@ -12,9 +12,9 @@ public class TalentDebug : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Y))
-        {
-            TalantManager.Instance.AddTalentPoints(5);
-        }
+        // if(Input.GetKeyDown(KeyCode.Y))
+        // {
+        //     TalantManager.Instance.AddTalentPoints(5);
+        // }
     }
 }

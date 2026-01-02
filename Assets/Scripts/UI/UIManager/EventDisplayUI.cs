@@ -73,11 +73,11 @@ public class EventDisplayUI : MonoBehaviour
                 OnPrevSentenceClicked();
             }
         }
-        if(Input.GetKeyDown(KeyCode.F9))
-        {
-            isDebugMode = !isDebugMode;
-            Debug.Log($"[EventDisplayUI] 切换调试模式: {isDebugMode}");
-        }
+        // if(Input.GetKeyDown(KeyCode.F9))
+        // {
+        //     isDebugMode = !isDebugMode;
+        //     Debug.Log($"[EventDisplayUI] 切换调试模式: {isDebugMode}");
+        // }
     }
 
     /// <summary>
